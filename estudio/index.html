@@ -1,0 +1,1069 @@
+<title>Estudio Koi Tea</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: una sola columna editorial (máx. 1120px) con pestañas fijas arriba; las piezas interactivas viven en "lienzos" con su propio fondo de pantalla/teléfono. */
+:root{
+  --paper:#FBF6EF;      /* crema del logo, un punto más cálido */
+  --surface:#F3EBDF;
+  --ink:#27211E;        /* trazo de la mascota */
+  --muted:#6E625A;
+  --line:#E2D6C6;
+  --koi:#D9442A;        /* rojo koi, ajustado para texto sobre crema */
+  --koi-soft:#F9DCD2;
+  --sage:#8FA397;       /* fondo de las pantallas actuales */
+  --sage-soft:#DCE5DF;
+  --walnut:#4A3D3F;     /* barra de duela */
+  --taro:#A982B4;
+  --good:#3F7A55; --warn:#A86A12; --bad:#B23A2A;
+  --f-display:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",Georgia,serif;
+  --f-body:"Zen Kaku Gothic New","Hiragino Sans","Segoe UI",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#171413;--surface:#221E1C;--ink:#F1E9DF;--muted:#AFA399;--line:#3A332F;
+  --koi:#FF6E4F;--koi-soft:#3D221B;--sage:#9DB2A5;--sage-soft:#24302A;--walnut:#C9AE96;--taro:#C4A3CE;
+  --good:#7CC496;--warn:#E3A84B;--bad:#F07C6A;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#171413;--surface:#221E1C;--ink:#F1E9DF;--muted:#AFA399;--line:#3A332F;
+  --koi:#FF6E4F;--koi-soft:#3D221B;--sage:#9DB2A5;--sage-soft:#24302A;--walnut:#C9AE96;--taro:#C4A3CE;
+  --good:#7CC496;--warn:#E3A84B;--bad:#F07C6A;color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.65;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+a{color:var(--koi)}
+:focus-visible{outline:2px solid var(--koi);outline-offset:3px;border-radius:4px}
+h1,h2,h3{font-family:var(--f-display);font-weight:700;line-height:1.2;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.1rem,5.2vw,3.6rem);font-weight:800;letter-spacing:-.01em}
+h2{font-size:clamp(1.55rem,3vw,2.1rem)}
+h3{font-size:1.2rem}
+p{margin:0}
+.wrap{max-width:1120px;margin:0 auto}
+.eyebrow{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.lede{font-size:1.12rem;color:var(--muted);max-width:62ch}
+.prose{max-width:66ch;display:grid;gap:.8em}
+.mono{font-family:var(--f-mono);font-size:.86em}
+.muted{color:var(--muted)}
+small,.small{font-size:.86rem}
+
+/* Cabecera y pestañas */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)))}
+.top .wrap{display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:space-between;padding:12px max(16px,env(safe-area-inset-left,0px))}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--f-display);font-weight:800;letter-spacing:.06em}
+.brand img{width:34px;height:34px;border-radius:50%;border:1px solid var(--line)}
+.brand span{font-family:var(--f-mono);font-weight:400;font-size:.72rem;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+.tabs{display:flex;gap:4px;background:var(--surface);padding:4px;border-radius:999px;border:1px solid var(--line)}
+.tab{appearance:none;border:0;background:transparent;color:var(--muted);font:500 .95rem var(--f-body);padding:8px 18px;border-radius:999px;cursor:pointer;transition:background .2s,color .2s}
+.tab[aria-selected="true"]{background:var(--ink);color:var(--paper)}
+
+main{padding-block:28px 80px}
+section{padding-block:44px;border-top:1px solid var(--line)}
+section:first-child{border-top:0}
+.sec-head{display:grid;gap:8px;margin-bottom:26px}
+
+/* Hero estudio */
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:center;padding-block:20px 40px}
+.hero figure{margin:0;position:relative}
+.hero img{border-radius:var(--r);display:block;width:100%;aspect-ratio:4/5;object-fit:cover}
+.hero .stack{display:grid;gap:18px;min-width:0}
+figcaption{font-family:var(--f-mono);font-size:.72rem;color:var(--muted);margin-top:8px}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-top:6px}
+.facts div{padding:12px 14px;border-bottom:1px solid var(--line);border-right:1px solid var(--line);min-width:0}
+.facts div:nth-child(2n){border-right:0}
+.facts div:nth-last-child(-n+2){border-bottom:0}
+.facts dt{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.facts dd{margin:2px 0 0;font-weight:500}
+
+/* Galería */
+.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.gallery figure{margin:0;min-width:0}
+.gallery img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:10px;display:block}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
+.two>*{min-width:0}
+.list{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.list li{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:baseline}
+.list li::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--koi);transform:translateY(-2px)}
+
+/* Paleta */
+.palette{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px}
+.sw{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface)}
+.sw i{display:block;height:74px}
+.sw div{padding:8px 10px;display:grid;gap:2px}
+.sw b{font-weight:500;font-size:.9rem}
+.sw code{font-family:var(--f-mono);font-size:.74rem;color:var(--muted)}
+.logo-card{display:grid;grid-template-columns:160px 1fr;gap:22px;align-items:center}
+.logo-card img{width:160px;height:160px;border-radius:50%;border:1px solid var(--line)}
+
+/* Menú leído */
+.menu-read{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.board{background:var(--sage-soft);border-radius:12px;padding:18px 18px 16px;min-width:0}
+.board h3{font-size:1rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
+.board ul{margin:0;padding-left:1.1em;display:grid;gap:3px}
+.board .q{color:var(--muted);font-size:.85rem}
+
+/* Tablas */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r)}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:.95rem}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--surface)}
+tr:last-child td{border-bottom:0}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.us td{background:var(--koi-soft)}
+
+/* FODA */
+.swot{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.swot>div{border:1px solid var(--line);border-radius:var(--r);padding:18px;min-width:0}
+.swot h3{font-size:1.05rem;margin-bottom:10px;display:flex;gap:10px;align-items:center}
+.swot h3 em{font-style:normal;font-family:var(--f-mono);font-size:.7rem;border-radius:6px;padding:2px 7px;background:var(--surface);color:var(--muted)}
+.swot ul{margin:0;padding-left:1.1em;display:grid;gap:6px}
+
+.hooks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.hook{background:var(--surface);border-radius:var(--r);padding:18px;display:grid;gap:6px;align-content:start;min-width:0}
+.hook b{font-family:var(--f-display);font-size:1.1rem}
+
+.callout{border-left:3px solid var(--koi);padding:4px 0 4px 16px;max-width:70ch}
+.sources{display:grid;gap:8px;padding-left:1.1em;margin:0}
+.verify{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.verify>div{border:1px solid var(--line);border-radius:var(--r);padding:16px;min-width:0}
+.verify h3{font-size:1rem;margin-bottom:8px}
+.verify ul{margin:0;padding-left:1.1em;display:grid;gap:5px}
+
+/* Propuesta */
+.letter{display:grid;grid-template-columns:1.2fr .8fr;gap:36px;align-items:start}
+.letter>*{min-width:0}
+.pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.pillar{border:1px solid var(--line);border-radius:var(--r);padding:20px;display:grid;gap:8px;align-content:start;min-width:0}
+.pillar .k{font-family:var(--f-mono);font-size:.72rem;color:var(--koi);letter-spacing:.1em;text-transform:uppercase}
+
+.demo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:start}
+.demo>*{min-width:0}
+.feat{display:grid;gap:14px}
+.feat div{display:grid;gap:2px}
+.feat b{font-weight:700}
+
+/* Teléfono */
+.phone-wrap{display:flex;justify-content:center}
+.phone{--m-bg:#FBF6EF;--m-card:#FFFFFF;--m-ink:#27211E;--m-muted:#7A6D64;--m-line:#EADFD1;--m-koi:#E2482B;--m-sage:#DCE5DF;
+  width:min(360px,100%);aspect-ratio:9/18.5;background:#151211;border-radius:44px;padding:11px;box-shadow:0 30px 60px -30px rgba(40,25,15,.45),0 0 0 1px rgba(0,0,0,.25)}
+.screen{position:relative;width:100%;height:100%;border-radius:34px;overflow:hidden;background:var(--m-bg);color:var(--m-ink);font-family:var(--f-body)}
+.scroller{position:absolute;inset:0;overflow-y:auto;scroll-behavior:smooth;overscroll-behavior:contain;scrollbar-width:none}
+.scroller::-webkit-scrollbar{display:none}
+.m-head{padding:22px 18px 12px;display:grid;gap:10px;background:linear-gradient(180deg,#F6E9DA,var(--m-bg))}
+.m-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.m-logo{display:flex;align-items:center;gap:9px}
+.m-logo img{width:40px;height:40px;border-radius:50%;animation:bob 4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-3px) rotate(-3deg)}}
+.m-logo b{font-family:var(--f-display);font-weight:800;letter-spacing:.08em;font-size:1rem;display:block;line-height:1.1}
+.m-logo small{font-size:.66rem;color:var(--m-muted);letter-spacing:.08em;text-transform:uppercase}
+.seg{display:flex;background:#EFE4D6;border-radius:999px;padding:2px}
+.seg button{appearance:none;border:0;background:transparent;font:500 .7rem var(--f-mono);padding:4px 8px;border-radius:999px;color:var(--m-muted);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--m-ink);color:#fff}
+.m-hero{border-radius:18px;overflow:hidden;position:relative;height:118px;background:#E7D8C6}
+.m-hero img{width:100%;height:100%;object-fit:cover;object-position:center 55%}
+.m-hero span{position:absolute;left:12px;bottom:10px;color:#fff;font-family:var(--f-display);font-weight:700;font-size:1.05rem;text-shadow:0 1px 10px rgba(0,0,0,.45)}
+.chips{position:sticky;top:0;z-index:2;display:flex;gap:6px;overflow-x:auto;padding:10px 14px;background:rgba(251,246,239,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--m-line);scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{appearance:none;border:1px solid var(--m-line);background:#fff;color:var(--m-ink);font:500 .78rem var(--f-body);padding:6px 12px;border-radius:999px;white-space:nowrap;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.chip[aria-current="true"]{background:var(--m-koi);border-color:var(--m-koi);color:#fff}
+.m-sec{padding:16px 14px 4px}
+.m-sec h4{margin:0 0 10px;font-family:var(--f-display);font-size:1.15rem;display:flex;align-items:baseline;justify-content:space-between}
+.m-sec h4 small{font-family:var(--f-mono);font-size:.62rem;color:var(--m-muted);font-weight:400}
+.items{display:grid;gap:8px}
+.item{display:grid;grid-template-columns:52px 1fr auto;gap:10px;align-items:center;background:var(--m-card);border:1px solid var(--m-line);border-radius:16px;padding:9px 10px;cursor:pointer;text-align:left;font:inherit;color:inherit;width:100%;transition:transform .18s ease}
+.item:active{transform:scale(.97)}
+.item .nm{font-weight:700;font-size:.9rem;line-height:1.2}
+.item .ds{font-size:.72rem;color:var(--m-muted);line-height:1.35}
+.item .pr{font-family:var(--f-mono);font-size:.78rem;font-variant-numeric:tabular-nums;text-align:right;display:grid;gap:4px;justify-items:end}
+.item .plus{width:26px;height:26px;border-radius:50%;background:var(--m-ink);color:#fff;display:grid;place-items:center;font-size:1rem;line-height:1}
+.cupico{width:52px;height:52px;border-radius:14px;background:var(--m-sage);display:grid;place-items:center}
+.cupico svg{width:30px;height:38px}
+.tops{display:flex;flex-wrap:wrap;gap:6px}
+.tops span{font-size:.74rem;background:#fff;border:1px solid var(--m-line);border-radius:999px;padding:4px 9px}
+.m-note{font-size:.66rem;color:var(--m-muted);padding:10px 14px 90px;text-align:center}
+.cartbar{position:absolute;left:12px;right:12px;bottom:12px;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--m-ink);color:#fff;border-radius:18px;padding:10px 12px 10px 16px;transition:transform .3s cubic-bezier(.2,.9,.3,1.2)}
+.cartbar[data-empty="true"]{transform:translateY(130%)}
+.cartbar button{appearance:none;border:0;background:var(--m-koi);color:#fff;font:700 .78rem var(--f-body);padding:8px 12px;border-radius:12px;cursor:pointer}
+.cartbar .cnt{font-family:var(--f-mono);font-size:.78rem}
+.cartbar.pop{animation:pop .4s ease}
+@keyframes pop{40%{transform:scale(1.04)}}
+.sheet{position:absolute;inset:auto 0 0 0;z-index:4;background:#fff;border-radius:26px 26px 0 0;padding:10px 16px 16px;transform:translateY(105%);transition:transform .42s cubic-bezier(.2,.85,.25,1);box-shadow:0 -20px 40px -20px rgba(0,0,0,.35);max-height:88%;overflow-y:auto;color:var(--m-ink)}
+.sheet[data-open="true"]{transform:none}
+.scrim{position:absolute;inset:0;z-index:4;background:rgba(20,14,10,.35);opacity:0;pointer-events:none;transition:opacity .3s}
+.scrim[data-open="true"]{opacity:1;pointer-events:auto}
+.grab{width:40px;height:4px;border-radius:4px;background:#E2D7CA;margin:0 auto 8px}
+.b-top{display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:center}
+.b-top h5{margin:0;font-family:var(--f-display);font-size:1.15rem;line-height:1.2}
+.b-top p{font-size:.74rem;color:var(--m-muted)}
+.bcup{width:96px;height:120px}
+.liquid{transition:transform .9s cubic-bezier(.3,.8,.3,1),fill .4s;transform-origin:50% 100%;transform-box:fill-box}
+.pearl{transition:fill .3s}
+.drop .pearl{animation:drop .7s cubic-bezier(.3,0,.5,1.4) both}
+@keyframes drop{from{transform:translateY(-70px);opacity:0}to{transform:none;opacity:1}}
+.opt{margin-top:12px}
+.opt label,.opt .lb{display:block;font:500 .66rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--m-muted);margin-bottom:6px}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.pills button{appearance:none;border:1px solid var(--m-line);background:#FBF6EF;color:var(--m-ink);font:500 .74rem var(--f-body);padding:6px 10px;border-radius:999px;cursor:pointer}
+.pills button[aria-pressed="true"]{background:var(--m-ink);border-color:var(--m-ink);color:#fff}
+.addbtn{margin-top:14px;width:100%;appearance:none;border:0;background:var(--m-koi);color:#fff;font:700 .9rem var(--f-body);padding:12px;border-radius:14px;cursor:pointer;display:flex;justify-content:space-between}
+.wa{white-space:pre-wrap;font-family:var(--f-mono);font-size:.72rem;background:#EFF6EE;border:1px solid #CFE3CC;border-radius:12px;padding:10px;margin-top:8px}
+.badge-demo{position:absolute;top:10px;right:12px;z-index:3;font:500 .58rem var(--f-mono);letter-spacing:.08em;text-transform:uppercase;background:rgba(39,33,30,.78);color:#fff;padding:3px 7px;border-radius:6px}
+
+/* Pantalla */
+.signage{display:grid;gap:18px}
+.sig-ctrl{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.seg2{display:flex;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:3px}
+.seg2 button{appearance:none;border:0;background:transparent;color:var(--muted);font:500 .86rem var(--f-body);padding:7px 14px;border-radius:999px;cursor:pointer}
+.seg2 button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.ghost{appearance:none;border:1px solid var(--line);background:transparent;color:var(--ink);font:500 .86rem var(--f-body);padding:7px 14px;border-radius:999px;cursor:pointer}
+.wall{position:relative;border-radius:18px;padding:34px 16px 26px;background:linear-gradient(180deg,#F3E7D6 0%,#EADBC6 100%);overflow-x:auto}
+.wall::before{content:"";position:absolute;left:0;right:0;top:0;height:16px;background:linear-gradient(180deg,rgba(255,196,120,.55),transparent)}
+.wall-row{display:flex;gap:clamp(10px,2.4vw,26px);justify-content:center;align-items:flex-end;min-width:min-content;margin:0 auto}
+.tv{background:#141110;padding:6px;border-radius:6px;box-shadow:0 18px 30px -18px rgba(40,25,15,.6)}
+.tv canvas{display:block;width:100%;height:auto;aspect-ratio:9/16;border-radius:2px;background:#FBF3E8}
+.tv.c{width:clamp(200px,34vw,330px)}
+.tv.s{width:clamp(150px,24vw,250px)}
+.timeline{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.tl{border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:grid;gap:4px;position:relative;overflow:hidden;min-width:0}
+.tl b{font-size:.92rem}
+.tl span{font-size:.8rem;color:var(--muted)}
+.tl i{position:absolute;left:0;bottom:0;height:3px;background:var(--koi);width:0}
+.tl[data-on="true"]{border-color:var(--koi)}
+.specs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.specs div{padding:12px 14px;border-right:1px solid var(--line);min-width:0}
+.specs div:last-child{border-right:0}
+.specs dt{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.specs dd{margin:2px 0 0;font-weight:500;font-size:.95rem}
+
+.opts3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.opt3{border:1px solid var(--line);border-radius:var(--r);padding:18px;display:grid;gap:8px;align-content:start;min-width:0}
+.opt3.rec{border-color:var(--koi);background:color-mix(in srgb,var(--koi-soft) 55%,transparent)}
+.tag{display:inline-block;font-family:var(--f-mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:6px;background:var(--surface);color:var(--muted);justify-self:start}
+.tag.k{background:var(--koi);color:#fff}
+
+.ops{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.op{border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:8px;align-content:start;min-width:0}
+.op h3{font-size:1.05rem}
+.meter{display:flex;gap:6px;flex-wrap:wrap}
+.meter span{font-family:var(--f-mono);font-size:.66rem;padding:2px 7px;border-radius:6px;border:1px solid var(--line)}
+.meter .hi{color:var(--good);border-color:color-mix(in srgb,var(--good) 45%,transparent)}
+.meter .md{color:var(--warn);border-color:color-mix(in srgb,var(--warn) 45%,transparent)}
+.meter .lo{color:var(--muted)}
+
+.phases{display:grid;gap:0;border-left:2px solid var(--line);margin-left:8px}
+.ph{position:relative;padding:0 0 22px 26px;display:grid;gap:4px}
+.ph::before{content:"";position:absolute;left:-8px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--paper);border:2px solid var(--koi)}
+.ph .when{font-family:var(--f-mono);font-size:.74rem;color:var(--koi)}
+
+.tiers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.tier{border:1px solid var(--line);border-radius:var(--r);padding:20px;display:grid;gap:10px;align-content:start;min-width:0}
+.tier.rec{border:2px solid var(--koi)}
+.tier ul{margin:0;padding-left:1.1em;display:grid;gap:5px;font-size:.94rem}
+.checklist{list-style:none;padding:0;margin:0;display:grid;gap:8px;grid-template-columns:repeat(2,minmax(0,1fr))}
+.checklist li{display:flex;gap:10px;align-items:flex-start;min-width:0}
+.checklist li::before{content:"";flex:0 0 14px;height:14px;border:1.5px solid var(--muted);border-radius:4px;margin-top:5px}
+
+@media (max-width:900px){
+  .hero,.letter,.demo{grid-template-columns:minmax(0,1fr)}
+  .hero figure{min-width:0}
+  .pillars,.ops,.tiers,.opts3,.hooks,.menu-read{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .specs{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .specs div:nth-child(2){border-right:0}
+  .specs div:nth-child(-n+2){border-bottom:1px solid var(--line)}
+}
+@media (max-width:620px){
+  .two,.swot,.verify,.pillars,.ops,.tiers,.opts3,.hooks,.menu-read,.checklist,.gallery{grid-template-columns:minmax(0,1fr)}
+  .logo-card{grid-template-columns:minmax(0,1fr)}
+  .timeline{grid-template-columns:minmax(0,1fr)}
+  .facts{grid-template-columns:minmax(0,1fr)}
+  .facts div{border-right:0!important;border-bottom:1px solid var(--line)!important}
+  .facts div:last-child{border-bottom:0!important}
+  .brand span{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.scroller{scroll-behavior:auto}}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand"><img src="img/logo_big.jpg" alt="">KOI TEA <span>Estudio de marca · propuesta</span></div>
+    <div class="tabs" role="tablist" aria-label="Secciones">
+      <button class="tab" role="tab" id="t-estudio" aria-controls="p-estudio" aria-selected="true">Estudio</button>
+      <button class="tab" role="tab" id="t-propuesta" aria-controls="p-propuesta" aria-selected="false">Propuesta</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+<!-- ===================== ESTUDIO ===================== -->
+<div id="p-estudio" role="tabpanel" aria-labelledby="t-estudio">
+
+  <section class="hero">
+    <div class="stack">
+      <p class="eyebrow">Estudio de marca · consultado el 4 de noviembre de 2026</p>
+      <h1>Un boba shop que se siente galería</h1>
+      <p class="lede">Koi Tea Boba Shop abrió el 1 de noviembre de 2026 en Puerto Peñasco, Sonora. Su propia frase lo resume: “el sabor y el arte se unen en un mismo espacio”. El local tiene un interiorismo cuidado de inspiración asiática, una mascota con mucha personalidad y tres pantallas verticales detrás de la barra que hoy muestran imágenes fijas.</p>
+      <dl class="facts">
+        <div><dt>Dirección</dt><dd>C. Benito Juárez 276, Col. José López Portillo, 83550</dd></div>
+        <div><dt>Horario</dt><dd>11:00 – 21:30</dd></div>
+        <div><dt>Apertura</dt><dd>1 nov 2026, 5:30 p.m.</dd></div>
+        <div><dt>Propuesta</dt><dd>Ingredientes importados de Taiwán</dd></div>
+        <div><dt>Instagram</dt><dd>@koitea.mx · ≈530 seguidores · 5 publicaciones</dd></div>
+        <div><dt>Facebook · Maps</dt><dd>159 seguidores · 5.0 ★ (2 reseñas)</dd></div>
+      </dl>
+    </div>
+    <figure>
+      <img src="img/welcome_1.jpg" alt="Barra de Koi Tea con plafón curvo iluminado, lámparas de globo, frente de duela y tres pantallas verticales">
+      <figcaption>Barra principal. Foto: @koitea.mx, publicación del 1 nov 2026.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">El espacio</p>
+      <h2>Japandi cálido con una galería al fondo</h2>
+      <p class="lede">Todo el local habla el mismo idioma: madera clara, ratán, blanco cálido, luz indirecta y referencias a Asia. Es un lugar pensado para fotografiarse.</p>
+    </div>
+    <div class="gallery">
+      <figure><img src="img/welcome_2.jpg" alt="Cubos de luz con íconos de torii, boba, koi y hoja; letras metálicas KOI TEA; rincón con celosía de madera"><figcaption>Cubos de luz, letras de acero y celosía.</figcaption></figure>
+      <figure><img src="img/welcome_3.jpg" alt="Cuadros con caligrafía, jardinera de helechos, arco hacia galería de fotografías y preparación de boba"><figcaption>Arco a la galería y preparación en barra.</figcaption></figure>
+      <figure><img src="img/welcome_4.jpg" alt="Muro de merch con playeras, gorras, tote bag con dos koi y bonsáis"><figcaption>Merch propio: playeras, gorras y tote.</figcaption></figure>
+    </div>
+    <div class="two" style="margin-top:28px">
+      <div>
+        <h3 style="margin-bottom:12px">Materiales y elementos</h3>
+        <ul class="list">
+          <li>Plafón curvo con tira LED cálida perimetral y cuatro lámparas de globo opal.</li>
+          <li>Barra en L con frente de duela de madera oscura y cubierta blanca de cuarzo.</li>
+          <li>Sillas de madera con respaldo y asiento de rejilla de ratán; mesas redondas blancas tipo tulipán.</li>
+          <li>Jardineras de ratán con helechos, bonsáis y plantas de hoja grande (alocasia).</li>
+          <li>Celosía de madera en retícula y lámpara colgante tejida.</li>
+          <li>Arco que enmarca una galería con riel de spots: fotos de pagodas, torii y paisajes asiáticos.</li>
+          <li>Columna de cubos de luz con íconos: torii, vaso de boba, koi y hoja.</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="margin-bottom:12px">Lo que comunica</h3>
+        <div class="prose">
+          <p>Calma, cuidado y cierto aire de café de autor. No es un boba shop “de colores chillones”; se parece más a una casa de té contemporánea.</p>
+          <p>Las tapas selladas de los vasos llevan ilustración tipo tinta y caligrafía, así que el detalle asiático llega hasta el producto.</p>
+          <p>El merch ya dice “Rocky Point, MX” y “Peñasco, Son, MX”: el negocio piensa en el visitante desde el primer día.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">Identidad visual</p>
+      <h2>Una mascota que ya hace el trabajo de marca</h2>
+    </div>
+    <div class="logo-card">
+      <img src="img/logo_big.jpg" alt="Logo de Koi Tea: un koi blanco con mancha roja que bebe boba con popote">
+      <div class="prose">
+        <p><b>El logo es un personaje.</b> Un koi blanco con mancha roja en la cabeza (patrón tipo kohaku), dibujado en línea negra simple, con aletas y bigotes, bebiendo un boba con popote. Es amable, fácil de animar y funciona en tamaño chico.</p>
+        <p>Aparece en el perfil de Instagram, en la pantalla central de la barra, en el póster de apertura y en el mandil del personal.</p>
+        <p><b>Tipografía observada.</b> Serif itálica de alto contraste para titulares (“Grand Opening”, “Coming soon”), sans geométrica en mayúsculas para datos y una sans redondeada y gruesa para el wordmark “KOI TEA · BOBA SHOP” de las playeras. No encontré un manual de marca público.</p>
+      </div>
+    </div>
+    <h3 style="margin:28px 0 12px">Paleta</h3>
+    <div class="palette">
+      <div class="sw"><i style="background:#FEF4EB"></i><div><b>Crema logo</b><code>#FEF4EB · logo</code></div></div>
+      <div class="sw"><i style="background:#F94E2B"></i><div><b>Rojo koi</b><code>#F94E2B · logo</code></div></div>
+      <div class="sw"><i style="background:#D0A585"></i><div><b>Milk tea</b><code>#D0A585 · logo</code></div></div>
+      <div class="sw"><i style="background:#2A2523"></i><div><b>Trazo</b><code>≈#2A2523 · logo</code></div></div>
+      <div class="sw"><i style="background:#C39056"></i><div><b>Plafón cálido</b><code>≈#C39056 · foto</code></div></div>
+      <div class="sw"><i style="background:#483D42"></i><div><b>Duela nogal</b><code>≈#483D42 · foto</code></div></div>
+      <div class="sw"><i style="background:#AFC0B6"></i><div><b>Salvia pantallas</b><code>≈#AFC0B6 · foto</code></div></div>
+      <div class="sw"><i style="background:#AA81B3"></i><div><b>Taro</b><code>≈#AA81B3 · póster</code></div></div>
+    </div>
+    <p class="small muted" style="margin-top:10px">Los colores marcados “logo” se muestrearon del archivo del logo; los marcados “foto” o “≈” son aproximados porque dependen de la luz de la foto. Para producción conviene pedir el archivo vectorial y los códigos oficiales.</p>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">Voz y redes</p>
+      <h2>Cálida, agradecida y todavía con poco volumen</h2>
+    </div>
+    <div class="two">
+      <div class="prose">
+        <p>Los textos son cortos, en español, con emojis recurrentes (🧋 🧡 ✨ 🍃) y tono de agradecimiento: “queremos agradecer profundamente a cada persona que ha formado parte de este camino”.</p>
+        <p>En dos semanas publicaron 5 piezas: teaser “Coming soon”, reel de agradecimiento, póster de apertura, carrusel del local y una foto de producto. La respuesta es alta para una cuenta nueva: un promedio de ≈128 “me gusta” por publicación con ≈530 seguidores. Es el efecto típico de amigos y comunidad en una apertura; el reto es sostenerlo.</p>
+        <p>Hay una historia destacada llamada “PROMOS”, que no pude abrir sin iniciar sesión.</p>
+      </div>
+      <div class="tbl">
+        <table style="min-width:420px">
+          <thead><tr><th>Fecha</th><th>Publicación</th><th>Me gusta</th></tr></thead>
+          <tbody>
+            <tr><td class="num">20 oct</td><td>“Un nuevo capítulo está por comenzar”</td><td class="num">180</td></tr>
+            <tr><td class="num">24 oct</td><td>Reel de agradecimiento</td><td class="num">130</td></tr>
+            <tr><td class="num">31 oct</td><td>Póster Grand Opening</td><td class="num">101</td></tr>
+            <tr><td class="num">1 nov</td><td>Carrusel “¡Bienvenidos a Koi Tea!”</td><td class="num">172</td></tr>
+            <tr><td class="num">3 nov</td><td>Tres fruit teas en mesa</td><td class="num">56</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">Menú actual</p>
+      <h2>Lo que se lee en las pantallas</h2>
+      <p class="lede">Transcrito de la foto de la barra. Los precios no son legibles a esa resolución, y algunos renglones quedan tapados por el reflejo de las lámparas.</p>
+    </div>
+    <div class="menu-read">
+      <div class="board"><h3>Milk Tea</h3><ul><li>Classic Milk Tea</li><li>Brown Sugar Milk Tea</li><li>Taro Milk Tea</li><li>Strawberry Milk Tea <span class="q">(parcial)</span></li><li>Mango Milk Tea <span class="q">(parcial)</span></li></ul></div>
+      <div class="board"><h3>Fruit Tea</h3><ul><li>Koi Tea</li><li>Maracuyá Green Tea</li><li>Fresa Green Tea</li><li>Durazno Green Tea</li><li>Mango Green Tea</li><li>Lichi Green Tea</li></ul></div>
+      <div class="board"><h3>Smoothies y toppings</h3><ul><li>Smoothies: mango, fresa, taro, maracuyá</li><li>Tapioca</li><li>Perlas explosivas: lichi, fresa, mango, maracuyá, cereza, coco y una más</li><li>Jellys: lichi, fresa, mango, maracuyá, aloe vera, café y una más</li></ul></div>
+    </div>
+    <p class="callout small" style="margin-top:18px">Una reseña en Google Maps recomienda “el taro con tapioca o durazno/mango green tea con jelly de lichi”. Son buenos candidatos para destacar en pantalla y en el menú digital.</p>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">Las tres pantallas</p>
+      <h2>El mejor espacio publicitario del local está quieto</h2>
+    </div>
+    <div class="two">
+      <figure style="margin:0"><img src="img/screens.jpg" alt="Acercamiento a las tres pantallas verticales: menú de milk tea y fruit tea, mascota con 'Síguenos en Instagram', smoothies y toppings" style="border-radius:12px;width:100%"><figcaption>Acercamiento de la foto de la barra. Foto: @koitea.mx.</figcaption></figure>
+      <div class="prose">
+        <p>Son tres pantallas verticales colgadas lado a lado, sobre la barra. La <b>izquierda</b> muestra Milk Tea y Fruit Tea, la <b>derecha</b> Smoothies y Toppings, y la <b>central</b> a la mascota con el texto “Síguenos en Instagram”.</p>
+        <ul class="list">
+          <li>Todo es imagen fija: no hay nada que atrape la mirada en la fila.</li>
+          <li>Texto delgado, gris oscuro sobre gris verdoso: poco contraste para leerse a 3–4 metros.</li>
+          <li>Las lámparas de globo se reflejan justo encima del texto.</li>
+          <li>La pantalla central repite el logo sin vender nada: es la que tiene más potencial.</li>
+          <li>Las tres funcionan por separado; podrían contar una sola historia.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">Mercado</p>
+      <h2>Competencia directa en Puerto Peñasco</h2>
+      <p class="lede">Resultados de Google Maps para “boba tea Puerto Peñasco”, consultados el 4 nov 2026.</p>
+    </div>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Negocio</th><th>Calificación</th><th>Reseñas</th><th>Ubicación</th><th>Nota</th></tr></thead>
+        <tbody>
+          <tr><td>Bubble Bee Tea</td><td class="num">4.5</td><td class="num">105</td><td>C. Miguel Hidalgo / Calle 13</td><td>El más establecido. Abre 9:00–21:00 y presta juegos de mesa.</td></tr>
+          <tr><td>BlueMoon Bubble Tea &amp; Coffee</td><td class="num">4.8</td><td class="num">16</td><td>C. Simón Morúa</td><td>Combina boba y café.</td></tr>
+          <tr><td>Bobalicious Tea</td><td class="num">4.4</td><td class="num">15</td><td>Blvd. Samuel Ocaña García</td><td>Cierra 22:00.</td></tr>
+          <tr><td>Bubble Breeze</td><td class="num">5.0</td><td class="num">1</td><td>Av. Campeche y Manuel Arista</td><td>Muy nuevo.</td></tr>
+          <tr class="us"><td><b>Koi Tea Boba Shop</b></td><td class="num">5.0</td><td class="num">2</td><td>C. Benito Juárez 276</td><td>Sin teléfono ni sitio web en la ficha; categoría “Cafetería”.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="two" style="margin-top:24px">
+      <div class="prose">
+        <h3>Contexto turístico</h3>
+        <p>Puerto Peñasco (Rocky Point) vive del turismo de Arizona y del noroeste de México. En agosto de 2026 la directora de la oficina de turismo local, Lizette Ibarra, estimó cerca de un millón de turistas en lo que iba del año y alrededor de 500,000 para la temporada de verano (KJZZ).</p>
+      </div>
+      <div class="prose">
+        <h3>Qué implica para Koi Tea</h3>
+        <p>Una parte importante de quienes pasan por el bulevar habla inglés y piensa en dólares. Un menú bilingüe con precio en MXN y USD es una ventaja directa, y la competencia con más reseñas lleva años de ventaja en Google. Koi Tea compite mejor por experiencia que por antigüedad.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">Diagnóstico</p>
+      <h2>FODA</h2>
+    </div>
+    <div class="swot">
+      <div><h3>Fortalezas <em>internas</em></h3><ul><li>Interiorismo cuidado y muy fotogénico.</li><li>Mascota memorable, lista para animarse.</li><li>Ingredientes de Taiwán como argumento de calidad.</li><li>Merch ya producido con guiño a Rocky Point.</li><li>Arranque fuerte en redes y reseñas de 5 estrellas.</li></ul></div>
+      <div><h3>Debilidades <em>internas</em></h3><ul><li>Pantallas estáticas, con poco contraste y reflejos.</li><li>Sin sitio web, sin teléfono y con categoría genérica en Google.</li><li>Sin fotos individuales de cada bebida.</li><li>Menú sin descripciones ni versión en inglés.</li><li>Pocas reseñas (2) frente a la competencia.</li></ul></div>
+      <div><h3>Oportunidades <em>externas</em></h3><ul><li>Flujo constante de turistas, sobre todo de Arizona.</li><li>Temporadas fuertes (spring break, Semana Santa, verano) para lanzar ediciones limitadas.</li><li>Diferenciarse por experiencia (espacio, pantallas y menú digital) frente a competidores con más antigüedad.</li><li>La galería permite eventos con artistas y fotógrafos locales.</li></ul></div>
+      <div><h3>Amenazas <em>externas</em></h3><ul><li>Bubble Bee Tea con 105 reseñas y años en el mercado.</li><li>Cuatro boba shops más en la ciudad.</li><li>Turismo estacional y sensible a noticias de seguridad.</li><li>Riesgo de que la novedad de la apertura se diluya.</li></ul></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">Para la reunión</p>
+      <h2>Lo que más le puede llamar la atención al dueño</h2>
+    </div>
+    <div class="hooks">
+      <div class="hook"><b>Su koi, nadando</b><p>Ver a su propia mascota cobrar vida en la pantalla central es el gancho emocional más fuerte. La demo de la pestaña Propuesta lo muestra.</p></div>
+      <div class="hook"><b>Turistas que entienden el menú</b><p>Inglés y dólares con un toque. En Rocky Point es dinero que hoy se pierde en la fila.</p></div>
+      <div class="hook"><b>Cambiar precios sin diseñador</b><p>Un panel simple para editar precios, marcar agotados y lanzar promos que se ven al instante en el teléfono y en las pantallas.</p></div>
+      <div class="hook"><b>Las 3 pantallas como una sola</b><p>Un koi que cruza de una pantalla a otra mientras el menú resalta la bebida del momento.</p></div>
+      <div class="hook"><b>“Sabor y arte”, con hechos</b><p>Fichas con QR para las obras de la galería y una muestra rotativa con artistas locales.</p></div>
+      <div class="hook"><b>Más reseñas en Google</b><p>Ficha completa y un QR de reseña en el ticket o en la mesa para alcanzar a la competencia.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">Verificación</p>
+      <h2>Qué está confirmado y qué falta</h2>
+    </div>
+    <div class="verify">
+      <div><h3>Confirmado en fuente</h3><ul>
+        <li>Nombre, usuario, bio, horario y “Ingredientes importados de Taiwán” (perfil de Instagram).</li>
+        <li>Fecha y hora de apertura (póster y texto del 31 oct).</li>
+        <li>Dirección, calificación y reseñas (Google Maps).</li>
+        <li>Seguidores de Facebook y correo de contacto (página de Facebook).</li>
+        <li>Menú por categoría (foto de las pantallas, leída con acercamiento).</li>
+        <li>Cifras de turismo (nota de KJZZ, 17 ago 2026).</li>
+      </ul></div>
+      <div><h3>Pendiente de confirmar con el dueño</h3><ul>
+        <li>Precios y tamaños (no legibles en las fotos).</li>
+        <li>Nota al pie del menú y el último topping de cada lista.</li>
+        <li>Marca, medida y forma de reproducción de las pantallas.</li>
+        <li>Contenido de la historia “PROMOS” y del reel (requieren sesión).</li>
+        <li>Archivos vectoriales del logo y tipografías oficiales.</li>
+      </ul></div>
+    </div>
+    <h3 style="margin:26px 0 10px">Fuentes</h3>
+    <ol class="sources small">
+      <li><a href="https://www.instagram.com/koitea.mx/" target="_blank" rel="noopener">Instagram @koitea.mx</a>: perfil y publicaciones del 20, 24 y 31 oct, 1 y 3 nov 2026.</li>
+      <li><a href="https://www.facebook.com/people/Koi-Tea-Boba-Shop/61594923254798/" target="_blank" rel="noopener">Facebook: Koi Tea Boba Shop</a>, Puerto Peñasco.</li>
+      <li><a href="https://www.google.com/maps/search/boba+tea+Puerto+Pe%C3%B1asco" target="_blank" rel="noopener">Google Maps: “boba tea Puerto Peñasco”</a>, ficha de Koi Tea y competencia.</li>
+      <li><a href="https://casago.com/rocky-point/restaurants/bubble-bee-tea/" target="_blank" rel="noopener">Casago Rocky Point: Bubble Bee Tea</a>.</li>
+      <li><a href="https://www.kjzz.org/fronteras-desk/2026-08-17/puerto-penasco-tourism-office-summer-tourism-up-from-last-year" target="_blank" rel="noopener">KJZZ: Puerto Peñasco tourism office: summer tourism up from last year</a> (17 ago 2026).</li>
+    </ol>
+  </section>
+</div>
+
+<!-- ===================== PROPUESTA ===================== -->
+<div id="p-propuesta" role="tabpanel" aria-labelledby="t-propuesta" hidden>
+
+  <section class="letter" style="padding-top:20px">
+    <div class="prose">
+      <p class="eyebrow">Propuesta · Luis Mario</p>
+      <h1>Que el koi se mueva</h1>
+      <p class="lede">Koi Tea ya tiene lo difícil: un espacio bonito, un producto con historia y una mascota que la gente recuerda. Lo que falta es que esa experiencia continúe en el teléfono del cliente y en las pantallas de la barra.</p>
+      <p>La propuesta tiene dos piezas principales y una lista de mejoras opcionales. Las dos piezas comparten el mismo contenido: cuando el dueño cambia un precio o lanza una bebida de temporada, se actualiza el menú del teléfono y las pantallas a la vez.</p>
+    </div>
+    <div class="pillars" style="grid-template-columns:1fr">
+      <div class="pillar"><span class="k">Pieza 1</span><h3>Menú digital avanzado</h3><p class="muted">Bilingüe, MXN/USD, animado, con armador de bebida y pedido por WhatsApp.</p></div>
+      <div class="pillar"><span class="k">Pieza 2</span><h3>Animación para la pantalla central</h3><p class="muted">Loop vertical con el koi nadando, bebida destacada y llamada a Instagram. Ampliable a las tres pantallas sincronizadas.</p></div>
+      <div class="pillar"><span class="k">Extras</span><h3>Áreas de oportunidad</h3><p class="muted">Google, lealtad, galería, merch, contenido y temporadas.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">Pieza 1 · Menú digital</p>
+      <h2>Prototipo funcional</h2>
+      <p class="lede">Pruébalo: cambia idioma y moneda, navega por categorías, toca una bebida para armarla y agrégala al pedido.</p>
+    </div>
+    <div class="demo">
+      <div class="phone-wrap">
+        <div class="phone" aria-label="Prototipo del menú digital">
+          <div class="screen">
+            <span class="badge-demo" id="m-badge">Precios ilustrativos</span>
+            <div class="scroller" id="m-scroll">
+              <div class="m-head">
+                <div class="m-row">
+                  <div class="m-logo"><img src="img/logo_big.jpg" alt=""><div><b>KOI TEA</b><small id="m-sub">Boba shop · Puerto Peñasco</small></div></div>
+                </div>
+                <div class="m-row">
+                  <div class="seg" role="group" aria-label="Idioma"><button id="lang-es" aria-pressed="true">ES</button><button id="lang-en" aria-pressed="false">EN</button></div>
+                  <div class="seg" role="group" aria-label="Moneda"><button id="cur-mxn" aria-pressed="true">MXN</button><button id="cur-usd" aria-pressed="false">USD</button></div>
+                </div>
+                <div class="m-hero"><img src="img/nov3.jpg" alt=""><span id="m-hero-t">Fruit teas de temporada</span></div>
+              </div>
+              <nav class="chips" id="m-chips" aria-label="Categorías"></nav>
+              <div id="m-body"></div>
+              <p class="m-note" id="m-note"></p>
+            </div>
+            <div class="cartbar" id="cartbar" data-empty="true"><span class="cnt" id="cart-cnt"></span><button id="cart-send">Ver pedido</button></div>
+            <div class="scrim" id="scrim" data-open="false"></div>
+            <div class="sheet" id="sheet" data-open="false" role="dialog" aria-modal="true" aria-labelledby="b-name"></div>
+          </div>
+        </div>
+      </div>
+      <div class="feat">
+        <div><b>Bilingüe y en dos monedas</b><span class="muted">Español/inglés con un toque y precio en pesos o dólares con tipo de cambio que el dueño ajusta. Pensado para el turista de Arizona.</span></div>
+        <div><b>Armador de bebida animado</b><span class="muted">El vaso se llena con el color de la bebida y las perlas caen al elegir topping. Dulzor y hielo como en barra.</span></div>
+        <div><b>Pedido para llevar por WhatsApp</b><span class="muted">Arma el pedido y lo manda con un mensaje ya escrito a WhatsApp. No requiere app ni pasarela de pago para empezar.</span></div>
+        <div><b>Panel de administración</b><span class="muted">El dueño cambia precios, marca “agotado”, sube fotos y programa promos desde el celular.</span></div>
+        <div><b>Rápido y sin instalar nada</b><span class="muted">Se abre con un QR en cada mesa. Funciona como app instalable (PWA) y guarda el menú para conexiones lentas.</span></div>
+        <div><b>Medible</b><span class="muted">Un QR distinto por mesa, mostrador, volante o Instagram para saber de dónde llega la gente y qué bebidas se ven más.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">Pieza 2 · Pantalla vertical</p>
+      <h2>El koi nada detrás de la barra</h2>
+      <p class="lede">Demo en vivo dibujada en código. La vista “Pantalla central” es el entregable base. “Las tres pantallas” muestra la versión ampliada: el koi cruza de una pantalla a otra y el menú lateral resalta la misma bebida que anuncia la central.</p>
+    </div>
+    <div class="signage">
+      <div class="sig-ctrl">
+        <div class="seg2" role="group" aria-label="Vista de pantallas">
+          <button id="v-one" aria-pressed="true">Pantalla central</button>
+          <button id="v-three" aria-pressed="false">Las tres pantallas</button>
+        </div>
+        <button class="ghost" id="sig-play" aria-pressed="false">Pausar</button>
+      </div>
+      <div class="wall"><div class="wall-row" id="wall"></div></div>
+      <div class="timeline" id="tl">
+        <div class="tl"><b>0–8 s · Marca</b><span>KOI TEA, frase de marca y origen Taiwán. El koi nada entre perlas que suben.</span><i></i></div>
+        <div class="tl"><b>8–16 s · Bebida destacada</b><span>El vaso se llena y caen las perlas. Rota entre taro, brown sugar y durazno.</span><i></i></div>
+        <div class="tl"><b>16–24 s · Síguenos</b><span>@koitea.mx con QR, horario y dirección, en español e inglés.</span><i></i></div>
+      </div>
+      <dl class="specs">
+        <div><dt>Formato</dt><dd>1080 × 1920, vertical</dd></div>
+        <div><dt>Duración</dt><dd>Loop de 24 s</dd></div>
+        <div><dt>Entrega</dt><dd>MP4 H.264 y versión web</dd></div>
+        <div><dt>Sincronía</dt><dd>Por reloj, sin cables extra</dd></div>
+      </dl>
+      <p class="small muted">Las tres pantallas no necesitan comunicarse entre sí: cada una calcula la escena a partir de la hora exacta (sincronizada por internet), así que todas muestran el mismo instante. El QR de la demo es un marcador; en producción se genera el real.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">Implementación de la pantalla</p>
+      <h2>Tres formas de ponerla al aire</h2>
+    </div>
+    <div class="opts3">
+      <div class="opt3"><span class="tag">Opción A · más simple</span><h3>Video en USB</h3><p class="muted">Se exporta un MP4 en loop y se reproduce desde una memoria USB en la propia TV.</p><ul class="list small"><li>Costo de hardware casi cero.</li><li>Cada cambio implica exportar y cargar un video nuevo.</li><li>Si la TV no gira la imagen sola, el video se exporta ya rotado 90°.</li></ul></div>
+      <div class="opt3 rec"><span class="tag k">Opción B · recomendada</span><h3>Página web en modo kiosco</h3><p class="muted">Un reproductor pequeño (Raspberry Pi 5, un stick Android/Google TV o una mini PC) abre la animación web a pantalla completa.</p><ul class="list small"><li>Precios y promos se actualizan solos desde el panel.</li><li>La Raspberry Pi 5 tiene dos salidas HDMI: dos pantallas por equipo.</li><li>Permite la sincronía de las tres pantallas.</li></ul></div>
+      <div class="opt3"><span class="tag">Opción C · plataforma</span><h3>Software de señalización</h3><p class="muted">Servicios como Yodeck, OptiSigns o ScreenCloud administran contenido y horarios desde la nube.</p><ul class="list small"><li>Programación por horario sin código.</li><li>Pago mensual por pantalla.</li><li>Menos control sobre animaciones a la medida.</li></ul></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">Lo técnico</p>
+      <h2>Stack recomendado</h2>
+      <p class="lede">Herramientas actuales, con buena documentación y que puedes mantener tú solo.</p>
+    </div>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Capa</th><th>Herramienta</th><th>Para qué</th></tr></thead>
+        <tbody>
+          <tr><td>Framework</td><td>Next.js (App Router) + React + TypeScript</td><td>Menú, panel de administración y página de pantallas en un solo proyecto.</td></tr>
+          <tr><td>Estilos</td><td>Tailwind CSS</td><td>Sistema de diseño con los colores y tipografías de Koi Tea.</td></tr>
+          <tr><td>Animación de interfaz</td><td>Motion (antes Framer Motion)</td><td>Transiciones de tarjetas, hoja del armador, gestos y microinteracciones.</td></tr>
+          <tr><td>Animación de escenas</td><td>GSAP</td><td>Líneas de tiempo precisas para las escenas de la pantalla. Es gratuito, incluidos sus plugins, desde 2025.</td></tr>
+          <tr><td>Mascota animada</td><td>Rive (o Lottie)</td><td>El koi con estados: nadar, beber, saludar. Archivos ligeros que funcionan en web y en pantallas.</td></tr>
+          <tr><td>Efectos de agua y perlas</td><td>Canvas 2D o PixiJS (WebGL)</td><td>Partículas, ondas y el nado del koi a 60 fps, como en la demo.</td></tr>
+          <tr><td>Datos y panel</td><td>Supabase (Postgres, Auth, Storage, Realtime)</td><td>Productos, precios, agotados y promos. Realtime empuja los cambios a las pantallas al momento.</td></tr>
+          <tr><td>Idiomas</td><td>next-intl</td><td>Español e inglés con rutas y textos separados.</td></tr>
+          <tr><td>Video para USB</td><td>Remotion o After Effects</td><td>Exportar el mismo loop como MP4 1080×1920. Remotion usa React; revisa su licencia (gratuita para individuos y equipos pequeños).</td></tr>
+          <tr><td>Hosting</td><td>Vercel Pro o Cloudflare Pages</td><td>Despliegue automático. El plan gratuito de Vercel es solo para uso no comercial.</td></tr>
+          <tr><td>Analítica</td><td>Vercel Analytics, Plausible o Umami</td><td>Visitas por QR, bebidas más vistas, idioma y horario.</td></tr>
+          <tr><td>Pedidos</td><td>Enlace wa.me con mensaje prellenado</td><td>Pedido para llevar sin costo de integración. Después, catálogo de WhatsApp Business.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="two" style="margin-top:24px">
+      <div class="prose"><h3>Detalles que evitan problemas</h3>
+        <ul class="list"><li>Diseñar las pantallas con texto grande y alto contraste: se leen a 3–4 m y con reflejos.</li><li>Confirmar si las pantallas son TV de consumo o profesionales: cambia cómo se rota la imagen y si traen navegador.</li><li>Brillo y una película antirreflejo ayudan con las lámparas de globo.</li><li>Respetar “reducir movimiento” en el menú del teléfono.</li></ul>
+      </div>
+      <div class="prose"><h3>Arquitectura en una frase</h3>
+        <p>Una base de datos de productos alimenta tres vistas: el menú del cliente, el panel del dueño y la página de pantallas. Cambias algo una vez y se ve en todos lados.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">Más allá del menú</p>
+      <h2>Áreas de oportunidad que puedes ofrecer</h2>
+    </div>
+    <div class="ops">
+      <div class="op"><h3>Ficha de Google completa</h3><p class="muted">Categoría “Tienda de té de burbujas”, teléfono, sitio, menú, fotos y un QR de reseña en mesa o ticket.</p><div class="meter"><span class="hi">Impacto alto</span><span class="lo">Esfuerzo bajo</span></div></div>
+      <div class="op"><h3>Tarjeta de lealtad digital</h3><p class="muted">Sellos por compra con número de teléfono o pase en Apple/Google Wallet. Bebida gratis al completar.</p><div class="meter"><span class="hi">Impacto alto</span><span class="md">Esfuerzo medio</span></div></div>
+      <div class="op"><h3>Sesión de fotos de producto</h3><p class="muted">Una foto por bebida para el menú, las pantallas y redes. Hoy solo hay una foto de producto publicada.</p><div class="meter"><span class="hi">Impacto alto</span><span class="md">Esfuerzo medio</span></div></div>
+      <div class="op"><h3>Ediciones de temporada</h3><p class="muted">Bebidas limitadas para spring break, Semana Santa y verano, con paquete de pantalla y posts listos.</p><div class="meter"><span class="hi">Impacto alto</span><span class="lo">Esfuerzo bajo</span></div></div>
+      <div class="op"><h3>Galería “Sabor y arte”</h3><p class="muted">Muestras rotativas de artistas y fotógrafos locales, fichas con QR por obra, venta y noche de inauguración.</p><div class="meter"><span class="md">Impacto medio</span><span class="lo">Esfuerzo bajo</span></div></div>
+      <div class="op"><h3>Merch en línea</h3><p class="muted">Sección de playeras, gorras y tote en el menú. Es un souvenir natural para el turista.</p><div class="meter"><span class="md">Impacto medio</span><span class="lo">Esfuerzo bajo</span></div></div>
+      <div class="op"><h3>Sitio web ligero</h3><p class="muted">Inicio, menú, ubicación, horario, merch y galería. Da credibilidad y aparece en Google.</p><div class="meter"><span class="md">Impacto medio</span><span class="md">Esfuerzo medio</span></div></div>
+      <div class="op"><h3>Promos por horario en pantalla</h3><p class="muted">Contenido distinto por la mañana, la tarde y el fin de semana, programado desde el panel.</p><div class="meter"><span class="md">Impacto medio</span><span class="md">Esfuerzo medio</span></div></div>
+      <div class="op"><h3>Spot de foto</h3><p class="muted">Los cubos de luz ya son el lugar natural para la foto. Un letrero pequeño con hashtag y @ lo convierte en contenido gratis.</p><div class="meter"><span class="md">Impacto medio</span><span class="lo">Esfuerzo bajo</span></div></div>
+    </div>
+    <p class="small muted" style="margin-top:14px">Evita ofrecer filtros de realidad aumentada para Instagram: Meta cerró Spark AR para efectos de terceros en enero de 2025.</p>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">Plan de trabajo</p>
+      <h2>De la reunión a las pantallas</h2>
+      <p class="lede">Tiempos estimados para una persona; dependen de tener precios y fotos a tiempo.</p>
+    </div>
+    <div class="two">
+      <div class="phases">
+        <div class="ph"><span class="when">Semana 1</span><b>Levantamiento</b><span class="muted">Precios, tamaños, specs de pantallas, logo en vector y sesión de fotos.</span></div>
+        <div class="ph"><span class="when">Semanas 2–3</span><b>Menú digital</b><span class="muted">Diseño, bilingüe, MXN/USD, armador, WhatsApp y QR por mesa.</span></div>
+        <div class="ph"><span class="when">Semanas 3–4</span><b>Pantalla central</b><span class="muted">Animación del koi y escenas; entrega en MP4 y en web.</span></div>
+        <div class="ph"><span class="when">Semana 5</span><b>Panel y tres pantallas</b><span class="muted">Administración de precios y promos, rediseño de pantallas laterales y sincronía.</span></div>
+        <div class="ph" style="padding-bottom:0"><span class="when">Mensual</span><b>Mantenimiento y temporadas</b><span class="muted">Ajustes, contenido de temporada y reporte de visitas por QR.</span></div>
+      </div>
+      <div class="prose">
+        <h3>Antes de la reunión, pregunta</h3>
+        <ul class="checklist" style="grid-template-columns:1fr">
+          <li>Lista de precios y tamaños actual.</li>
+          <li>Marca y medida de las 3 pantallas, y cómo reproducen hoy (USB, stick, PC).</li>
+          <li>Si hay WiFi estable detrás de la barra.</li>
+          <li>Logo en vector y tipografías.</li>
+          <li>Quién maneja redes y quién cambiaría precios.</li>
+          <li>Si ya cobran con terminal o tienen sistema de punto de venta.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">Paquetes</p>
+      <h2>Tres niveles para que el dueño elija</h2>
+      <p class="lede">El precio lo defines tú. Suma los costos recurrentes de terceros (hosting, dominio, base de datos y, si aplica, plataforma de pantallas) a una cuota mensual de mantenimiento.</p>
+    </div>
+    <div class="tiers">
+      <div class="tier"><span class="tag">Esencial</span><h3>Arranque</h3><ul><li>Animación loop para la pantalla central (MP4).</li><li>Menú digital bilingüe con QR, sin panel.</li><li>Ficha de Google completa.</li></ul></div>
+      <div class="tier rec"><span class="tag k">Recomendado</span><h3>Experiencia</h3><ul><li>Todo lo esencial.</li><li>Menú avanzado: animaciones, armador, MXN/USD, WhatsApp, PWA.</li><li>Panel para precios, agotados y promos.</li><li>Rediseño legible de pantallas laterales.</li><li>Pantalla central en modo web conectada al panel.</li></ul></div>
+      <div class="tier"><span class="tag">Completo</span><h3>Koi en todas partes</h3><ul><li>Todo lo de Experiencia.</li><li>Tres pantallas sincronizadas y promos por horario.</li><li>Lealtad digital.</li><li>Sitio web con merch y galería.</li><li>Mantenimiento y contenido de temporada mensual.</li></ul></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <p class="eyebrow">Cómo presentarlo</p>
+      <h2>Guion corto para la reunión</h2>
+    </div>
+    <div class="prose">
+      <p><b>1. Empieza por lo que ya hicieron bien.</b> El espacio, la mascota y el merch. Muéstrales que estudiaste su marca.</p>
+      <p><b>2. Pon el teléfono en su mano.</b> Que cambie a inglés y dólares y arme un taro con tapioca.</p>
+      <p><b>3. Enseña el koi nadando en una laptop o tablet vertical.</b> Luego la vista de las tres pantallas.</p>
+      <p><b>4. Cierra con el problema que resuelves.</b> Turistas que entienden el menú, precios que se cambian solos y más reseñas.</p>
+      <p><b>5. Deja una opción clara.</b> El paquete Experiencia, con un plazo de cinco semanas.</p>
+    </div>
+  </section>
+</div>
+</main>
+
+<script>
+(function(){
+"use strict";
+/* ---------- Pestañas con hash ---------- */
+const tabs={estudio:document.getElementById('t-estudio'),propuesta:document.getElementById('t-propuesta')};
+const panels={estudio:document.getElementById('p-estudio'),propuesta:document.getElementById('p-propuesta')};
+let current='estudio';
+function show(name,push){
+  if(!panels[name]) name='estudio';
+  current=name;
+  for(const k in panels){const on=k===name;panels[k].hidden=!on;tabs[k].setAttribute('aria-selected',on);tabs[k].tabIndex=on?0:-1;}
+  if(push && location.hash!=='#'+name){try{history.replaceState(null,'','#'+name)}catch(e){location.hash=name}}
+  window.scrollTo({top:0});
+  signage.setActive(name==='propuesta');
+}
+tabs.estudio.addEventListener('click',()=>show('estudio',true));
+tabs.propuesta.addEventListener('click',()=>show('propuesta',true));
+document.querySelector('.tabs').addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){const n=current==='estudio'?'propuesta':'estudio';show(n,true);tabs[n].focus();}});
+window.addEventListener('hashchange',()=>show(location.hash.slice(1),false));
+
+/* ---------- Menú digital ---------- */
+const RATE=18; // MXN por USD, configurable
+const MENU=[
+ {id:'milk',es:'Milk Tea',en:'Milk Tea',items:[
+  {n:'Classic Milk Tea',es:'Té negro con leche, suave y balanceado',en:'Black tea with milk, smooth and balanced',p:85,c:'#D0A585'},
+  {n:'Brown Sugar Milk Tea',es:'Leche con jarabe de azúcar morena',en:'Milk with brown sugar syrup',p:95,c:'#B07A4F'},
+  {n:'Taro Milk Tea',es:'Cremoso, con raíz de taro',en:'Creamy, made with taro root',p:90,c:'#B79AD0',star:1},
+  {n:'Strawberry Milk Tea',es:'Té con leche y fresa',en:'Milk tea with strawberry',p:90,c:'#F2A7B4'},
+  {n:'Mango Milk Tea',es:'Té con leche y mango',en:'Milk tea with mango',p:90,c:'#F5C15A'}]},
+ {id:'fruit',es:'Fruit Tea',en:'Fruit Tea',items:[
+  {n:'Koi Tea',es:'La bebida de la casa',en:'Our house signature',p:95,c:'#F07B4F',star:1},
+  {n:'Maracuyá Green Tea',es:'Té verde con maracuyá',en:'Green tea with passion fruit',p:85,c:'#F2B53C'},
+  {n:'Fresa Green Tea',es:'Té verde con fresa',en:'Green tea with strawberry',p:85,c:'#E2495A'},
+  {n:'Durazno Green Tea',es:'Té verde con durazno',en:'Green tea with peach',p:85,c:'#F3A33C',star:1},
+  {n:'Mango Green Tea',es:'Té verde con mango',en:'Green tea with mango',p:85,c:'#F5B83D'},
+  {n:'Lichi Green Tea',es:'Té verde con lichi',en:'Green tea with lychee',p:85,c:'#F3D7D2'}]},
+ {id:'smooth',es:'Smoothies',en:'Smoothies',items:[
+  {n:'Mango',es:'Smoothie frappé de mango',en:'Blended mango smoothie',p:90,c:'#F6B93B'},
+  {n:'Fresa',en:'Blended strawberry smoothie',es:'Smoothie frappé de fresa',p:90,c:'#EC6A7A'},
+  {n:'Taro',es:'Smoothie frappé de taro',en:'Blended taro smoothie',p:90,c:'#B79AD0'},
+  {n:'Maracuyá',es:'Smoothie frappé de maracuyá',en:'Blended passion fruit smoothie',p:90,c:'#F2B53C'}]}
+];
+const TOPS=[
+ {k:'tapioca',es:'Tapioca',en:'Tapioca pearls',c:'#2E201B'},
+ {k:'p-lichi',es:'Perlas explosivas de lichi',en:'Lychee popping pearls',c:'#F6E3DF'},
+ {k:'p-fresa',es:'Perlas explosivas de fresa',en:'Strawberry popping pearls',c:'#E3415A'},
+ {k:'p-mango',es:'Perlas explosivas de mango',en:'Mango popping pearls',c:'#F5B731'},
+ {k:'j-lichi',es:'Jelly de lichi',en:'Lychee jelly',c:'#F3EEE6'},
+ {k:'j-cafe',es:'Jelly de café',en:'Coffee jelly',c:'#6B4532'},
+ {k:'aloe',es:'Aloe vera',en:'Aloe vera',c:'#D9EBC9'}];
+const SWEET=['0%','25%','50%','75%','100%'];
+const ICE={es:['Sin hielo','Poco','Normal'],en:['No ice','Light','Regular']};
+const T={
+ es:{sub:'Boba shop · Puerto Peñasco',hero:'Fruit teas de temporada',note:'Prototipo de Luis Mario. Precios ilustrativos; tipo de cambio de ejemplo: $18 MXN por dólar.',star:'Recomendado',tops:'Toppings',topsHint:'Elige en el armador',badge:'Precios ilustrativos',topping:'Topping',sweet:'Dulzor',ice:'Hielo',add:'Agregar al pedido',items:n=>n===1?'1 bebida':n+' bebidas',see:'Ver pedido',order:'Tu pedido',send:'En producción este botón abre WhatsApp con este mensaje:',hello:'Hola Koi Tea, quiero pedir para llevar:',close:'Seguir viendo',clear:'Vaciar'},
+ en:{sub:'Boba shop · Rocky Point',hero:'Seasonal fruit teas',note:'Prototype by Luis Mario. Illustrative prices; sample rate: $18 MXN per dollar.',star:'Recommended',tops:'Toppings',topsHint:'Pick yours in the builder',badge:'Illustrative prices',topping:'Topping',sweet:'Sweetness',ice:'Ice',add:'Add to order',items:n=>n===1?'1 drink':n+' drinks',see:'View order',order:'Your order',send:'In production this button opens WhatsApp with this message:',hello:'Hi Koi Tea, I would like to order to go:',close:'Keep browsing',clear:'Clear'}
+};
+let lang='es',cur='mxn',cart=[];
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function price(p){return cur==='mxn'?'$'+p+' MXN':'US$'+(Math.round(p/RATE*4)/4).toFixed(2);}
+function cupIcon(c){return '<svg viewBox="0 0 30 38" aria-hidden="true"><path d="M5 9h20l-2.4 25.5a2 2 0 0 1-2 1.5H9.4a2 2 0 0 1-2-1.5z" fill="#fff" stroke="#2A2523" stroke-width="1.4"/><path d="M7.2 16h15.6l-1.7 18a1.6 1.6 0 0 1-1.6 1.3h-9a1.6 1.6 0 0 1-1.6-1.3z" fill="'+c+'"/><circle cx="11" cy="31" r="1.6" fill="#2E201B"/><circle cx="15" cy="32.5" r="1.6" fill="#2E201B"/><circle cx="19" cy="31" r="1.6" fill="#2E201B"/><circle cx="13" cy="28.5" r="1.6" fill="#2E201B"/><circle cx="17" cy="28.5" r="1.6" fill="#2E201B"/><path d="M4 9h22" stroke="#2A2523" stroke-width="1.6" stroke-linecap="round"/><path d="M17 9l3-8" stroke="#2A2523" stroke-width="1.6" stroke-linecap="round"/></svg>';}
+function renderMenu(){
+  const t=T[lang];
+  $('m-sub').textContent=t.sub;$('m-hero-t').textContent=t.hero;$('m-note').textContent=t.note;$('m-badge').textContent=t.badge;
+  const cats=MENU.map(c=>({id:c.id,label:c[lang]})).concat([{id:'tops',label:t.tops}]);
+  $('m-chips').innerHTML=cats.map((c,i)=>'<button class="chip" data-go="'+c.id+'"'+(i===0?' aria-current="true"':'')+'>'+esc(c.label)+'</button>').join('');
+  let h='';
+  MENU.forEach(c=>{
+    h+='<div class="m-sec" id="sec-'+c.id+'"><h4>'+esc(c[lang])+'<small>'+c.items.length+'</small></h4><div class="items">';
+    c.items.forEach((it,i)=>{h+='<button class="item" data-cat="'+c.id+'" data-i="'+i+'"><span class="cupico">'+cupIcon(it.c)+'</span><span><span class="nm">'+esc(it.n)+'</span><br><span class="ds">'+esc(it[lang])+(it.star?' · <b style="color:var(--m-koi)">'+t.star+'</b>':'')+'</span></span><span class="pr">'+price(it.p)+'<span class="plus" aria-hidden="true">+</span></span></button>';});
+    h+='</div></div>';
+  });
+  h+='<div class="m-sec" id="sec-tops"><h4>'+esc(t.tops)+'<small>'+esc(t.topsHint)+'</small></h4><div class="tops">'+TOPS.map(x=>'<span>'+esc(x[lang])+'</span>').join('')+'</div></div>';
+  $('m-body').innerHTML=h;
+  observeSecs();
+  updateCart(false);
+}
+$('m-chips').addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(!b)return;const s=$('sec-'+b.dataset.go);const sc=$('m-scroll');sc.scrollTo({top:s.offsetTop-$('m-chips').offsetHeight+2});setChip(b.dataset.go);});
+function setChip(id){$('m-chips').querySelectorAll('.chip').forEach(c=>{const on=c.dataset.go===id;c.setAttribute('aria-current',on);if(on){const box=$('m-chips');const l=c.offsetLeft-box.clientWidth/2+c.offsetWidth/2;box.scrollTo({left:l,behavior:'smooth'});}});}
+let io;
+function observeSecs(){
+  if(io) io.disconnect();
+  if(!('IntersectionObserver' in window)) return;
+  io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting) setChip(e.target.id.slice(4));});},{root:$('m-scroll'),rootMargin:'-30% 0px -60% 0px'});
+  document.querySelectorAll('#m-body .m-sec').forEach(s=>io.observe(s));
+}
+function seg(a,b,on){$(a).setAttribute('aria-pressed',on);$(b).setAttribute('aria-pressed',!on);}
+$('lang-es').onclick=()=>{lang='es';seg('lang-es','lang-en',true);renderMenu();};
+$('lang-en').onclick=()=>{lang='en';seg('lang-es','lang-en',false);renderMenu();};
+$('cur-mxn').onclick=()=>{cur='mxn';seg('cur-mxn','cur-usd',true);renderMenu();};
+$('cur-usd').onclick=()=>{cur='usd';seg('cur-mxn','cur-usd',false);renderMenu();};
+
+/* Armador */
+let sel=null;
+function openSheet(it){
+  sel={it,top:0,sweet:2,ice:2};
+  drawSheet(true);
+  $('sheet').dataset.open='true';$('scrim').dataset.open='true';
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{const l=$('sheet').querySelector('.liquid');if(l)l.style.transform='scaleY(1)';dropPearls();}));
+}
+function closeSheet(){$('sheet').dataset.open='false';$('scrim').dataset.open='false';}
+function pearlsSVG(c){const pts=[[30,96],[42,99],[54,97],[66,96],[36,88],[48,90],[60,88],[42,81],[54,82]];return pts.map(p=>'<circle class="pearl" cx="'+p[0]+'" cy="'+p[1]+'" r="4.6" fill="'+c+'" stroke="rgba(0,0,0,.18)" stroke-width=".8"/>').join('');}
+function drawSheet(fresh){
+  const t=T[lang],it=sel.it,top=TOPS[sel.top];
+  const level=sel.ice===0?1:sel.ice===1?0.94:0.86;
+  $('sheet').innerHTML='<div class="grab"></div>'+
+   '<div class="b-top"><svg class="bcup" viewBox="0 0 96 120" aria-hidden="true"><defs><clipPath id="cupclip"><path d="M18 24h60l-6.8 85a5 5 0 0 1-5 4.6H29.8a5 5 0 0 1-5-4.6z"/></clipPath></defs>'+
+   '<g clip-path="url(#cupclip)"><rect x="10" y="'+(24+ (1-level)*90)+'" width="80" height="100" fill="'+it.c+'" class="liquid" style="transform:'+(fresh?'scaleY(0)':'scaleY(1)')+'"/>'+
+   (sel.ice>0?'<rect x="34" y="'+(32+(1-level)*90)+'" width="12" height="12" rx="2" fill="rgba(255,255,255,.55)" transform="rotate(12 40 38)"/><rect x="52" y="'+(38+(1-level)*90)+'" width="11" height="11" rx="2" fill="rgba(255,255,255,.5)" transform="rotate(-10 57 43)"/>':'')+
+   '<g id="pearls">'+pearlsSVG(top.c)+'</g></g>'+
+   '<path d="M18 24h60l-6.8 85a5 5 0 0 1-5 4.6H29.8a5 5 0 0 1-5-4.6z" fill="none" stroke="#2A2523" stroke-width="2.4" stroke-linejoin="round"/>'+
+   '<path d="M14 24h68" stroke="#2A2523" stroke-width="3" stroke-linecap="round"/><path d="M54 24l9-20" stroke="#2A2523" stroke-width="3" stroke-linecap="round"/></svg>'+
+   '<div><h5 id="b-name">'+esc(it.n)+'</h5><p>'+esc(it[lang])+'</p><p class="mono" style="margin-top:4px;color:var(--m-ink)">'+price(it.p)+'</p></div></div>'+
+   '<div class="opt"><span class="lb">'+t.topping+'</span><div class="pills" data-k="top">'+TOPS.map((x,i)=>'<button aria-pressed="'+(i===sel.top)+'" data-v="'+i+'">'+esc(x[lang])+'</button>').join('')+'</div></div>'+
+   '<div class="opt"><span class="lb">'+t.sweet+'</span><div class="pills" data-k="sweet">'+SWEET.map((x,i)=>'<button aria-pressed="'+(i===sel.sweet)+'" data-v="'+i+'">'+x+'</button>').join('')+'</div></div>'+
+   '<div class="opt"><span class="lb">'+t.ice+'</span><div class="pills" data-k="ice">'+ICE[lang].map((x,i)=>'<button aria-pressed="'+(i===sel.ice)+'" data-v="'+i+'">'+esc(x)+'</button>').join('')+'</div></div>'+
+   '<button class="addbtn" id="b-add"><span>'+t.add+'</span><span class="mono">'+price(it.p)+'</span></button>';
+}
+function dropPearls(){const g=document.getElementById('pearls');if(!g)return;g.parentNode.parentNode.classList.remove('drop');void g.getBBox;g.querySelectorAll('.pearl').forEach((p,i)=>{p.style.animationDelay=(i*55)+'ms'});const svg=g.closest('svg');svg.classList.remove('drop');void svg.offsetWidth;svg.classList.add('drop');}
+$('sheet').addEventListener('click',e=>{
+  const b=e.target.closest('.pills button');
+  if(b){const k=b.parentNode.dataset.k;sel[k]=+b.dataset.v;drawSheet(false);if(k==='top')dropPearls();return;}
+  if(e.target.closest('#b-add')){cart.push({n:sel.it.n,p:sel.it.p,top:sel.top,sweet:sel.sweet,ice:sel.ice});closeSheet();updateCart(true);}
+  if(e.target.closest('#b-close')){closeSheet();}
+  if(e.target.closest('#b-clear')){cart=[];closeSheet();updateCart(false);}
+});
+$('scrim').addEventListener('click',closeSheet);
+$('m-body').addEventListener('click',e=>{const b=e.target.closest('.item');if(!b)return;openSheet(MENU.find(c=>c.id===b.dataset.cat).items[+b.dataset.i]);});
+function updateCart(pop){
+  const t=T[lang],bar=$('cartbar');
+  bar.dataset.empty=cart.length===0;
+  const total=cart.reduce((s,x)=>s+x.p,0);
+  $('cart-cnt').textContent=t.items(cart.length)+' · '+price(total);
+  $('cart-send').textContent=t.see;
+  if(pop){bar.classList.remove('pop');void bar.offsetWidth;bar.classList.add('pop');}
+}
+$('cart-send').addEventListener('click',()=>{
+  const t=T[lang];
+  const lines=cart.map((x,i)=>(i+1)+'. '+x.n+' · '+TOPS[x.top][lang]+' · '+t.sweet.toLowerCase()+' '+SWEET[x.sweet]+' · '+ICE[lang][x.ice]);
+  const total=cart.reduce((s,x)=>s+x.p,0);
+  $('sheet').innerHTML='<div class="grab"></div><h5 style="margin:0;font-family:var(--f-display);font-size:1.15rem">'+t.order+'</h5><p style="font-size:.74rem;color:var(--m-muted);margin-top:6px">'+t.send+'</p><div class="wa">'+esc(t.hello+'\n'+lines.join('\n')+'\nTotal: '+price(total))+'</div><button class="addbtn" id="b-close"><span>'+t.close+'</span><span></span></button><button class="addbtn" id="b-clear" style="background:#EFE4D6;color:#27211E"><span>'+t.clear+'</span><span></span></button>';
+  $('sheet').dataset.open='true';$('scrim').dataset.open='true';
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet();});
+renderMenu();
+
+/* ---------- Pantalla vertical (canvas) ---------- */
+const signage=(function(){
+  const W=1080,H=1920,LOOP=24;
+  const C={cream:'#FBF3E8',cream2:'#F1E2CF',ink:'#2A2523',koi:'#F94E2B',white:'#FFFDF9',pearl:'#3A2A26',sage:'#DCE5DF',muted:'#7A6D64'};
+  const F={d:'"Shippori Mincho", Georgia, serif',b:'"Zen Kaku Gothic New", system-ui, sans-serif',m:'"IBM Plex Mono", ui-monospace, monospace'};
+  const FEAT=[
+    {n:'Taro Milk Tea',c:'#B79AD0',board:0,row:2,es:'Recomendado por nuestros clientes',en:'A guest favorite'},
+    {n:'Brown Sugar Milk Tea',c:'#B07A4F',board:0,row:1,es:'Jarabe de azúcar morena y tapioca',en:'Brown sugar syrup and tapioca'},
+    {n:'Durazno Green Tea',c:'#F3A33C',board:0,row:8,es:'Pruébalo con jelly de lichi',en:'Try it with lychee jelly'}];
+  const LEFT=[['MILK TEA',null],['Classic Milk Tea',1],['Brown Sugar Milk Tea',1],['Taro Milk Tea',1],['Strawberry Milk Tea',1],['Mango Milk Tea',1],['FRUIT TEA',null],['Koi Tea',1],['Maracuyá Green Tea',1],['Fresa Green Tea',1],['Durazno Green Tea',1],['Mango Green Tea',1],['Lichi Green Tea',1]];
+  const RIGHT=[['SMOOTHIES',null],['Mango',1],['Fresa',1],['Taro',1],['Maracuyá',1],['TOPPINGS',null],['Tapioca',1],['Perlas explosivas',2],['lichi · fresa · mango · maracuyá · cereza · coco',3],['Jellys',2],['lichi · fresa · mango · maracuyá · aloe vera · café',3]];
+  let mode='one',cans=[],active=false,paused=false,raf=0,frozenT=null;
+  const reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const wall=document.getElementById('wall');
+  const rnd=k=>{const x=Math.sin(k*127.1+311.7)*43758.5453;return x-Math.floor(x);};
+  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+  const ease=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+  function build(){
+    wall.innerHTML='';cans=[];
+    const list=mode==='one'?[{i:0,cls:'c'}]:[{i:0,cls:'s'},{i:1,cls:'c'},{i:2,cls:'s'}];
+    list.forEach(o=>{const tv=document.createElement('div');tv.className='tv '+o.cls;const cv=document.createElement('canvas');cv.setAttribute('role','img');cv.setAttribute('aria-label',mode==='one'?'Animación de la pantalla central: koi nadando, bebida destacada y llamada a Instagram':['Pantalla izquierda: Milk Tea y Fruit Tea','Pantalla central animada','Pantalla derecha: Smoothies y Toppings'][o.i]);tv.appendChild(cv);wall.appendChild(tv);cans.push({cv,ctx:cv.getContext('2d'),i:o.i});});
+    size();
+  }
+  function size(){const dpr=Math.min(window.devicePixelRatio||1,2);cans.forEach(o=>{const w=o.cv.clientWidth||300;o.cv.width=Math.min(1080,Math.round(w*dpr));o.cv.height=Math.round(o.cv.width*16/9);});}
+  window.addEventListener('resize',()=>{if(active)size();});
+  function koiPoints(t,worldW){
+    const path=s=>{const cx=worldW/2,ax=worldW*(worldW>W?0.4:0.3);return {x:cx+ax*Math.sin(s*0.23)+60*Math.sin(s*0.9),y:H*0.5+H*0.33*Math.sin(s*0.15+0.6)+70*Math.sin(s*0.7)};};
+    const hist=[];for(let k=0;k<260;k++)hist.push(path(t-k*0.05));
+    const N=15,seg=36,pts=[hist[0]];let acc=0,j=1,prev=hist[0];
+    while(pts.length<N&&j<hist.length){const p=hist[j];const d=Math.hypot(p.x-prev.x,p.y-prev.y);if(acc+d>=seg){const r=(seg-acc)/d;const q={x:prev.x+(p.x-prev.x)*r,y:prev.y+(p.y-prev.y)*r};pts.push(q);prev=q;acc=0;}else{acc+=d;prev=p;j++;}}
+    while(pts.length<N){const a=pts[pts.length-1],b=pts[pts.length-2]||{x:a.x+1,y:a.y};const dx=a.x-b.x,dy=a.y-b.y,l=Math.hypot(dx,dy)||1;pts.push({x:a.x+dx/l*seg,y:a.y+dy/l*seg});}
+    // ondulación lateral
+    return pts.map((p,i)=>{const a=pts[Math.max(0,i-1)],b=pts[Math.min(N-1,i+1)];let tx=b.x-a.x,ty=b.y-a.y;const l=Math.hypot(tx,ty)||1;tx/=l;ty/=l;const nx=-ty,ny=tx;const w=Math.sin(t*5.2-i*0.55)*(3+i*1.6);return {x:p.x+nx*w,y:p.y+ny*w,tx,ty,nx,ny};});
+  }
+  const PROF=[.62,.86,1,1,.96,.88,.78,.67,.56,.45,.36,.28,.21,.15,.1];
+  function bodyPath(ctx,P,R){
+    const L=[],Rr=[];P.forEach((p,i)=>{const w=PROF[i]*R;L.push({x:p.x+p.nx*w,y:p.y+p.ny*w});Rr.push({x:p.x-p.nx*w,y:p.y-p.ny*w});});
+    const nose={x:P[0].x-P[0].tx*R*0.75,y:P[0].y-P[0].ty*R*0.75};
+    ctx.beginPath();ctx.moveTo(nose.x,nose.y);
+    ctx.quadraticCurveTo(L[0].x-P[0].tx*R*0.4,L[0].y-P[0].ty*R*0.4,L[0].x,L[0].y);
+    for(let i=1;i<L.length;i++){const m={x:(L[i-1].x+L[i].x)/2,y:(L[i-1].y+L[i].y)/2};ctx.quadraticCurveTo(L[i-1].x,L[i-1].y,m.x,m.y);}
+    const e=P[P.length-1];ctx.lineTo(e.x,e.y);
+    for(let i=Rr.length-1;i>0;i--){const m={x:(Rr[i-1].x+Rr[i].x)/2,y:(Rr[i-1].y+Rr[i].y)/2};ctx.quadraticCurveTo(Rr[i].x,Rr[i].y,m.x,m.y);}
+    ctx.quadraticCurveTo(Rr[0].x-P[0].tx*R*0.4,Rr[0].y-P[0].ty*R*0.4,nose.x,nose.y);ctx.closePath();
+  }
+  function fin(ctx,x,y,ang,len,wid,lw){ctx.save();ctx.translate(x,y);ctx.rotate(ang);ctx.beginPath();ctx.moveTo(0,0);ctx.quadraticCurveTo(len*0.45,-wid,len,-wid*0.2);ctx.quadraticCurveTo(len*0.7,wid*0.55,0,0);ctx.fillStyle=C.white;ctx.fill();ctx.lineWidth=lw;ctx.strokeStyle=C.ink;ctx.stroke();ctx.beginPath();ctx.moveTo(len*0.15,0);ctx.lineTo(len*0.75,-wid*0.25);ctx.moveTo(len*0.15,wid*0.05);ctx.lineTo(len*0.68,wid*0.12);ctx.lineWidth=lw*0.6;ctx.stroke();ctx.restore();}
+  function drawKoi(ctx,P,t){
+    const R=62,lw=7;
+    // sombra
+    ctx.save();ctx.translate(16,24);bodyPath(ctx,P,R);ctx.fillStyle='rgba(60,35,20,.10)';ctx.fill();ctx.restore();
+    // aletas pectorales y pélvicas
+    const flap=Math.sin(t*3.4)*0.28;
+    [[2,1],[2,-1],[7,1],[7,-1]].forEach(([i,s])=>{const p=P[i];const w=PROF[i]*R*0.85;const back=Math.atan2(p.ty,p.tx);const big=i===2;fin(ctx,p.x+p.nx*w*s,p.y+p.ny*w*s,back+s*(big?0.95:0.75)+s*flap,big?86:52,big?34:22,lw*0.8);});
+    // cola
+    const e=P[P.length-1],q=P[P.length-3];const ang=Math.atan2(e.y-q.y,e.x-q.x)+Math.sin(t*5.2-8)*0.35;
+    ctx.save();ctx.translate(e.x,e.y);ctx.rotate(ang);ctx.beginPath();ctx.moveTo(-6,0);ctx.bezierCurveTo(30,-12,70,-58,104,-50);ctx.quadraticCurveTo(70,-10,82,0);ctx.quadraticCurveTo(70,10,104,50);ctx.bezierCurveTo(70,58,30,12,-6,0);ctx.fillStyle=C.white;ctx.fill();ctx.lineWidth=lw*0.8;ctx.strokeStyle=C.ink;ctx.stroke();
+    ctx.beginPath();for(let k=-2;k<=2;k++){ctx.moveTo(14,k*3);ctx.lineTo(80,k*16);}ctx.lineWidth=2;ctx.globalAlpha=.45;ctx.stroke();ctx.restore();
+    // cuerpo
+    bodyPath(ctx,P,R);ctx.fillStyle=C.white;ctx.fill();
+    ctx.save();bodyPath(ctx,P,R);ctx.clip();ctx.fillStyle=C.koi;
+    const blob=(i,off,r)=>{const p=P[i];ctx.beginPath();ctx.arc(p.x+p.nx*off,p.y+p.ny*off,r,0,Math.PI*2);ctx.fill();};
+    blob(0,4,30);blob(1,-6,34);blob(1,22,22);blob(5,10,30);blob(6,-14,24);blob(9,6,16);
+    ctx.restore();
+    bodyPath(ctx,P,R);ctx.lineWidth=lw;ctx.strokeStyle=C.ink;ctx.lineJoin='round';ctx.stroke();
+    // aleta dorsal
+    ctx.beginPath();ctx.moveTo(P[3].x,P[3].y);for(let i=4;i<=9;i++)ctx.lineTo(P[i].x,P[i].y);ctx.lineWidth=3;ctx.strokeStyle='rgba(42,37,35,.55)';ctx.stroke();
+    // ojos y bigotes
+    const h=P[0];[1,-1].forEach(s=>{const ex=h.x-h.tx*16+h.nx*R*0.52*s,ey=h.y-h.ty*16+h.ny*R*0.52*s;ctx.beginPath();ctx.arc(ex,ey,6.5,0,Math.PI*2);ctx.fillStyle=C.ink;ctx.fill();
+      const bx=h.x-h.tx*R*0.6+h.nx*12*s,by=h.y-h.ty*R*0.6+h.ny*12*s;ctx.beginPath();ctx.moveTo(bx,by);ctx.quadraticCurveTo(bx-h.tx*20+h.nx*16*s,by-h.ty*20+h.ny*16*s,bx-h.tx*10+h.nx*34*s+Math.sin(t*3)*4,by-h.ty*10+h.ny*34*s);ctx.lineWidth=3;ctx.strokeStyle=C.ink;ctx.stroke();});
+  }
+  function bg(ctx,worldW,t){
+    const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,C.cream);g.addColorStop(1,C.cream2);ctx.fillStyle=g;ctx.fillRect(-10,-10,worldW+20,H+20);
+    // ondas
+    ctx.lineWidth=3;
+    for(let k=0;k<(worldW>W?12:5);k++){const per=6,ph=((t+k*1.37)%per)/per,cyc=Math.floor((t+k*1.37)/per);const x=rnd(k*7+cyc)*worldW,y=200+rnd(k*13+cyc)*(H-400);ctx.strokeStyle='rgba(143,163,151,'+(0.35*(1-ph))+')';ctx.beginPath();ctx.ellipse(x,y,40+ph*230,(40+ph*230)*0.42,0,0,Math.PI*2);ctx.stroke();}
+  }
+  function pearls(ctx,worldW,t,front){
+    const n=worldW>W?60:24;
+    for(let k=0;k<n;k++){const depth=rnd(k+3);if((depth>0.6)!==front)continue;const r=8+depth*20,sp=40+depth*70;const y=H+60-((t*sp+rnd(k)*H*1.4)%(H+140));const x=rnd(k+11)*worldW+Math.sin(t*0.8+k)*22;
+      ctx.globalAlpha=0.35+depth*0.6;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fillStyle=C.pearl;ctx.fill();ctx.beginPath();ctx.arc(x-r*0.35,y-r*0.35,r*0.28,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,.55)';ctx.fill();}
+    ctx.globalAlpha=1;
+  }
+  function env(s,a,b){const f=0.7;if(s<a||s>b)return 0;return clamp(Math.min((s-a)/f,(b-s)/f),0,1);}
+  function txt(ctx,s,x,y,font,color,align,ls){ctx.font=font;ctx.fillStyle=color;ctx.textAlign=align||'center';ctx.textBaseline='alphabetic';try{ctx.letterSpacing=(ls||0)+'px';}catch(e){}ctx.fillText(s,x,y);try{ctx.letterSpacing='0px';}catch(e){}}
+  function panel(ctx,x,y,w,h,a){ctx.save();ctx.globalAlpha=a;ctx.fillStyle='rgba(251,246,239,.86)';ctx.beginPath();ctx.roundRect?ctx.roundRect(x,y,w,h,36):ctx.rect(x,y,w,h);ctx.fill();ctx.restore();}
+  function cup(ctx,cx,cy,color,p,t){
+    const tw=380,bw=290,h=560,top=cy-h/2;
+    ctx.save();ctx.beginPath();ctx.moveTo(cx-tw/2,top);ctx.lineTo(cx+tw/2,top);ctx.lineTo(cx+bw/2,top+h);ctx.lineTo(cx-bw/2,top+h);ctx.closePath();ctx.fillStyle='rgba(255,255,255,.75)';ctx.fill();ctx.clip();
+    const lvl=top+h-(h*0.82)*ease(clamp(p/0.45,0,1));ctx.fillStyle=color;ctx.fillRect(cx-tw,lvl+Math.sin(t*3)*4,tw*2,h);
+    for(let k=0;k<16;k++){const d=clamp((p-0.35-k*0.025)/0.25,0,1);const tx=cx-110+(k%6)*44+(Math.floor(k/6)%2)*22,ty=top+h-34-Math.floor(k/6)*40;const y=top-60+(ty-top+60)*ease(d);if(d>0){ctx.beginPath();ctx.arc(tx,y,19,0,Math.PI*2);ctx.fillStyle=C.pearl;ctx.fill();ctx.beginPath();ctx.arc(tx-6,y-6,5,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,.5)';ctx.fill();}}
+    ctx.restore();
+    ctx.lineWidth=7;ctx.strokeStyle=C.ink;ctx.lineJoin='round';ctx.beginPath();ctx.moveTo(cx-tw/2,top);ctx.lineTo(cx-bw/2,top+h);ctx.lineTo(cx+bw/2,top+h);ctx.lineTo(cx+tw/2,top);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(cx-tw/2-24,top);ctx.lineTo(cx+tw/2+24,top);ctx.lineWidth=10;ctx.lineCap='round';ctx.stroke();
+    ctx.beginPath();ctx.moveTo(cx-tw/2+10,top);ctx.quadraticCurveTo(cx,top-80,cx+tw/2-10,top);ctx.lineWidth=7;ctx.stroke();
+    ctx.beginPath();ctx.moveTo(cx+40,top+120);ctx.lineTo(cx+110,top-190);ctx.lineWidth=22;ctx.strokeStyle=C.koi;ctx.stroke();ctx.lineWidth=6;ctx.strokeStyle=C.ink;ctx.stroke();
+  }
+  function centerScenes(ctx,ox,t,epoch){
+    const s=t%LOOP;const feat=FEAT[Math.floor(epoch/LOOP)%FEAT.length];
+    ctx.save();ctx.translate(ox,0);
+    let a=env(s,0,8);
+    if(a>0){ctx.globalAlpha=a;panel(ctx,90,330,900,520,a);ctx.globalAlpha=a;
+      txt(ctx,'KOI TEA',540,560,'800 170px '+F.d,C.ink,'center',18);
+      txt(ctx,'BOBA SHOP',540,640,'500 44px '+F.m,C.koi,'center',14);
+      txt(ctx,'Boba de calidad, sabor auténtico',540,730,'500 46px '+F.b,C.ink);
+      txt(ctx,'Ingredientes de Taiwán · Imported from Taiwan',540,790,'400 30px '+F.m,C.muted);}
+    a=env(s,8,16);
+    if(a>0){ctx.globalAlpha=a;panel(ctx,90,220,900,360,a*0.9);ctx.globalAlpha=a;
+      txt(ctx,'RECOMENDADO · RECOMMENDED',540,300,'500 32px '+F.m,C.koi,'center',6);
+      txt(ctx,feat.n,540,410,'800 '+(feat.n.length>16?84:100)+'px '+F.d,C.ink);
+      txt(ctx,feat.es,540,480,'500 40px '+F.b,C.ink);txt(ctx,feat.en,540,530,'400 32px '+F.m,C.muted);
+      cup(ctx,540,1060,feat.c,(s-8)/8,t);}
+    a=env(s,16,24);
+    if(a>0){ctx.globalAlpha=a;panel(ctx,90,330,900,360,a*0.9);panel(ctx,140,1200,800,200,a*0.9);ctx.globalAlpha=a;
+      txt(ctx,'Síguenos',540,450,'800 130px '+F.d,C.ink);txt(ctx,'Follow us',540,520,'400 40px '+F.m,C.muted,'center',4);
+      txt(ctx,'@koitea.mx',540,640,'700 84px '+F.b,C.koi);
+      const qx=330,qy=740,qs=420;ctx.fillStyle=C.cream;ctx.fillRect(qx,qy,qs,qs);ctx.lineWidth=8;ctx.strokeStyle=C.ink;ctx.strokeRect(qx,qy,qs,qs);
+      for(let i=0;i<3;i++){const cx=[qx+30,qx+qs-120,qx+30][i],cy=[qy+30,qy+30,qy+qs-120][i];ctx.fillStyle=C.ink;ctx.fillRect(cx,cy,90,90);ctx.fillStyle=C.cream;ctx.fillRect(cx+16,cy+16,58,58);ctx.fillStyle=C.ink;ctx.fillRect(cx+30,cy+30,30,30);}
+      txt(ctx,'QR',qx+qs/2+50,qy+qs/2+60,'800 80px '+F.m,'rgba(42,37,35,.25)');
+      txt(ctx,'Abierto 11:00 – 21:30',540,1290,'500 48px '+F.b,C.ink);
+      txt(ctx,'C. Benito Juárez 276 · Puerto Peñasco',540,1350,'400 32px '+F.m,C.muted);}
+    ctx.globalAlpha=1;
+    // cinta inferior
+    ctx.fillStyle=C.ink;ctx.fillRect(0,H-110,W,110);
+    const msg='KOI TEA  ·  BOBA SHOP  ·  PUERTO PEÑASCO  ·  ROCKY POINT  ·  ';ctx.font='500 38px '+F.m;const mw=ctx.measureText(msg).width;const off=-((t*60)%mw);
+    ctx.save();ctx.beginPath();ctx.rect(0,H-110,W,110);ctx.clip();for(let x=off;x<W;x+=mw)txt(ctx,msg,x,H-42,'500 38px '+F.m,C.cream,'left',0);ctx.restore();
+    ctx.restore();
+    return {s,feat};
+  }
+  function board(ctx,ox,rows,hiName,t){
+    ctx.save();ctx.translate(ox,0);panel(ctx,60,120,960,1680,1);
+    let y=250;
+    rows.forEach(([label,kind])=>{
+      if(kind===null){y+=y>260?50:0;txt(ctx,label,540,y,'800 76px '+F.d,C.koi,'center',10);y+=40;ctx.fillStyle='rgba(42,37,35,.15)';ctx.fillRect(140,y,800,3);y+=80;return;}
+      if(kind===2){txt(ctx,label,120,y,'700 46px '+F.b,C.ink,'left');y+=66;return;}
+      if(kind===3){txt(ctx,label,120,y,'400 32px '+F.b,C.muted,'left');y+=78;return;}
+      const on=hiName&&label===hiName;
+      if(on){const pulse=0.5+0.5*Math.sin(t*4);ctx.fillStyle='rgba(249,78,43,'+(0.12+0.1*pulse)+')';ctx.beginPath();ctx.roundRect?ctx.roundRect(96,y-62,888,88,44):ctx.rect(96,y-62,888,88);ctx.fill();ctx.beginPath();ctx.arc(140,y-18,12,0,Math.PI*2);ctx.fillStyle=C.koi;ctx.fill();}
+      txt(ctx,label,on?172:130,y,(on?'700 ':'500 ')+'50px '+F.b,C.ink,'left');
+      txt(ctx,'$ —',950,y,'500 42px '+F.m,C.muted,'right');
+      y+=104;
+    });
+    ctx.restore();
+  }
+  function frame(now){
+    const epoch=(frozenT!==null?frozenT:Date.now()/1000);
+    const t=epoch%100000;
+    const worldW=mode==='one'?W:W*3;
+    const P=koiPoints(t,worldW);
+    const s=epoch%LOOP;const feat=FEAT[Math.floor(epoch/LOOP)%FEAT.length];
+    cans.forEach(o=>{const ctx=o.ctx,sc=o.cv.width/W;ctx.setTransform(sc,0,0,sc,-o.i*W*sc,0);
+      bg(ctx,worldW,t);pearls(ctx,worldW,t,false);drawKoi(ctx,P,t);pearls(ctx,worldW,t,true);
+      if(mode==='one'||o.i===1){centerScenes(ctx,o.i*W,t,epoch);}
+      else{const hi=(s>=8&&s<16)?feat.n:null;board(ctx,o.i*W,o.i===0?LEFT:RIGHT,(o.i===0)?hi:null,t);}
+    });
+    document.querySelectorAll('#tl .tl').forEach((el,i)=>{const on=s>=i*8&&s<(i+1)*8;el.dataset.on=on;el.querySelector('i').style.width=on?((s-i*8)/8*100)+'%':'0';});
+    if(active&&!paused&&!document.hidden) raf=requestAnimationFrame(frame);
+  }
+  function start(){cancelAnimationFrame(raf);if(!active)return;size();raf=requestAnimationFrame(frame);}
+  function setMode(m){mode=m;document.getElementById('v-one').setAttribute('aria-pressed',m==='one');document.getElementById('v-three').setAttribute('aria-pressed',m==='three');build();start();}
+  document.getElementById('v-one').onclick=()=>setMode('one');
+  document.getElementById('v-three').onclick=()=>setMode('three');
+  const pb=document.getElementById('sig-play');
+  pb.onclick=()=>{paused=!paused;if(paused){frozenT=Date.now()/1000;}else{frozenT=null;}pb.textContent=paused?'Reproducir':'Pausar';pb.setAttribute('aria-pressed',paused);if(!paused)start();else{cancelAnimationFrame(raf);frame();}};
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)start();});
+  if(reduce){paused=true;frozenT=Math.floor(Date.now()/1000/LOOP)*LOOP+12.5;pb.textContent='Reproducir';pb.setAttribute('aria-pressed','true');}
+  build();
+  return {setActive(on){active=on;if(on){requestAnimationFrame(()=>{size();if(paused)frame();else start();});}else cancelAnimationFrame(raf);}};
+})();
+
+const fontsReady=(document.fonts&&document.fonts.ready)?document.fonts.ready:Promise.resolve();
+show((location.hash||'#estudio').slice(1),false);
+fontsReady.then(()=>{if(current==='propuesta')signage.setActive(true);});
+})();
+</script>
