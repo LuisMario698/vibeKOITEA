@@ -3,14 +3,14 @@
 <meta name="description" content="Cinco animaciones para las tres pantallas verticales de la barra de Koi Tea Boba Shop, Puerto Peñasco.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Jost:wght@300..700&family=M+PLUS+Rounded+1c:wght@500;800&family=Shippori+Mincho:wght@600;800&family=Yuji+Syuku&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Jost:wght@300..700&family=Shippori+Mincho:wght@600;800&family=Yuji+Syuku&display=swap">
 <style>
 /* Layout: una sala de muestra en una sola columna (máx. 1200 px): tesis → selector de 5 versiones → la pared de la barra con sus tres pantallas (escenario) y su línea de tiempo → ficha → comparativa → investigación → producción. */
 :root{
   --paper:#F6F0E7; --surface:#EEE5D7; --raised:#FBF8F3; --ink:#221D1B; --muted:#6B5E56; --line:#DED0BE;
   --koi:#C93D27; --koi-ink:#FFFFFF; --koi-soft:#F5DDD4; --sage:#7E9488;
   --wall-a:#F3E6D4; --wall-b:#E6D3BA; --soffit:#D2AA74; --led:#FFE0AA; --bezel:#141011; --stage:#E8DCCB; --slat:#4A3E40;
-  --f-display:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif;
+  --f-display:"DM Serif Display","Didot",Georgia,serif;
   --f-body:"Jost","Futura","Avenir Next","Segoe UI",system-ui,sans-serif;
   --f-jp:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",serif;
   --ease:cubic-bezier(.22,.8,.2,1); --silk:cubic-bezier(.76,0,.24,1);
@@ -30,8 +30,8 @@ body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-siz
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
 h1,h2,h3{margin:0;text-wrap:balance;font-weight:600}
-h1,h2{font-family:var(--f-display);font-style:italic;letter-spacing:-.005em;line-height:1.08}
-h1{font-size:clamp(2.4rem,6.2vw,4.6rem);font-weight:600}
+h1,h2{font-family:var(--f-display);font-style:italic;font-weight:400;letter-spacing:-.005em;line-height:1.08}
+h1{font-size:clamp(2.4rem,6.2vw,4.6rem);font-weight:400}
 h2{font-size:clamp(1.8rem,3.6vw,2.6rem)}
 h3{font-family:var(--f-body);font-size:1.02rem;font-weight:600;letter-spacing:.01em}
 p{margin:0}
@@ -74,7 +74,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .vcard:active{transform:scale(.985)}
 .vcard[aria-pressed="true"]{border-color:var(--koi);background:color-mix(in srgb,var(--koi) 7%,var(--raised))}
 .vnum{font-size:.7rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
-.vname{font-family:var(--f-display);font-style:italic;font-weight:600;font-size:1.55rem;line-height:1.05}
+.vname{font-family:var(--f-display);font-style:italic;font-weight:400;font-size:1.6rem;line-height:1.05}
 .vtag{justify-self:start;font-size:.7rem;font-weight:600;letter-spacing:.06em;border-radius:999px;padding:3px 9px;border:1px solid var(--line);color:var(--muted)}
 .vtag.tri{background:var(--koi);border-color:var(--koi);color:var(--koi-ink)}
 .vline{font-size:.86rem;color:var(--muted);line-height:1.4}
@@ -121,6 +121,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .time{font-size:.86rem;font-variant-numeric:tabular-nums;color:var(--muted);white-space:nowrap}
 .time b{color:var(--ink);font-weight:600}
 .cyc{margin-left:6px;padding:2px 8px;border-radius:999px;background:var(--koi-soft);color:var(--ink);font-size:.76rem}
+[hidden]{display:none!important}
 .seg2{display:flex;background:color-mix(in srgb,var(--ink) 8%,transparent);border-radius:999px;padding:3px}
 .seg2 button{appearance:none;border:0;background:transparent;color:var(--muted);font-size:.84rem;font-weight:500;padding:7px 12px;border-radius:999px;white-space:nowrap}
 .seg2 button[aria-pressed="true"]{background:var(--raised);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
@@ -256,6 +257,7 @@ footer{margin-top:72px;padding-block:28px 56px;border-top:1px solid var(--line);
       <span class="time"><b id="tl-cur">0.0 s</b> / <span id="tl-total"></span> <span class="cyc" id="tl-cyc" hidden></span></span>
       <div class="tright">
         <div class="seg2" role="group" aria-label="Vista"><button data-view-btn="wall" aria-pressed="true">Pared</button><button data-view-btn="center" aria-pressed="false">Pantalla central</button></div>
+        <div class="seg2" id="sides-seg" role="group" aria-label="Pantallas laterales" hidden><button data-sides-btn="hoy" aria-pressed="true">Laterales de hoy</button><button data-sides-btn="crema" aria-pressed="false">Laterales en crema</button></div>
         <button class="ghost" id="btn-lamps" aria-pressed="false">Lámparas</button>
         <button class="ghost" id="btn-full" aria-pressed="false">Pantalla completa</button>
         <button class="ghost" id="btn-restart">Desde el inicio</button>

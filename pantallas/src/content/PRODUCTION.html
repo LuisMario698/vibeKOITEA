@@ -36,6 +36,8 @@
   <div class="prose">
     <h3>Video maestro</h3>
     <p>MP4 H.264 de 1080 × 1920 a 30 cuadros por segundo (perfil High 4.0, calidad CRF 18, tope de 12 Mbps), uno por pantalla, exportado cuadro por cuadro desde el mismo código. Cada vuelta del loop termina exactamente donde empieza, y los cambios entre vueltas ocurren en momentos quietos para que no se note el corte. La versión de tres pantallas se exporta como un solo lienzo de 3720 × 1920 y se recorta en tres videos con los mismos cuadros.</p>
+    <h3>Prueba en el equipo</h3>
+    <p>Antes de instalar, cada versión se corre en la Raspberry Pi durante una jornada: debe ir a 30 cuadros por segundo o más y sin saltos en el cambio de vuelta. Si alguna no lo logra, esa pantalla se reproduce como video.</p>
     <h3>Calibración en el local (15 minutos)</h3>
     <p>Con una página de prueba se ajustan tres valores por pantalla, a ojo desde la fila: el ancho real del hueco (para que una diagonal se vea recta de una pantalla a otra), la diferencia de altura entre soportes y el retraso de cada TV. Se guardan en la dirección de cada pantalla, por ejemplo <code>?screen=C&amp;gap=240&amp;dy=0&amp;lat=0</code>.</p>
   </div>
@@ -48,6 +50,8 @@
       <li>Contactos, ventilación y calor detrás de la barra en verano.</li>
       <li>El reflejo de los globos visto desde la fila.</li>
     </ul>
+    <h3>Caligrafía y sellos</h3>
+    <p>La caligrafía 鯉 y los sellos se dibujan con los trazos abiertos de <a href="http://kanjivg.tagaini.net" target="_blank" rel="noopener">KanjiVG</a> (Ulrich Apel, licencia CC BY-SA 3.0), en su orden real de escritura. Para la versión final conviene encargar a un calígrafo un sello propio de Koi Tea y digitalizarlo.</p>
     <h3>Costos de referencia</h3>
     <p>Una Raspberry Pi 5 de 4 GB con fuente, disipador, cables y memoria ronda entre $2,000 y $3,600 MXN; tres kits, entre $6,000 y $7,700 MXN. Una mini PC con tres salidas, entre $3,500 y $6,500 MXN. Son estimaciones a partir de precios de lista en dólares, con IVA y un tipo de cambio de 18 a 20: hay que confirmarlas en tienda. El software (ffmpeg, Chromium, chrony) es gratuito; un panel de precios en Supabase puede empezar en el plan gratuito.</p>
   </div>

@@ -3,14 +3,14 @@
 <meta name="description" content="Cinco animaciones para las tres pantallas verticales de la barra de Koi Tea Boba Shop, Puerto Peñasco.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Jost:wght@300..700&family=M+PLUS+Rounded+1c:wght@500;800&family=Shippori+Mincho:wght@600;800&family=Yuji+Syuku&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Jost:wght@300..700&family=Shippori+Mincho:wght@600;800&family=Yuji+Syuku&display=swap">
 <style>
 /* Layout: una sala de muestra en una sola columna (máx. 1200 px): tesis → selector de 5 versiones → la pared de la barra con sus tres pantallas (escenario) y su línea de tiempo → ficha → comparativa → investigación → producción. */
 :root{
   --paper:#F6F0E7; --surface:#EEE5D7; --raised:#FBF8F3; --ink:#221D1B; --muted:#6B5E56; --line:#DED0BE;
   --koi:#C93D27; --koi-ink:#FFFFFF; --koi-soft:#F5DDD4; --sage:#7E9488;
   --wall-a:#F3E6D4; --wall-b:#E6D3BA; --soffit:#D2AA74; --led:#FFE0AA; --bezel:#141011; --stage:#E8DCCB; --slat:#4A3E40;
-  --f-display:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif;
+  --f-display:"DM Serif Display","Didot",Georgia,serif;
   --f-body:"Jost","Futura","Avenir Next","Segoe UI",system-ui,sans-serif;
   --f-jp:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",serif;
   --ease:cubic-bezier(.22,.8,.2,1); --silk:cubic-bezier(.76,0,.24,1);
@@ -30,8 +30,8 @@ body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-siz
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
 h1,h2,h3{margin:0;text-wrap:balance;font-weight:600}
-h1,h2{font-family:var(--f-display);font-style:italic;letter-spacing:-.005em;line-height:1.08}
-h1{font-size:clamp(2.4rem,6.2vw,4.6rem);font-weight:600}
+h1,h2{font-family:var(--f-display);font-style:italic;font-weight:400;letter-spacing:-.005em;line-height:1.08}
+h1{font-size:clamp(2.4rem,6.2vw,4.6rem);font-weight:400}
 h2{font-size:clamp(1.8rem,3.6vw,2.6rem)}
 h3{font-family:var(--f-body);font-size:1.02rem;font-weight:600;letter-spacing:.01em}
 p{margin:0}
@@ -74,7 +74,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .vcard:active{transform:scale(.985)}
 .vcard[aria-pressed="true"]{border-color:var(--koi);background:color-mix(in srgb,var(--koi) 7%,var(--raised))}
 .vnum{font-size:.7rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
-.vname{font-family:var(--f-display);font-style:italic;font-weight:600;font-size:1.55rem;line-height:1.05}
+.vname{font-family:var(--f-display);font-style:italic;font-weight:400;font-size:1.6rem;line-height:1.05}
 .vtag{justify-self:start;font-size:.7rem;font-weight:600;letter-spacing:.06em;border-radius:999px;padding:3px 9px;border:1px solid var(--line);color:var(--muted)}
 .vtag.tri{background:var(--koi);border-color:var(--koi);color:var(--koi-ink)}
 .vline{font-size:.86rem;color:var(--muted);line-height:1.4}
@@ -121,6 +121,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .time{font-size:.86rem;font-variant-numeric:tabular-nums;color:var(--muted);white-space:nowrap}
 .time b{color:var(--ink);font-weight:600}
 .cyc{margin-left:6px;padding:2px 8px;border-radius:999px;background:var(--koi-soft);color:var(--ink);font-size:.76rem}
+[hidden]{display:none!important}
 .seg2{display:flex;background:color-mix(in srgb,var(--ink) 8%,transparent);border-radius:999px;padding:3px}
 .seg2 button{appearance:none;border:0;background:transparent;color:var(--muted);font-size:.84rem;font-weight:500;padding:7px 12px;border-radius:999px;white-space:nowrap}
 .seg2 button[aria-pressed="true"]{background:var(--raised);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
@@ -226,7 +227,7 @@ footer{margin-top:72px;padding-block:28px 56px;border-top:1px solid var(--line);
       <div><dt>Pantallas</dt><dd>3 verticales, lado a lado</dd></div>
       <div><dt>Lienzo</dt><dd>1080 × 1920 por pantalla</dd></div>
       <div><dt>Lectura</dt><dd>Desde la fila, a 3–4 m</dd></div>
-      <div><dt>Formato</dt><dd>Loops de 36 y 60 s, 3 vueltas</dd></div>
+      <div><dt>Formato</dt><dd>Loops de 36 a 60 s, 3 vueltas</dd></div>
     </dl>
   </section>
 
@@ -256,6 +257,7 @@ footer{margin-top:72px;padding-block:28px 56px;border-top:1px solid var(--line);
       <span class="time"><b id="tl-cur">0.0 s</b> / <span id="tl-total"></span> <span class="cyc" id="tl-cyc" hidden></span></span>
       <div class="tright">
         <div class="seg2" role="group" aria-label="Vista"><button data-view-btn="wall" aria-pressed="true">Pared</button><button data-view-btn="center" aria-pressed="false">Pantalla central</button></div>
+        <div class="seg2" id="sides-seg" role="group" aria-label="Pantallas laterales" hidden><button data-sides-btn="hoy" aria-pressed="true">Laterales de hoy</button><button data-sides-btn="crema" aria-pressed="false">Laterales en crema</button></div>
         <button class="ghost" id="btn-lamps" aria-pressed="false">Lámparas</button>
         <button class="ghost" id="btn-full" aria-pressed="false">Pantalla completa</button>
         <button class="ghost" id="btn-restart">Desde el inicio</button>
@@ -276,10 +278,10 @@ footer{margin-top:72px;padding-block:28px 56px;border-top:1px solid var(--line);
     </thead>
     <tbody>
       <tr><th scope="row">Pantallas</th><td>Central</td><td>Central</td><td>Las tres</td><td>Las tres</td><td>Las tres</td></tr>
-      <tr><th scope="row">Idea</th><td>La mascota del logo cobra vida y presenta la bebida.</td><td>Sumi-e: la bebida pintada como obra de galería.</td><td>Un estanque detrás de las tres pantallas; el menú flota quieto.</td><td>La línea de luz del plafón cruza las pantallas y enciende el menú.</td><td>Un friso del Mar de Cortés; la Koi Tea como atardecer.</td></tr>
-      <tr><th scope="row">Momento firma</th><td>El koi sorbe: una perla sube por el popote.</td><td>El sello rojo 鯉 firma la ficha de la obra.</td><td>El koi entra al muro y sale en la pantalla de al lado.</td><td>El acorde de té: cortinas con los colores de todas las bebidas.</td><td>El sol se mete en el mar a lo largo de las tres pantallas.</td></tr>
-      <tr><th scope="row">Qué vende</th><td>Una bebida por vuelta, con precio grande, e Instagram.</td><td>Una “obra” por vuelta, con precio, e Instagram.</td><td>Bebida recomendada resaltada en el menú, topping incluido e Instagram.</td><td>Bebida del momento, Koi Tea, smoothies e Instagram.</td><td>Koi Tea, la combinación recomendada en Google e Instagram.</td></tr>
-      <tr><th scope="row">Menú de los lados</th><td>Como está hoy</td><td>Como está hoy</td><td>Rediseñado, en placas de papel</td><td>Rediseñado, en marcos de nogal</td><td>Rediseñado, bajo el friso</td></tr>
+      <tr><th scope="row">Idea</th><td>La mascota del logo cobra vida y presenta la bebida.</td><td>Sumi-e: la bebida pintada como obra de galería.</td><td>Un estanque color té detrás de las tres pantallas; el menú flota quieto.</td><td>La línea de luz del plafón cruza las pantallas y enciende el menú.</td><td>Un friso del Mar de Cortés; la Koi Tea como atardecer.</td></tr>
+      <tr><th scope="row">Momento firma</th><td>El koi sorbe: una perla sube por el popote.</td><td>鯉 se escribe trazo por trazo y el sello 茶 lo firma: juntos dicen «Koi Tea».</td><td>Dos koi giran cabeza con cola alrededor de 鯉; cada tres minutos, las placas se apartan.</td><td>El acorde de té: las bebidas se vierten desde la luz y drenan hacia un vaso de Koi Tea.</td><td>El sol se mete en un vaso de Koi Tea que sube del mar.</td></tr>
+      <tr><th scope="row">Qué vende</th><td>Una bebida por vuelta, con precio grande, e Instagram.</td><td>Una “obra” por vuelta, con precio, e Instagram.</td><td>Bebida recomendada resaltada en el menú, topping incluido e Instagram.</td><td>Bebida del momento, Koi Tea, tés verdes con fruta e Instagram.</td><td>Koi Tea, la combinación que recomienda una reseña e Instagram.</td></tr>
+      <tr><th scope="row">Menú de los lados</th><td>Como está hoy, o recoloreado en crema</td><td>Como está hoy, o recoloreado en crema</td><td>Rediseñado, en placas de papel</td><td>Rediseñado, en marcos de nogal</td><td>Rediseñado, bajo el friso</td></tr>
       <tr><th scope="row">Tono</th><td>Cálido y cercano</td><td>Calmado, de galería</td><td>Natural, sereno</td><td>Arquitectónico, sobrio</td><td>Local, emotivo</td></tr>
       <tr><th scope="row">Para instalar</th><td>1 reproductor</td><td>1 reproductor</td><td>3 reproductores sincronizados</td><td>3 reproductores sincronizados</td><td>3 reproductores sincronizados</td></tr>
       <tr><th scope="row">Ideal para</th><td>Empezar ya, sin tocar los menús.</td><td>Reforzar “sabor y arte” y la galería.</td><td>Hacer del koi la experiencia del local.</td><td>Integrar las pantallas al diseño interior.</td><td>Conquistar al turista y la temporada alta.</td></tr>
@@ -289,7 +291,7 @@ footer{margin-top:72px;padding-block:28px 56px;border-top:1px solid var(--line);
 <div class="rec" id="recomendacion">
   <span class="tg">Recomendación</span>
   <div class="prose">
-    <p><b>Empezar por la pantalla central con Koi vivo.</b> Se instala con un solo reproductor, no toca los menús actuales y convierte la pantalla que hoy solo repite el logo en una que vende: cada vuelta presenta una bebida con su precio y termina en Instagram.</p>
+    <p><b>Empezar por la pantalla central con Koi vivo.</b> Se instala con un solo reproductor y convierte la pantalla que hoy solo repite el logo en una que vende: cada vuelta presenta una bebida con su precio y termina en Instagram. Si además se recolorean las laterales en crema (el mismo menú, sin animarlo), la pared se ve como una sola pieza desde el primer día.</p>
 <p><b>Para dar el paso a las tres pantallas, Atardecer o Estanque.</b> Atardecer es la más propia de Koi Tea en Rocky Point y le habla directo al turista; Estanque es la más ligada al koi. Las dos traen los menús laterales rediseñados para leerse desde la fila. Tinta y Luz son alternativas más sobrias si se prefiere que las pantallas se integren al interiorismo sin tanto protagonismo.</p>
   </div>
 </div>
@@ -437,6 +439,8 @@ footer{margin-top:72px;padding-block:28px 56px;border-top:1px solid var(--line);
   <div class="prose">
     <h3>Video maestro</h3>
     <p>MP4 H.264 de 1080 × 1920 a 30 cuadros por segundo (perfil High 4.0, calidad CRF 18, tope de 12 Mbps), uno por pantalla, exportado cuadro por cuadro desde el mismo código. Cada vuelta del loop termina exactamente donde empieza, y los cambios entre vueltas ocurren en momentos quietos para que no se note el corte. La versión de tres pantallas se exporta como un solo lienzo de 3720 × 1920 y se recorta en tres videos con los mismos cuadros.</p>
+    <h3>Prueba en el equipo</h3>
+    <p>Antes de instalar, cada versión se corre en la Raspberry Pi durante una jornada: debe ir a 30 cuadros por segundo o más y sin saltos en el cambio de vuelta. Si alguna no lo logra, esa pantalla se reproduce como video.</p>
     <h3>Calibración en el local (15 minutos)</h3>
     <p>Con una página de prueba se ajustan tres valores por pantalla, a ojo desde la fila: el ancho real del hueco (para que una diagonal se vea recta de una pantalla a otra), la diferencia de altura entre soportes y el retraso de cada TV. Se guardan en la dirección de cada pantalla, por ejemplo <code>?screen=C&amp;gap=240&amp;dy=0&amp;lat=0</code>.</p>
   </div>
@@ -449,6 +453,8 @@ footer{margin-top:72px;padding-block:28px 56px;border-top:1px solid var(--line);
       <li>Contactos, ventilación y calor detrás de la barra en verano.</li>
       <li>El reflejo de los globos visto desde la fila.</li>
     </ul>
+    <h3>Caligrafía y sellos</h3>
+    <p>La caligrafía 鯉 y los sellos se dibujan con los trazos abiertos de <a href="http://kanjivg.tagaini.net" target="_blank" rel="noopener">KanjiVG</a> (Ulrich Apel, licencia CC BY-SA 3.0), en su orden real de escritura. Para la versión final conviene encargar a un calígrafo un sello propio de Koi Tea y digitalizarlo.</p>
     <h3>Costos de referencia</h3>
     <p>Una Raspberry Pi 5 de 4 GB con fuente, disipador, cables y memoria ronda entre $2,000 y $3,600 MXN; tres kits, entre $6,000 y $7,700 MXN. Una mini PC con tres salidas, entre $3,500 y $6,500 MXN. Son estimaciones a partir de precios de lista en dólares, con IVA y un tipo de cambio de 18 a 20: hay que confirmarlas en tienda. El software (ffmpeg, Chromium, chrony) es gratuito; un panel de precios en Supabase puede empezar en el plan gratuito.</p>
   </div>
@@ -462,6 +468,7 @@ footer{margin-top:72px;padding-block:28px 56px;border-top:1px solid var(--line);
 </main>
 
 <script src="../src/kit.js"></script>
+<script src="../src/kanji.js"></script>
 <script src="../src/mascot.js"></script>
 <script src="../src/koi.js"></script>
 <script src="../src/cup.js"></script>

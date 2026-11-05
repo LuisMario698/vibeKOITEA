@@ -94,13 +94,29 @@
     ctx.restore();
   }
 
-  // manchas kohaku por semilla: [{i (posición en la columna), off (lateral -1..1), r (relativo a R)}]
+  // manchas kohaku por semilla: [{i (posición en la columna), off (lateral -1..1), r (relativo a R), s (semilla de forma)}]
+  // 2–3 manchas orgánicas: cabeza (0–2) y lomo (5–9); nada en la cola.
   function patches(seed) {
-    if (seed === 'mascot') return [{ i: 0.8, off: 0.15, r: 0.95 }, { i: 1.6, off: -0.35, r: 0.55 }, { i: 5.5, off: 0.25, r: 0.75 }, { i: 6.6, off: -0.3, r: 0.5 }, { i: 10.2, off: 0.05, r: 0.42 }];
-    const R = KT.rng(1000 + seed * 17), out = [{ i: 0.6 + R() * 0.8, off: (R() - 0.5) * 0.5, r: 0.8 + R() * 0.3 }];
-    const n = 2 + Math.floor(R() * 3);
-    for (let k = 0; k < n; k++) out.push({ i: 3 + R() * 8, off: (R() - 0.5) * 1.0, r: 0.4 + R() * 0.5 });
+    if (seed === 'mascot') return [{ i: 0.9, off: 0.12, r: 0.92, s: 1.3 }, { i: 5.6, off: -0.18, r: 0.95, s: 4.1 }, { i: 8.6, off: 0.2, r: 0.55, s: 2.2 }];
+    const R = KT.rng(1000 + seed * 17), out = [{ i: 0.7 + R() * 0.7, off: (R() - 0.5) * 0.4, r: 0.8 + R() * 0.25, s: R() * 6 }];
+    const n = 1 + Math.floor(R() * 2);
+    for (let k = 0; k < n; k++) out.push({ i: 4.8 + k * 2.6 + R() * 1.2, off: (R() - 0.5) * 0.7, r: 0.6 + R() * 0.35, s: R() * 6 });
     return out;
+  }
+  // mancha orgánica alargada en la dirección del cuerpo
+  function blob(ctx, x, y, rx, ry, ang, sd) {
+    ctx.beginPath();
+    for (let k = 0; k <= 30; k++) {
+      const th = (k / 30) * TAU, rr = 1 + 0.17 * Math.sin(3 * th + sd) + 0.09 * Math.sin(5 * th + sd * 1.7) + 0.05 * Math.sin(8 * th + sd * 0.3);
+      const px = Math.cos(th) * rx * rr, py = Math.sin(th) * ry * rr;
+      const X = x + px * Math.cos(ang) - py * Math.sin(ang), Y = y + px * Math.sin(ang) + py * Math.cos(ang);
+      k ? ctx.lineTo(X, Y) : ctx.moveTo(X, Y);
+    }
+    ctx.closePath();
+  }
+  function patchPos(P, pt, R, k) {
+    const i = Math.min(N - 1, Math.floor(pt.i)), f = pt.i - i, a = P[i], b = P[Math.min(N - 1, i + 1)];
+    return { x: a.x + (b.x - a.x) * f + a.nx * pt.off * R * k, y: a.y + (b.y - a.y) * f + a.ny * pt.off * R * k, ang: Math.atan2(a.ty, a.tx) };
   }
 
   /* o: {style:'line'|'ink'|'shadow', R (medio ancho máx.), phase (rad, nado), amp, seed, lw, line, body, red, alpha,
@@ -141,11 +157,10 @@
       gr.addColorStop(0, KT.rgba(ink, 0.22)); gr.addColorStop(0.5, KT.rgba(ink, 0.08)); gr.addColorStop(1, KT.rgba(ink, 0.02));
       ctx.fillStyle = gr; ctx.fill();
       // manchas rojas en acuarela (capas translúcidas)
-      ctx.save(); bodyPath(ctx, P, R * 0.98); ctx.clip();
+      ctx.save(); bodyPath(ctx, P, R * 0.86); ctx.clip();
       patches(o.seed == null ? 'mascot' : o.seed).forEach((pt, j) => {
-        const i = Math.min(N - 1, Math.floor(pt.i)), f = pt.i - i, a = P[i], b = P[Math.min(N - 1, i + 1)];
-        const x = a.x + (b.x - a.x) * f + a.nx * pt.off * R * 0.6, y = a.y + (b.y - a.y) * f + a.ny * pt.off * R * 0.6;
-        for (let k = 0; k < 4; k++) { const ang2 = k * 1.7 + j; ctx.fillStyle = KT.rgba(red, 0.24); ctx.beginPath(); ctx.ellipse(x + Math.cos(ang2) * R * 0.1, y + Math.sin(ang2) * R * 0.1, pt.r * R * (0.95 - k * 0.12), pt.r * R * (0.8 - k * 0.1), Math.atan2(a.ty, a.tx) + k * 0.4, 0, TAU); ctx.fill(); }
+        const q = patchPos(P, pt, R, 0.6);
+        for (let k = 0; k < 3; k++) { ctx.fillStyle = KT.rgba(red, 0.3); blob(ctx, q.x + Math.cos(k * 2.1 + j) * R * 0.06, q.y + Math.sin(k * 2.1 + j) * R * 0.06, pt.r * R * (1.25 - k * 0.12), pt.r * R * (0.8 - k * 0.08), q.ang, pt.s + k); ctx.fill(); }
       });
       ctx.restore();
       // contorno de pincel: halo suave + línea
@@ -173,12 +188,10 @@
     ctx.fillStyle = o.finFill || KT.rgba(body, 0.94); ctx.fill(); ctx.strokeStyle = line; ctx.lineWidth = lw * 0.8; ctx.stroke();
     ctx.lineWidth = lw * 0.45; ctx.strokeStyle = KT.rgba(line, 0.5); tailRays(ctx, e, tailAng, R * 2.1, R * 1.25); ctx.stroke();
     bodyPath(ctx, P, R); ctx.fillStyle = body; ctx.fill();
-    ctx.save(); bodyPath(ctx, P, R); ctx.clip(); ctx.fillStyle = red;
+    ctx.save(); bodyPath(ctx, P, R * 0.85); ctx.clip(); ctx.fillStyle = red; // margen blanco (kiwa) hacia el contorno
     patches(o.seed == null ? 'mascot' : o.seed).forEach(pt => {
-      const i = Math.min(N - 1, Math.floor(pt.i)), f = pt.i - i, a = P[i], b = P[Math.min(N - 1, i + 1)];
-      const x = a.x + (b.x - a.x) * f + a.nx * pt.off * R * 0.7, y = a.y + (b.y - a.y) * f + a.ny * pt.off * R * 0.7;
-      ctx.beginPath(); ctx.ellipse(x, y, pt.r * R, pt.r * R * 0.82, Math.atan2(a.ty, a.tx), 0, TAU); ctx.fill();
-      ctx.beginPath(); ctx.arc(x + a.tx * pt.r * R * 0.5 + a.nx * pt.r * R * 0.4, y + a.ty * pt.r * R * 0.5 + a.ny * pt.r * R * 0.4, pt.r * R * 0.55, 0, TAU); ctx.fill();
+      const q = patchPos(P, pt, R, 0.55);
+      blob(ctx, q.x, q.y, pt.r * R * 1.3, pt.r * R * 0.86, q.ang, pt.s); ctx.fill();
     });
     ctx.restore();
     bodyPath(ctx, P, R); ctx.strokeStyle = line; ctx.lineWidth = lw; ctx.stroke();
@@ -207,18 +220,24 @@
     cross: (x0, y0, x1, y1, t0, t1, wav = 60, L = 1) => t => { const u = (t - t0) / (t1 - t0); return { x: x0 + (x1 - x0) * u, y: y0 + (y1 - y0) * u + wav * Math.sin(u * TAU * 1.2) }; }
   };
 
-  // ruta periódica por puntos con tiempo: [{t, x, y}], periodo L. Catmull-Rom en el tiempo (pasa por cada punto a su hora).
+  // ruta periódica por puntos con tiempo: [{t, x, y}], periodo L. Hermite cúbica en el tiempo: pasa por cada punto a
+  // su hora y la velocidad en cada punto es (siguiente − anterior) / (tiempo entre ellos), así no hay tirones aunque
+  // los tramos duren distinto.
   paths.route = function (pts, L) {
     const P = pts.slice().sort((a, b) => a.t - b.t), n = P.length;
+    const T = i => P[((i % n) + n) % n].t + Math.floor(i / n) * L;          // tiempo desenrollado del punto i
+    const Q = i => P[((i % n) + n) % n];
+    const vel = i => { const a = Q(i - 1), c = Q(i + 1), dt = T(i + 1) - T(i - 1); return { x: (c.x - a.x) / dt, y: (c.y - a.y) / dt }; };
+    const V = P.map((_, i) => vel(i));
     return function (t) {
       const tt = ((t % L) + L) % L;
       let i = n - 1; for (let k = 0; k < n; k++) { if (P[k].t > tt) { i = k - 1; break; } }
       if (i < 0) i = n - 1;
-      const p1 = P[i], p2 = P[(i + 1) % n], p0 = P[(i - 1 + n) % n], p3 = P[(i + 2) % n];
-      let t1 = p1.t, t2 = p2.t; if (t2 <= t1) t2 += L; let x = tt; if (x < t1) x += L;
-      const u = (x - t1) / (t2 - t1), u2 = u * u, u3 = u2 * u;
-      const cr = (a, b, c, d) => 0.5 * (2 * b + (-a + c) * u + (2 * a - 5 * b + 4 * c - d) * u2 + (-a + 3 * b - 3 * c + d) * u3);
-      return { x: cr(p0.x, p1.x, p2.x, p3.x), y: cr(p0.y, p1.y, p2.y, p3.y) };
+      const t1 = T(i), t2 = T(i + 1); let x = tt; if (x < t1) x += L;
+      const h = t2 - t1, u = (x - t1) / h, u2 = u * u, u3 = u2 * u;
+      const h00 = 2 * u3 - 3 * u2 + 1, h10 = u3 - 2 * u2 + u, h01 = -2 * u3 + 3 * u2, h11 = u3 - u2;
+      const p1 = Q(i), p2 = Q(i + 1), m1 = V[i], m2 = V[(i + 1) % n];
+      return { x: h00 * p1.x + h10 * h * m1.x + h01 * p2.x + h11 * h * m2.x, y: h00 * p1.y + h10 * h * m1.y + h01 * p2.y + h11 * h * m2.y };
     };
   };
 

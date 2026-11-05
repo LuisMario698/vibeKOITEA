@@ -37,6 +37,16 @@
     }, { text: true });
   }
   KT.legacy = function (ctx, side) { ctx.drawImage(legacySprite(side), 0, 0, 1080, 1920); };
+  // laterales recoloreadas para las versiones de solo pantalla central: mismo menú, crema y tinta, sin animación
+  KT.sidesCream = function (ctx, side) {
+    const sp = KT.sprite('cream|' + side, 1080, 1920, (g) => {
+      g.fillStyle = '#FBF3E8'; g.fillRect(0, 0, 1080, 1920);
+      KT.text(g, 'KOI TEA', 540, 150, { size: 64, weight: 600, family: KT.F.logo, color: KT.C.ink, align: 'center', ls: 13 });
+      g.fillStyle = KT.rgba(KT.C.ink, 0.2); g.fillRect(490, 186, 100, 3);
+      KT.boardText(g, side, { top: 200 });
+    }, { text: true });
+    ctx.drawImage(sp, 0, 0, 1080, 1920);
+  };
 
   /* ---------- Menú rediseñado (legible a 3–4 m) ----------
      Tamaños para pantallas de ~55" (estimadas con la foto): nombres y precios 62 px, inglés/secundario ≥ 46 px,
@@ -82,8 +92,10 @@
       if (r) {
         const hk = KT.E.inOutCubic(KT.clamp(o.hi.k)), NS = 62, h = NS * 1.42 + (r.en ? 52 : 0);
         ctx.save(); if (sc !== 1) { ctx.translate(540, top0); ctx.scale(sc, sc); ctx.translate(-540, -top0); }
-        ctx.fillStyle = KT.rgba(accent, 0.13 * hk); ctx.beginPath(); KT.rr(ctx, X - 26, r.y - NS * 1.0, W + 52, h, 30); ctx.fill();
-        ctx.fillStyle = KT.rgba(accent, 0.9 * hk); ctx.beginPath(); KT.rr(ctx, X - 26, r.y - NS * 1.0, 8, h, 4); ctx.fill();
+        // halo cálido, como luz sobre el renglón (sin barra lateral de "selección")
+        const g = ctx.createLinearGradient(X - 30, 0, X + W + 30, 0);
+        g.addColorStop(0, KT.rgba('#FFD58A', 0)); g.addColorStop(0.12, KT.rgba('#FFD58A', 0.42 * hk)); g.addColorStop(0.88, KT.rgba('#FFD58A', 0.42 * hk)); g.addColorStop(1, KT.rgba('#FFD58A', 0));
+        ctx.fillStyle = g; ctx.beginPath(); KT.rr(ctx, X - 30, r.y - NS * 1.0, W + 60, h, h / 2); ctx.fill();
         ctx.restore();
       }
     }
@@ -117,13 +129,17 @@
         let nx = X;
         if (o.swatch !== false) { const g = ctx.createLinearGradient(0, r.y - 44, 0, r.y + 4); g.addColorStop(0, r.d.c2 || r.d.c1); g.addColorStop(1, r.d.c1); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(X + 16, r.y - 21, 16, 0, TAU); ctx.fill(); ctx.strokeStyle = KT.rgba(ink, 0.25); ctx.lineWidth = 2; ctx.stroke(); nx = X + 50; }
         const nw = KT.text(ctx, r.d.n, nx, r.y, { size: NS, weight: 500, family: KT.F.sans, color: ink });
-        if (r.d.house) KT.hanko(ctx, nx + nw + 40, r.y - 22, 46, '鯉');
+        if (r.d.house) { // etiqueta "Casa · House" en lugar de un sello suelto
+          const tx = nx + nw + 24, lab = 'Casa · House', tw = KT.measure(ctx, lab, { size: 40, weight: 600, family: KT.F.sans, ls: 1 });
+          ctx.strokeStyle = KT.rgba(KT.C.red, 0.9); ctx.lineWidth = 2.5; ctx.beginPath(); KT.rr(ctx, tx, r.y - 48, tw + 30, 56, 28); ctx.stroke();
+          KT.text(ctx, lab, tx + 15, r.y - 7, { size: 40, weight: 600, family: KT.F.sans, color: KT.C.red, ls: 1 });
+        }
         if (r.en) KT.text(ctx, r.en + (r.d.k === 'fruit' ? ' green tea' : ''), nx, r.y + 52, { size: ES, weight: 400, family: KT.F.sans, color: en });
         KT.text(ctx, String(r.d.p), R, r.y, { size: NS, weight: 600, family: KT.F.sans, color: ink, align: 'right' });
       } else if (r.kind === 'tapioca') {
-        KT.text(ctx, M().toppings.tapioca.es, X, r.y, { size: NS, weight: 500, family: KT.F.sans, color: ink });
-        KT.text(ctx, M().toppings.tapioca.en, X + KT.measure(ctx, 'Tapioca', { size: NS, weight: 500, family: KT.F.sans }) + 26, r.y, { size: ES, weight: 400, family: KT.F.sans, color: en });
-        for (let k = 0; k < 4; k++) KT.pearl(ctx, R - 22 - k * 50, r.y - 22, 20);
+        ctx.fillStyle = KT.C.pearl; ctx.beginPath(); ctx.arc(X + 16, r.y - 21, 16, 0, TAU); ctx.fill();
+        KT.text(ctx, M().toppings.tapioca.es, X + 50, r.y, { size: NS, weight: 500, family: KT.F.sans, color: ink });
+        KT.text(ctx, M().toppings.tapioca.en, X + 50 + KT.measure(ctx, 'Tapioca', { size: NS, weight: 500, family: KT.F.sans }) + 26, r.y, { size: ES, weight: 400, family: KT.F.sans, color: en });
       } else if (r.kind === 'cols') {
         const T = M().toppings, cx2 = X + W * 0.54;
         KT.text(ctx, T.pops.es, X, r.y, { size: ES + 2, weight: 600, family: KT.F.sans, color: ink });

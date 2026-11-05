@@ -30,17 +30,15 @@
 
   /* ---------- Tipografías (Google Fonts) ---------- */
   KT.F = {
-    serif: '"Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif',
+    serif: '"DM Serif Display", "Bodoni Moda", "Didot", Georgia, serif',   // cursiva de alto contraste con trazos finos que aguantan la distancia
     sans: '"Jost", "Futura", "Avenir Next", "Segoe UI", system-ui, sans-serif',
-    round: '"M PLUS Rounded 1c", "Arial Rounded MT Bold", "Nunito", system-ui, sans-serif',
+    logo: '"Jost", "Futura", "Avenir Next", system-ui, sans-serif',          // logotipo: sans geométrica con O circular, como las letras de acero del local
     mincho: '"Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif',
     brush: '"Yuji Syuku", "Shippori Mincho", "Hiragino Mincho ProN", serif'
   };
   KT.FONT_LOADS = [
-    'italic 400 100px "Bodoni Moda"', 'italic 600 100px "Bodoni Moda"', 'italic 800 100px "Bodoni Moda"',
-    '400 100px "Bodoni Moda"', '600 100px "Bodoni Moda"', '800 100px "Bodoni Moda"',
+    'italic 400 100px "DM Serif Display"', '400 100px "DM Serif Display"',
     '300 60px "Jost"', '400 60px "Jost"', '500 60px "Jost"', '600 60px "Jost"', '700 60px "Jost"',
-    '500 60px "M PLUS Rounded 1c"', '800 60px "M PLUS Rounded 1c"',
     '600 60px "Shippori Mincho"', '800 60px "Shippori Mincho"',
     '400 60px "Yuji Syuku"'
   ];
@@ -126,9 +124,34 @@
     return '#' + ((1 << 24) | (m(0) << 16) | (m(1) << 8) | m(2)).toString(16).slice(1);
   };
 
+  // mezcla en OKLCH (tono por el camino corto): pasa de índigo a crema sin el gris de la mezcla RGB
+  const lin = c => { c /= 255; return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); };
+  const gam = c => { const v = c <= 0.0031308 ? 12.92 * c : 1.055 * Math.pow(c, 1 / 2.4) - 0.055; return Math.round(clamp(v) * 255); };
+  const toOklch = hex => {
+    const [R, G, B] = KT.rgb(hex).map(lin);
+    const l = Math.cbrt(0.4122214708 * R + 0.5363325363 * G + 0.0514459929 * B), m = Math.cbrt(0.2119034982 * R + 0.6806995451 * G + 0.1073969566 * B), s = Math.cbrt(0.0883024619 * R + 0.2817188376 * G + 0.6299787005 * B);
+    const L = 0.2104542553 * l + 0.793617785 * m - 0.0040720468 * s, a = 1.9779984951 * l - 2.428592205 * m + 0.4505937099 * s, b = 0.0259040371 * l + 0.7827717662 * m - 0.808675766 * s;
+    return [L, Math.hypot(a, b), Math.atan2(b, a)];
+  };
+  const fromOklch = ([L, C, h]) => {
+    const a = C * Math.cos(h), b = C * Math.sin(h);
+    const l = Math.pow(L + 0.3963377774 * a + 0.2158037573 * b, 3), m = Math.pow(L - 0.1055613458 * a - 0.0638541728 * b, 3), s = Math.pow(L - 0.0894841775 * a - 1.291485548 * b, 3);
+    const R = gam(4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s), G = gam(-1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s), B = gam(-0.0041960863 * l - 0.7034186147 * m + 1.707614701 * s);
+    return '#' + ((1 << 24) | (R << 16) | (G << 8) | B).toString(16).slice(1);
+  };
+  KT.mixOklch = function (a, b, t) {
+    if (t <= 0) return a; if (t >= 1) return b;
+    const A = toOklch(a), B = toOklch(b);
+    let dh = B[2] - A[2]; if (dh > Math.PI) dh -= TAU; if (dh < -Math.PI) dh += TAU;
+    const hA = A[1] < 0.02 ? B[2] : A[2], hB = B[1] < 0.02 ? A[2] : B[2];
+    let d2 = hB - hA; if (d2 > Math.PI) d2 -= TAU; if (d2 < -Math.PI) d2 += TAU;
+    return fromOklch([A[0] + (B[0] - A[0]) * t, A[1] + (B[1] - A[1]) * t, hA + d2 * t]);
+  };
+
   /* ---------- Texto ---------- */
   const hasLS = typeof CanvasRenderingContext2D !== 'undefined' && 'letterSpacing' in CanvasRenderingContext2D.prototype;
-  KT.font = o => `${o.style || 'normal'} ${o.weight || 400} ${o.size || 48}px ${o.family || KT.F.sans}`;
+  // DM Serif Display solo tiene peso 400: se fuerza para que el navegador no invente una negrita
+  KT.font = o => `${o.style || 'normal'} ${o.family === KT.F.serif ? 400 : (o.weight || 400)} ${o.size || 48}px ${o.family || KT.F.sans}`;
   KT._layoutCache = new Map();
   // posiciones x de cada carácter (respeta kerning e interletrado)
   KT.layout = function (ctx, s, o) {
@@ -203,6 +226,20 @@
     let size = o.size;
     while (size > (minSize || 10) && KT.measure(ctx, s, Object.assign({}, o, { size })) > maxW) size -= 2;
     return Object.assign({}, o, { size });
+  };
+
+  // parte un texto en 1–2 renglones para que quepa en maxW sin bajar de minSize (no lo encoge de más)
+  KT.fitLines = function (ctx, s, o, maxW, minSize) {
+    if (KT.measure(ctx, s, o) <= maxW) return { lines: [s], o };
+    const w = s.split(' ');
+    if (w.length > 1) {
+      let best = null, bd = 1e9;
+      for (let i = 1; i < w.length; i++) { const a = w.slice(0, i).join(' '), b = w.slice(i).join(' '); const d = Math.max(KT.measure(ctx, a, o), KT.measure(ctx, b, o)); if (d < bd) { bd = d; best = [a, b]; } }
+      if (bd <= maxW) return { lines: best, o };
+      const o2 = KT.fit(ctx, best[0].length > best[1].length ? best[0] : best[1], o, maxW, minSize || 10);
+      return { lines: best, o: Object.assign({}, o, { size: Math.min(o2.size, o.size) }) };
+    }
+    return { lines: [s], o: KT.fit(ctx, s, o, maxW, minSize) };
   };
 
   /* ---------- Formas ---------- */
@@ -417,20 +454,77 @@
     ctx.restore();
   };
 
+  /* ---------- Caligrafía en orden de trazos (datos de KanjiVG en KT.KANJI, ver kanji.js) ---------- */
+  // perfil del pincel según el tipo de trazo de KanjiVG: tome (se detiene), harai (barrido), hane (gancho), ten (punto)
+  const strokeStyle = type => {
+    const t = type || '';
+    if (/㇔/.test(t) && !/㇏/.test(t)) return { tin: 0.3, tout: 0.32, press: u => 0.55 + 0.7 * u };
+    if (/㇏/.test(t)) return { tin: 0.06, tout: 0.2, press: u => (u < 0.8 ? 0.72 + 0.5 * (u / 0.8) * (u / 0.8) : 1.22) };
+    if (/㇒|㇓|㇇|㇋|㇢/.test(t)) return { tin: 0.05, tout: 0.62, press: u => 1.1 - 0.2 * u + 0.3 * Math.exp(-u * 14) };
+    if (/㇚|㇁|㇆|㇟|㇙|㇉|㇖|㇗|㇛|㇜/.test(t)) return { tin: 0.05, tout: 0.24, press: u => 0.92 + 0.3 * Math.exp(-u * 14) };
+    return { tin: 0.04, tout: 0.08, press: u => 0.88 + 0.32 * Math.exp(-u * 12) + 0.24 * Math.exp(-(1 - u) * 16) };
+  };
+  const calliCache = {};
+  // plan de tiempos: cada trazo dura 0.07 s + 0.0024 s por unidad de largo, con 0.07 s de pausa entre trazos
+  KT.calliPlan = function (ch, speed) {
+    speed = speed || 1; const key = ch + '|' + speed;
+    if (calliCache[key]) return calliCache[key];
+    const S = (KT.KANJI || {})[ch]; if (!S) return null;
+    let t = 0;
+    const strokes = S.map(([type, flat]) => {
+      const pts = []; for (let i = 0; i < flat.length; i += 2) pts.push({ x: flat[i], y: flat[i + 1] });
+      let len = 0; for (let i = 1; i < pts.length; i++) len += Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y);
+      const d = (0.07 + 0.0024 * len) / speed, st = { pts, type, len, t0: t, d, sty: strokeStyle(type) };
+      t += d + 0.07 / speed; return st;
+    });
+    return (calliCache[key] = { strokes, dur: t - 0.07 / speed });
+  };
+  KT.calliDur = (ch, speed) => { const P = KT.calliPlan(ch, speed); return P ? P.dur : 0; };
+  // escribe ch con pincel, centrado en (x, y) dentro de una caja de size px; lt = segundos desde el primer trazo
+  // o: {weight (ancho del pincel / caja), color, alpha, speed, dry, seed}
+  KT.calli = function (ctx, ch, x, y, size, lt, o = {}) {
+    const P = KT.calliPlan(ch, o.speed); if (!P || lt <= 0) return false;
+    const k = size / 109, w = (o.weight || 0.095) * 109;
+    ctx.save(); ctx.translate(x - size / 2, y - size / 2); ctx.scale(k, k);
+    for (let i = 0; i < P.strokes.length; i++) {
+      const s = P.strokes[i], p = clamp((lt - s.t0) / s.d); if (p <= 0) break;
+      KT.brush(ctx, s.pts, KT.E.ink(p), { w: w * (s.len < 16 ? 1.08 : 1), color: o.color || KT.C.ink, alpha: o.alpha, taperIn: s.sty.tin, taperOut: s.sty.tout, press: s.sty.press, dry: o.dry == null ? 0.25 : o.dry, seed: (o.seed || 3) + i * 7 });
+    }
+    ctx.restore();
+    return true;
+  };
+
   /* ---------- Sello hanko ---------- */
+  // sello de piedra: cuadro rojo con el carácter tallado en blanco (hakubun). Si el carácter está en KT.KANJI se
+  // talla con sus trazos de ancho uniforme (como una talla); si no, con la fuente de pincel.
   KT.hanko = function (ctx, x, y, size, ch, o = {}) {
     const key = 'hanko|' + size + '|' + ch + '|' + (o.color || KT.C.koi);
     const sp = KT.sprite(key, size + 8, size + 8, (g) => {
       const R = KT.rng(size + ch.charCodeAt(0)); const s = size, c = 4;
       g.fillStyle = o.color || KT.C.koi; g.beginPath();
-      const steps = 40, pts = [];
+      const steps = 48, pts = [];
       for (let i = 0; i < steps; i++) { const u = i / steps; let px, py; if (u < 0.25) { px = u * 4 * s; py = 0; } else if (u < 0.5) { px = s; py = (u - 0.25) * 4 * s; } else if (u < 0.75) { px = s - (u - 0.5) * 4 * s; py = s; } else { px = 0; py = s - (u - 0.75) * 4 * s; } pts.push([c + px + (R() - 0.5) * s * 0.03, c + py + (R() - 0.5) * s * 0.03]); }
       pts.forEach((p, i) => (i ? g.lineTo(p[0], p[1]) : g.moveTo(p[0], p[1]))); g.closePath(); g.fill();
-      g.globalCompositeOperation = 'destination-out';
-      g.strokeStyle = '#000'; g.lineWidth = s * 0.045; g.strokeRect(c + s * 0.08, c + s * 0.08, s * 0.84, s * 0.84);
-      g.font = `400 ${Math.round(s * 0.72)}px ${KT.F.brush}`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillStyle = '#000';
-      g.fillText(ch, c + s / 2, c + s * 0.53);
-      for (let i = 0; i < 70; i++) { g.globalAlpha = 0.35 + R() * 0.5; g.beginPath(); g.arc(c + R() * s, c + R() * s, R() * s * 0.018 + 0.5, 0, TAU); g.fill(); }
+      g.globalCompositeOperation = 'destination-out'; g.fillStyle = '#000'; g.strokeStyle = '#000';
+      const S = (KT.KANJI || {})[ch];
+      if (S) {
+        // ajusta la caja real de los trazos al 76 % del sello, centrada; trazos de 7.8 % del sello
+        let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+        S.forEach(([, f]) => { for (let i = 0; i < f.length; i += 2) { x0 = Math.min(x0, f[i]); x1 = Math.max(x1, f[i]); y0 = Math.min(y0, f[i + 1]); y1 = Math.max(y1, f[i + 1]); } });
+        const k = (s * 0.76) / Math.max(x1 - x0, y1 - y0), ox = c + s / 2 - ((x0 + x1) / 2) * k, oy = c + s / 2 - ((y0 + y1) / 2) * k;
+        g.lineWidth = s * 0.078; g.lineCap = 'square'; g.lineJoin = 'miter'; g.miterLimit = 3;
+        S.forEach(([, flat]) => {
+          g.beginPath();
+          for (let i = 0; i < flat.length; i += 2) { const X = ox + flat[i] * k + (R() - 0.5) * s * 0.004, Y = oy + flat[i + 1] * k + (R() - 0.5) * s * 0.004; i ? g.lineTo(X, Y) : g.moveTo(X, Y); }
+          g.stroke();
+        });
+      } else {
+        g.font = `400 ${Math.round(s * 0.72)}px ${KT.F.brush}`; g.textAlign = 'center'; g.textBaseline = 'middle';
+        g.fillText(ch, c + s / 2, c + s * 0.53);
+      }
+      // desgaste de la piedra y del entintado
+      for (let i = 0; i < 90; i++) { g.globalAlpha = 0.3 + R() * 0.55; g.beginPath(); g.arc(c + R() * s, c + R() * s, R() * s * 0.016 + 0.5, 0, TAU); g.fill(); }
+      for (let i = 0; i < 14; i++) { g.globalAlpha = 0.6; const e = R() * 4 | 0, u = R() * s, r = R() * s * 0.025 + 1; g.beginPath(); g.arc(c + (e === 0 ? u : e === 1 ? s : e === 2 ? u : 0), c + (e === 0 ? 0 : e === 1 ? u : e === 2 ? s : u), r, 0, TAU); g.fill(); }
       g.globalAlpha = 1; g.globalCompositeOperation = 'source-over';
     }, { text: true });
     const a0 = ctx.globalAlpha; if (o.alpha != null) ctx.globalAlpha = a0 * o.alpha;
@@ -465,12 +559,14 @@
 
   /* ---------- Íconos de los cubos de luz (línea) ---------- */
   KT.icon = {
-    torii(ctx, x, y, s, lw) { // silueta sólida, como el cubo de luz del local
+    torii(ctx, x, y, s, lw) { // silueta sólida (myōjin): kasagi con las puntas levantadas, shimaki recto, nuki y pilares
       ctx.save(); ctx.translate(x, y); ctx.scale(s / 100, s / 100); ctx.fillStyle = ctx.strokeStyle;
-      ctx.beginPath(); ctx.moveTo(-52, -40); ctx.quadraticCurveTo(0, -52, 52, -40); ctx.lineTo(50, -31); ctx.quadraticCurveTo(0, -41, -50, -31); ctx.closePath(); ctx.fill();
-      ctx.fillRect(-44, -22, 88, 8); ctx.fillRect(-4, -33, 8, 12);
-      ctx.beginPath(); ctx.moveTo(-34, -34); ctx.lineTo(-25, -34); ctx.lineTo(-23, 46); ctx.lineTo(-35, 46); ctx.closePath(); ctx.fill();
-      ctx.beginPath(); ctx.moveTo(25, -34); ctx.lineTo(34, -34); ctx.lineTo(35, 46); ctx.lineTo(23, 46); ctx.closePath(); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(-56, -50); ctx.quadraticCurveTo(0, -34, 56, -50); ctx.lineTo(53, -41); ctx.quadraticCurveTo(0, -27, -53, -41); ctx.closePath(); ctx.fill();
+      ctx.fillRect(-46, -35, 92, 7);                       // shimaki
+      ctx.fillRect(-4, -29, 8, 13);                        // gakuzuka
+      ctx.fillRect(-46, -17, 92, 8);                       // nuki
+      ctx.beginPath(); ctx.moveTo(-33, -29); ctx.lineTo(-24, -29); ctx.lineTo(-22, 48); ctx.lineTo(-35, 48); ctx.closePath(); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(24, -29); ctx.lineTo(33, -29); ctx.lineTo(35, 48); ctx.lineTo(22, 48); ctx.closePath(); ctx.fill();
       ctx.restore();
     },
     boba(ctx, x, y, s, lw) {
@@ -480,14 +576,15 @@
       ctx.fillStyle = ctx.strokeStyle; [[-10, 34], [2, 36], [14, 33], [-4, 24], [9, 23]].forEach(p => { ctx.beginPath(); ctx.arc(p[0], p[1], 4.5, 0, TAU); ctx.fill(); });
       ctx.restore();
     },
-    koi(ctx, x, y, s, lw) { // silueta sólida con barbillas, como el cubo de luz del local
-      ctx.save(); ctx.translate(x, y); ctx.scale(s / 100, s / 100); ctx.fillStyle = ctx.strokeStyle; ctx.lineWidth = lw * 100 / s; ctx.lineCap = 'round';
-      ctx.beginPath(); ctx.moveTo(-2, -48); ctx.bezierCurveTo(16, -44, 20, -8, 9, 16); ctx.bezierCurveTo(5, 26, 3, 32, 0, 34);
-      ctx.bezierCurveTo(-3, 32, -5, 26, -9, 16); ctx.bezierCurveTo(-20, -8, -18, -44, -2, -48); ctx.closePath(); ctx.fill();
-      ctx.beginPath(); ctx.moveTo(0, 30); ctx.bezierCurveTo(-18, 38, -22, 50, -20, 54); ctx.bezierCurveTo(-8, 48, -2, 44, 0, 40); ctx.bezierCurveTo(2, 44, 8, 48, 20, 54); ctx.bezierCurveTo(22, 50, 18, 38, 0, 30); ctx.fill();
-      ctx.beginPath(); ctx.moveTo(-10, -14); ctx.quadraticCurveTo(-30, -10, -32, 4); ctx.quadraticCurveTo(-18, -2, -9, -4); ctx.fill();
-      ctx.beginPath(); ctx.moveTo(10, -14); ctx.quadraticCurveTo(30, -10, 32, 4); ctx.quadraticCurveTo(18, -2, 9, -4); ctx.fill();
-      ctx.beginPath(); ctx.moveTo(-5, -46); ctx.quadraticCurveTo(-12, -54, -8, -60); ctx.moveTo(1, -46); ctx.quadraticCurveTo(8, -54, 4, -60); ctx.stroke();
+    koi(ctx, x, y, s, lw) { // silueta sólida vista desde arriba: cuerpo, aletas pectorales y cola en V
+      ctx.save(); ctx.translate(x, y); ctx.scale(s / 100, s / 100); ctx.fillStyle = ctx.strokeStyle;
+      ctx.beginPath(); ctx.moveTo(0, -50); ctx.bezierCurveTo(12, -50, 17, -34, 16, -16); ctx.bezierCurveTo(15, 2, 8, 20, 3, 30);
+      ctx.lineTo(-3, 30); ctx.bezierCurveTo(-8, 20, -15, 2, -16, -16); ctx.bezierCurveTo(-17, -34, -12, -50, 0, -50); ctx.closePath(); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(0, 24); ctx.bezierCurveTo(-6, 34, -16, 44, -22, 54); ctx.bezierCurveTo(-12, 52, -4, 46, 0, 40); ctx.bezierCurveTo(4, 46, 12, 52, 22, 54); ctx.bezierCurveTo(16, 44, 6, 34, 0, 24); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(-14, -22); ctx.bezierCurveTo(-26, -20, -34, -12, -34, -2); ctx.bezierCurveTo(-26, -6, -18, -10, -13, -12); ctx.closePath(); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(14, -22); ctx.bezierCurveTo(26, -20, 34, -12, 34, -2); ctx.bezierCurveTo(26, -6, 18, -10, 13, -12); ctx.closePath(); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(-6, 8); ctx.bezierCurveTo(-14, 12, -18, 18, -18, 24); ctx.bezierCurveTo(-12, 20, -8, 18, -5, 16); ctx.closePath(); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(6, 8); ctx.bezierCurveTo(14, 12, 18, 18, 18, 24); ctx.bezierCurveTo(12, 20, 8, 18, 5, 16); ctx.closePath(); ctx.fill();
       ctx.restore();
     },
     leaf(ctx, x, y, s, lw) {
@@ -496,6 +593,31 @@
       for (let k = 0; k < 4; k++) { const yy = -26 + k * 16; ctx.moveTo(0, yy + 8); ctx.lineTo(18 - k * 2, yy - 4); ctx.moveTo(0, yy + 8); ctx.lineTo(-18 + k * 2, yy - 4); }
       ctx.stroke(); ctx.restore();
     }
+  };
+
+  /* ---------- Papel de galería: esquina casi recta, sombra de contacto y filete nogal interior ---------- */
+  KT.card = function (ctx, x, y, w, h, a, o = {}) {
+    if (a <= 0) return;
+    ctx.save(); ctx.globalAlpha *= a;
+    if (o.drop) { const [dx, dy, da, dc] = o.drop; ctx.fillStyle = KT.rgba(dc || '#3A2A20', da); ctx.fillRect(x + dx, y + dy, w, h); } // sombra sobre el agua
+    ctx.fillStyle = KT.rgba(o.shadow || '#3A2A20', 0.10); ctx.fillRect(x + 3, y + 4, w, h);
+    if (o.paper) ctx.drawImage(o.paper, x, y, w, h); else { ctx.fillStyle = o.fill || '#FBF3E8'; ctx.fillRect(x, y, w, h); }
+    ctx.strokeStyle = KT.rgba(KT.C.ink, 0.14); ctx.lineWidth = 2; ctx.strokeRect(x + 1, y + 1, w - 2, h - 2);
+    if (o.fillet !== false) { ctx.strokeStyle = KT.rgba(KT.C.walnut, 0.55); ctx.lineWidth = 2; const i = o.inset || 24; ctx.strokeRect(x + i, y + i, w - i * 2, h - i * 2); }
+    ctx.restore();
+  };
+  /* ---------- Precio tipográfico (sin "$"; MXN como etiqueta) ---------- */
+  KT.priceBlock = function (ctx, x, y, mxn, o = {}) {
+    const a = o.alpha == null ? 1 : o.alpha; if (a <= 0) return;
+    const al = o.align || 'left', size = o.size || 140, ink = o.color || KT.C.ink;
+    const w = KT.measure(ctx, String(mxn), { size, weight: 600, family: KT.F.sans });
+    const x0 = al === 'center' ? x - w / 2 : al === 'right' ? x - w : x;
+    ctx.save(); ctx.globalAlpha *= a;
+    ctx.fillStyle = KT.rgba(KT.C.walnut, 0.8); ctx.fillRect(x0, y - size * 0.86, Math.max(w, 120) * KT.clamp(o.rule == null ? 1 : o.rule), 3);
+    ctx.restore();
+    KT.text(ctx, String(mxn), x0, y, { size, weight: 600, family: KT.F.sans, color: ink, alpha: a });
+    KT.text(ctx, 'MXN', x0 + 4, y + 56, { size: 44, weight: 600, family: KT.F.sans, color: ink, ls: 6, alpha: a });
+    if (o.usd !== false) KT.text(ctx, '≈ ' + KT.money(mxn, 'usd'), x0 + 4, y + 118, { size: 46, weight: 500, family: KT.F.sans, color: KT.C.en, alpha: a });
   };
 
   /* ---------- Fondo cálido de la pared (para composiciones) ---------- */

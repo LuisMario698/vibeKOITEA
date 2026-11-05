@@ -96,9 +96,14 @@
         ctx.save(); ctx.clip(P.cup);
         const lvl = st.level == null ? 1 : KT.clamp(st.level);
         const top = 792 - (792 - 628) * lvl;
-        ctx.fillStyle = st.tea || KT.C.milk; ctx.fillRect(330, top, 240, 800 - top);
+        if (st.teaLayers) { const g = ctx.createLinearGradient(0, 792, 0, 628); st.teaLayers.forEach(([p, c]) => g.addColorStop(p, c)); ctx.fillStyle = g; }
+        else ctx.fillStyle = st.tea || KT.C.milk;
+        ctx.fillRect(330, top, 240, 800 - top);
         const pc = st.pearls == null ? PEARLS.length : st.pearls;
-        for (let i = 0; i < Math.min(pc, PEARLS.length); i++) { ctx.fillStyle = st.pearl || KT.C.pearl; ctx.beginPath(); ctx.arc(PEARLS[i][0], PEARLS[i][1], 13, 0, TAU); ctx.fill(); }
+        for (let i = 0; i < Math.min(pc, PEARLS.length); i++) {
+          if (st.topType === 'jelly') { ctx.fillStyle = '#F2ECE2'; ctx.save(); ctx.translate(PEARLS[i][0], PEARLS[i][1]); ctx.rotate(i * 0.4); ctx.fillRect(-12, -12, 24, 24); ctx.strokeStyle = KT.rgba(line, 0.5); ctx.lineWidth = 3; ctx.strokeRect(-12, -12, 24, 24); ctx.restore(); }
+          else { ctx.fillStyle = st.pearl || KT.C.pearl; ctx.beginPath(); ctx.arc(PEARLS[i][0], PEARLS[i][1], 13, 0, TAU); ctx.fill(); }
+        }
         ctx.restore();
         ctx.fillStyle = st.lidFill || '#FFFFFF'; ctx.fill(new Path2D(D.dome + ' Z')); ctx.fill(P.lid); ctx.globalAlpha = 1;
       }

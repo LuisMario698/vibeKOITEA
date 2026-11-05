@@ -69,7 +69,7 @@
       concept: 'La mascota del logo cobra vida en la pantalla central. Se dibuja con tinta, toma su boba y presenta la bebida del momento con su precio. Cada vuelta del loop destaca una bebida distinta: Taro, Koi Tea y Brown Sugar. Cierra con un QR real que abre el Instagram del local y una razón para seguirlo.',
       why: 'Es la evolución directa de lo que hoy muestra la pantalla central: la misma mascota y el mismo llamado a Instagram, pero ahora vende. El trazo negro y el rojo koi son los del logo, y el fondo crema continúa la pared del local en lugar de cortarla.',
       signature: 'El koi sorbe su boba: una perla sube por el popote y el nivel del vaso baja. Luego se acomoda arriba y mira la bebida que presenta.',
-      specs: [['Formato', 'Pantalla central · 1080 × 1920'], ['Loop', '36 s × 3 bebidas = 108 s'], ['Escenas', '3 por vuelta, de 9 a 14 s'], ['Texto', 'Nombres 132 px · inglés ≥ 48 px'], ['Laterales', 'Sin cambio'], ['Exportación', 'MP4 de 108 s o web']]
+      specs: [['Formato', 'Pantalla central · 1080 × 1920'], ['Loop', '36 s × 3 bebidas = 108 s'], ['Escenas', '3 por vuelta, de 9 a 14 s'], ['Texto', 'Nombres 132 px · inglés ≥ 48 px'], ['Laterales', 'Como hoy o en crema'], ['Exportación', 'MP4 de 108 s o web']]
     },
     setup() { return { paper: KT.paper(1080, 1920, '#FBF3E8', 11, 0.9) }; },
     draw(ctx, t, view, st) {
@@ -93,15 +93,17 @@
       // "el vaso manda": en la escena de la bebida, el vasito de la mascota toma el color de la bebida del momento
       const teaK = KT.E.inOutSine(seg(t, 13.4, 15)) * (1 - seg(t, 34.8, 35.6));
       const featTea = d.k === 'fruit' ? KT.mix(d.c1, d.c2, 0.5) : d.c1;
+      const useLayers = d.k === 'fruit' && teaK > 0.5;
       KT.mascot(ctx, pose.x, pose.y + bob * (pose.s / 820), pose.s, {
         draw: drawP, fill: fillP, blink: life.blink, finL, finR, whisk: life.whisk, dorsal: life.dorsal,
-        sip: sip > 0 && sip < 1 ? sip : 0, level: t < 12.2 ? level : 1, look, lw: 10, tea: KT.mix(C.milk, featTea, teaK)
+        sip: sip > 0 && sip < 1 ? sip : 0, level: t < 12.2 ? level : 1, look, lw: 10, tea: KT.mix(C.milk, featTea, teaK),
+        teaLayers: useLayers ? d.layers : null, topType: useLayers && d.top && d.top.type === 'jelly' ? 'jelly' : null
       });
 
       // ---- escena 1: marca ----
       if (t > 3.6 && t < 12.6) {
         const out = t > 11.6 ? t - 11.6 : null;
-        KT.textIn(ctx, 'KOI TEA', 540, 1450, { size: 150, weight: 800, family: F.round, color: C.ink, align: 'center', ls: 24, stagger: 0.07, dur: 1.0 }, t - 3.8, out);
+        KT.textIn(ctx, 'KOI TEA', 540, 1450, { size: 150, weight: 600, family: F.logo, color: C.ink, align: 'center', ls: 24, stagger: 0.07, dur: 1.0 }, t - 3.8, out);
         const subA = 1 - seg(t, 6.8, 7.4), capA = seg(t, 7.2, 7.9);
         if (subA > 0) KT.textIn(ctx, 'Boba shop · Puerto Peñasco', 540, 1556, { size: 56, weight: 500, family: F.sans, color: C.en, align: 'center', alpha: subA, stagger: 0.02 }, t - 4.6, null);
         if (capA > 0) {
@@ -111,17 +113,17 @@
       }
 
       // ---- escena 2: bebida del momento ----
-      if (t > 13.2 && t < 27) {
+      if (t > 12.6 && t < 27) {
         const out = t > 25.6 ? t - 25.6 : null;
-        KT.textIn(ctx, 'BEBIDA DEL MOMENTO', 540, 640, { size: 50, weight: 600, family: F.sans, color: C.red, align: 'center', ls: 6, stagger: 0.02 }, t - 13.4, out);
+        KT.textIn(ctx, 'BEBIDA DEL MOMENTO', 540, 640, { size: 50, weight: 600, family: F.sans, color: C.red, align: 'center', ls: 6, mode: 'fade', stagger: 0.01 }, t - 12.8, out);
         const NO = { size: 132, weight: 700, style: 'italic', family: F.serif };
         const lines = nameLines(ctx, f.name, NO, 960);
         let y = lines.length > 1 ? 780 : 790;
-        lines.forEach((ln, i) => { KT.textIn(ctx, ln, 540, y, Object.assign({ color: C.ink, align: 'center', mode: 'mask', stagger: 0.03, dur: 1.1 }, NO), t - 13.8 - i * 0.25, out); if (i < lines.length - 1) y += 128; });
+        lines.forEach((ln, i) => { KT.textIn(ctx, ln, 540, y, Object.assign({ color: C.ink, align: 'center', mode: 'mask', stagger: 0.03, dur: 1.1 }, NO), t - 13.2 - i * 0.25, out); if (i < lines.length - 1) y += 128; });
         KT.textIn(ctx, f.es, 540, y + 96, { size: 58, weight: 500, family: F.sans, color: C.ink, align: 'center', mode: 'fade', stagger: 0.012 }, t - 14.6, out);
         KT.textIn(ctx, f.en, 540, y + 160, { size: 50, weight: 400, family: F.sans, color: C.en, align: 'center', mode: 'fade', stagger: 0.012 }, t - 15.0, out);
-        const rise = 1 - E.outCubic(seg(t, 13.4, 14.8)), sink = E.inOutCubic(seg(t, 25.6, 26.8));
-        const cupA = KT.clamp(seg(t, 13.4, 14.2)) * (1 - seg(t, 26.2, 26.8));
+        const rise = 1 - E.outCubic(seg(t, 12.8, 14.4)), sink = E.inOutCubic(seg(t, 25.6, 26.8));
+        const cupA = KT.clamp(seg(t, 12.8, 13.6)) * (1 - seg(t, 26.2, 26.8));
         if (cupA > 0) {
           ctx.save(); ctx.globalAlpha = cupA;
           KT.cup(ctx, 400, 1770 + rise * 260 + sink * 320, lines.length > 1 ? 600 : 640, {
@@ -129,16 +131,15 @@
             wave: (TAU * 18 * t) / L, straw: false, seed: 3
           });
           ctx.restore();
-          const pa = seg(t, 18.2, 19.0) * (1 - seg(t, 25.4, 25.9));
-          priceBadge(ctx, 836, 1330, d.p, pa);
-          if (pa > 0) KT.text(ctx, '≈ ' + KT.money(d.p, 'usd'), 836, 1556, { size: 48, weight: 500, family: F.sans, color: C.en, align: 'center', alpha: KT.clamp((pa - 0.5) * 2) });
+          const pa = seg(t, 18.0, 18.8) * (1 - seg(t, 25.4, 25.9));
+          KT.priceBlock(ctx, 690, 1420, d.p, { alpha: pa, rule: E.outCubic(seg(t, 18.0, 19.0)) });
         }
       }
 
       // ---- escena 3: síguenos ----
-      if (t > 27.2) {
+      if (t > 26.6) {
         const out = t > 34.4 ? t - 34.4 : null;
-        KT.textIn(ctx, 'Síguenos', 540, 1010, { size: 150, weight: 700, style: 'italic', family: F.serif, color: C.ink, align: 'center', mode: 'mask', stagger: 0.04, dur: 1.1 }, t - 27.6, out);
+        KT.textIn(ctx, 'Síguenos', 540, 1010, { size: 150, weight: 700, style: 'italic', family: F.serif, color: C.ink, align: 'center', mode: 'mask', stagger: 0.04, dur: 1.1 }, t - 27.0, out);
         KT.textIn(ctx, 'Follow us on Instagram', 540, 1090, { size: 50, weight: 400, family: F.sans, color: C.en, align: 'center', mode: 'fade', stagger: 0.015 }, t - 28.2, out);
         const qa = seg(t, 28.2, 28.8) * (1 - seg(t, 34.6, 35.3));
         if (qa > 0) {
@@ -147,7 +148,7 @@
           KT.qr(ctx, 540 - 170, 1140, 340, { round: 0.32, radius: 28, reveal: E.outCubic(seg(t, 28.2, 29.8)) });
           ctx.restore();
         }
-        KT.textIn(ctx, '@koitea.mx', 540, 1626, { size: 96, weight: 600, family: F.sans, color: C.red, align: 'center', stagger: 0.03 }, t - 29.4, out);
+        KT.textIn(ctx, '@koitea.mx', 540, 1626, { size: 96, weight: 600, family: F.sans, color: C.red, align: 'center', mode: 'fade', stagger: 0.015 }, t - 29.2, out);
         KT.textIn(ctx, 'Promos y bebidas nuevas', 540, 1716, { size: 56, weight: 500, family: F.sans, color: C.ink, align: 'center', mode: 'fade', stagger: 0.01 }, t - 30.0, out);
         KT.textIn(ctx, 'Promos & new drinks', 540, 1782, { size: 48, weight: 400, family: F.sans, color: C.en, align: 'center', mode: 'fade', stagger: 0.01 }, t - 30.3, out);
       }

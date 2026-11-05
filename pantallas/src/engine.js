@@ -6,7 +6,7 @@
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const fmtT = s => (Math.floor(s / 60) ? Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0') : Math.floor(s) + ' s');
 
-  const S = { v: null, view: 'wall', playing: !RM, playhead: 0, cycle: 0, lamps: false, visible: true, states: new Map(), errors: new Set(), dirtySides: true };
+  const S = { v: null, view: 'wall', playing: !RM, playhead: 0, cycle: 0, lamps: false, sides: 'hoy', visible: true, states: new Map(), errors: new Set(), dirtySides: true };
   KT.state = S;
 
   function versions() { return KT.versions.slice().sort((a, b) => a.n - b.n); }
@@ -70,7 +70,7 @@
     const c = cv[s], g = cx[s]; if (!c || !c.width) return;
     const sc = c.width / KT.SW;
     g.setTransform(1, 0, 0, 1, 0, 0);
-    if (v.format !== 'triple' && s !== 'C') { g.setTransform(sc, 0, 0, sc, 0, 0); KT.legacy(g, s); return; }
+    if (v.format !== 'triple' && s !== 'C') { g.setTransform(sc, 0, 0, sc, 0, 0); (S.sides === 'crema' ? KT.sidesCream : KT.legacy)(g, s); return; }
     const x0 = v.format === 'triple' ? KT.X0[s] : 0;
     const view = { slot: s, x0, w: KT.SW, h: KT.SH, worldW: v.format === 'triple' ? KT.WORLD3 : KT.SW, format: v.format, scale: sc, cycle: S.cycle % (v.cycles || 1) };
     g.setTransform(sc, 0, 0, sc, -x0 * sc, 0);
@@ -93,10 +93,10 @@
     });
     if (S.view === 'wall') S.dirtySides = false;
   }
-  KT.renderAt = function (id, t, slot, canvas, cycle) { // usado por las pruebas y la exportación
+  KT.renderAt = function (id, t, slot, canvas, cycle, sides) { // usado por las pruebas, el modo kiosco y la exportación
     const v = byId(id); const g = canvas.getContext('2d'); const sc = canvas.width / KT.SW;
     g.setTransform(1, 0, 0, 1, 0, 0);
-    if (v.format !== 'triple' && slot !== 'C') { g.setTransform(sc, 0, 0, sc, 0, 0); KT.legacy(g, slot); return; }
+    if (v.format !== 'triple' && slot !== 'C') { g.setTransform(sc, 0, 0, sc, 0, 0); (sides === 'crema' ? KT.sidesCream : KT.legacy)(g, slot); return; }
     const x0 = v.format === 'triple' ? KT.X0[slot] : 0;
     g.setTransform(sc, 0, 0, sc, -x0 * sc, 0); g.save();
     v.draw(g, t, { slot, x0, w: KT.SW, h: KT.SH, worldW: v.format === 'triple' ? KT.WORLD3 : KT.SW, format: v.format, scale: sc, cycle: (cycle || 0) % (v.cycles || 1) }, stateFor(v));
@@ -167,10 +167,18 @@
     buildTimeline(); buildInfo(); layout();
     if (fromUser) { try { history.replaceState(null, '', '#' + v.id); } catch (e) { location.hash = v.id; } }
     render(KT.wrap(S.playhead, v.duration)); updateTimeline(KT.wrap(S.playhead, v.duration));
-    const lbl = $('stage-label'); if (lbl) lbl.textContent = (v.format === 'triple' ? 'Las tres pantallas cuentan una sola escena; las laterales siguen siendo el menú.' : 'Solo cambia la pantalla central; las laterales se muestran como están hoy.') + ' Precios ilustrativos.';
-    const names = { L: 'izquierda', C: 'central', R: 'derecha' };
-    slots.forEach(sl => { if (cv[sl]) cv[sl].setAttribute('aria-label', v.format === 'triple' || sl === 'C' ? `${v.name}, pantalla ${names[sl]}: ${v.tagline || ''}` : `Pantalla ${names[sl]}: menú como está hoy`); });
+    sidesUI();
   }
+  // etiqueta, accesibilidad y selector de laterales según el formato
+  function sidesUI() {
+    const v = S.v, cream = S.sides === 'crema', central = v.format !== 'triple';
+    const lbl = $('stage-label'); if (lbl) lbl.textContent = (!central ? 'Las tres pantallas cuentan una sola escena; las laterales siguen siendo el menú.' : cream ? 'Solo cambia la pantalla central; las laterales se muestran recoloreadas en crema, sin animación.' : 'Solo cambia la pantalla central; las laterales se muestran como están hoy.') + ' Precios ilustrativos.';
+    const names = { L: 'izquierda', C: 'central', R: 'derecha' };
+    slots.forEach(sl => { if (cv[sl]) cv[sl].setAttribute('aria-label', !central || sl === 'C' ? `${v.name}, pantalla ${names[sl]}: ${v.tagline || ''}` : `Pantalla ${names[sl]}: menú ${cream ? 'recoloreado en crema' : 'como está hoy'}`); });
+    const sg = $('sides-seg'); if (sg) sg.hidden = !central;
+    document.querySelectorAll('[data-sides-btn]').forEach(b => b.setAttribute('aria-pressed', b.dataset.sidesBtn === S.sides ? 'true' : 'false'));
+  }
+  function setSides(m) { S.sides = m; S.dirtySides = true; sidesUI(); render(KT.wrap(S.playhead, S.v.duration)); }
   function setPlaying(p) { S.playing = p; const b = $('btn-play'); if (b) { b.setAttribute('aria-pressed', p ? 'true' : 'false'); b.querySelector('span').textContent = p ? 'Pausar' : 'Reproducir'; } }
   function setView(view) {
     S.view = view; S.dirtySides = true;
@@ -183,6 +191,7 @@
     const tb = $('btn-take');
     if (tb) tb.addEventListener('click', () => { const v = S.v; if (!v || !v.takeover) return; const n = v.cycles || 1; S.cycle = S.cycle - (S.cycle % n) + v.takeover.cycle; seek(v.takeover.t); if (!S.playing) setPlaying(true); });
     document.querySelectorAll('[data-view-btn]').forEach(b => b.addEventListener('click', () => setView(b.dataset.viewBtn)));
+    document.querySelectorAll('[data-sides-btn]').forEach(b => b.addEventListener('click', () => setSides(b.dataset.sidesBtn)));
     const fb = $('btn-full');
     if (fb) fb.addEventListener('click', () => {
       const st = $('stage');
@@ -214,7 +223,7 @@
     let q; try { q = new URLSearchParams(location.search); } catch (e) { return false; }
     const slot = (q.get('screen') || '').toUpperCase(); if (!['L', 'C', 'R'].includes(slot)) return false;
     const v = byId(q.get('v') || 'v1') || versions()[0];
-    const dy = parseFloat(q.get('dy')) || 0, lat = parseFloat(q.get('lat')) || 0;
+    const dy = parseFloat(q.get('dy')) || 0, lat = parseFloat(q.get('lat')) || 0, sides = q.get('sides') === 'crema' ? 'crema' : 'hoy';
     const EPOCH = Date.UTC(2026, 10, 1, 17 + 7, 30);   // 1 nov 2026, 17:30 en Sonora (UTC−7)
     document.body.innerHTML = '';
     document.body.style.cssText = 'margin:0;padding:0;background:#000;overflow:hidden;cursor:none';
@@ -229,7 +238,7 @@
       const cyc = Math.floor(total / v.duration) % n, t = ((total % v.duration) + v.duration) % v.duration;
       const sc = Math.min(c.width / KT.SW, c.height / KT.SH), w = Math.round(KT.SW * sc), h = Math.round(KT.SH * sc);
       if (tmp.width !== w) { tmp.width = w; tmp.height = h; }
-      KT.renderAt(v.id, t, slot, tmp, cyc);
+      KT.renderAt(v.id, t, slot, tmp, cyc, sides);
       g.fillStyle = '#000'; g.fillRect(0, 0, c.width, c.height);
       g.drawImage(tmp, Math.round((c.width - w) / 2), Math.round((c.height - h) / 2 + dy * sc));
       requestAnimationFrame(tick);

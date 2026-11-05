@@ -9,7 +9,7 @@ Cinco animaciones para las tres pantallas verticales de la barra de Koi Tea Boba
 | Versión | Pantallas | Loop |
 |---|---|---|
 | 1 · Koi vivo | Central | 36 s × 3 bebidas |
-| 2 · Tinta | Central | 36 s × 3 obras |
+| 2 · Tinta | Central | 40 s × 3 obras |
 | 3 · Estanque | Las tres | 60 s × 3 vueltas (toma de 7 s en la tercera) |
 | 4 · Luz | Las tres | 60 s × 3 vueltas (acorde de té en la tercera) |
 | 5 · Atardecer | Las tres | 60 s × 3 luces (puesta de sol en la tercera) |
@@ -60,5 +60,6 @@ index.html?screen=L&v=v3&gap=240&dy=0&lat=0
 - `gap`: hueco real entre imágenes encendidas, en px de contenido (1080 × distancia ÷ ancho de la imagen).
 - `dy`: diferencia de altura entre soportes, en px.
 - `lat`: retraso de esa TV, en ms.
+- `sides`: solo para las versiones de pantalla central; `crema` muestra en las laterales el menú recoloreado (crema y tinta, sin animación). Sin el parámetro, las laterales quedan como hoy.
 
 Todas las pantallas calculan el mismo instante a partir de la hora del sistema y de un ancla común (la apertura, 1 nov 2026 17:30), así que no necesitan hablar entre sí. Con varias Raspberry Pi, la del centro sirve la hora a las demás con chrony.
