@@ -97,6 +97,43 @@ button{font:inherit;color:inherit;cursor:pointer}
 @keyframes kbub{0%{transform:translateY(0);opacity:0}20%{opacity:.9}100%{transform:translateY(-26px);opacity:0}}
 @keyframes kfill{to{transform:scaleY(1)}}
 @keyframes kdrop{from{opacity:0;transform:translateY(-40px)}to{opacity:1;transform:none}}
+
+/* ---------- Presentación ---------- */
+.intro{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:32px;align-items:end;padding-block:40px 26px}
+.intro h1{font-size:clamp(2.2rem,5.5vw,4rem);letter-spacing:-.01em}
+.intro h1 em{font-style:normal;color:var(--koi)}
+.intro .lede{color:var(--muted);font-size:1.08rem;max-width:56ch;margin-top:12px}
+.vsw{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.vbtn{appearance:none;border:1.5px solid var(--line);background:var(--surface);border-radius:18px;padding:14px 16px;text-align:left;display:grid;gap:2px;transition:border-color .3s,background .3s,transform .2s}
+.vbtn:active{transform:scale(.98)}
+.vbtn b{font-family:var(--f-display);font-size:1.25rem}
+.vbtn span{font-size:.85rem;color:var(--muted)}
+.vbtn .k{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.12em;color:var(--koi)}
+.vbtn[aria-pressed="true"]{border-color:var(--koi);background:color-mix(in srgb,var(--koi) 9%,var(--surface))}
+
+/* ---------- Escenario ---------- */
+.stage{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr);gap:48px;align-items:center;background:var(--stage);border-radius:32px;padding:40px clamp(16px,4vw,56px);overflow:hidden;overflow:clip}
+.stage::before{content:"";position:absolute;inset:auto -10% -40% -10%;height:70%;background:radial-gradient(50% 50% at 30% 50%,color-mix(in srgb,var(--koi) 14%,transparent),transparent 70%);pointer-events:none}
+.notes{display:grid;gap:18px;position:relative;min-width:0}
+.notes h2{font-size:clamp(1.6rem,3vw,2.3rem)}
+.notes .feat{display:grid;gap:12px}
+.notes .feat div{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start}
+.notes .feat i{width:28px;height:28px;border-radius:9px;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;font-style:normal;font-family:var(--f-mono);font-size:.72rem;color:var(--koi)}
+.notes .try{font-family:var(--f-mono);font-size:.78rem;color:var(--muted);border-top:1px dashed var(--line);padding-top:12px}
+.kctl{display:grid;gap:8px;border:1px solid var(--line);border-radius:16px;padding:12px 14px;background:var(--paper)}
+.kctl .lbk{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.kctl .seg2{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:2px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:4px;max-width:360px}
+.kctl .seg2 button{appearance:none;border:0;background:transparent;color:var(--muted);font:500 .9rem var(--f-mono);min-width:0;min-height:36px;padding:6px 0;border-radius:10px;font-variant-numeric:tabular-nums;transition:background .2s,color .2s}
+.kctl .seg2 button[aria-pressed="true"]{background:var(--koi);color:var(--koi-ink)}
+.ghost{appearance:none;border:1px solid var(--line);background:var(--paper);color:var(--ink);font:500 .88rem var(--f-body);padding:9px 16px;border-radius:999px;justify-self:start}
+
+/* ---------- Teléfono ---------- */
+.phone{position:relative;width:min(390px,calc(100vw - 32px));aspect-ratio:9/19.3;background:#100D0C;border-radius:54px;padding:12px;box-shadow:0 50px 80px -40px rgba(40,20,10,.55),inset 0 0 0 2px #2A2422}
+.phone::after{content:"";position:absolute;top:22px;left:50%;width:96px;height:26px;margin-left:-48px;border-radius:20px;background:#100D0C;z-index:30}
+/* En escritorio el teléfono cabe en la vista y se queda fijo mientras se leen las notas y el chat del equipo */
+@media (min-width:921px){.phone{--ph:clamp(686px,calc(100vh - 48px),836px);width:calc(var(--ph) * 9 / 19.3);align-self:start;position:sticky;top:max(16px,calc((100vh - var(--ph)) / 2))}}
+.screen{position:relative;width:100%;height:100%;border-radius:42px;overflow:hidden;overflow:clip;container-type:size;isolation:isolate}
+.app{position:absolute;inset:0}
 .app[hidden]{display:none}
 .toast{position:absolute;left:50%;bottom:96px;z-index:40;transform:translate(-50%,20px);opacity:0;background:#27211E;color:#fff;font:500 .78rem var(--f-body);padding:8px 14px;border-radius:999px;transition:opacity .3s,transform .3s var(--ease);pointer-events:none;white-space:nowrap}
 .toast.on{opacity:1;transform:translate(-50%,0)}
