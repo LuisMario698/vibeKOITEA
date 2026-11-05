@@ -444,6 +444,16 @@ a{color:inherit}
   *,*::before,*::after{animation-duration:1ms!important;animation-iteration-count:1!important;transition-duration:120ms!important;transition-property:opacity,background-color,color,box-shadow!important;scroll-behavior:auto!important}
   .sheet,.layer.on .sheet,.toast,.toast.on{transform:none!important}
 }
+
+/* Ajustes de revisión */
+.tk-code{white-space:nowrap;font-size:clamp(44px,16vw,64px)}
+.tk-total .num{display:flex;flex-direction:column;align-items:flex-end}
+.tk-usd{font-size:var(--t-sm);font-weight:600;color:var(--muted)}
+.t-koi .t-price{right:62px;white-space:nowrap}
+@media (max-width:380px){.t-koi .t-price{font-size:16px}}
+.tile:focus-visible,.t-koi:focus-visible{outline:3px solid var(--ink);outline-offset:2px;box-shadow:0 0 0 6px #fff}
+.tchip .lab{overflow-wrap:anywhere;hyphens:auto}
+.foot-photo img{transform:none;object-position:50% 40%}
 </style>
 </head>
 <body>
@@ -524,7 +534,7 @@ es: {
   first: '¿Primera vez?', firstSub: 'Qué es el boba', topsSub: '13 opciones · 1 incluido', topsA: 'Ir a los toppings',
   merchSub: 'Rocky Point, MX', merchA: 'Merch y datos del local',
   menu: 'Menú', nDrinks: '{n} bebidas', oneDrink: '1 bebida', nOf: '{n} de 15 bebidas',
-  ph: 'Busca por sabor: fresa, mango, taro…', qLabel: 'Buscar bebida por sabor', clearQ: 'Borrar búsqueda', jumpQ: 'Buscar por sabor',
+  ph: 'Fresa, mango, taro…', qLabel: 'Buscar bebida por sabor', clearQ: 'Borrar búsqueda', jumpQ: 'Buscar por sabor',
   filters: 'Filtros', fMilk: 'Con leche', fNoMilk: 'Sin leche', fDecaf: 'Sin cafeína', fRev: 'Recomendado en reseñas', tabs: 'Categorías del menú',
   topsRule: '1 incluido en cada bebida · extra {p} · máx. 3', soldOut: 'Agotado',
   addA: 'Agregar {name}: {desc}. {price}', soldA: '{name}: agotado por hoy', added: 'Agregado',
@@ -576,7 +586,7 @@ en: {
   first: 'First time?', firstSub: 'What is boba?', topsSub: '13 options · 1 included', topsA: 'Go to toppings',
   merchSub: 'Rocky Point, MX', merchA: 'Merch and shop info',
   menu: 'Menu', nDrinks: '{n} drinks', oneDrink: '1 drink', nOf: '{n} of 15 drinks',
-  ph: 'Search by flavor: strawberry, mango, taro…', qLabel: 'Search drinks by flavor', clearQ: 'Clear search', jumpQ: 'Search by flavor',
+  ph: 'Strawberry, mango, taro…', qLabel: 'Search drinks by flavor', clearQ: 'Clear search', jumpQ: 'Search by flavor',
   filters: 'Filters', fMilk: 'With milk', fNoMilk: 'No milk', fDecaf: 'Caffeine-free', fRev: 'Recommended in reviews', tabs: 'Menu categories',
   topsRule: '1 included with every drink · extra {p} · max 3', soldOut: 'Sold out',
   addA: 'Add {name}: {desc}. {price}', soldA: '{name}: sold out today', added: 'Added',
@@ -770,7 +780,7 @@ function renderIntro() {
     '<p class="origin">' + ic('leaf', 18) + esc(t('origin')) + '</p>' + againHtml();
 }
 function againHtml() {
-  if (!S.last) return '';
+  if (!S.last || S.cart.length) return '';
   var L = S.last.lines, cups = L.slice(0, 3).map(function (l) { return C.svg(K.drink(l.id), { mini: true, shadow: false, toppings: l.cfg.toppings }); }).join('');
   return '<div class="again"><span class="cups" aria-hidden="true">' + cups + '</span><div><b>' + esc(t('againT')) + '</b><span class="s">' + esc(L.map(function (l) { return l.qty + '× ' + nm(K.drink(l.id)); }).join(' · ')) + '</span></div>' +
     '<button type="button" class="btn ghost sm" data-a="again" data-k="again">' + ic('repeat', 18) + esc(t('againBtn')) + '</button></div>';
@@ -1049,7 +1059,7 @@ function vCounter() {
         '<span class="tk-d">' + esc(K.describe(d, l.cfg, S.lang)) + '</span>' +
         (en ? '<span class="tk-staff" lang="es"><b>' + esc(t('staff')) + '</b>' + esc(d.name + ' · ' + K.describe(d, l.cfg, 'es')) + '</span>' : '') + '</li>';
     }).join('') + '</ol>' +
-    '<div class="tk-total"><span>' + esc(t('total')) + '</span><span class="num">' + (S.cur === 'usd' ? '≈ ' + K.money(K.cartTotal(S.cart, 'usd'), 'usd', 'full') : K.money(K.cartTotal(S.cart, 'mxn'), 'mxn', 'full')) + '</span></div>' +
+    '<div class="tk-total"><span>' + esc(t('total')) + '</span><span class="num">' + K.money(K.cartTotal(S.cart, 'mxn'), 'mxn', 'full') + (S.cur === 'usd' ? '<small class="tk-usd">≈ ' + K.money(K.cartTotal(S.cart, 'usd'), 'usd', 'full') + '</small>' : '') + '</span></div>' +
     (en || S.cur === 'usd' ? '<p class="tk-staff" lang="es"><b>' + esc(t('staff')) + '</b>' + esc(t('charge')) + ': ' + K.money(K.cartTotal(S.cart, 'mxn'), 'mxn', 'full') + ' · ' + TX.es[S.mode] + '</p>' : '') +
     '<div class="tk-thanks">' + koi('happy', 46) + '<span>' + esc(t('thanks')) + '</span></div>' +
     '<p class="fine">' + esc(t('payNote')) + ' ' + esc(K.meta.pricesNote[S.lang]) + '</p>';
@@ -1155,6 +1165,9 @@ function shut(ret) {
   if (!el || !el.offsetParent) el = $('#cartbar');
   el.focus();
 }
+/* Evita toques fantasma: si una capa se abrió o cerró hace menos de 350 ms, el segundo toque se ignora. */
+(function () { var last = 0, sig = ''; function cur() { return S.stack.map(function (x) { return x.view; }).join('|') + (layer.classList.contains('on') ? '+' : '-'); }
+  doc.addEventListener('click', function (e) { var t = performance.now(), now = cur(); if (t - last < 350 && now !== sig) { e.preventDefault(); e.stopImmediatePropagation(); return; } last = t; sig = now; }, true); })();
 doc.addEventListener('keydown', function (e) {
   if (S.stack.length) {
     if (e.key === 'Escape') { e.preventDefault(); closeTop(); return; }
@@ -1217,7 +1230,7 @@ function replaceLine(lines, oldKey, id, cfg, qty) {
 function quickAdd(id, btn) {
   var d = K.drink(id); if (!d || d.soldOut) return;
   var cfg = K.defaultConfig(d);
-  S.cart = K.addToCart(S.cart, id, cfg, 1);
+  S.cart = clampQ(K.addToCart(S.cart, id, cfg, 1));
   doneMark(btn); fly(btn.getBoundingClientRect(), d.colors.main);
   setTimeout(function () { renderBar(true); }, rm() ? 0 : 230);
   showToast({ kind: 'added', id: id, cfg: cfg, key: K.lineKey(id, cfg) });
@@ -1226,7 +1239,7 @@ function quickAdd(id, btn) {
 function addFromSheet(btn) {
   var dr = S.draft, d = K.drink(dr.id); if (!d || d.soldOut) return;
   var cfg = clone(dr.cfg), rect = btn.getBoundingClientRect(), under = S.stack.length > 1;
-  S.cart = dr.editKey ? replaceLine(S.cart, dr.editKey, d.id, cfg, dr.qty) : K.addToCart(S.cart, d.id, cfg, dr.qty);
+  S.cart = clampQ(dr.editKey ? replaceLine(S.cart, dr.editKey, d.id, cfg, dr.qty) : K.addToCart(S.cart, d.id, cfg, dr.qty));
   closeTop();
   if (under) { renderBar(false); announce(t('saved')); return; }
   fly(rect, d.colors.main);
@@ -1235,10 +1248,11 @@ function addFromSheet(btn) {
   else showToast({ kind: 'added', id: d.id, cfg: cfg, key: K.lineKey(d.id, cfg) });
   announce(dr.editKey ? t('saved') : t('addedAnn', { name: nm(d), n: K.cartCount(S.cart) }));
 }
+function clampQ(c) { return c.map(function (l) { return l.qty > 20 ? { key: l.key, id: l.id, cfg: l.cfg, qty: 20 } : l; }); }
 function lineAct(a, key) {
   var l = null, idx = -1;
   S.cart.forEach(function (x, i) { if (x.key === key) { l = x; idx = i; } }); if (!l) return;
-  var q = a === 'lrem' ? 0 : Math.min(20, l.qty + (a === 'linc' ? 1 : -1));
+  var q = a === 'lrem' ? 0 : (a === 'linc' ? Math.min(20, l.qty + 1) : l.qty - 1);
   S.undo = q === 0 ? { line: { key: l.key, id: l.id, cfg: clone(l.cfg), qty: l.qty }, idx: idx } : null;
   S.cart = K.setQty(S.cart, key, q);
   if (!S.cart.length) S.code = null;
