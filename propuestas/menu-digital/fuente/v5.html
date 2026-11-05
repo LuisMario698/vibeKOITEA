@@ -523,6 +523,17 @@ ul{padding:0;list-style:none}
   .scrim{transition:opacity .15s linear!important}
   .sx-row.is-hl{animation:none}
 }
+
+/* Ajustes de revisión */
+.app{overflow:clip}
+.board{position:relative}
+.feat-name{font-size:clamp(20px,6.2vw,26px)}
+.feat .ln-name{overflow-wrap:normal;min-width:5ch}
+@media (max-width:400px){.feat .ln{flex-wrap:wrap;column-gap:12px;align-items:baseline}.feat .ln-dots{display:none}}
+.foot-msg{margin:0;padding:8px 16px 0;font:600 15px/1.3 var(--f-sans);color:#B83A22}
+.foot-msg:empty{display:none}
+.qa:focus-visible{outline-offset:-3px}
+.sx-sub,.sx-d2{color:var(--ink);font-weight:500}
 </style>
 </head>
 <body>
@@ -851,6 +862,7 @@ ul{padding:0;list-style:none}
   function subLine(d, lang) {
     var o = lang || other(), p = o === 'es' ? 'en' : 'es';
     if (K.drinkName(d, o) !== K.drinkName(d, p)) return { text: K.drinkName(d, o), lang: o };
+    if (SUB[d.id] && S.lang === 'es') return { text: SUB[d.id].es, lang: 'es' };
     return SUB[d.id] ? { text: SUB[d.id][o], lang: o } : null;
   }
   function boardOf(d) { return d.cat === 'milk' ? 0 : d.cat === 'fruit' ? 1 : 2; }
@@ -1020,6 +1032,7 @@ ul{padding:0;list-style:none}
     stack.push({ name: n, opener: openerKey || null });
     L.classList.remove('is-closing');
     L.inert = false; L.hidden = false;
+    Array.prototype.forEach.call(L.querySelectorAll('.sheet-body,.tk-wrap,.sv'), function (sc) { sc.scrollTop = 0; });
     moveTools();
     void L.offsetWidth;
     L.classList.add('is-open');
@@ -1038,6 +1051,7 @@ ul{padding:0;list-style:none}
     if (below) {
       var BL = layerEl(below.name); BL.inert = false;
       if (below.name === 'cart') renderCart();
+      if (below.name === 'drink' && S.sheet) syncDrink(true);
     } else { $('#app').inert = false; lockBg(false); }
     moveTools();
     if (top.name === 'drink') S.sheet = null;
@@ -1156,6 +1170,9 @@ ul{padding:0;list-style:none}
     });
     var to = $('#top-opts'); if (to) to.classList.toggle('is-max', cfg.toppings.length >= K.meta.maxToppings);
     var msg = $('#top-msg'); if (msg) msg.textContent = sh.msg ? t(sh.msg) : '';
+    var foot = $('#drink-foot'), fm = foot && $('.foot-msg', foot);
+    if (foot && !fm) { fm = document.createElement('p'); fm.className = 'foot-msg'; fm.setAttribute('role', 'status'); foot.insertBefore(fm, foot.firstChild); }
+    if (fm) fm.textContent = sh.msg ? t(sh.msg) : '';
     if (d.soldOut) return;
     var unit = K.unitPrice(d, cfg);
     $('#unit-price').textContent = ap() + fmt(unit, 'full');
@@ -1541,6 +1558,10 @@ ul{padding:0;list-style:none}
   renderChrome();
   renderBoards();
 })();
+</script>
+<script>
+/* Evita toques fantasma: si una capa se abrió o cerró hace menos de 350 ms, el segundo toque se ignora. */
+(function(){var last=0,sig='';function cur(){return Array.prototype.map.call(document.querySelectorAll('.layer.is-open'),function(d){return d.id;}).join('|');}document.addEventListener('click',function(e){var t=performance.now(),now=cur();if(t-last<350&&now!==sig){e.preventDefault();e.stopImmediatePropagation();return;}last=t;sig=now;},true);})();
 </script>
 </body>
 </html>
