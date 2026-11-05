@@ -508,7 +508,7 @@ h1[tabindex="-1"]:focus,h2[tabindex="-1"]:focus{outline:none}
 .k{margin-top:16px;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
 .bubble{position:relative;margin-top:8px;padding:12px 14px;border-radius:18px 18px 18px 6px;background:#fff;box-shadow:0 0 0 1px var(--line),0 10px 22px -18px rgba(42,37,35,.6)}
 .bubble pre{margin:0;font-family:var(--f);font-size:15px;line-height:1.45;white-space:pre-wrap;overflow-wrap:anywhere}
-.copied{min-height:20px;font-size:15px;font-weight:600;color:var(--open);text-align:center}
+.copied{min-height:20px;font-size:15px;font-weight:600;color:#1F6B43;text-align:center}
 .copied:empty{display:none}
 
 /* avisos */
@@ -532,6 +532,17 @@ h1[tabindex="-1"]:focus,h2[tabindex="-1"]:focus{outline:none}
   .opt:active,.top:active,.fav:active,.path:active,.btn:active,.cta:active,.qadd:active,.qbtn:active{transform:none}
   .stage{transition:--halo .15s}
 }
+
+/* Ajustes de revisión: el escenario no cambia de alto, teléfonos bajos, jelly distinto del hielo */
+.gauge{width:44px}
+.g-lbl b{min-width:4ch;text-align:center}
+.b-name{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.13}
+.b-desc{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+@media (max-height:740px){.b-desc{display:none}}
+.koi-cup .kc-ice rect{fill-opacity:.12;stroke-width:1.6}
+.koi-cup .kc-jelly{fill-opacity:1;stroke:#2A2523;stroke-opacity:.45;stroke-width:1}
+.koi-cup .kc-jelly[fill="#EFE8DC"]{fill:#F4D9B8}
+.koi-cup .kc-pop circle:first-child{stroke:#2A2523;stroke-opacity:.45}
 </style>
 </head>
 <body>
@@ -1643,7 +1654,7 @@ h1[tabindex="-1"]:focus,h2[tabindex="-1"]:focus{outline:none}
     S.cart.forEach(function (l) { for (var i = 0; i < l.qty; i++) { if (cups.length < 6) cups.push(l); else extra++; } });
     var lines = S.cart.map(function (l) {
       var d = K.drink(l.id);
-      return '<li><span class="tk-q num">' + l.qty + '×</span><span class="tk-n">' + esc(K.drinkName(d, S.lang)) + '</span><span class="tk-p num">' + esc(LT(l)) + '</span>' +
+      return '<li><span class="tk-q num">' + l.qty + '×</span><span class="tk-n">' + esc(K.drinkName(d, S.lang)) + '</span><span class="tk-p num">' + esc(K.money(K.lineTotal(l, 'mxn'), 'mxn', 'short')) + '</span>' +
         '<span class="tk-d">' + esc(K.describe(d, l.cfg, S.lang)) + '</span>' +
         (S.lang === 'en' ? '<span class="tk-es"><b>' + esc(t('tkStaff')) + ' (ES):</b> <span lang="es">' + esc(K.describe(d, l.cfg, 'es')) + '</span></span>' : '') + '</li>';
     }).join('');
@@ -1657,7 +1668,7 @@ h1[tabindex="-1"]:focus,h2[tabindex="-1"]:focus{outline:none}
       '<div class="tk-cut" aria-hidden="true"></div>' +
       '<div class="tk-shelf" aria-hidden="true">' + cups.map(function (l) { return '<span class="tcup">' + cupHtml(K.drink(l.id), l.cfg, { shadow: false }) + '</span>'; }).join('') + (extra ? '<span class="more num">+' + extra + '</span>' : '') + '</div>' +
       '<ul class="tk-lines">' + lines + '</ul>' +
-      '<div class="tk-total"><span>' + esc(t('total')) + '</span><span class="tot-v"><b class="num">' + esc(TT('full')) + '</b><small class="num">' + esc(TE()) + '</small></span></div>' +
+      '<div class="tk-total"><span>' + esc(t('total')) + '</span><span class="tot-v"><b class="num">' + esc(K.money(K.cartTotal(S.cart, 'mxn'), 'mxn', 'full')) + '</b>' + (S.cur === 'usd' ? '<small class="num">≈ ' + esc(K.money(K.cartTotal(S.cart, 'usd'), 'usd', 'full')) + '</small>' : '') + '</span></div>' +
       '<p class="tk-thanks">' + esc(t('tkThanks')) + '</p><p class="fine" style="margin-top:6px">' + esc(K.meta.pricesNote[S.lang]) + '</p>';
   }
   function resetConfirm() { $('#tkConfirm').hidden = true; $('#tkActions').hidden = false; }
@@ -1804,6 +1815,10 @@ h1[tabindex="-1"]:focus,h2[tabindex="-1"]:focus{outline:none}
     });
   }
 })();
+</script>
+<script>
+/* Evita toques fantasma: si una capa se abrió o cerró hace menos de 350 ms, el segundo toque se ignora. */
+(function(){var last=0,sig='';function cur(){return Array.prototype.map.call(document.querySelectorAll('.dlg:not([hidden])'),function(d){return d.id;}).join('|');}document.addEventListener('click',function(e){var t=performance.now(),now=cur();if(t-last<350&&now!==sig){e.preventDefault();e.stopImmediatePropagation();return;}last=t;sig=now;},true);})();
 </script>
 </body>
 </html>
