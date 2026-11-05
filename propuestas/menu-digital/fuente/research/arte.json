@@ -1,0 +1,226 @@
+{
+ "track": "Dirección de arte: koi, Japón/Taiwán, tipografía y contraste",
+ "sources": [
+  {
+   "name": "Google Fonts CSS API v2: Instrument Serif normal + itálica (misma consulta repetida con curl para 24 familias)",
+   "url": "https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap",
+   "accessed": true,
+   "kind": "dirección de arte",
+   "observed": "Con WebFetch la API devuelve 2 @font-face (v5) en TTF. Con curl y user-agent de Chrome devuelve woff2 partidos por subset. El bloque /* latin */ cubre U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF y U+FFFD; aparte va /* latin-ext */. Medí los woff2 latin: 14.7 KB (normal) y 15.3 KB (itálica). Hice la misma consulta para 24 familias (las 16 de la lista más las de DIRECTIONS.md) y revisé el cmap con fontTools. A ninguna le falta nada de este juego en su subset latin: á é í ó ú Á É Í Ó Ú ñ Ñ ü Ü ¿ ¡ « » “ ” ‘ ’ — – … · • $ € ¢ % º ° × −. El rango latin incluye ↑ y ↓, pero no → (U+2192), ✓ (U+2713) ni ★ (U+2605). Las 8 familias japonesas se sirven en 118–122 slices sin etiqueta por peso, más latin y latin-ext.",
+   "borrow": "Para ES/EN basta el subset latin: el navegador solo descarga ese archivo. Pide solo los estilos que uses. Para un wordmark usa &text= (medí M PLUS Rounded 1c 800 con 'KOI TEA·BOBASHP' en 1,504 bytes contra 21.7 KB del subset latin). Las flechas, palomitas y estrellas van en SVG.",
+   "avoid": "No escribas →, ✓ ni ★ como texto. En fuentes latinas caen a la fuente del sistema (estilo distinto). En japonesas descargan un slice extra de 12–20 KB cada uno."
+  },
+  {
+   "name": "google/fonts: METADATA.pb de Instrument Serif",
+   "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/instrumentserif/METADATA.pb",
+   "accessed": true,
+   "kind": "dirección de arte",
+   "observed": "Es de Rodrigo Fuenzalida y Jordan Egstad, publicada el 2023-03-22, OFL, categoría SERIF. Tiene solo dos archivos, normal 400 e itálica 400, sin negritas; subsets latin y latin-ext. Su DESCRIPTION, que también leí, dice 'condensed display font… intended for use at large sizes… contemporary take on… old-style serifs'. Lo que medí: x-height 0.51, sin tnum ni smcp. 'Passion Fruit Green Tea' mide 7.99 em en normal y 8.51 em en itálica, así que cabe en una línea de 328 px (pantalla de 360 con márgenes de 16) hasta ~41 / ~38 px; Fraunces llega solo a 26 px y Shippori Mincho a 28 px. Para que line-clamp no corte la Á ni los descendentes necesita line-height ≥1.22.",
+   "borrow": "Es la itálica real del titular 'serif itálica' de la marca (v1 Galería y títulos de ficha), a ≥28 px y en tinta. Por ser condensada, los nombres bilingües largos caben en una línea a tamaños grandes.",
+   "avoid": "No le pongas font-weight 600/700 (el navegador inventa la negrita). Tampoco precios: sus cifras son proporcionales y no tiene tnum."
+  },
+  {
+   "name": "google/fonts: DESCRIPTION de Fraunces",
+   "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/fraunces/DESCRIPTION.en_us.html",
+   "accessed": true,
+   "kind": "dirección de arte",
+   "observed": "La describe como 'display, Old Style soft-serif', inspirada en Windsor, Souvenir y la serie Cooper, de Undercase Type (Phaedra Charles y Flavia Zimbardi). Tiene 4 ejes: Weight, Optical Size, Softness ('wetness or inkiness') y Wonky. METADATA: wght 100–900, opsz 9–144, SOFT 0–100, WONK 0–1, con itálica. Lo que medí: si se pide ital,opsz,wght, el archivo servido trae solo opsz y wght (SOFT y WONK hay que pedirlos en la URL). Pesa 65.8 KB roman y 79.8 KB itálica (latin), no tiene tnum, 'Passion Fruit Green Tea' cabe a ≤26.4 px en 328 px y necesita line-height ≥1.21–1.23.",
+   "borrow": "Si se quiere que el titular se vea entintado como el trazo de las tapas, Fraunces itálica con SOFT alto es la candidata, solo para títulos.",
+   "avoid": "No la uses para la interfaz ni en v3 o v5: pesa 80 KB y es ancha."
+  },
+  {
+   "name": "google/fonts: DESCRIPTION de DM Serif Display",
+   "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/dmserifdisplay/DESCRIPTION.en_us.html",
+   "accessed": true,
+   "kind": "dirección de arte",
+   "observed": "La describe como 'high-contrast transitional face… shaped for use in super-sized poster settings'. Colophon la hizo a partir del latín de Source Serif 4, y dice 'supports a Latin Extended glyph set'. METADATA: normal e itálica, solo 400. Lo que medí: 17.4 KB y 17.2 KB en itálica (latin), sin tnum, 'Passion Fruit Green Tea' cabe a ≤31–32 px, line-height ≥1.18.",
+   "borrow": "Es la que más se acerca a 'serif itálica de alto contraste' de póster. Sirve de alternativa a Instrument Serif si el póster 'Grand Opening' resulta más didona: hay que compararlo con el póster real.",
+   "avoid": "Tamaños menores a 24 px (los trazos finos se pierden) y negritas sintéticas."
+  },
+  {
+   "name": "google/fonts: DESCRIPTION de Gloock",
+   "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/gloock/DESCRIPTION.en_us.html",
+   "accessed": true,
+   "kind": "dirección de arte",
+   "observed": "La describe como 'contemporary high-contrast serif… intended for display use… inspiration from newspaper's headlines… smooth relationship between the thin and thick strokes'. METADATA: solo normal 400, sin itálica. Lo que medí: 17.2 KB (latin), con tnum. El acento de la Á sube a 0.986 em, por encima del ascendente hhea (0.975 em): con line-height 1 y overflow oculto se recorta. Mínimo seguro: 1.22.",
+   "borrow": "Precios o cifras grandes en un titular de alto contraste, sin itálica, con cifras tabulares.",
+   "avoid": "Pedirle itálica: no tiene y el navegador la inclinaría de mentira."
+  },
+  {
+   "name": "google/fonts: DESCRIPTION de Shippori Mincho",
+   "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/shipporimincho/DESCRIPTION.en_us.html",
+   "accessed": true,
+   "kind": "dirección de arte",
+   "observed": "Es un mincho de estilo antiguo 'based on The Tokyo Tsukiji Type Foundry No. 5 Mincho', hecho 'to provide novel writers in Japan a beautiful Mincho style for free'. Tiene 5 pesos, de Regular a ExtraBold, y una variante B1 que 'has rounded corners and ink pooling'. METADATA: sin itálica; subsets japanese, latin y latin-ext. Lo que medí: 122 slices por peso; el latin pesa 26.5–28 KB; cifras proporcionales sin tnum. La caja vertical es CJK (hhea y win 1.16 / 0.288): con line-clamp necesita line-height ≥1.34–1.39 y en botones el texto latino queda ~0.07 em abajo del centro.",
+   "borrow": "Herencia tipográfica japonesa real (Tsukiji) para un detalle puntual, como un numeral de sala o un rótulo del boleto. La versión B1 da efecto de tinta.",
+   "avoid": "Usarla como serif itálica (no tiene) o para precios e interfaz."
+  },
+  {
+   "name": "google/fonts: DESCRIPTION de Zen Maru Gothic",
+   "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/zenmarugothic/DESCRIPTION.en_us.html",
+   "accessed": true,
+   "kind": "dirección de arte",
+   "observed": "La describe como 'rounded san serif family that gives a soft and natural impression due to the deep rounds in the corners'. Según METADATA es de Yoshimichi Ohira, con 5 pesos de 300 a 900, sin itálica, subsets cyrillic, greek, japanese, latin y latin-ext. Lo que medí: 11.3 KB por peso (latin), sin tnum (cifras proporcionales). Por la caja CJK necesita line-height ≥1.27–1.29 con recorte y queda ~0.09 em baja en botones. →, ✓ y ★ cargan slices de 12.2, 15.2 y 13.4 KB.",
+   "borrow": "Títulos cortos y wordmark redondeado como el del merch (v3). Es muy ligera.",
+   "avoid": "Párrafos, precios y símbolos escritos como texto."
+  },
+  {
+   "name": "google/fonts: METADATA.pb de M PLUS Rounded 1c",
+   "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/mplusrounded1c/METADATA.pb",
+   "accessed": true,
+   "kind": "dirección de arte",
+   "observed": "Es de Coji Morishita y M+ Fonts Project, publicada el 2018-05-17. Tiene 7 pesos (100, 300, 400, 500, 700, 800 y 900), solo normales; subsets cyrillic(-ext), greek(-ext), hebrew, japanese, latin, latin-ext y vietnamese. Lo que medí: 21.1–21.7 KB por peso (latin), cifras tabulares por defecto. Su caja es más latina que la de las Zen (hhea 1.075 / 0.320), así que basta line-height ≥1.21. Con &text= y solo 'KOI TEA·BOBASHP' en peso 800, el archivo pesa 1,504 bytes.",
+   "borrow": "El wordmark 'KOI TEA · BOBA SHOP' grueso y redondeado como el merch (v5), cargando solo esas letras.",
+   "avoid": "Cargar el subset completo cuando solo se usa para el wordmark."
+  },
+  {
+   "name": "google/fonts: DESCRIPTION de Klee One",
+   "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/kleeone/DESCRIPTION.en_us.html",
+   "accessed": true,
+   "kind": "dirección de arte",
+   "observed": "La describe como 'script font handwritten by pencil or pen. Its quiet design has an elegant look that sets itself apart from traditional script and textbook fonts', 'ideal for body text'. METADATA: es de Fontworks, con pesos 400 y 600, sin itálica; subsets incluyen japanese y latin. Lo que medí: 34.5–35.5 KB (latin), cifras tabulares por defecto. Por la caja CJK necesita line-height ≥1.29–1.30 con recorte. →, ✓ y ★ caen en slices de 16–20 KB.",
+   "borrow": "La voz manuscrita y tranquila del koi en las burbujas de v4, en línea con la caligrafía de las tapas selladas.",
+   "avoid": "Sumarla a Baloo 2 y Nunito sin cuidar el peso: v4 llega a ~105 KB de fuentes."
+  },
+  {
+   "name": "W3C (repositorio oficial w3c/wcag): Understanding SC 1.4.3 Contrast (Minimum)",
+   "url": "https://raw.githubusercontent.com/w3c/wcag/main/understanding/20/contrast-minimum.html",
+   "accessed": true,
+   "kind": "estudio/artículo UX",
+   "observed": "Dice que los umbrales 3:1 y 4.5:1 son límites y que 'the computed values should not be rounded (e.g., 4.499:1 would not meet the 4.5:1 threshold)'. Texto grande: 18 pt o 14 pt bold, 'approximately 18.5px and 24px'. Advierte que 'particularly thin or unusual fonts may be rendered… with a much fainter color'. Los logotipos están exentos, pero el texto con poco contraste 'due to corporate identity or brand guidelines' no.",
+   "borrow": "Regla para el equipo: el rojo de marca solo va en texto menor a 24 px si es un token de ≥4.5:1. El logo y el wordmark sí pueden ir en rojo vivo. En serifs finas como Instrument Serif, conviene dejar margen sobre el mínimo.",
+   "avoid": "Redondear: el rojo vivo sobre tinta da 4.43:1 y falla."
+  },
+  {
+   "name": "W3C (repositorio oficial w3c/wcag): Understanding SC 1.4.11 Non-text Contrast",
+   "url": "https://raw.githubusercontent.com/w3c/wcag/main/understanding/21/non-text-contrast.html",
+   "accessed": true,
+   "kind": "estudio/artículo UX",
+   "observed": "Los componentes de interfaz y los gráficos necesarios para entender piden 'a minimum 3:1 contrast ratio with the adjacent colors', y eso incluye los estados de foco y selección. Recomienda evitar líneas y formas muy finas. Pone como fallo un borde de input #AAA sobre blanco.",
+   "borrow": "El rojo vivo #F94E2B sí sirve como ícono, anillo de foco o sello sobre crema (3.15:1), blanco (3.41:1) y muro #FAF7F2 (3.19:1). Los bordes de los controles van en piedra #6A5F57 (5.8:1) o nogal (9.57:1).",
+   "avoid": "Bordes o separadores funcionales en roble #C8A27A (2.21:1) o milk tea (2.06:1). Íconos en rojo vivo sobre salvia clara (2.65:1), miel (2.50:1), durazno (2.27:1), taro claro (2.18:1) o bajo el haz de luz #FFE9C7 (2.88:1)."
+  },
+  {
+   "name": "APCA in a Nutshell (Myndex, repositorio SAPC-APCA)",
+   "url": "https://raw.githubusercontent.com/Myndex/SAPC-APCA/master/documentation/APCA_in_a_Nutshell.md",
+   "accessed": true,
+   "kind": "estudio/artículo UX",
+   "observed": "Niveles Lc: 90 es el preferido para cuerpo; 75 es el mínimo para cuerpo (18px/400, 16px/500, 14px/700); 60 para texto de contenido (24px/400, 21px/500, 18px/600, 16px/700); 45 para titulares (36px/400 o 24px/700); 30 para texto 'spot readable'; 15 para no-texto. Los tamaños suponen una x-height de 0.52; por ejemplo, Times (0.45) necesita ~16% más. Dice que WCAG 2 'overstates contrast for dark colors'. Implementé APCA 0.0.98G-4g y reproduce sus valores de referencia: 106.04, −107.88, 63.06 y −68.54.",
+   "borrow": "Afinar tamaños. Rojo vivo sobre crema da Lc 55: solo titulares de ≥36px/400 o ≥24px/700. #C2361C da Lc 70: etiquetas de ≥16px en bold. Para texto rojo pequeño, #A33119 (Lc 77). Jost tiene x-height 0.46, así que necesita ~13% más de tamaño.",
+   "avoid": "Tratar APCA como requisito: el brief pide WCAG AA y APCA solo sirve de afinación."
+  },
+  {
+   "name": "CSS3 Patterns Gallery (Lea Verou): Seigaiha, Shippo, Japanese cube, HoneyComb",
+   "url": "https://raw.githubusercontent.com/LeaVerou/css3patterns/master/index.html",
+   "accessed": true,
+   "kind": "dirección de arte",
+   "observed": "Galería de 42 patrones hechos solo con gradientes CSS. 'Seigaiha' usa 5 radial-gradient en un mosaico de 100×50 px. 'Shippo' usa 2 radial-gradient (closest-side, línea rgba(0,0,0,.3)) en 80×80 px, desfasados 40 px. También trae 'Japanese cube', 'Waves' y 'HoneyComb' (hexágonos, de Paul Salentiny), que se parece al kikko. Seigaiha y Shippo no tienen autor indicado, así que son de Lea Verou.",
+   "borrow": "Texturas japonesas sin imágenes ni peticiones de red, recoloreables con variables. Seigaiha (olas) conecta con la playera de olas y palmeras del merch y con el mar de Rocky Point: va bien en el talón del boleto o una cabecera. Shippo, en estados vacíos. Siempre con muy poca diferencia de tono (por ejemplo, crema sobre muro).",
+   "avoid": "Ponerlas detrás de texto o a pantalla completa: meten ruido y obligan a repintar al desplazar. Asanoha y kikko no vienen en la galería (habría que hacerlas con un <pattern> SVG). Sus significados tradicionales no se pudieron verificar."
+  },
+  {
+   "name": "Tate Collection (dataset CC0): registro A00001 en JSON + encabezado del CSV",
+   "url": "https://raw.githubusercontent.com/tategallery/collection/master/artworks/a/000/a00001-1035.json",
+   "accessed": true,
+   "kind": "dirección de arte",
+   "observed": "Según el README (también leído), el dataset tiene ~70,000 obras, se actualizó por última vez en octubre de 2014 y archiva cada obra por número de inventario. El registro A00001 trae: acno 'A00001', title, all_artists 'Robert Blake', contributors con fechas '1762–1787' (con raya), dateText 'date not known', medium 'Watercolour, ink, chalk and graphite on paper…', dimensions 'support: 394 x 419 mm', creditLine 'Presented by Mrs John Richmond 1922', acquisitionYear 1922, un campo foreignTitle para el título en otro idioma, classification e inscription. El encabezado de artwork_data.csv, que leí con curl por rango de bytes, va en este orden: id, accession_number, artist, artistRole, artistId, title, dateText, medium, creditLine, year, acquisitionYear, dimensions…",
+   "borrow": "La cédula de v1 puede salir de campos fijos del menú: N.º (como acno) · título ES (title) · título EN (como foreignTitle) · Técnica (medium: base · fruta · topping) · Medidas (tamaños) · Crédito ('Obra de la casa' / 'Recomendado en reseñas', como creditLine) · precio. En rangos de fechas o tamaños va la raya –.",
+   "avoid": "Textos curatoriales largos: la cédula es dato, no ensayo."
+  },
+  {
+   "name": "MoMA Collection (dataset): README",
+   "url": "https://raw.githubusercontent.com/MuseumofModernArt/collection/main/README.md",
+   "accessed": true,
+   "kind": "dirección de arte",
+   "observed": "Son 160,928 registros con 'basic metadata for each work, including title, artist, date made, medium, dimensions, and date acquired by the Museum'. El dataset de artistas trae nombre, nacionalidad, género, año de nacimiento y de muerte. El archivo Artworks.csv está en Git LFS y raw solo devuelve el puntero, así que se usó el README.",
+   "borrow": "Confirma el núcleo de la cédula de museo: título, autor, fecha, técnica, dimensiones y adquisición. En Koi Tea quedaría: Título · Serie (Milk Tea / Fruit Tea) · 'Colección 2026' · Técnica · Tamaños · Precio.",
+   "avoid": "Agregar campos que el panel de administración no pueda mantener."
+  }
+ ],
+ "patterns": [
+  {
+   "pattern": "Solo las serifs latinas tienen itálica real: ninguna japonesa la tiene, ni Gloock ni Young Serif",
+   "evidence": "Según los METADATA.pb de google/fonts, solo tienen estilo normal: Shippori Mincho, Zen Old Mincho, Zen Kaku Gothic New, Zen Maru Gothic, Kaisei Decol, Klee One, M PLUS Rounded 1c, Dela Gothic One, Gloock, Young Serif, Fredoka, Baloo 2 y Bricolage Grotesque. Entre las serifs, solo Instrument Serif, DM Serif Display y Fraunces tienen itálica.",
+   "implication": "La 'serif itálica de alto contraste' de la marca tiene que ser Instrument Serif, DM Serif Display o Fraunces. Conviene declarar font-synthesis: none para que ningún <em> ni estilo heredado incline o engruese de mentira una fuente japonesa o una serif de un solo peso."
+  },
+  {
+   "name": "",
+   "pattern": "El español nunca es el problema; los símbolos sí",
+   "evidence": "En las 24 familias revisadas (cmap del woff2 latin servido), no falta ninguno de estos: á é í ó ú Á É Í Ó Ú ñ Ñ ü Ü ¿ ¡ « » “ ” — – … · • º € ×. El unicode-range latin de Google incluye ↑ U+2191 y ↓ U+2193, pero no → U+2192, ✓ U+2713 ni ★ U+2605. En las japonesas, esos tres caen en slices de 12–20 KB.",
+   "implication": "La fuente se elige por personalidad, métricas y peso, no por acentos. Los íconos (flecha, palomita de paso, estrella de reseña) se dibujan en SVG, idealmente con el set del local: torii, vaso, koi y hoja."
+  },
+  {
+   "pattern": "Las familias japonesas traen caja vertical CJK: texto latino bajo y recortes con line-clamp",
+   "evidence": "Shippori Mincho, Zen Kaku/Maru/Old, Klee One, Kaisei Decol y Dela Gothic One tienen hhea y win 1.16 / 0.288. Para que line-clamp no corte la Á ni la g/p/¿ necesitan line-height de 1.27 a 1.48; las latinas, de 1.07 a 1.23 (Instrument Serif 1.22, Figtree 1.13, Rubik 1.13, Jost 1.27). En botones, el texto latino queda 0.07–0.09 em abajo del centro. M PLUS Rounded 1c es la excepción (1.075 / 0.320, mínimo 1.21).",
+   "implication": "Usar las japonesas para display corto: wordmark, títulos de una línea, etiquetas en MAYÚSCULAS (sin descendentes bastan ~1.1). Si van en botones, compensar el padding (~0.08 em más arriba). No usarlas en párrafos con recorte."
+  },
+  {
+   "pattern": "Pocas fuentes de display tienen cifras tabulares",
+   "evidence": "Tienen tnum: Figtree, Jost, Rubik, Schibsted Grotesk, Instrument Sans, Bricolage, Gloock, Young Serif, Dela Gothic One y Baloo 2. Tienen cifras tabulares por defecto: IBM Plex Mono, Red Hat Mono, Nunito, M PLUS Rounded 1c, Klee One y Kaisei Decol. Sin tnum y con cifras proporcionales: Instrument Serif, DM Serif Display, Fraunces, Fredoka, Shippori Mincho, Zen Maru y Zen Kaku.",
+   "implication": "Los precios y totales van siempre en la sans o la mono con font-variant-numeric: tabular-nums, nunca en la serif de display. Así las columnas de precio y los puntos guía alinean en MXN y USD."
+  },
+  {
+   "pattern": "Ninguna candidata trae versalitas",
+   "evidence": "Ni smcp ni c2sc en los archivos servidos de las 24 familias, incluidas Schibsted Grotesk e Instrument Serif, que v1 piensa usar para 'versalitas'.",
+   "implication": "Con font-variant: small-caps el navegador encoge mayúsculas y quedan más delgadas. Mejor mayúsculas reales a ~0.8 em, con tracking de +0.06 em y un paso más de peso (las variables lo permiten). 'N.º' se escribe con el carácter º (U+00BA), que todas tienen."
+  },
+  {
+   "pattern": "El rojo koi vivo, y también #D9442A, no sirven para texto normal en ningún fondo de la marca",
+   "evidence": "#F94E2B da 3.15:1 sobre crema, 3.41 sobre blanco, 3.04 sobre nogal y 4.43 sobre tinta. #D9442A da 4.02 sobre crema y 4.37 sobre blanco: falla AA, aunque el brief lo propone como 'oscurecido para AA'. WCAG no exime colores de marca ni redondea.",
+   "implication": "El rojo vivo queda para ilustración, bloques, sello, anillo de foco e íconos sobre crema, blanco o muro (pasan 3:1 de no-texto), y para titulares de ≥24 px bold o ≥36 px regular. Para texto y botones hacen falta tokens oscurecidos."
+  },
+  {
+   "pattern": "Las superficies tintadas se comen al rojo; la tinta funciona en todas",
+   "evidence": "#C2361C da 4.01:1 sobre miel #F6D9A8, 3.64 sobre durazno #F9C8B8, 3.50 sobre taro claro #D8C8EE y 4.25 sobre salvia clara #DCE5DF: todas fallan para texto. El rojo vivo como ícono queda entre 1.79 y 2.88 en todas ellas. La tinta #2A2523 da ≥9.67 en todas y 7.96 sobre salvia #AFC0B6.",
+   "implication": "El texto rojo va solo sobre crema, blanco, muro o luz. En chips, tiles y burbujas tintadas, el texto va en tinta, o en #A33119 (miel 5.12, salvia clara 5.42, durazno 4.64) o #8E2A15 (taro claro 5.38)."
+  },
+  {
+   "pattern": "Las maderas y neutros cálidos son decorativos sobre claro y se vuelven texto válido sobre oscuro",
+   "evidence": "Sobre crema dan: milk tea 2.06:1, plafón 2.60, taro 2.98, salvia 1.75 y roble #C8A27A 2.21 (sobre muro). Sobre tinta dan: milk tea 6.78, salvia 7.96, plafón 5.37 y taro 4.69. Sobre nogal, salvia da 5.46 y milk tea 4.65.",
+   "implication": "Japandi digital: la madera va como filete, marco o passe-partout, no como borde de control ni como texto. Las bandas oscuras de nogal o tinta, como la duela de la barra, pueden llevar texto en salvia o milk tea, y eso da calidez sin perder AA."
+  },
+  {
+   "pattern": "Los 7 rojos que hoy usan las direcciones son el mismo tono",
+   "evidence": "En OKLCH: #D9442A, #C63F26, #B83A22, #C2361C, #B5321B, #B33A22 y #A33119 están todos entre 32.3° y 33.5° de tono, contra 33.3° del rojo koi. Solo cambian la luminosidad y el croma. Verifiqué además todos los contrastes declarados en DIRECTIONS.md y salen correctos con ±0.05 de diferencia.",
+   "implication": "Unificarlos en 4–5 tokens compartidos en shared/ no altera la identidad y evita que cada versión invente su rojo."
+  },
+  {
+   "pattern": "La cédula de museo es un registro de campos estables, no un texto libre",
+   "evidence": "Tate guarda acno, title, foreignTitle, artista con fechas '1762–1787', dateText, medium, dimensions y creditLine. MoMA registra 'title, artist, date made, medium, dimensions, and date acquired'.",
+   "implication": "La cédula de v1 se alimenta del mismo esquema que el panel (nombre ES, nombre EN, técnica, tamaños, crédito o insignia, precio, N.º): se mantiene sin diseñador y el resto de las versiones la reutiliza."
+  },
+  {
+   "pattern": "El local ya tiene su propio sistema de arte (visto en las fotos del brief)",
+   "evidence": "gallery.jpg: carteles con caligrafía vertical y un pequeño sello rojo, y un arco con riel de spots. cubes.jpg: cubos de luz con 4 íconos de línea (torii, vaso de boba, koi en tinta, hoja), duela vertical y una celosía de celdas cuadradas. bar.jpg: plafón curvo ámbar, 4 globos opal, duela de nogal, arcos. screens.jpg: encabezados geométricos en MAYÚSCULAS espaciadas con puntos guía, y la selladora de vasos (caja blanca con dos rollos de película) en la barra. merch.jpg: wordmark 'KOI TEA' redondeado y grueso, tote con dos koi en círculo, playera con olas y palmeras. fruit-teas.jpg: tapas con película impresa en tinta y degradado rojo abajo → naranja arriba.",
+   "implication": "Antes de importar motivos japoneses genéricos, usar los propios. El sello rojo ya está en las paredes. 'Sellar' es un ritual real de la barra, con la selladora. Los 4 íconos sirven de set. La celosía y la duela dan el ritmo vertical. Las olas del merch justifican seigaiha."
+  }
+ ],
+ "insights": [
+  "Tokens de rojo para las 5 versiones (WCAG 2 · APCA): --koi-500 #F94E2B solo para ilustración, bloques, sello, foco e íconos sobre crema (3.15), blanco (3.41) o muro (3.19), y titulares de ≥24px bold o ≥36px regular (Lc 55). --koi-700 #C2361C para texto sobre crema (5.04), blanco (5.47), muro (5.12) o luz (4.62), y para botones con texto blanco (5.47, Lc −81) o crema (5.04). --koi-800 #A33119 para precios y texto rojo pequeño (crema 6.43, Lc 77; salvia clara 5.42; miel 5.12; durazno 4.64). --koi-900 #8E2A15 para taro claro (5.38) y AAA sobre crema (7.77). --koi-300 #FF9A84 para texto rojo sobre nogal (5.05) o tinta (7.36), en ≥24px bold por APCA (Lc −53/−59).",
+  "Corrección al brief: #D9442A no cumple AA para texto normal (4.02 sobre crema, 4.37 sobre blanco); solo sirve para texto grande o elementos de interfaz. Si se quiere un rojo de texto más vivo que #C2361C conservando el tono del koi, la variante de croma máximo en OKLCH #CF2C01 da 4.82 sobre crema y 5.23 sobre blanco, y se parece más al rojo koi (ΔE 0.105 contra 0.122 de #C2361C). Los mínimos exactos de croma máximo, sin margen, son #D72E00 (4.52 sobre crema) y #E03409 (4.50 con texto blanco): no conviene usarlos.",
+  "Sobre fondos tintados el texto rojo no llega: sobre miel, durazno, taro claro y salvia clara, #C2361C da 4.01, 3.64, 3.50 y 4.25. Ahí el texto va en tinta #2A2523 (≥9.67 en todas) o en koi-800/900. Sobre la banda salvia #AFC0B6 ni #8E2A15 alcanza (4.43): los precios van en tinta (7.96).",
+  "Los anillos de foco y los íconos en rojo vivo solo cumplen 3:1 sobre crema, blanco o muro. Sobre salvia clara (2.65), miel (2.50), durazno (2.27), taro claro (2.18) o bajo el haz de luz #FFE9C7 (2.88) fallan: ahí el foco va en tinta o en doble anillo (tinta + blanco), y el sello en #B33A22, que da 5.00 sobre luz y 5.54 sobre muro.",
+  "Japandi en la interfaz, a partir de los números: roble #C8A27A (2.21), milk tea (2.06) y plafón (2.60) van solo como filetes, marcos y passe-partout; los bordes de los inputs, en piedra #6A5F57 (5.8) o nogal (9.57). Las bandas oscuras (nogal o tinta) pueden llevar texto salvia (5.46/7.96) o milk tea (4.65/6.78), como la duela de la barra bajo la luz cálida.",
+  "Trío tipográfico recomendado, opción A (la más ligera y la más fiel a pósters, pantallas y merch): Instrument Serif itálica (15.3 KB), Jost (26 KB variable, con tnum, igual que los encabezados en MAYÚSCULAS de las pantallas actuales) y M PLUS Rounded 1c 800 solo para el wordmark con &text= (1.5 KB). Total: ~43 KB, o ~58 KB con Instrument Serif roman. Opción B, más 'editorial de alto contraste': DM Serif Display itálica (17.2 KB), Figtree (19.7 KB, tnum) y Zen Maru Gothic 700 (11.3 KB), ~48 KB. Para decidir entre Instrument y DM Serif hay que ponerlas junto al póster 'Grand Opening', que no vi.",
+  "Fuentes que no conviene tomar como base de interfaz: Shippori Mincho y Zen Old Mincho (sin itálica, sin tnum, caja CJK con line-height ≥1.34–1.48); Dela Gothic One ('Passion Fruit Green Tea' solo cabe a ≤22.7 px en 328 px y necesita line-height 1.40); Bricolage Grotesque (75 KB latin) y Fraunces (66–80 KB); Fredoka para precios (sin tnum, cifras proporcionales); Gloock y Young Serif si se necesita itálica.",
+  "Jost tiene x-height de 0.46. Según la nota de APCA (referencia 0.52), hay que subirla ~13%: cuerpo de ≥18 px y, en la vista de pantallas del local a 3–4 m, más. Instrument Serif (0.51) y Rubik (0.52) casi no necesitan ajuste; Zen Old Mincho (0.43), +21%.",
+  "Íconos y caracteres: no escribir →, ✓ ni ★ como texto (no están en el subset latin). En fuentes latinas cambian a la fuente del sistema; en Zen Maru, M PLUS Rounded, Klee One y Shippori descargan un slice extra de 12–20 KB cada uno. Los puntos guía con '·' o '.' sí están en latin, aunque es mejor hacerlos con border-bottom dotted para que no dependan del ancho del texto.",
+  "Peso de fuentes por versión (woff2 latin medidos, petición de rango variable): v1 ~86 KB (Instrument Serif 14.7+15.3, Schibsted 45.8, Plex Mono 9.8); v2 ~35 KB (Rubik); v3 ~31 KB (Figtree + Zen Maru 700); v4 ~105 KB (Baloo 2 32.3, Nunito 38.2, Klee One 34.5): es la más pesada; v5 ~70 KB, o ~49 KB con &text= en el wordmark.",
+  "Para que el navegador no recorte acentos ni descendentes con line-clamp u overflow oculto, el line-height mínimo es: Instrument Serif 1.22, DM Serif Display 1.18, Fraunces 1.21–1.23, Gloock 1.22, Jost 1.27, Figtree 1.13, Rubik 1.13, Schibsted 1.18, Baloo 2 1.09, Nunito 1.22, M PLUS Rounded 1c 1.21, Zen Maru 1.27–1.29, Klee One 1.30, Shippori 1.34–1.39, Dela Gothic One 1.40. Gloock además sube el acento de la Á por encima de su ascendente.",
+  "Cédula de v1, del dato de museo a Koi Tea: 'N.º 07' · Durazno Green Tea (serif itálica, tinta) · PEACH GREEN TEA (mayúsculas a 0.8 em con tracking, sin versalitas falsas) · Técnica: té verde · durazno · jelly de lichi · Medidas: Mediano – Grande (con raya) · Crédito: 'Recomendado en reseñas (Google Maps)' o 'Obra de la casa' · precio en mono tabular. Es el mismo esquema del panel, sin texto curatorial.",
+  "Sello como gesto único del cierre de pedido: el local tiene la selladora de vasos en la barra (la caja blanca con dos rollos de película al pie de las pantallas) y carteles con sello rojo en la galería. Un solo componente de sello (cuadrado o círculo #B33A22 o #C2361C con el koi de línea) puede confirmar el pedido en todas las versiones: el boleto de v1, la tapa sellada de v2 y los tickets de v3 y v5. Si solo es un gráfico, basta 3:1; si lleva texto como 'Pagado', 'Muéstralo en caja' o el código, el texto necesita ≥4.5.",
+  "Patrones japoneses sin imágenes: Seigaiha (5 radial-gradient, 100×50 px) y Shippo (2 radial-gradient, 80×80 px) en CSS puro, sacados del CSS3 Patterns Gallery, recoloreados con variables y con muy poca diferencia de tono, en el talón del boleto, una cabecera o un estado vacío. HoneyComb se parece al kikko. Asanoha va como <pattern> SVG inline de pocos cientos de bytes. Seigaiha conecta con las olas del merch y el mar de Rocky Point.",
+  "Mascota: según lo que veo en logo.jpg, es un koi de frente, blanco, con una mancha roja irregular en la coronilla y otra más chica en el costado. Por eso es más un Kohaku con mancha en la cabeza que un Tancho, que tendría un solo círculo. Hay que verificarlo con una fuente de variedades antes de ponerlo en un texto. Idea de color por verificar: la paleta ya parece de variedades (crema + rojo como Kohaku, tinta como sumi, ámbar del plafón como Ogon, salvia como Asagi) y podría nombrar salas o tableros sin inventar colores.",
+  "'Ingredientes de Taiwán' y la cultura japonesa (puerta del dragón, koinobori, noren, chōchin, hanko, significado de cada patrón, Chun Shui Tang y Hanlin, oolong de Alishan) no se pudieron verificar en esta sesión porque la red los bloquea. No hay que publicar fechas, lugares ni significados en los prototipos hasta abrir fuentes. Mejor dejar el bloque 'Historia / Ingredientes' como contenido editable del panel, con la frase propia del cliente ('Ingredientes importados de Taiwán') como única afirmación."
+ ],
+ "direction_notes": "v1 Galería (la investigación la respalda, con ajustes): Instrument Serif es la mejor itálica disponible para títulos largos. Es condensada y cabe 'Passion Fruit Green Tea' en una línea de 328 px hasta ~38 px en itálica, con 15 KB por estilo. Pero solo tiene peso 400: declarar font-synthesis: none y no pedir negrita. Ni Schibsted Grotesk ni Instrument Serif traen versalitas, así que el numeral de sala y los nombres EN van en mayúsculas reales a 0.8 em con tracking y +100 de peso. La cédula queda bien respaldada por los datos de Tate y MoMA (título, título extranjero, técnica, dimensiones, crédito, número de inventario) y sale del mismo esquema del panel. Contraste: rojo sello #B33A22 da 5.54 sobre muro y 5.00 bajo el haz #FFE9C7; el rojo vivo solo como sello o gráfico sobre muro (3.19), nunca en la pieza iluminada (2.88); roble #C8A27A solo en marcos (2.21). Pesa ~86 KB de fuentes: si la red lo exige, Figtree en lugar de Schibsted ahorra ~26 KB. El sello del boleto tiene precedente en los carteles con sello rojo del propio local. La 'luz de galería' es lo que queda de la hipótesis Linterna, sin volver al modo oscuro.\n\nv2 Armador (respaldada, con correcciones): Rubik (34.5 KB variable, tnum, line-height ≥1.13) funciona. Sobre las superficies miel #F6D9A8, el rojo #C2361C da 4.01 y falla: las etiquetas '+$15' e 'Incluido' van en tinta (11.11) o #A33119 (5.12), y el rojo vivo sobre miel (2.50) solo dentro de la ilustración del vaso. Las palomitas ✓ de los pasos van en SVG. El taro #7A5BA6 con texto blanco da 5.42 y pasa. El 'sellado de la tapa' al agregar tiene base real: la selladora de vasos de la barra.\n\nv3 Express (respaldada; es la más ligera): Figtree con tnum (19.7 KB) más Zen Maru Gothic 700 (11.3 KB) suman ~31 KB. Zen Maru no tiene itálica ni tnum y su caja es CJK: solo títulos cortos, nunca precios; line-height ≥1.29 si se recorta; en botones, compensar ~0.09 em; y nada de →, ✓ ni ★ como texto, porque cada uno descarga 12–15 KB. #C2361C sobre los tiles salvia clara da 4.25 y falla: precios en #B5321B (4.75) o #A33119 (5.42) sobre salvia, y #C2361C solo sobre blanco o crema. El gris #5E554F (7.27) y la tinta pasan.\n\nv4 Koi guía (hay que ajustarla): es la más pesada, con Baloo 2, Nunito y Klee One (~105 KB). Klee One, el lápiz que encaja con la caligrafía de las tapas, debería limitarse a la burbuja de saludo, o sustituirse por Nunito itálica. En burbujas recortadas necesita line-height ≥1.30. El rojo #C2361C sobre durazno (3.64) y taro claro (3.50) falla: dentro de las burbujas, tinta (≥9.67) o #8E2A15 (5.61 / 5.38). Para la mascota, mantener la mancha irregular de la coronilla del logo (tipo Kohaku, por verificar); no convertirla en un Tancho de círculo único.\n\nv5 Tablero (respaldada): Jost coincide con los encabezados geométricos en MAYÚSCULAS espaciadas de las pantallas actuales (26 KB variable, tnum), pero su x-height de 0.46 obliga a subir ~13% (cuerpo ≥18 px, más en la vista a 3–4 m) y a usar line-height ≥1.27 con recorte. Red Hat Mono es tabular para los precios y los puntos guía. M PLUS Rounded 1c 800 con &text= deja el wordmark en 1.5 KB. #A33119 sobre salvia clara (5.42) pasa, pero sobre las bandas salvia #AFC0B6 (3.67) no: precios en tinta (7.96). El encabezado nogal admite texto crema (9.57), salvia (5.46) y koi-300 #FF9A84 (5.05), este último solo en ≥24 px bold. Las pantallas actuales siguen en 1.75:1, crema sobre salvia, y la tinta las sube a 7.96.\n\nPara las cinco: un solo juego de tokens de rojo (500/700/800/900/300) en shared/, íconos en SVG, cifras tabulares en la sans o la mono, y patrones seigaiha o shippo en CSS solo como textura. Los datos culturales (koi, puerta del dragón, patrones, noren, chōchin, hanko, Taiwán) quedan pendientes de fuente antes de entrar en los textos.",
+ "blocked": [
+  "WebSearch: el límite de 200 búsquedas por turno, compartido por todos los agentes del flujo, ya estaba agotado desde mi primera consulta. No hice ninguna búsqueda. Las URL de las fuentes no vienen de resultados de búsqueda: son direcciones canónicas que abrí directamente, y todas las listadas se verificaron con WebFetch. Para buscar más hace falta un mensaje de seguimiento o subir CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION.",
+  "en.wikipedia.org: WebFetch falló con 'getaddrinfo ENOTFOUND' (dominio fuera de la red permitida) en Koi, Koinobori, Noren, Chōchin y Seal (East Asia). Hay que agregar en.wikipedia.org y es.wikipedia.org en Network access del entorno de nube (menú del entorno en la barra de título, Edit, Allowed domains) y volver a correr esta línea.",
+  "Probé el acceso por el proxy: fonts.google.com, es.wikipedia.org, www.w3.org, cdn.jsdelivr.net y unpkg.com no conectaron; github.com respondió 403. Como indica la herramienta, no probé más sitios ni rodeé la restricción. Sí responden fonts.googleapis.com, fonts.gstatic.com, raw.githubusercontent.com y registry.npmjs.org.",
+  "Las páginas de espécimen de Google Fonts (fonts.google.com/specimen/…) no abren. El soporte latino se confirmó por otra vía más rigurosa: la API CSS oficial (subsets y unicode-range), los METADATA.pb y DESCRIPTION del repositorio google/fonts, y los woff2 servidos analizados con fontTools (cmap, features, métricas, tamaños). Los METADATA y DESCRIPTION de Schibsted Grotesk, IBM Plex Mono, Rubik, Figtree, Jost, Red Hat Mono, Instrument Sans, Baloo 2, Nunito, Fredoka, Young Serif, Bricolage Grotesque, Kaisei Decol, Dela Gothic One, Zen Kaku Gothic New y Zen Old Mincho los leí con curl, no con WebFetch, y por eso no aparecen como fuentes separadas.",
+  "www.w3.org bloqueado: los criterios 1.4.3 y 1.4.11 se leyeron del repositorio oficial w3c/wcag en raw.githubusercontent.com, que tiene el mismo texto fuente de los documentos 'Understanding'.",
+  "No verificado en esta sesión, sin ninguna fuente abierta: simbolismo del koi y leyenda de la puerta del dragón; koinobori; variedades Kohaku, Sanke, Showa, Ogon, Asagi (y Tancho) y sus colores; significado de seigaiha, asanoha, shippo y kikko; chōchin, noren (si se cuelga al abrir) y hanko o rakkan; origen del bubble tea (Chun Shui Tang en Taichung, Hanlin en Tainan) y oolong de Alishan; guías de cédulas de museo (V&A, Smithsonian) con su orden de lectura; artículos de japandi aplicado a interfaces. No los di por hechos: donde aparecen, van marcados 'por verificar'.",
+  "MoMA Artworks.csv está en Git LFS (raw devuelve el puntero) y por eso se usó el README. El encabezado de artwork_data.csv de Tate se leyó con curl por rango de bytes; el registro JSON y el README sí con WebFetch."
+ ]
+}

@@ -1,0 +1,1546 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Koi Tea · Tablero</title>
+<meta name="description" content="Menú digital de Koi Tea Boba Shop, Puerto Peñasco: tres tableros bilingües con precios en MXN y USD.">
+<meta name="theme-color" content="#483D42">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&family=Red+Hat+Mono:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@800&display=swap&text=KOITEABSHP%C2%B7%20">
+<style>
+/* ============================================================================
+   PLAN · v5 Tablero — "El tablero en tu mano"
+   Layout en una línea: el teléfono es la cuarta pantalla de la barra; bisel de
+   nogal arriba y abajo, tres tableros de salvia que se deslizan con snap nativo
+   y filas bilingües con puntos guía hasta el precio. El mismo renderizador de
+   filas dibuja las 3 pantallas del local.
+
+   COLOR (rol · par de texto verificado)
+   --board  #DCE5DF salvia clara: superficie del tablero · tinta 11.76 · musgo 6.94 · rojo 5.42
+   --band   #AFC0B6 salvia de las pantallas reales · tinta 7.96 · musgo 4.69 (rojo NO: 3.67)
+   --band-2 #C9D6CE salvia media: toque/resalte sobre tablero · tinta 10.09 · rojo 4.65
+   --cream  #FEF4EB hojas (fichas, info, WhatsApp) · tinta 13.95 · musgo 8.23 · rojo-c 5.28
+   --paper  #FFFCF7 papel térmico (comanda y ticket) · tinta 14.79 · rojo-c 5.60
+   --ink    #2A2523 texto, trazos, filetes fuertes
+   --moss   #3E4D45 texto secundario (segunda lengua, notas)
+   --walnut #483D42 nogal: bisel superior, botones primarios · crema 9.57 · ámbar 5.27
+   --walnut-2 #3A3236 nogal profundo: barra inferior · ámbar 6.31
+   --amber  #E0B07A luz del plafón: texto/indicadores sobre nogal
+   --glow   #C39056 plafón (solo decorativo)
+   --red    #A33119 precios y acentos sobre salvia clara; fondo de insignias (crema 6.43)
+   --red-c  #B83A22 rojo para texto sobre crema/papel
+   --koi    #F94E2B solo ilustración (mancha del koi, halos)
+   --bezel  #1E1A1B bisel de pantallas · --wall #F1E4D3 muro cálido del local
+   --mute   #D8CCC3 texto secundario sobre nogal (6.60)
+
+   TIPOGRAFÍA
+   Jost (títulos de tablero en mayúsculas espaciadas, nombres, cuerpo) ·
+   Red Hat Mono (precios, puntos guía, comanda; cifras tabulares) ·
+   M PLUS Rounded 1c 800 (solo el wordmark KOI TEA · BOBA SHOP).
+   Escala: 12 cap · 14 nota · 15 segunda lengua · 16 cuerpo · 19 nombre ·
+   22 subtítulo · 28 título · 56 código. Interlineado 1.2 nombres / 1.45 cuerpo.
+   ESPACIO: 4 · 8 · 12 · 16 · 24 · 32. RADIOS con intención: 3 (insignias,
+   biseles) · 10 (controles) · 16 (tarjetas) · 18 (hojas) · píldora (acciones).
+   ========================================================================== */
+:root{
+  --board:#DCE5DF; --band:#AFC0B6; --band-2:#C9D6CE; --cream:#FEF4EB; --paper:#FFFCF7;
+  --ink:#2A2523; --moss:#3E4D45; --walnut:#483D42; --walnut-2:#3A3236; --amber:#E0B07A;
+  --glow:#C39056; --red:#A33119; --red-c:#B83A22; --koi:#F94E2B; --bezel:#1E1A1B;
+  --wall:#F1E4D3; --mute:#D8CCC3; --line:rgba(42,37,35,.16); --line-2:rgba(42,37,35,.3);
+  --f-sans:"Jost","Futura","Century Gothic","Avenir Next",system-ui,sans-serif;
+  --f-mono:"Red Hat Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --f-mark:"M PLUS Rounded 1c","Arial Rounded MT Bold","Nunito",system-ui,sans-serif;
+  --t-cap:12px; --t-note:14px; --t-sub:15px; --t-body:16px; --t-name:19px; --t-h3:22px; --t-title:28px; --t-code:56px;
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px;
+  --r-tag:3px; --r-ctl:10px; --r-card:16px; --r-sheet:18px;
+  --flute:repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 2px,rgba(0,0,0,.075) 2px 4px,rgba(0,0,0,0) 4px 9px);
+  --ease:cubic-bezier(.2,.8,.2,1);
+  --focus:var(--ink);
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background-color:var(--wall);background-image:radial-gradient(120% 55% at 50% -12%,rgba(195,144,86,.42),rgba(195,144,86,0) 62%),repeating-linear-gradient(90deg,rgba(72,61,66,.05) 0 1px,rgba(0,0,0,0) 1px 26px);color:var(--ink);font:400 var(--t-body)/1.45 var(--f-sans);overflow:hidden;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;-webkit-appearance:none;appearance:none;margin:0}
+button:disabled{cursor:not-allowed}
+img{display:block;max-width:100%}
+h1,h2,h3,h4,p,ul,figure{margin:0}
+ul{padding:0;list-style:none}
+:focus{outline:none}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+[tabindex="-1"]:focus-visible{outline:none}
+.sr{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.ico{width:22px;height:22px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---------- App (columna máx. 480 px) ---------- */
+.app{position:relative;height:100%;max-width:480px;margin:0 auto;display:flex;flex-direction:column;background:var(--board);overflow:hidden}
+@media (min-width:600px){.app{box-shadow:0 0 0 3px var(--bezel),0 30px 60px -20px rgba(42,37,35,.45)}}
+
+/* ---------- Encabezado de nogal ---------- */
+.hdr,.strip,.bar{background-color:var(--walnut);background-image:var(--flute);color:var(--cream);--focus:var(--amber)}
+.hdr{flex:none;padding:max(6px,env(safe-area-inset-top)) 12px 0}
+.hdr-row{display:flex;align-items:center;justify-content:space-between;gap:var(--s2);min-height:52px}
+.brand{display:flex;align-items:center;gap:10px;min-height:48px;min-width:0;padding:2px 8px 2px 2px;border:0;border-radius:var(--r-ctl);background:none;color:inherit;text-align:left}
+.brand-logo{width:40px;height:40px;border-radius:50%;object-fit:cover;flex:none;box-shadow:0 0 0 2px rgba(254,244,235,.85)}
+.brand-mark{display:flex;flex-direction:column;align-items:flex-start;line-height:1;min-width:0}
+.wm-1{font:800 clamp(15px,4.7vw,19px)/1 var(--f-mark);letter-spacing:.06em;white-space:nowrap}
+.wm-2{font:800 9.5px/1 var(--f-mark);letter-spacing:.36em;color:var(--amber);margin-top:5px;white-space:nowrap}
+.tools-home{flex:none;min-width:182px;display:flex;justify-content:flex-end}
+.tools{display:flex;gap:6px}
+.seg{display:flex;border-radius:var(--r-ctl);padding:0;background:rgba(0,0,0,.18);box-shadow:inset 0 0 0 1px rgba(254,244,235,.22)}
+.seg button{min-width:44px;min-height:44px;padding:0 8px;border:0;border-radius:var(--r-ctl);background:none;color:var(--mute);font:600 13px/1 var(--f-mono);letter-spacing:.06em}
+.seg button[aria-pressed="true"]{background:var(--cream);color:var(--ink)}
+.status{display:flex;flex-wrap:wrap;align-items:center;gap:2px 12px;padding:2px 2px 8px;font:500 13px/1.3 var(--f-sans);color:var(--mute)}
+.st-now{display:inline-flex;align-items:center;gap:7px;color:var(--cream)}
+.st-dot{width:8px;height:8px;border-radius:50%;background:#9FD6B2;box-shadow:0 0 0 3px rgba(159,214,178,.18)}
+.is-closed .st-dot{background:var(--amber);box-shadow:0 0 0 3px rgba(224,176,122,.18)}
+.st-orig{color:var(--amber)}
+
+/* ---------- Indicador de 3 mini pantallas ---------- */
+.strip{flex:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding:0 12px 10px}
+.tab{position:relative;display:flex;align-items:center;gap:8px;min-height:52px;min-width:0;padding:6px 6px 6px 8px;border:1px solid transparent;border-radius:var(--r-ctl);background:none;color:var(--mute);text-align:left}
+.tab[aria-current="true"]{background:rgba(254,244,235,.09);border-color:rgba(254,244,235,.24);color:var(--cream)}
+.tab[aria-current="true"]::after{content:"";position:absolute;left:10px;right:10px;bottom:-1px;height:3px;border-radius:3px 3px 0 0;background:var(--amber)}
+.mini{position:relative;flex:none;width:20px;height:34px;border:2px solid #15110F;border-radius:3px;background:var(--band);transition:background-color .2s,box-shadow .2s}
+.mini::before{content:"";position:absolute;inset:4px 3px 5px;background:repeating-linear-gradient(180deg,rgba(42,37,35,.6) 0 1.5px,rgba(0,0,0,0) 1.5px 4.5px)}
+.mini--2::after{content:"";position:absolute;left:3px;right:3px;top:3px;height:4px;border-radius:1px;background:linear-gradient(90deg,#D7263D,#F39A2B)}
+.mini--2::before{top:10px}
+.mini--3::before{bottom:13px}
+.mini--3::after{content:"";position:absolute;left:3px;right:3px;bottom:4px;height:7px;background:radial-gradient(circle,rgba(42,37,35,.65) 1px,rgba(0,0,0,0) 1.4px) 0 0/4px 3.5px}
+.tab[aria-current="true"] .mini{background:var(--board);box-shadow:0 0 0 1px rgba(254,244,235,.25),0 0 14px 2px rgba(224,176,122,.5)}
+.tab-txt{display:flex;flex-direction:column;min-width:0}
+.tab-n{font:600 11px/1.1 var(--f-mono);color:var(--amber);letter-spacing:.06em}
+.tab-l{font:600 14px/1.15 var(--f-sans)}
+.tab-l2{display:block}
+
+/* ---------- Tableros (scroll-snap horizontal) ---------- */
+.boards{flex:1;min-height:0;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none;background:var(--board)}
+.boards::-webkit-scrollbar{display:none}
+.board{flex:0 0 100%;width:100%;min-width:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior-y:contain;scroll-snap-align:start;scroll-snap-stop:always;padding-bottom:var(--s5);scrollbar-width:thin;scrollbar-color:rgba(62,77,69,.35) transparent}
+.is-locked .boards,.is-locked .board{overflow:hidden}
+.bd-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:start;padding:18px 16px 10px;background-image:repeating-linear-gradient(90deg,rgba(62,77,69,.07) 0 1px,rgba(0,0,0,0) 1px 24px)}
+.bd-kick{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:2px 12px;font:600 var(--t-cap)/1.3 var(--f-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--moss)}
+.bd-side{display:inline-flex;align-items:center;gap:6px;letter-spacing:.06em;text-transform:none;font-weight:500}
+.bd-side .ico{width:16px;height:16px}
+.bd-title{font:600 var(--t-title)/1.05 var(--f-sans);letter-spacing:.16em;text-transform:uppercase;margin-top:6px}
+.bd-cube{grid-row:2/span 3;grid-column:2;align-self:center;width:48px;height:48px;border-radius:6px;display:grid;place-items:center;color:var(--ink);background:radial-gradient(circle at 50% 42%,#FFFDF8 0,#F7ECDB 72%);box-shadow:inset 0 0 0 1px rgba(42,37,35,.12),0 8px 18px -8px rgba(195,144,86,.9),6px 0 0 -2px #2A2523}
+.bd-cube .ico{width:26px;height:26px;stroke-width:1.8}
+.bd-desc{font:500 var(--t-body)/1.35 var(--f-sans);color:var(--ink)}
+.bd-desc2{font:400 var(--t-sub)/1.35 var(--f-sans);color:var(--moss)}
+.col-h{display:flex;justify-content:flex-end;padding:6px 64px 6px 16px;font:600 var(--t-cap)/1 var(--f-mono);letter-spacing:.16em;color:var(--moss)}
+
+/* Puntos guía (líder de tablero) */
+.ln{display:flex;align-items:baseline;align-items:last baseline;min-width:0}
+.ln-name{flex:0 1 auto;min-width:0;overflow-wrap:anywhere}
+.ln-dots{flex:1 1 18px;min-width:18px;align-self:last baseline;height:3px;margin:0 8px;background-image:radial-gradient(circle at 1.5px 1.5px,var(--dots,rgba(62,77,69,.8)) 1.25px,rgba(0,0,0,0) 1.7px);background-size:7px 3px;background-repeat:repeat-x;background-position:0 0;transform:translateY(-1px)}
+.ln-val{flex:none;white-space:nowrap;font-variant-numeric:tabular-nums}
+
+/* Filas */
+.rows{border-top:2px solid var(--ink)}
+.row{display:grid;grid-template-columns:minmax(0,1fr) 52px;align-items:center;border-bottom:1px solid var(--line)}
+.row-main{display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px;align-items:center;min-height:76px;padding:12px 2px 12px 16px;border:0;background:none;text-align:left;transition:background-color .15s}
+.row-main:active{background:var(--band-2)}
+.row-main:focus-visible,.feat-main:focus-visible,.visit:focus-visible,.opt:focus-visible{outline-offset:-3px}
+.row-cup{position:relative;width:40px;height:54px;display:grid;place-items:center}
+.row-cup::before{content:"";position:absolute;left:1px;top:12px;width:38px;height:38px;border-radius:50%;background:var(--c);opacity:.32}
+.row-cup svg{position:relative;width:auto;height:52px}
+.row-name{font:500 var(--t-name)/1.2 var(--f-sans)}
+.row-price{font:600 17px/1.2 var(--f-mono);color:var(--red)}
+.row-sub{display:block;margin-top:2px;font:400 var(--t-sub)/1.3 var(--f-sans);color:var(--moss)}
+.row-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.tag{display:inline-flex;align-items:center;gap:5px;padding:4px 7px 3px;border-radius:var(--r-tag);font:600 11.5px/1.1 var(--f-sans);letter-spacing:.08em;text-transform:uppercase}
+.tag .ico{width:12px;height:12px;stroke-width:2.4}
+.tag--casa{background:var(--ink);color:var(--cream)}
+.tag--rev{box-shadow:inset 0 0 0 1.5px var(--moss);color:var(--ink)}
+.tag--out{background:var(--red);color:var(--cream)}
+.row.is-out .row-cup svg{filter:grayscale(1);opacity:.5}
+.row.is-out .row-price{color:var(--moss)}
+.qa{position:relative;justify-self:center;width:48px;height:48px;border:0;border-radius:50%;background:none;color:var(--ink);display:grid;place-items:center}
+.qa::before{content:"";position:absolute;inset:6px;border-radius:50%;box-shadow:inset 0 0 0 2px var(--ink);transition:background-color .15s,transform .15s}
+.qa .ico{position:relative;width:20px;height:20px;stroke-width:2.4}
+
+.qa:active::before{transform:scale(.9)}
+.qa.is-done{color:var(--cream)}
+.qa.is-done::before{background:var(--ink)}
+.qa--out{width:48px;height:48px}
+.qa--out::before{display:none}
+
+/* Destacada: Koi Tea */
+.feat{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 52px;align-items:center;margin:2px 12px 16px;border-radius:var(--r-card);background:var(--cream);box-shadow:0 0 0 1px rgba(42,37,35,.1),0 14px 26px -18px rgba(163,49,25,.65)}
+.feat-main{display:grid;grid-template-columns:86px minmax(0,1fr);gap:12px;align-items:center;padding:14px 2px 14px 12px;border:0;border-radius:var(--r-card) 0 0 var(--r-card);background:none;text-align:left}
+
+.feat-cup{position:relative;height:118px;display:grid;place-items:center}
+.feat-cup::before{content:"";position:absolute;width:84px;height:84px;top:26px;border-radius:50%;background:radial-gradient(circle at 50% 38%,var(--c2) 0,var(--c1) 100%);opacity:.38}
+.feat-cup svg{position:relative;height:116px;width:auto}
+.feat-txt{display:block;min-width:0}
+.feat-kick{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;margin-bottom:8px}
+.feat-k2{font:500 13px/1.2 var(--f-sans);color:var(--moss)}
+.feat-name{font:600 26px/1.1 var(--f-sans);padding-bottom:7px;background:linear-gradient(90deg,var(--c1),var(--c2)) 0 100%/72px 4px no-repeat}
+.feat .ln-val{font:600 18px/1.1 var(--f-mono);color:var(--red)}
+.feat-sub{display:block;margin-top:6px;font:400 var(--t-sub)/1.3 var(--f-sans);color:var(--moss)}
+.feat-desc{display:block;margin-top:6px;font:400 var(--t-note)/1.4 var(--f-sans);color:var(--ink)}
+.photo{position:relative;margin:0 12px 14px;border-radius:var(--r-card);overflow:hidden;background:var(--band)}
+.photo img{width:100%;height:auto;aspect-ratio:16/8;object-fit:cover;object-position:50% 62%}
+.photo figcaption{padding:8px 12px;font:500 13px/1.3 var(--f-sans);color:var(--ink);background:var(--band-2)}
+
+/* Toppings (tablero 3) */
+.tps{margin-top:var(--s5);padding:0 16px}
+.tps-h{display:flex;align-items:baseline;flex-wrap:wrap;gap:2px 12px;padding-bottom:6px;border-bottom:2px solid var(--ink);font:600 var(--t-h3)/1.1 var(--f-sans);letter-spacing:.14em;text-transform:uppercase}
+.tps-h small{font:400 var(--t-sub) var(--f-sans);letter-spacing:.02em;text-transform:none;color:var(--moss)}
+.tps-rule{margin-top:10px;font:500 var(--t-body)/1.35 var(--f-sans)}
+.tps-rule2{font:400 var(--t-sub)/1.35 var(--f-sans);color:var(--moss)}
+.tp-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 16px;margin-top:14px}
+.tp-g--tapioca{grid-column:1/-1}
+.tp-h{margin:10px 0 4px;font:600 13px/1.25 var(--f-sans);letter-spacing:.12em;text-transform:uppercase}
+.tp-h small{display:block;font:400 13px/1.3 var(--f-sans);letter-spacing:.02em;text-transform:none;color:var(--moss)}
+.tp{display:grid;grid-template-columns:18px minmax(0,1fr);column-gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line)}
+.tp svg{width:16px;height:16px}
+.tp-n{font:500 var(--t-body)/1.2 var(--f-sans)}
+.tp-n2{grid-column:2;font:400 14px/1.25 var(--f-sans);color:var(--moss)}
+.tp .tag{grid-column:2;justify-self:start;margin-top:4px}
+
+/* Pie de tablero */
+.bd-foot{display:grid;gap:14px;padding:22px 16px 6px}
+.fn{font:500 var(--t-body)/1.35 var(--f-sans)}
+.fn2{font:400 var(--t-sub)/1.35 var(--f-sans);color:var(--moss)}
+.teaser{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;min-height:64px;padding:12px 12px 12px 14px;border:0;border-radius:var(--r-card);background-color:var(--walnut);background-image:var(--flute);color:var(--cream);text-align:left;--focus:var(--ink)}
+.teaser strong{display:block;font:600 var(--t-body)/1.25 var(--f-sans)}
+.teaser span span{display:block;margin-top:2px;font:400 14px/1.3 var(--f-sans);color:var(--mute)}
+.wall-ico{display:flex;gap:3px;align-items:flex-end;padding:8px 6px 6px;border-radius:6px;background:linear-gradient(180deg,rgba(195,144,86,.55),rgba(195,144,86,.15))}
+.wall-ico i{width:10px;height:18px;border:1.5px solid #15110F;border-radius:1.5px;background:var(--band)}
+.wall-ico i.on{background:var(--board);box-shadow:0 0 8px 1px rgba(224,176,122,.9)}
+.legal{font:400 13px/1.45 var(--f-sans);color:var(--moss)}
+.visit{display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:10px;align-items:center;min-height:56px;padding:10px 8px 10px 4px;border:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:none;color:var(--ink);text-align:left}
+.visit strong{display:block;font:600 15px/1.3 var(--f-sans)}
+.visit span span{display:block;font:400 14px/1.35 var(--f-sans);color:var(--moss)}
+.next-b{display:flex;align-items:center;gap:12px;min-height:56px;padding:8px 12px 8px 16px;border:0;border-radius:var(--r-card);box-shadow:inset 0 0 0 2px var(--ink);background:none;color:var(--ink);text-align:left}
+.next-b span{flex:1;display:grid}
+.next-b small{font:600 var(--t-cap)/1.3 var(--f-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--moss)}
+.next-b strong{font:600 18px/1.25 var(--f-sans)}
+.next-b .ico{width:24px;height:24px}
+.merch{margin-top:6px;border-radius:var(--r-card);overflow:hidden;background:var(--cream);box-shadow:0 0 0 1px rgba(42,37,35,.1)}
+.merch img{width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;object-position:50% 40%}
+.merch figcaption{display:grid;gap:2px;padding:12px 14px 14px}
+.merch strong{font:600 17px/1.25 var(--f-sans)}
+.merch span{font:400 15px/1.35 var(--f-sans);color:var(--moss)}
+
+/* ---------- Barra inferior ---------- */
+.bar{flex:none;display:flex;align-items:center;gap:8px;padding:8px 12px;padding-bottom:max(8px,env(safe-area-inset-bottom));background-color:var(--walnut-2)}
+.scr-btn{display:flex;align-items:center;gap:8px;min-height:48px;min-width:48px;padding:0 12px;border:1px solid rgba(254,244,235,.3);border-radius:var(--r-ctl);background:none;color:var(--cream);font:600 15px/1.1 var(--f-sans)}
+.cart-btn{flex:1;min-width:0;display:flex;align-items:center;gap:14px;min-height:56px;padding:6px 12px 6px 18px;border:0;border-radius:999px;background:var(--cream);color:var(--ink);text-align:left;--focus:var(--amber)}
+.cart-btn .ico{width:24px;height:24px}
+.cb-ico{position:relative;flex:none;display:grid;place-items:center;width:28px;height:30px}
+.cb-n{position:absolute;top:-7px;right:-11px;min-width:21px;height:21px;padding:0 5px;border-radius:11px;background:var(--red);color:var(--cream);font:700 12px/21px var(--f-mono);text-align:center;box-shadow:0 0 0 2px var(--cream)}
+.cb-n.is-zero{display:none}
+.cb-txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.cb-l{font:600 16px/1.2 var(--f-sans);white-space:nowrap}
+.cb-t{font:600 15px/1.1 var(--f-mono);font-variant-numeric:tabular-nums;color:var(--red);white-space:nowrap}
+.cb-t.is-empty{font:500 13px/1.15 var(--f-sans);color:var(--moss)}
+.cart-btn .cb-go{flex:none;width:20px;height:20px;color:var(--moss)}
+.cart-btn.bump{animation:bump .32s var(--ease)}
+@keyframes bump{40%{transform:scale(1.045)}}
+@media (max-width:380px){.tab{gap:6px;padding:6px 4px 6px 6px}.mini{width:16px;height:28px}.mini::before{inset:3px 2px 4px}.tab-l{font-size:13px}}
+@media (max-width:349px){.scr-btn .lbl{display:none}.hdr,.strip,.bar{padding-left:8px;padding-right:8px}.hdr-row{gap:6px}.brand{gap:8px;padding:2px 4px 2px 2px}.brand-logo{width:32px;height:32px}.wm-2{font-size:8.5px;letter-spacing:.2em}.strip{gap:4px}}
+
+/* Aviso flotante */
+.toast{position:absolute;left:12px;right:12px;bottom:84px;z-index:5;display:flex;justify-content:center;pointer-events:none}
+.toast-in{pointer-events:auto;display:flex;align-items:center;gap:12px;max-width:100%;padding:6px 6px 6px 16px;border-radius:12px;background:var(--ink);color:var(--cream);font:500 15px/1.3 var(--f-sans);box-shadow:0 12px 28px -10px rgba(0,0,0,.55);opacity:0;transform:translateY(10px);transition:opacity .2s,transform .2s var(--ease);--focus:var(--amber)}
+.toast.is-on .toast-in{opacity:1;transform:none}
+.toast-in button{flex:none;min-height:44px;padding:0 12px;border:0;border-radius:8px;background:none;color:var(--amber);font:600 15px var(--f-sans)}
+.toast:empty{display:none}
+
+/* ---------- Capas (diálogos) ---------- */
+.layer{position:fixed;inset:0;z-index:50;display:flex;align-items:flex-end;justify-content:center}
+.layer[hidden]{display:none}
+.layer.is-closing{pointer-events:none}
+.scrim{position:absolute;inset:0;background:rgba(30,24,22,.5);opacity:0;transition:opacity .22s}
+.layer.is-open .scrim{opacity:1}
+.sheet{position:relative;display:flex;flex-direction:column;width:100%;max-width:480px;max-height:calc(100% - 36px);background:var(--cream);border-radius:var(--r-sheet) var(--r-sheet) 0 0;box-shadow:0 -10px 34px rgba(30,24,22,.25);transform:translateY(104%);transition:transform .26s var(--ease)}
+.sheet--tall{height:calc(100% - 36px)}
+.layer.is-open .sheet{transform:none}
+.sheet-top{flex:none;position:relative;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 8px 6px 12px}
+.grab{position:absolute;top:6px;left:50%;width:40px;height:4px;margin-left:-20px;border-radius:2px;background:rgba(42,37,35,.22)}
+.slot .seg{background:rgba(42,37,35,.06);box-shadow:inset 0 0 0 1px var(--line-2)}
+.slot .seg button{color:var(--ink)}
+.slot .seg button[aria-pressed="true"]{background:var(--ink);color:var(--cream)}
+.x{flex:none;width:44px;height:44px;display:grid;place-items:center;border:0;border-radius:50%;background:rgba(42,37,35,.07);color:var(--ink)}
+
+.sheet-body{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:4px 16px 20px}
+.sheet-foot{flex:none;padding:10px 16px max(12px,env(safe-area-inset-bottom));border-top:1px solid var(--line);background:inherit;border-radius:0}
+.sheet-foot:empty{display:none}
+
+/* Ficha de bebida */
+.dk-head{display:grid;grid-template-columns:96px minmax(0,1fr);gap:14px;align-items:center;padding:2px 0 12px}
+.dk-cup{position:relative;height:124px;display:grid;place-items:center}
+.dk-cup::before{content:"";position:absolute;top:30px;width:88px;height:88px;border-radius:50%;background:var(--c);opacity:.3}
+.dk-cup svg{position:relative;height:122px;width:auto;transition:opacity .15s}
+.dk-cup.is-swap svg{opacity:.35}
+.dk-kick{font:600 var(--t-cap)/1.3 var(--f-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--moss)}
+.dk-title{margin:4px 0 2px;font:600 var(--t-title)/1.1 var(--f-sans)}
+.dk-sub{font:400 var(--t-body)/1.3 var(--f-sans);color:var(--moss)}
+.dk-head .row-tags{margin-top:8px}
+.dk-desc{font:400 var(--t-body)/1.5 var(--f-sans)}
+.link-scr{display:flex;align-items:center;gap:10px;width:100%;min-height:48px;margin-top:10px;padding:8px 10px 8px 12px;border:1.5px solid var(--ink);border-radius:var(--r-ctl);background:none;color:var(--ink);font:600 15px/1.25 var(--f-sans);text-align:left}
+.link-scr span{flex:1}
+
+.sec{margin-top:22px}
+.sec-h{display:flex;align-items:baseline;flex-wrap:wrap;gap:2px 10px;padding-bottom:6px;border-bottom:2px solid var(--ink);font:600 13px/1.25 var(--f-sans);letter-spacing:.16em;text-transform:uppercase}
+.sec-h small{font:400 14px/1.25 var(--f-sans);letter-spacing:.02em;text-transform:none;color:var(--moss)}
+.sec-h em{margin-left:auto;font:500 12px/1.25 var(--f-mono);font-style:normal;letter-spacing:0;text-transform:none;color:var(--moss)}
+.sub-h{margin:12px 0 0;padding:0 0 2px 34px;font:600 12px/1.3 var(--f-sans);letter-spacing:.12em;text-transform:uppercase;color:var(--moss)}
+.sub-h small{font:400 12px var(--f-sans);letter-spacing:.02em;text-transform:none}
+.opt{display:grid;grid-template-columns:22px minmax(0,1fr);gap:12px;align-items:center;width:100%;min-height:48px;padding:6px 6px 6px 4px;border:0;border-bottom:1px solid var(--line);background:none;color:var(--ink);font:500 17px/1.25 var(--f-sans);text-align:left;transition:background-color .15s}
+.opt--top{grid-template-columns:22px 16px minmax(0,1fr)}
+
+.opt-mk{width:20px;height:20px;border-radius:50%;box-shadow:inset 0 0 0 2px var(--ink);display:grid;place-items:center}
+.opt--top .opt-mk{border-radius:4px}
+.opt-mk .ico{width:14px;height:14px;stroke-width:3;opacity:0}
+.opt[aria-checked="true"],.opt[aria-pressed="true"]{background:rgba(175,192,182,.38);font-weight:600}
+.opt[aria-checked="true"] .opt-mk{box-shadow:inset 0 0 0 2px var(--ink),inset 0 0 0 5px var(--cream);background:var(--ink)}
+.opt[aria-pressed="true"] .opt-mk{background:var(--ink);color:var(--cream)}
+.opt[aria-pressed="true"] .opt-mk .ico{opacity:1}
+.opt .ln-val{font:500 15px/1.2 var(--f-mono);color:var(--moss)}
+.opt[aria-checked="true"] .ln-val,.opt[aria-pressed="true"] .ln-val{font-weight:600;color:var(--red)}
+.opt:disabled{color:#8C837E}
+.opt:disabled .opt-mk{box-shadow:inset 0 0 0 2px #B9B1AB}
+.opt:disabled .ln-val{color:#8C837E}
+.opts.is-max .opt[aria-pressed="false"]:not(:disabled){color:var(--moss)}
+.tg{width:16px;height:16px}
+.cubes{display:inline-flex;gap:3px;vertical-align:middle}
+.cubes i{width:9px;height:9px;border-radius:2px;box-shadow:inset 0 0 0 1.5px currentColor;background:rgba(255,255,255,.7)}
+.msg{min-height:0;margin:6px 0 0;font:500 14px/1.35 var(--f-sans);color:var(--red-c)}
+.msg:empty{display:none}
+.dk-note{margin-top:20px;font:400 13px/1.45 var(--f-sans);color:var(--moss)}
+.dk-out{margin-top:18px;padding:14px;border-radius:var(--r-card);background:rgba(175,192,182,.35)}
+.dk-out p{font:500 var(--t-body)/1.4 var(--f-sans)}
+.dk-out .alts{display:grid;gap:8px;margin-top:10px}
+.alt{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:10px;align-items:center;min-height:56px;padding:6px 10px;border:1.5px solid var(--ink);border-radius:var(--r-ctl);background:var(--cream);text-align:left;font:600 16px/1.2 var(--f-sans)}
+.alt svg{height:44px;width:auto}
+.alt .ln-val{font:600 15px var(--f-mono);color:var(--red-c)}
+.pricebar .ln-name{font:500 14px/1.2 var(--f-sans);color:var(--moss)}
+.pricebar .ln-val{font:600 19px/1.2 var(--f-mono);color:var(--red-c)}
+.pricebar .eq{display:block;text-align:right;font:500 13px/1.3 var(--f-mono);color:var(--moss)}
+.actions{display:flex;align-items:center;gap:10px;margin-top:8px}
+.qty{flex:none;display:flex;align-items:center;border-radius:999px;box-shadow:inset 0 0 0 1.5px var(--ink)}
+.qty button{width:44px;height:44px;display:grid;place-items:center;border:0;border-radius:50%;background:none;color:var(--ink)}
+.qty button:disabled{color:#A39A94}
+.qty .ico{width:18px;height:18px;stroke-width:2.4}
+.qty output,.qty .q{min-width:26px;text-align:center;font:600 17px/1 var(--f-mono);font-variant-numeric:tabular-nums}
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 20px;border:0;border-radius:999px;font:600 17px/1.15 var(--f-sans);text-align:center}
+.btn--pri{flex:1;background:var(--walnut);color:var(--cream)}
+
+.btn--pri:disabled{background:#B5ACA7;color:#2A2523}
+.btn--sec{background:none;box-shadow:inset 0 0 0 1.5px var(--ink);color:var(--ink)}
+
+.btn .ico{width:20px;height:20px}
+.btn small{display:block;font:400 13px/1.2 var(--f-sans);opacity:.85}
+
+/* Comanda (carrito) */
+.sheet--paper{background:var(--paper)}
+.sheet--paper::before{content:"";position:absolute;left:0;right:0;top:-9px;height:10px;background:linear-gradient(135deg,var(--paper) 6px,rgba(0,0,0,0) 0) 0 0/12px 10px repeat-x,linear-gradient(225deg,var(--paper) 6px,rgba(0,0,0,0) 0) 0 0/12px 10px repeat-x}
+.sheet--paper{border-radius:0}
+.pp-kick{font:600 var(--t-cap)/1.3 var(--f-mono);letter-spacing:.22em;color:var(--moss)}
+.pp-title{margin-top:2px;font:600 26px/1.15 var(--f-sans)}
+.pp-meta{margin-top:2px;font:500 14px/1.35 var(--f-mono);color:var(--moss)}
+.pp-lines{margin-top:12px;border-top:2px solid var(--ink)}
+.pl{padding:14px 0 12px;border-bottom:1.5px dashed rgba(42,37,35,.4)}
+.pl .ln-name{font:600 17px/1.25 var(--f-mono)}
+.pl .ln-val{font:600 17px/1.25 var(--f-mono)}
+.pl-q{color:var(--red-c)}
+.pl-sub{margin-top:2px;font:400 14px/1.35 var(--f-sans);color:var(--moss)}
+.pl-desc{margin-top:4px;font:400 15px/1.45 var(--f-mono)}
+.pl-es{margin-top:4px;font:400 14px/1.4 var(--f-mono);color:var(--moss)}
+.pl-ctl{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:10px}
+.pl-ctl .grow{flex:1}
+.lnk{min-height:44px;padding:0 12px;border:0;border-radius:var(--r-ctl);background:none;color:var(--ink);font:600 15px/1 var(--f-sans);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1.5px}
+
+.pp-total{margin-top:6px;padding:12px 0 4px;border-top:3px double var(--ink)}
+.pp-total .ln-name,.pp-total .ln-val{font:700 21px/1.2 var(--f-mono)}
+.pp-eq{text-align:right;font:500 15px/1.4 var(--f-mono);color:var(--moss)}
+.undo{display:flex;align-items:center;gap:8px;margin:4px 0 10px;padding:4px 4px 4px 12px;border-radius:var(--r-ctl);background:rgba(175,192,182,.4);font:500 15px/1.3 var(--f-sans)}
+.undo span{flex:1}
+.empty{display:grid;justify-items:start;gap:10px;padding:8px 0 12px}
+.empty svg{height:120px;width:auto}
+.empty h2{font:600 24px/1.2 var(--f-sans)}
+.empty p{font:400 var(--t-body)/1.5 var(--f-sans);color:var(--ink)}
+.foot-2{display:grid;gap:8px}
+.foot-2 .btn{width:100%}
+
+/* Ticket "Mostrar en caja" */
+.full{position:relative;display:flex;flex-direction:column;width:100%;max-width:480px;height:100%;opacity:0;transform:translateY(18px);transition:opacity .22s,transform .26s var(--ease)}
+.layer.is-open .full{opacity:1;transform:none}
+.full--counter{background-color:var(--walnut);background-image:var(--flute);color:var(--cream);--focus:var(--amber)}
+.full--counter .sheet-top{padding-top:max(10px,env(safe-area-inset-top))}
+.full--counter .x{background:rgba(254,244,235,.12);color:var(--cream)}
+.full--counter .slot .seg{background:rgba(0,0,0,.2);box-shadow:inset 0 0 0 1px rgba(254,244,235,.25)}
+.full--counter .slot .seg button{color:var(--mute)}
+.full--counter .slot .seg button[aria-pressed="true"]{background:var(--cream);color:var(--ink)}
+.tk-wrap{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:14px 16px 22px}
+.tk{position:relative;width:100%;max-width:370px;margin:10px auto 6px;padding:22px 20px 26px;background:var(--paper);color:var(--ink);font-family:var(--f-mono);box-shadow:0 18px 36px -12px rgba(0,0,0,.55);--focus:var(--ink)}
+.tk::before,.tk::after{content:"";position:absolute;left:0;right:0;height:10px}
+.tk::before{top:-9px;background:linear-gradient(135deg,var(--paper) 6px,rgba(0,0,0,0) 0) 0 0/12px 10px repeat-x,linear-gradient(225deg,var(--paper) 6px,rgba(0,0,0,0) 0) 0 0/12px 10px repeat-x}
+.tk::after{bottom:-9px;background:linear-gradient(45deg,var(--paper) 6px,rgba(0,0,0,0) 0) 0 0/12px 10px repeat-x,linear-gradient(315deg,var(--paper) 6px,rgba(0,0,0,0) 0) 0 0/12px 10px repeat-x}
+.tk-brand{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center}
+.tk-brand .wm-1{font-size:22px}
+.tk-brand .wm-2{color:var(--ink);font-size:10px}
+.tk-c{text-align:center;font:500 14px/1.45 var(--f-mono);color:var(--moss)}
+.tk-cut{margin:14px 0;border:0;border-top:1.5px dashed rgba(42,37,35,.45)}
+.tk-h{text-align:center;font:700 15px/1.3 var(--f-mono);letter-spacing:.12em;text-transform:uppercase}
+.tk-h2{text-align:center;font:500 13px/1.3 var(--f-mono);color:var(--moss)}
+.tk-code{margin:10px 0 6px;text-align:center;font:700 var(--t-code)/1 var(--f-mono);letter-spacing:.04em;font-variant-numeric:tabular-nums}
+.tk-mode{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}
+.tk-mode button{min-height:44px;padding:4px 6px;border:0;border-radius:8px;box-shadow:inset 0 0 0 1.5px var(--ink);background:none;color:var(--ink);font:600 14px/1.15 var(--f-mono)}
+.tk-mode button[aria-checked="true"]{background:var(--ink);color:var(--paper)}
+.tk-colh{text-align:right;font:600 11.5px/1.3 var(--f-mono);letter-spacing:.14em;color:var(--moss)}
+.tk-lines li{padding:8px 0;border-bottom:1px dotted rgba(42,37,35,.45)}
+.tk-lines .ln-name,.tk-lines .ln-val{font:600 16px/1.3 var(--f-mono)}
+.tk-d{margin-top:2px;font:400 14px/1.4 var(--f-mono)}
+.tk-es{margin-top:3px;font:400 14px/1.4 var(--f-mono);color:var(--moss)}
+.tk-es b{font-weight:600;color:var(--ink)}
+.tk-total{margin-top:10px;padding-top:10px;border-top:3px double var(--ink)}
+.tk-total .ln-name,.tk-total .ln-val{font:700 20px/1.2 var(--f-mono)}
+.tk-pay{display:grid;gap:2px;margin-top:12px;padding:8px 10px;text-align:center;box-shadow:inset 0 0 0 2px var(--ink)}
+.tk-pay span{font:700 16px/1.25 var(--f-mono);letter-spacing:.12em;text-transform:uppercase}
+.tk-pay small{font:500 13px/1.3 var(--f-mono);color:var(--moss)}
+.tk-foot{padding:12px 16px max(14px,env(safe-area-inset-bottom));display:grid;grid-template-columns:1fr 1fr;gap:8px;background:rgba(30,24,22,.35)}
+.tk-foot .btn--sec{box-shadow:inset 0 0 0 1.5px rgba(254,244,235,.7);color:var(--cream)}
+.tk-foot .btn--pri{background:var(--cream);color:var(--ink)}
+
+/* WhatsApp */
+.wa-lead{margin-top:6px;font:400 var(--t-body)/1.45 var(--f-sans)}
+.closed-note{margin-top:12px;padding:10px 12px;border-radius:var(--r-ctl);background:rgba(224,176,122,.35);font:500 15px/1.4 var(--f-sans)}
+.fld{display:grid;gap:6px;margin-top:14px}
+.fld label{font:600 15px/1.2 var(--f-sans)}
+.fld label small{font:400 14px var(--f-sans);color:var(--moss)}
+.fld input{width:100%;min-height:48px;padding:10px 12px;border:0;border-radius:var(--r-ctl);background:#fff;box-shadow:inset 0 0 0 1.5px var(--moss);font:400 17px/1.2 var(--f-sans);color:var(--ink)}
+.fld input:focus-visible{outline:3px solid var(--ink);outline-offset:1px}
+.fld input::placeholder{color:#6B6560}
+.pv-l{margin-top:18px;font:600 var(--t-cap)/1.3 var(--f-sans);letter-spacing:.14em;text-transform:uppercase;color:var(--moss)}
+.bubble{position:relative;margin-top:8px;padding:10px 12px 12px;border-radius:14px 14px 4px 14px;background:#E3EEDF;box-shadow:0 1px 0 rgba(42,37,35,.15)}
+.bubble textarea{display:block;width:100%;padding:0;border:0;background:none;resize:none;overflow:hidden;field-sizing:content;font:400 15px/1.45 var(--f-sans);color:var(--ink)}
+.bubble textarea:focus-visible{outline:2px solid var(--ink);outline-offset:4px;border-radius:4px}
+.wa-note{margin-top:10px;font:400 14px/1.45 var(--f-sans);color:var(--moss)}
+.copy-st{min-height:20px;margin-top:8px;font:600 15px/1.35 var(--f-sans);color:var(--moss)}
+.copy-st:empty{display:none}
+
+/* Info */
+.in-head{display:grid;grid-template-columns:84px minmax(0,1fr);gap:14px;align-items:center}
+.in-logo{width:84px;height:84px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 2px var(--ink)}
+.in-head h2{font:600 24px/1.15 var(--f-sans)}
+.in-tag{margin-top:4px;font:italic 400 var(--t-body)/1.4 var(--f-sans)}
+.in-or{margin-top:2px;font:500 15px/1.35 var(--f-sans);color:var(--moss)}
+.in-rows{margin-top:16px;border-top:2px solid var(--ink)}
+.in-rows li{padding:12px 0;border-bottom:1px solid var(--line)}
+.in-rows .ln-name{font:500 var(--t-body)/1.3 var(--f-sans)}
+.in-rows .ln-val{font:600 15px/1.3 var(--f-mono)}
+.in-addr{display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;margin-top:14px;font:400 var(--t-body)/1.45 var(--f-sans)}
+.in-photo{margin-top:16px;border-radius:var(--r-card);overflow:hidden;background:var(--band)}
+.in-photo img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;object-position:50% 36%}
+.in-photo figcaption{padding:8px 12px;font:500 14px/1.35 var(--f-sans);background:var(--band-2)}
+.in-notes{display:grid;gap:4px;margin-top:14px}
+
+/* ---------- Pantallas del local ---------- */
+.full--wall{background:var(--wall)}
+.sv{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:2px 16px 22px}
+.sv h2{font:600 24px/1.15 var(--f-sans)}
+.sv-lead{margin-top:6px;font:500 17px/1.4 var(--f-sans)}
+.sv-ctl{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin-top:14px}
+.seg--l{background:rgba(42,37,35,.06);box-shadow:inset 0 0 0 1px var(--line-2)}
+.seg--l button{color:var(--ink);font:600 14px/1 var(--f-sans);letter-spacing:0;padding:0 12px}
+.seg--l button[aria-pressed="true"]{background:var(--ink);color:var(--cream)}
+.chip{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;border:0;border-radius:999px;box-shadow:inset 0 0 0 1.5px var(--ink);background:none;color:var(--ink);font:600 14px/1 var(--f-sans)}
+.chip .ico{width:18px;height:18px}
+.wall{--s:.37;position:relative;margin-top:12px;padding:30px 0 16px;border-radius:var(--r-card);background:radial-gradient(130% 70% at 50% -18%,rgba(195,144,86,.6),rgba(195,144,86,0) 62%),#EFE0CC;box-shadow:inset 0 0 0 1px rgba(42,37,35,.08)}
+.lamps{position:absolute;inset:0 0 auto;height:30px;pointer-events:none}
+.lamps i{position:absolute;top:0;width:1.5px;height:16px;background:var(--ink)}
+.lamps i::after{content:"";position:absolute;top:14px;left:-6px;width:13px;height:13px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#fff,#F6EBDD 60%,#E8D3B8);box-shadow:0 0 12px 4px rgba(255,236,200,.85)}
+.wall-row{display:flex;justify-content:center;gap:10px;padding:0 10px}
+.wall.is-zoom .wall-row{justify-content:flex-start;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px calc(50% - (288px * var(--s) + 6px) / 2) 12px;scrollbar-width:thin}
+.scr{position:relative;flex:none;display:block;width:calc(288px * var(--s) + 6px);height:calc(512px * var(--s) + 6px);padding:0;border:3px solid var(--bezel);border-radius:4px;background:var(--band);overflow:hidden;box-shadow:0 10px 20px -8px rgba(42,37,35,.5);text-align:left;color:var(--ink)}
+
+.scr-in{display:block;width:288px;height:512px;padding:16px 14px 10px;transform:scale(var(--s));transform-origin:0 0;--dots:rgba(42,37,35,.75)}
+.scr-wrap{flex:none;display:flex;flex-direction:column;align-items:center;gap:8px;scroll-snap-align:center}
+.scr-cap{max-width:calc(288px * var(--s) + 6px);font:500 13px/1.25 var(--f-sans);color:var(--ink);text-align:center}
+.sx-h{display:block;font:600 19px/1 var(--f-sans);letter-spacing:.2em;text-transform:uppercase}
+.sx-d{display:block;margin-top:4px;font:500 11px/1.3 var(--f-sans)}
+.sx-d2{display:block;font:400 10.5px/1.3 var(--f-sans);color:var(--moss)}
+.sx-rows{display:block;margin:6px 0 10px;border-top:1.5px solid var(--ink)}
+.sx-row{display:block;padding:3px 4px 2px;border-bottom:1px solid rgba(42,37,35,.18)}
+.sx-row .ln-name{font:500 14.5px/1.15 var(--f-sans)}
+.sx-row .ln-val{font:700 14.5px/1.15 var(--f-mono)}
+.sx-row .ln-dots{margin:0 5px;background-size:6px 3px}
+.sx-sub{display:block;font:400 10.5px/1.2 var(--f-sans);color:var(--moss)}
+.sx-row.is-hl{position:relative;z-index:1;background:var(--cream);border-radius:3px;box-shadow:0 0 0 2px var(--ink);animation:hl 1.6s ease-in-out 3}
+@keyframes hl{50%{box-shadow:0 0 0 2px var(--ink),0 0 0 7px rgba(249,78,43,.35)}}
+.sx-row.is-flash{animation:flash 1.2s ease-out 1}
+@keyframes flash{0%{background:#FFE7B8}100%{background:rgba(0,0,0,0)}}
+.sx-foot{display:block;margin-top:auto;font:500 10.5px/1.3 var(--f-sans)}
+.scr-in--col{display:flex;flex-direction:column}
+.sx-koi{display:flex;flex-direction:column;align-items:center;justify-content:space-between;height:100%;padding:10px 0 4px;text-align:center}
+.sx-logo{width:150px;height:150px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 4px var(--cream),0 0 0 6px var(--ink)}
+.sx-mark{display:flex;flex-direction:column;align-items:center}
+.sx-mark .wm-1{font-size:30px}
+.sx-mark .wm-2{font-size:12px;color:var(--ink);margin-top:7px}
+.sx-or{font:500 12px/1.35 var(--f-sans)}
+.sx-or span{display:block;font-weight:400;color:var(--moss)}
+.sx-ig{font:600 13px/1.3 var(--f-sans)}
+.sx-ig b{display:block;font:700 17px/1.2 var(--f-mono)}
+.qr{width:84px;height:84px;display:block;margin:6px auto 0}
+.sx-qr{font:600 10px/1.2 var(--f-mono);letter-spacing:.08em;text-transform:uppercase}
+.sx-tg{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+.sx-tg span.it{display:flex;align-items:center;gap:5px;padding:2px 0;font:500 12.5px/1.2 var(--f-sans);border-bottom:1px solid rgba(42,37,35,.15)}
+.sx-tg span.it i{width:7px;height:7px;border-radius:50%;background:var(--ink);flex:none}
+.sx-tg span.it em{margin-left:auto;font:600 8.5px/1 var(--f-sans);font-style:normal;letter-spacing:.06em;text-transform:uppercase;padding:2px 3px;background:var(--ink);color:var(--band)}
+.sx-gh{display:block;margin:8px 0 2px;font:600 11px/1.2 var(--f-sans);letter-spacing:.14em;text-transform:uppercase}
+.sx-gh small{display:block;font:400 9.5px/1.2 var(--f-sans);letter-spacing:.02em;text-transform:none;color:var(--moss)}
+.sv-cap{margin-top:12px;font:500 15px/1.45 var(--f-sans)}
+.sv-cap b{font-weight:600}
+.sv-note{margin-top:6px;font:400 14px/1.45 var(--f-sans);color:var(--moss)}
+.today{margin-top:12px;border-radius:var(--r-card);overflow:hidden;background:#2A2523}
+.today img{width:100%;height:auto;aspect-ratio:900/820;object-fit:cover}
+.today figcaption{padding:10px 12px;font:500 14px/1.4 var(--f-sans);color:var(--cream);background:var(--walnut)}
+.demo{margin-top:16px;padding:14px;border-radius:var(--r-card);background:var(--cream);box-shadow:0 0 0 1px var(--line)}
+.demo-k{font:600 var(--t-cap)/1.3 var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--moss)}
+.demo h3{margin-top:2px;font:600 19px/1.25 var(--f-sans)}
+.demo-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:10px}
+.demo select{flex:1 1 170px;min-width:0;min-height:48px;padding:0 10px;border:0;border-radius:var(--r-ctl);background:#fff;box-shadow:inset 0 0 0 1.5px var(--moss);font:500 16px var(--f-sans);color:var(--ink)}
+.demo .qty button{width:auto;min-width:52px;padding:0 10px;border-radius:999px;font:600 15px var(--f-mono)}
+.demo .qty output{min-width:64px;font-size:16px}
+.demo .lnk{margin-top:6px;padding-left:0}
+
+/* ---------- Hover solo con puntero ---------- */
+@media (hover:hover){.row-main:hover{background:var(--band-2)}.qa:hover::before{background:rgba(42,37,35,.08)}.feat-main:hover{background:rgba(201,214,206,.35)}.x:hover{background:rgba(42,37,35,.14)}.link-scr:hover{background:rgba(42,37,35,.05)}.opt:hover:not([aria-checked="true"]):not([aria-pressed="true"]):not(:disabled){background:rgba(201,214,206,.28)}.btn--pri:not(:disabled):hover{background:#3C3237}.btn--sec:hover{background:rgba(42,37,35,.05)}.lnk:hover{background:rgba(42,37,35,.06)}button.scr:hover{box-shadow:0 0 0 3px rgba(42,37,35,.25),0 10px 20px -8px rgba(42,37,35,.5)}}
+/* ---------- Movimiento reducido ---------- */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+  .sheet,.full{transform:none!important}
+  .layer .sheet,.layer .full{opacity:0;transition:opacity .15s linear!important}
+  .layer.is-open .sheet,.layer.is-open .full{opacity:1}
+  .scrim{transition:opacity .15s linear!important}
+  .sx-row.is-hl{animation:none}
+}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <h1 class="sr" id="h1">Menú de Koi Tea Boba Shop</h1>
+  <header class="hdr" id="hdr">
+    <div class="hdr-row">
+      <button class="brand" type="button" data-act="info" data-k="brand" aria-haspopup="dialog" id="brand">
+        <img class="brand-logo" src="img/logo.jpg" alt="" width="40" height="40">
+        <span class="brand-mark" aria-hidden="true"><span class="wm-1">KOI TEA</span><span class="wm-2">BOBA SHOP</span></span>
+        <span class="sr" id="brand-sr">Koi Tea Boba Shop: horario, dirección y avisos</span>
+      </button>
+      <div class="tools-home" id="tools-home">
+        <div class="tools" id="tools">
+          <div class="seg" role="group" id="g-lang" aria-label="Idioma">
+            <button type="button" data-testid="lang-es" data-act="lang" data-v="es" aria-pressed="true" lang="es">ES<span class="sr"> · Español</span></button>
+            <button type="button" data-testid="lang-en" data-act="lang" data-v="en" aria-pressed="false" lang="en">EN<span class="sr"> · English</span></button>
+          </div>
+          <div class="seg" role="group" id="g-cur" aria-label="Moneda">
+            <button type="button" data-testid="cur-mxn" data-act="cur" data-v="mxn" aria-pressed="true">MXN<span class="sr" id="cur-mxn-sr"> · pesos</span></button>
+            <button type="button" data-testid="cur-usd" data-act="cur" data-v="usd" aria-pressed="false">USD<span class="sr" id="cur-usd-sr"> · dólares</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="status" id="status"></p>
+  </header>
+  <nav class="strip" id="strip" aria-label="Tableros del menú"></nav>
+  <main class="boards" id="boards" aria-label="Menú">
+    <section class="board" id="board-0" data-i="0" aria-labelledby="bt-0"></section>
+    <section class="board" id="board-1" data-i="1" aria-labelledby="bt-1"></section>
+    <section class="board" id="board-2" data-i="2" aria-labelledby="bt-2"></section>
+  </main>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <footer class="bar" id="bar">
+    <button class="scr-btn" type="button" data-act="screens" data-k="screens-btn" aria-haspopup="dialog" id="scr-btn"></button>
+    <button class="cart-btn" type="button" data-testid="open-cart" data-act="cart" data-k="open-cart" aria-haspopup="dialog" id="cart-btn"></button>
+  </footer>
+</div>
+
+<div class="layer" id="L-drink" hidden>
+  <div class="scrim" data-act="close"></div>
+  <section class="sheet sheet--tall" role="dialog" aria-modal="true" aria-labelledby="drink-title">
+    <div class="sheet-top"><span class="grab" aria-hidden="true"></span><div class="slot"></div><button class="x" type="button" data-testid="close" data-act="close" aria-label="Cerrar"></button></div>
+    <div class="sheet-body" id="drink-body"></div>
+    <div class="sheet-foot" id="drink-foot"></div>
+  </section>
+</div>
+<div class="layer" id="L-cart" hidden>
+  <div class="scrim" data-act="close"></div>
+  <section class="sheet sheet--paper" role="dialog" aria-modal="true" aria-labelledby="cart-title">
+    <div class="sheet-top"><span class="grab" aria-hidden="true"></span><div class="slot"></div><button class="x" type="button" data-testid="close" data-act="close" aria-label="Cerrar"></button></div>
+    <div class="sheet-body" id="cart-body"></div>
+    <div class="sheet-foot" id="cart-foot"></div>
+  </section>
+</div>
+<div class="layer" id="L-ticket" hidden>
+  <div class="scrim" data-act="close"></div>
+  <section class="full full--counter" role="dialog" aria-modal="true" aria-labelledby="ticket-title">
+    <div class="sheet-top"><div class="slot"></div><button class="x" type="button" data-testid="close" data-act="close" aria-label="Cerrar"></button></div>
+    <div class="tk-wrap" id="ticket-body"></div>
+    <div class="tk-foot" id="ticket-foot"></div>
+  </section>
+</div>
+<div class="layer" id="L-wa" hidden>
+  <div class="scrim" data-act="close"></div>
+  <section class="sheet sheet--tall" role="dialog" aria-modal="true" aria-labelledby="wa-title">
+    <div class="sheet-top"><span class="grab" aria-hidden="true"></span><div class="slot"></div><button class="x" type="button" data-testid="close" data-act="close" aria-label="Cerrar"></button></div>
+    <div class="sheet-body" id="wa-body"></div>
+    <div class="sheet-foot" id="wa-foot"></div>
+  </section>
+</div>
+<div class="layer" id="L-screens" hidden>
+  <div class="scrim" data-act="close"></div>
+  <section class="full full--wall" role="dialog" aria-modal="true" aria-labelledby="scr-title">
+    <div class="sheet-top"><div class="slot"></div><button class="x" type="button" data-testid="close" data-act="close" aria-label="Cerrar"></button></div>
+    <div class="sv" id="scr-body"></div>
+  </section>
+</div>
+<div class="layer" id="L-info" hidden>
+  <div class="scrim" data-act="close"></div>
+  <section class="sheet" role="dialog" aria-modal="true" aria-labelledby="info-title">
+    <div class="sheet-top"><span class="grab" aria-hidden="true"></span><div class="slot"></div><button class="x" type="button" data-testid="close" data-act="close" aria-label="Cerrar"></button></div>
+    <div class="sheet-body" id="info-body"></div>
+  </section>
+</div>
+
+<script src="shared/koi-data.js"></script>
+<script src="shared/koi-cup.js"></script>
+<script>
+(function () {
+  'use strict';
+  var K = window.KOI, KC = window.KoiCup;
+  if (!K || !KC) return;
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+  var RM = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
+  var LS = 'koi5.v5.tablero';
+
+  /* ---------- Íconos (24×24, trazo 2) ---------- */
+  function ic(d, cls) { return '<svg class="ico' + (cls ? ' ' + cls : '') + '" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' + d + '</svg>'; }
+  var I = {
+    plus: ic('<path d="M12 5v14M5 12h14"/>'),
+    minus: ic('<path d="M5 12h14"/>'),
+    check: ic('<path d="M5 12.5l4.5 4.5L19 7.5"/>'),
+    close: ic('<path d="M6 6l12 12M18 6L6 18"/>'),
+    chev: ic('<path d="M9 6l6 6-6 6"/>'),
+    screens: ic('<rect x="2.5" y="4.5" width="5" height="15" rx="1"/><rect x="9.5" y="4.5" width="5" height="15" rx="1"/><rect x="16.5" y="4.5" width="5" height="15" rx="1"/>'),
+    cup: ic('<path d="M5.5 8.5h13l-1.6 11.3a1.5 1.5 0 0 1-1.5 1.2H8.6a1.5 1.5 0 0 1-1.5-1.2z"/><path d="M4.5 8.5h15"/><path d="M12.5 8.5l2-6"/><circle cx="10" cy="17" r=".6"/><circle cx="13.6" cy="16.2" r=".6"/>'),
+    leaf: ic('<path d="M12 21c-5.5-3-7.3-9-5-16 7 1.5 9.6 9 5 16z"/><path d="M12 21c-.5-4.5-1.6-8.4-3.6-11.6"/>'),
+    koi: ic('<path d="M3.5 12c3.5-5 10-5.5 14.5-1.5L21 8v8l-3-2.5C13.5 17.5 7 17 3.5 12z"/><circle cx="7.5" cy="11.3" r=".7"/><path d="M11 9.5c1.2 1.4 1.2 3.4 0 5"/>'),
+    torii: ic('<path d="M3 6.5c6 1 12 1 18 0"/><path d="M5 10h14"/><path d="M7 7.5V21M17 7.5V21"/><path d="M12 7.6V10"/>'),
+    copy: ic('<rect x="8.5" y="8.5" width="11" height="11" rx="2"/><path d="M15.5 8.5V6a1.5 1.5 0 0 0-1.5-1.5H6A1.5 1.5 0 0 0 4.5 6v8A1.5 1.5 0 0 0 6 15.5h2.5"/>'),
+    chat: ic('<path d="M4.5 19.5l1.3-3.8A7.5 7.5 0 1 1 9 18.6z"/><path d="M9 10.5h6M9 13.5h4"/>'),
+    receipt: ic('<path d="M6 3.5h12v17l-2.4-1.6-2.4 1.6-2.4-1.6-2.4 1.6L6 20.5z"/><path d="M9 8h6M9 11.5h6M9 15h3.5"/>'),
+    edit: ic('<path d="M4.5 19.5h4l10-10-4-4-10 10z"/><path d="M12.5 7.5l4 4"/>'),
+    pin: ic('<path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.2"/>'),
+    zoom: ic('<circle cx="10.5" cy="10.5" r="6"/><path d="M19.5 19.5l-4.6-4.6M10.5 8v5M8 10.5h5"/>'),
+    quote: ic('<path d="M6 17c2.5-1 3.5-2.8 3.5-5.5V7.5H5.5v4h4M14.5 17c2.5-1 3.5-2.8 3.5-5.5V7.5h-4v4h4"/>'),
+    back: ic('<path d="M15 6l-6 6 6 6"/>')
+  };
+  var BOARD_ICON = [I.cup, I.leaf, I.koi];
+
+  /* ---------- Textos ---------- */
+  var T = {
+    es: {
+      docTitle: 'Koi Tea · Menú en tableros',
+      h1: 'Menú de Koi Tea Boba Shop, Puerto Peñasco',
+      brandSr: 'Koi Tea Boba Shop: horario, dirección y avisos',
+      langGroup: 'Idioma', curGroup: 'Moneda', mxnSr: ' · pesos mexicanos', usdSr: ' · dólares',
+      openNow: 'Abierto ahora', closedNow: 'Cerrado ahora', hoursLbl: 'Horario',
+      nav: 'Tableros del menú', board: 'Tablero', menu: 'Menú',
+      tabNames: ['Milk Tea', 'Fruit Tea', 'Smoothies y Toppings'], tabAnd: ' y',
+      boardN: function (n) { return 'Tablero ' + n + ' de 3'; },
+      nextB: function (n) { return 'Sigue en el tablero ' + n; },
+      sameAs: function (s) { return s === 1 ? 'Igual que la pantalla izquierda de la barra' : 'Igual que la pantalla derecha de la barra'; },
+      pricesIn: function (c) { return c === 'usd' ? 'PRECIOS APROX. EN USD' : 'PRECIOS EN MXN'; },
+      charged: function (p) { return 'Se cobra en pesos: ' + p; }, usdNote: 'Los montos en dólares son aproximados (tipo de cambio de ejemplo).',
+      house: 'De la casa', review: 'Recomendado en reseñas', soldOut: 'Agotado hoy',
+      quickAria: function (n, d) { return 'Agregar ' + n + ' como la prepara la casa: ' + d; },
+      added: function (n, q) { return (q > 1 ? q + ' × ' : '') + n + ' ya va en tu pedido.'; },
+      undo: 'Deshacer', undone: 'Listo, lo quitamos de tu pedido.',
+      tpTitle: 'Toppings', tpTitle2: 'para tu bebida',
+      tpRule: function (p) { return '1 topping incluido en cada bebida · cada extra ' + p + ' · máximo 3.'; },
+      freeTop: '*Todas las bebidas incluyen 1 topping (por confirmar).',
+      visitT: 'Visítanos en Puerto Peñasco',
+      teaserT: 'Ver este tablero en la pantalla del local', teaserS: 'El mismo contenido, en letra para leer a 3–4 m.',
+      fruitPhoto: 'Fruit teas recién servidos en Koi Tea · foto de @koitea.mx',
+      merchT: 'Merch Koi Tea · Rocky Point, MX', merchS: 'Playeras, gorras y tote en el local.',
+      merchAlt: 'Muro de merch de Koi Tea con playeras, gorras y una tote con koi dibujados',
+      fruitAlt: 'Tres fruit teas con tapa sellada sobre una mesa blanca, en tonos rojo y naranja',
+      screensBtn: 'Pantallas', screensAria: 'Ver el menú en las 3 pantallas del local',
+      cartLbl: 'Tu pedido', cartEmpty: 'Aún vacío',
+      cartAria: function (n, t) { return n ? 'Tu pedido: ' + n + (n === 1 ? ' bebida' : ' bebidas') + ', total ' + t : 'Tu pedido: todavía vacío'; },
+      close: 'Cerrar',
+      size: 'Tamaño', toppings: 'Toppings', sweet: 'Dulzor', ice: 'Hielo', qty: 'Cantidad',
+      tpHint: '1 incluido · máx. 3',
+      maxMsg: 'Máximo 3 toppings. Quita uno para elegir otro.',
+      perCup: 'Precio por vaso',
+      add: function (q, p) { return 'Agregar' + (q > 1 ? ' ' + q : '') + ' · ' + p; },
+      save: function (p) { return 'Guardar cambios · ' + p; },
+      soldOutBtn: 'Agotado por hoy',
+      soldOutMsg: 'Se nos terminó por hoy. Mientras tanto, te puede gustar:',
+      seeOnScreens: 'Verla en las pantallas del local',
+      qtyDec: 'Uno menos', qtyInc: 'Uno más',
+      orderKick: 'COMANDA · ORDER', yourOrder: 'Tu pedido',
+      cups: function (n) { return n + (n === 1 ? ' bebida' : ' bebidas'); },
+      edit: 'Editar', remove: 'Quitar',
+      lineDec: function (n) { return 'Una ' + n + ' menos'; }, lineInc: function (n) { return 'Una ' + n + ' más'; },
+      removed: function (n) { return 'Quitaste ' + n + '.'; },
+      emptyT: 'Tu comanda está en blanco',
+      emptyP: 'Toca + en cualquier fila del tablero para agregar la receta de la casa, o abre una bebida para ajustarla a tu gusto.',
+      emptyBtn: 'Volver al tablero',
+      counter: 'Mostrar en caja', counterS: 'Ticket con código para el cajero',
+      wa: 'Pedir por WhatsApp', waS: 'Para llevar',
+      tkTitle: 'Muestra esta pantalla en caja', tkTitle2: 'Show this screen at the counter',
+      tkCode: 'Código de pedido', tkCol: 'IMPORTE EN PESOS · MXN', here: 'Para tomar aquí', togo: 'Para llevar', modeLbl: 'Cómo lo quieres',
+      staff: 'Para la barra:', payAt: 'Paga en caja', thanks: '¡Gracias por tu visita!',
+      back: 'Volver', newOrder: 'Nuevo pedido', newToast: '¡Gracias! Empezamos un pedido nuevo.',
+      waTitle: 'Pedir por WhatsApp', waLead: 'Para llevar. Copia el mensaje y mándalo al WhatsApp de Koi Tea; pagas en caja al recoger.',
+      waClosed: 'Ahora el local está cerrado (horario 11:00–21:30). Puedes dejar tu pedido para cuando abra.',
+      waName: 'Tu nombre', waTime: '¿A qué hora pasas?', optional: '(opcional)', waTimePh: 'Ej. 18:30',
+      waPv: 'Vista previa del mensaje', copy: 'Copiar mensaje', copied: '¡Copiado! Ya puedes pegarlo en el chat.',
+      copyFail: 'Tu navegador no dejó copiar: el texto quedó seleccionado para que lo copies a mano.',
+      waNote: 'En producción este botón abre WhatsApp con el mensaje listo. Número de WhatsApp por confirmar con Koi Tea.',
+      infoTag: '“El sabor y el arte se unen en un mismo espacio”',
+      hours: 'Horario', today: 'Hoy', ig: 'Instagram', waRow: 'WhatsApp', tbc: 'por confirmar', rate: 'Cambio de ejemplo', rateV: '$18 MXN = US$1',
+      addr: 'Dirección', barCap: 'La barra de Koi Tea con sus tres pantallas.', barAlt: 'Barra de Koi Tea con plafón iluminado, lámparas de globo y tres pantallas verticales con el menú',
+      logoAlt: 'Logotipo de Koi Tea: un koi blanco con mancha roja que bebe boba con popote',
+      thanksVisit: 'Gracias por visitarnos.', infoScreens: 'Ver el menú en las pantallas del local',
+      scrTitle: 'Las 3 pantallas del local', scrLead: 'Cambias un precio una vez y cambia aquí y en tu celular.',
+      compare: 'Comparar', proposal: 'Propuesta', todayPhoto: 'Hoy (foto)', zoomIn: 'Acercar', seeAll: 'Ver las 3',
+      scr1: 'Pantalla 1 · Milk Tea y Fruit Tea', scr2: 'Pantalla 2 · El koi', scr3: 'Pantalla 3 · Smoothies y Toppings',
+      scrShort: ['1 · Milk y Fruit', '2 · El koi', '3 · Smoothies'],
+      zoomScr: function (n) { return 'Acercar la pantalla ' + n; },
+      scrImg: function (n) { return n === 1 ? 'Pantalla 1: Milk Tea y Fruit Tea con precios, tinta sobre salvia' : n === 2 ? 'Pantalla 2: logo del koi, Síguenos @koitea.mx y QR de ejemplo' : 'Pantalla 3: Smoothies y toppings, tinta sobre salvia'; },
+      wallLbl: 'Las 3 pantallas, desplazables',
+      hl: function (n) { return 'Resaltada: <b>' + esc(n) + '</b>, la que abriste en tu celular.'; },
+      hlNone: 'Abre una bebida en tu celular y aquí se resalta.',
+      bilingual: 'Las pantallas muestran español e inglés a la vez y precios en pesos.',
+      contrast: 'Tinta sobre salvia: contraste 7.96:1, para leer a 3–4 m. Hoy el texto crema sobre salvia queda en 1.75:1.',
+      contrastNew: 'Con la propuesta, la tinta sobre la misma salvia sube a 7.96:1 y se lee a 3–4 m.',
+      todayCap: 'Así se ven hoy: texto crema sobre salvia (contraste 1.75:1) y reflejos de las lámparas.',
+      todayAlt: 'Foto de las tres pantallas actuales detrás de la barra, con letras claras difíciles de leer',
+      demoK: 'Para Koi Tea', demoH: 'Pruébalo: cambia un precio', demoDrink: 'Bebida',
+      demoDec: 'Bajar 5 pesos', demoInc: 'Subir 5 pesos',
+      demoNote: 'El cambio aparece al instante en las 3 pantallas y en el tablero del celular. Es una demostración: no se guarda.',
+      demoReset: 'Restablecer precios', demoToast: function (n, p) { return 'Precio de prueba: ' + n + ' ' + p + '.'; },
+      follow: 'Síguenos en Instagram', qr: 'QR de ejemplo', origin: 'Ingredientes importados de Taiwán',
+      sxFree: '*Todas las bebidas incluyen 1 topping'
+    },
+    en: {
+      docTitle: 'Koi Tea · Menu boards',
+      h1: 'Koi Tea Boba Shop menu, Rocky Point',
+      brandSr: 'Koi Tea Boba Shop: hours, address and notes',
+      langGroup: 'Language', curGroup: 'Currency', mxnSr: ' · Mexican pesos', usdSr: ' · US dollars',
+      openNow: 'Open now', closedNow: 'Closed now', hoursLbl: 'Hours',
+      nav: 'Menu boards', board: 'Board', menu: 'Menu',
+      tabNames: ['Milk Tea', 'Fruit Tea', 'Smoothies & Toppings'], tabAnd: ' &',
+      boardN: function (n) { return 'Board ' + n + ' of 3'; },
+      nextB: function (n) { return 'Next: board ' + n; },
+      sameAs: function (s) { return s === 1 ? 'Same as the left screen at the bar' : 'Same as the right screen at the bar'; },
+      pricesIn: function (c) { return c === 'usd' ? 'APPROX. PRICES IN USD' : 'PRICES IN MXN'; },
+      charged: function (p) { return 'Charged in pesos: ' + p; }, usdNote: 'Dollar amounts are approximate (sample exchange rate).',
+      house: 'House signature', review: 'Recommended in reviews', soldOut: 'Sold out today',
+      quickAria: function (n, d) { return 'Add ' + n + ' the house way: ' + d; },
+      added: function (n, q) { return (q > 1 ? q + ' × ' : '') + n + ' is in your order.'; },
+      undo: 'Undo', undone: 'Done, we took it out of your order.',
+      tpTitle: 'Toppings', tpTitle2: 'for your drink',
+      tpRule: function (p) { return '1 topping included with every drink · each extra ' + p + ' · up to 3.'; },
+      freeTop: '*Every drink includes 1 topping (to be confirmed).',
+      visitT: 'Visit us in Rocky Point',
+      teaserT: 'See this board on the in-store screen', teaserS: 'Same content, lettered to read from 3–4 m.',
+      fruitPhoto: 'Fruit teas just served at Koi Tea · photo by @koitea.mx',
+      merchT: 'Koi Tea merch · Rocky Point, MX', merchS: 'T-shirts, caps and totes in store.',
+      merchAlt: 'Koi Tea merch wall with T-shirts, caps and a tote with drawn koi',
+      fruitAlt: 'Three sealed fruit teas on a white table, in red and orange tones',
+      screensBtn: 'Screens', screensAria: 'See the menu on the 3 in-store screens',
+      cartLbl: 'Your order', cartEmpty: 'Still empty',
+      cartAria: function (n, t) { return n ? 'Your order: ' + n + (n === 1 ? ' drink' : ' drinks') + ', total ' + t : 'Your order: still empty'; },
+      close: 'Close',
+      size: 'Size', toppings: 'Toppings', sweet: 'Sugar', ice: 'Ice', qty: 'Quantity',
+      tpHint: '1 included · max 3',
+      maxMsg: 'Up to 3 toppings. Remove one to pick another.',
+      perCup: 'Price per cup',
+      add: function (q, p) { return 'Add' + (q > 1 ? ' ' + q : '') + ' · ' + p; },
+      save: function (p) { return 'Save changes · ' + p; },
+      soldOutBtn: 'Sold out today',
+      soldOutMsg: 'We ran out for today. Meanwhile, you might like:',
+      seeOnScreens: 'See it on the in-store screens',
+      qtyDec: 'One less', qtyInc: 'One more',
+      orderKick: 'COMANDA · ORDER', yourOrder: 'Your order',
+      cups: function (n) { return n + (n === 1 ? ' drink' : ' drinks'); },
+      edit: 'Edit', remove: 'Remove',
+      lineDec: function (n) { return 'One less ' + n; }, lineInc: function (n) { return 'One more ' + n; },
+      removed: function (n) { return 'You removed ' + n + '.'; },
+      emptyT: 'Your order ticket is blank',
+      emptyP: 'Tap + on any row of the board to add the house recipe, or open a drink to make it your way.',
+      emptyBtn: 'Back to the board',
+      counter: 'Show at the counter', counterS: 'Ticket with a code for the cashier',
+      wa: 'Order on WhatsApp', waS: 'For pickup',
+      tkTitle: 'Show this screen at the counter', tkTitle2: 'Muestra esta pantalla en caja',
+      tkCode: 'Order code', tkCol: 'AMOUNTS IN PESOS · MXN', here: 'For here', togo: 'To go', modeLbl: 'How you want it',
+      staff: 'For the bar (ES):', payAt: 'Pay at the counter', thanks: 'Thanks for stopping by!',
+      back: 'Back', newOrder: 'New order', newToast: 'Thank you! Starting a new order.',
+      waTitle: 'Order on WhatsApp', waLead: 'For pickup. Copy the message and send it to Koi Tea on WhatsApp; you pay at the counter.',
+      waClosed: 'The shop is closed right now (hours 11:00–21:30). You can leave your order for when it opens.',
+      waName: 'Your name', waTime: 'Pickup time', optional: '(optional)', waTimePh: 'e.g. 6:30 pm',
+      waPv: 'Message preview', copy: 'Copy message', copied: 'Copied! You can paste it in the chat.',
+      copyFail: 'Your browser blocked copying: the text is selected so you can copy it manually.',
+      waNote: 'In production this button opens WhatsApp with the message ready. WhatsApp number to be confirmed by Koi Tea.',
+      infoTag: '“Where flavor and art share one space”',
+      hours: 'Hours', today: 'Today', ig: 'Instagram', waRow: 'WhatsApp', tbc: 'to be confirmed', rate: 'Sample rate', rateV: 'MX$18 = US$1',
+      addr: 'Address', barCap: 'Koi Tea’s bar and its three screens.', barAlt: 'Koi Tea bar with a lit curved ceiling, globe lamps and three vertical menu screens',
+      logoAlt: 'Koi Tea logo: a white koi with a red spot sipping boba through a straw',
+      thanksVisit: 'Thanks for stopping by.', infoScreens: 'See the menu on the in-store screens',
+      scrTitle: 'The 3 in-store screens', scrLead: 'Change a price once and it updates here and on your phone.',
+      compare: 'Compare', proposal: 'Proposal', todayPhoto: 'Today (photo)', zoomIn: 'Zoom in', seeAll: 'See all 3',
+      scr1: 'Screen 1 · Milk Tea & Fruit Tea', scr2: 'Screen 2 · The koi', scr3: 'Screen 3 · Smoothies & Toppings',
+      scrShort: ['1 · Milk & Fruit', '2 · The koi', '3 · Smoothies'],
+      zoomScr: function (n) { return 'Zoom in on screen ' + n; },
+      scrImg: function (n) { return n === 1 ? 'Screen 1: Milk Tea and Fruit Tea with prices, ink on sage' : n === 2 ? 'Screen 2: koi logo, Follow us @koitea.mx and a sample QR' : 'Screen 3: Smoothies and toppings, ink on sage'; },
+      wallLbl: 'The 3 screens, scrollable',
+      hl: function (n) { return 'Highlighted: <b>' + esc(n) + '</b>, the one you opened on your phone.'; },
+      hlNone: 'Open a drink on your phone and it lights up here.',
+      bilingual: 'The screens show Spanish and English at once, with prices in pesos.',
+      contrast: 'Ink on sage: 7.96:1 contrast, readable from 3–4 m. Today’s cream-on-sage text is 1.75:1.',
+      contrastNew: 'With the proposal, ink on the same sage rises to 7.96:1 and reads from 3–4 m.',
+      todayCap: 'How they look today: cream text on sage (1.75:1 contrast) plus lamp glare.',
+      todayAlt: 'Photo of the three current screens behind the bar, with light lettering that is hard to read',
+      demoK: 'For Koi Tea', demoH: 'Try it: change a price', demoDrink: 'Drink',
+      demoDec: 'Lower 5 pesos', demoInc: 'Raise 5 pesos',
+      demoNote: 'The change shows up instantly on the 3 screens and on the phone board. It is a demo: nothing is saved.',
+      demoReset: 'Reset prices', demoToast: function (n, p) { return 'Test price: ' + n + ' ' + p + '.'; },
+      follow: 'Follow us on Instagram', qr: 'Sample QR', origin: 'Ingredients imported from Taiwan',
+      sxFree: '*Todas las bebidas incluyen 1 topping'
+    }
+  };
+
+  /* Segunda línea cuando el nombre es igual en ambos idiomas */
+  var SUB = {
+    'classic': { es: 'Té negro con leche', en: 'Black tea with milk' },
+    'brown-sugar': { es: 'Con jarabe de azúcar morena', en: 'With brown sugar syrup' },
+    'taro': { es: 'Cremoso, de raíz de taro', en: 'Creamy taro root' },
+    'strawberry-milk': { es: 'Fresa con leche', en: 'Strawberry with milk' },
+    'mango-milk': { es: 'Mango maduro con leche', en: 'Ripe mango with milk' },
+    'koi': { es: 'En capas de rojo a naranja', en: 'Layered red to orange' },
+    'mango-green': { es: 'Té verde con mango', en: 'Green tea with mango' }
+  };
+  var BOARDS = [{ cat: 'milk', scr: 1 }, { cat: 'fruit', scr: 1, feat: 'koi' }, { cat: 'smooth', scr: 3, tops: true }];
+
+  /* ---------- Estado ---------- */
+  var S = { lang: 'es', cur: 'mxn', cart: [], board: 0, sheet: null, focus: null, code: null, mode: 'here', wa: { name: '', time: '' },
+    scr: { zoom: false, view: 'new', target: 1 }, demoId: null, orig: {}, undo: null, removed: null, tkTime: null };
+  try { var p0 = JSON.parse(localStorage.getItem(LS) || '{}'); if (p0.lang === 'en') S.lang = 'en'; if (p0.cur === 'usd') S.cur = 'usd'; } catch (e) { /* sin almacenamiento */ }
+  function save() { try { localStorage.setItem(LS, JSON.stringify({ lang: S.lang, cur: S.cur })); } catch (e) { /* opcional */ } }
+
+  function t(k) { var v = T[S.lang][k]; if (typeof v === 'function') return v.apply(null, Array.prototype.slice.call(arguments, 1)); return v; }
+  function tl(lang, k) { var v = T[lang][k]; if (typeof v === 'function') return v.apply(null, Array.prototype.slice.call(arguments, 2)); return v; }
+  function other() { return S.lang === 'es' ? 'en' : 'es'; }
+  function fmt(mxn, style) { return K.fmt(mxn, S.cur, style); }
+  function ap() { return S.cur === 'usd' ? '≈ ' : ''; }
+  function totalTxt(style) { return ap() + K.money(K.cartTotal(S.cart, S.cur), S.cur, style || 'full'); }
+  function name(d, lang) { return K.drinkName(d, lang || S.lang); }
+  function subLine(d, lang) {
+    var o = lang || other(), p = o === 'es' ? 'en' : 'es';
+    if (K.drinkName(d, o) !== K.drinkName(d, p)) return { text: K.drinkName(d, o), lang: o };
+    return SUB[d.id] ? { text: SUB[d.id][o], lang: o } : null;
+  }
+  function boardOf(d) { return d.cat === 'milk' ? 0 : d.cat === 'fruit' ? 1 : 2; }
+  function screenOf(d) { return d.cat === 'smooth' ? 3 : 1; }
+  function flavor(tp, lang) {
+    if (tp.id === 'tapioca') return lang === 'en' ? 'Tapioca pearls' : 'Tapioca';
+    var s = lang === 'en' ? tp.en.replace(/ popping boba$/, '').replace(/ jelly$/, '') : tp.es.replace(/^Perlas explosivas de /, '').replace(/^Jelly de /, '');
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  }
+  function shopState() {
+    try {
+      var parts = new Intl.DateTimeFormat('en-GB', { timeZone: 'America/Hermosillo', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date());
+      var h = 0, m = 0; parts.forEach(function (x) { if (x.type === 'hour') h = +x.value; if (x.type === 'minute') m = +x.value; });
+      var mins = h * 60 + m; return mins >= 660 && mins < 1290 ? 'open' : 'closed';
+    } catch (e) { return null; }
+  }
+  function hoursTxt() { return '11:00–21:30'; }
+
+  /* ---------- Piezas ---------- */
+  function tagsHTML(d) {
+    var o = [];
+    if (d.tags.indexOf('casa') >= 0) o.push('<span class="tag tag--casa">' + t('house') + '</span>');
+    if (d.tags.indexOf('resena') >= 0) o.push('<span class="tag tag--rev">' + I.quote + t('review') + '</span>');
+    if (d.soldOut) o.push('<span class="tag tag--out">' + t('soldOut') + '</span>');
+    return o.length ? '<span class="row-tags">' + o.join('') + '</span>' : '';
+  }
+  function topGlyph(tp, cls) {
+    var c = tp.color, s = KC.shade(c, -0.32);
+    var g = tp.type === 'jelly' ? '<rect x="3" y="3" width="10" height="10" rx="2.2" transform="rotate(12 8 8)" fill="' + c + '" fill-opacity=".9" stroke="' + s + '" stroke-width="1.2"/>'
+      : tp.type === 'pop' ? '<circle cx="8" cy="8" r="6" fill="' + c + '" stroke="' + s + '" stroke-width="1.2"/><circle cx="6" cy="5.8" r="1.8" fill="#fff" fill-opacity=".85"/>'
+        : '<circle cx="8" cy="8" r="6" fill="' + c + '"/><circle cx="6" cy="5.8" r="1.6" fill="#fff" fill-opacity=".35"/>';
+    return '<svg class="' + (cls || 'tg') + '" viewBox="0 0 16 16" aria-hidden="true" focusable="false">' + g + '</svg>';
+  }
+  function cubesHTML(n) { var s = ''; for (var i = 0; i < n; i++) s += '<i></i>'; return n ? '<span class="cubes" aria-hidden="true">' + s + '</span>' : '<span aria-hidden="true">—</span>'; }
+  function lnHTML(nameHtml, valHtml, nameCls, valAttrs) {
+    return '<span class="ln"><span class="ln-name' + (nameCls ? ' ' + nameCls : '') + '">' + nameHtml + '</span>' + (valHtml != null ? '<span class="ln-dots" aria-hidden="true"></span><span class="ln-val"' + (valAttrs || '') + '>' + valHtml + '</span>' : '') + '</span>';
+  }
+  function curSr() { return '<span class="sr"> ' + (S.cur === 'mxn' ? 'MXN' : '') + '</span>'; }
+
+  function rowHTML(d) {
+    var sub = subLine(d);
+    var main = '<button type="button" class="row-main" data-testid="drink-' + d.id + '" data-k="drink-' + d.id + '" data-act="open" data-id="' + d.id + '" aria-haspopup="dialog">' +
+      '<span class="row-cup" aria-hidden="true">' + KC.svg(d, { mini: true }) + '</span>' +
+      '<span class="row-txt">' + lnHTML(esc(name(d)), fmt(d.price) + curSr(), 'row-name').replace('class="ln-val"', 'class="ln-val row-price"') +
+      (sub ? '<span class="row-sub" lang="' + sub.lang + '">' + esc(sub.text) + '</span>' : '') + tagsHTML(d) + '</span></button>';
+    var qa = d.soldOut ? '<span class="qa qa--out" aria-hidden="true"></span>'
+      : '<button type="button" class="qa" data-testid="quick-add-' + d.id + '" data-k="quick-add-' + d.id + '" data-act="quick" data-id="' + d.id + '" aria-label="' + esc(t('quickAria', name(d), K.describe(d, K.defaultConfig(d), S.lang))) + '">' + I.plus + '</button>';
+    return '<li class="row' + (d.soldOut ? ' is-out' : '') + '" style="--c:' + d.colors.main + '">' + main + qa + '</li>';
+  }
+  function featHTML(d) {
+    var sub = subLine(d), o = other();
+    return '<div class="feat" style="--c1:' + d.colors.bottom + ';--c2:' + d.colors.top + '">' +
+      '<button type="button" class="feat-main" data-testid="drink-' + d.id + '" data-k="drink-' + d.id + '" data-act="open" data-id="' + d.id + '" aria-haspopup="dialog">' +
+      '<span class="feat-cup" aria-hidden="true">' + KC.svg(d, {}) + '</span>' +
+      '<span class="feat-txt"><span class="feat-kick"><span class="tag tag--casa">' + t('house') + '</span><span class="feat-k2" lang="' + o + '">' + tl(o, 'house') + '</span></span>' +
+      lnHTML(esc(name(d)), fmt(d.price) + curSr(), 'feat-name') +
+      (sub ? '<span class="feat-sub" lang="' + sub.lang + '">' + esc(sub.text) + '</span>' : '') +
+      '<span class="feat-desc">' + esc(K.drinkDesc(d, S.lang)) + '</span></span></button>' +
+      '<button type="button" class="qa" data-testid="quick-add-' + d.id + '" data-k="quick-add-' + d.id + '" data-act="quick" data-id="' + d.id + '" aria-label="' + esc(t('quickAria', name(d), K.describe(d, K.defaultConfig(d), S.lang))) + '">' + I.plus + '</button></div>';
+  }
+  function toppingsBoardHTML() {
+    var o = other();
+    var groups = K.toppingGroups.map(function (g) {
+      var items = K.toppings.filter(function (tp) { return tp.group === g.id; });
+      var g2 = g.id === 'tapioca' ? (o === 'en' ? 'Tapioca pearls' : 'Perlas de tapioca') : g[o];
+      return '<div class="tp-g tp-g--' + g.id + '"><h4 class="tp-h">' + esc(g[S.lang]) + '<small lang="' + o + '">' + esc(g2) + '</small></h4><ul>' +
+        items.map(function (tp) {
+          var f1 = flavor(tp, S.lang), f2 = flavor(tp, o);
+          return '<li class="tp">' + topGlyph(tp) + '<span class="tp-n">' + esc(f1) + '</span>' + (same(f1, f2) ? '' : '<span class="tp-n2" lang="' + o + '">' + esc(f2) + '</span>') + (tp.soldOut ? '<span class="tag tag--out">' + t('soldOut') + '</span>' : '') + '</li>';
+        }).join('') + '</ul></div>';
+    }).join('');
+    return '<section class="tps" aria-labelledby="tps-h"><h3 class="tps-h" id="tps-h">' + t('tpTitle') + ' <small>' + t('tpTitle2') + '</small></h3>' +
+      '<p class="tps-rule">' + esc(t('tpRule', '+' + fmt(K.meta.extraToppingPrice))) + '</p><p class="tps-rule2" lang="' + o + '">' + esc(tl(o, 'tpRule', '+' + fmt(K.meta.extraToppingPrice))) + '</p>' +
+      '<div class="tp-grid">' + groups + '</div></section>';
+  }
+  function wallIco(n) { return '<span class="wall-ico" aria-hidden="true"><i' + (n === 1 ? ' class="on"' : '') + '></i><i' + (n === 2 ? ' class="on"' : '') + '></i><i' + (n === 3 ? ' class="on"' : '') + '></i></span>'; }
+  function boardHTML(i) {
+    var B = BOARDS[i], c = K.category(B.cat), o = other();
+    var h = '<header class="bd-head"><p class="bd-kick"><span>' + t('boardN', i + 1) + '</span><span class="bd-side">' + I.screens + t('sameAs', B.scr) + '</span></p>' +
+      '<h2 class="bd-title" id="bt-' + i + '" tabindex="-1">' + esc(K.catName(c, S.lang)) + '</h2>' +
+      '<span class="bd-cube" aria-hidden="true">' + BOARD_ICON[i] + '</span>' +
+      '<p class="bd-desc">' + esc(S.lang === 'en' ? c.descEn : c.descEs) + '</p><p class="bd-desc2" lang="' + o + '">' + esc(o === 'en' ? c.descEn : c.descEs) + '</p></header>';
+    if (B.feat) {
+      h += '<figure class="photo"><img src="img/fruit-teas.jpg" alt="' + esc(t('fruitAlt')) + '" loading="lazy" width="728" height="900"><figcaption>' + esc(t('fruitPhoto')) + '</figcaption></figure>';
+      h += featHTML(K.drink(B.feat));
+    }
+    h += '<p class="col-h" aria-hidden="true">' + t('pricesIn', S.cur) + '</p>';
+    h += '<ul class="rows">' + K.drinksIn(B.cat).filter(function (d) { return d.id !== B.feat; }).map(rowHTML).join('') + '</ul>';
+    if (B.tops) h += toppingsBoardHTML();
+    h += '<footer class="bd-foot"><div><p class="fn">' + t('freeTop') + '</p><p class="fn2" lang="' + o + '">' + tl(o, 'freeTop') + '</p></div>' +
+      (i < 2 ? '<button type="button" class="next-b" data-act="next-board" data-v="' + (i + 1) + '" data-k="next-' + i + '"><span><small>' + t('nextB', i + 2) + '</small><strong>' + T[S.lang].tabNames[i + 1] + '</strong></span>' + I.chev + '</button>' : '') +
+      '<button type="button" class="teaser" data-act="screens-board" data-v="' + B.scr + '" data-k="teaser-' + i + '" aria-haspopup="dialog">' + wallIco(B.scr) + '<span><strong>' + t('teaserT') + '</strong><span>' + t('teaserS') + '</span></span>' + I.chev + '</button>' +
+      (B.tops ? '<figure class="merch"><img src="img/merch.jpg" alt="' + esc(t('merchAlt')) + '" loading="lazy" width="720" height="900"><figcaption><strong>' + t('merchT') + '</strong><span>' + t('merchS') + '</span><span lang="' + o + '">' + tl(o, 'merchS') + '</span></figcaption></figure>' : '') +
+      '<button type="button" class="visit" data-act="info" data-k="visit-' + i + '" aria-haspopup="dialog">' + I.pin + '<span><strong>' + t('visitT') + '</strong><span>' + esc(K.meta.address.split(', 83550')[0]) + ' · ' + hoursTxt() + '</span></span>' + I.chev + '</button>' +
+      '<p class="legal">' + esc(K.meta.pricesNote[S.lang]) + ' ' + esc(K.meta.protoNote[S.lang]) + '</p></footer>';
+    return h;
+  }
+
+  /* ---------- Render del marco ---------- */
+  function renderChrome() {
+    document.documentElement.lang = S.lang;
+    document.title = t('docTitle');
+    $('#h1').textContent = t('h1');
+    $('#brand-sr').textContent = t('brandSr');
+    $('#g-lang').setAttribute('aria-label', t('langGroup'));
+    $('#g-cur').setAttribute('aria-label', t('curGroup'));
+    $('#cur-mxn-sr').textContent = t('mxnSr'); $('#cur-usd-sr').textContent = t('usdSr');
+    $$('[data-act="lang"]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.v === S.lang)); });
+    $$('[data-act="cur"]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.v === S.cur)); });
+    var st = shopState(), stEl = $('#status');
+    stEl.classList.toggle('is-closed', st === 'closed');
+    stEl.innerHTML = '<span class="st-now"><span class="st-dot" aria-hidden="true"></span>' + (st ? t(st === 'open' ? 'openNow' : 'closedNow') + ' · ' : t('hoursLbl') + ' ') + hoursTxt() + '</span><span class="st-orig">' + esc(K.meta.origin[S.lang]) + '</span>';
+    $('#strip').setAttribute('aria-label', t('nav'));
+    $('#boards').setAttribute('aria-label', t('menu'));
+    $('#strip').innerHTML = [0, 1, 2].map(function (i) {
+      return '<button type="button" class="tab" data-act="board" data-v="' + i + '" data-k="tab-' + i + '" aria-controls="board-' + i + '" aria-current="' + (i === S.board) + '">' +
+        '<span class="mini mini--' + (i + 1) + '" aria-hidden="true"></span><span class="tab-txt"><span class="tab-n"><span class="sr">' + t('board') + ' </span>' + (i + 1) + '</span><span class="tab-l">' + (i === 2 ? 'Smoothies<span class="sr">' + t('tabAnd') + '</span> <span class="tab-l2">Toppings</span>' : T[S.lang].tabNames[i]) + '</span></span></button>';
+    }).join('');
+    $('#scr-btn').setAttribute('aria-label', t('screensAria'));
+    $('#scr-btn').innerHTML = I.screens + '<span class="lbl">' + t('screensBtn') + '</span>';
+    $$('.x').forEach(function (x) { x.setAttribute('aria-label', t('close')); x.innerHTML = I.close; });
+    renderBar();
+  }
+  function renderBar() {
+    var n = K.cartCount(S.cart), tot = totalTxt('full');
+    var b = $('#cart-btn');
+    b.setAttribute('aria-label', t('cartAria', n, tot));
+    b.innerHTML = '<span class="cb-ico">' + I.cup + '<span class="cb-n' + (n ? '' : ' is-zero') + '">' + n + '</span></span><span class="cb-txt"><span class="cb-l">' + t('cartLbl') + '</span>' +
+      (n ? '<span class="cb-t">' + totalTxt('short') + '</span>' : '<span class="cb-t is-empty">' + t('cartEmpty') + '</span>') + '</span>' + I.chev.replace('class="ico"', 'class="ico cb-go"');
+  }
+  function renderBoards() {
+    $$('.board').forEach(function (b, i) { var st = b.scrollTop; b.innerHTML = boardHTML(i); b.scrollTop = st; });
+  }
+  function setBoard(i) {
+    S.board = i;
+    $$('.tab').forEach(function (b, j) { b.setAttribute('aria-current', String(j === i)); });
+  }
+  function goBoard(i) {
+    var el = $('#boards');
+    setBoard(i);
+    try { el.scrollTo({ left: i * el.clientWidth, behavior: RM.matches ? 'auto' : 'smooth' }); } catch (e) { el.scrollLeft = i * el.clientWidth; }
+  }
+
+  /* ---------- Capas ---------- */
+  var LAYERS = { drink: 'L-drink', cart: 'L-cart', ticket: 'L-ticket', wa: 'L-wa', screens: 'L-screens', info: 'L-info' };
+  var stack = [], saved = null;
+  function layerEl(n) { return document.getElementById(LAYERS[n]); }
+  function moveTools() {
+    var tools = $('#tools'), top = stack[stack.length - 1];
+    var slot = top ? $('.slot', layerEl(top.name)) : $('#tools-home');
+    if (slot && tools.parentNode !== slot) slot.appendChild(tools);
+  }
+  function lockBg(on) {
+    var boards = $('#boards');
+    if (on) { saved = { left: boards.scrollLeft, tops: $$('.board').map(function (b) { return b.scrollTop; }) }; document.documentElement.classList.add('is-locked'); }
+    else {
+      document.documentElement.classList.remove('is-locked');
+      if (saved) { boards.scrollLeft = saved.left; $$('.board').forEach(function (b, i) { b.scrollTop = saved.tops[i]; }); saved = null; }
+    }
+  }
+  function openLayer(n, openerKey) {
+    var L = layerEl(n);
+    if (stack.some(function (s) { return s.name === n; })) return;
+    if (L._t) { clearTimeout(L._t); L._t = null; }
+    if (!stack.length) { lockBg(true); $('#app').inert = true; hideToast(true); }
+    else layerEl(stack[stack.length - 1].name).inert = true;
+    stack.push({ name: n, opener: openerKey || null });
+    L.classList.remove('is-closing');
+    L.inert = false; L.hidden = false;
+    moveTools();
+    void L.offsetWidth;
+    L.classList.add('is-open');
+    var h = L.querySelector('h2[tabindex="-1"]') || L.querySelector('[role="dialog"]');
+    if (h) h.focus({ preventScroll: true });
+    if (n === 'screens') requestAnimationFrame(function () { fitScreens(true); });
+  }
+  function closeLayer(opts) {
+    opts = opts || {};
+    var top = stack.pop(); if (!top) return;
+    var L = layerEl(top.name);
+    L.classList.remove('is-open'); L.classList.add('is-closing');
+    var ms = RM.matches ? 160 : 230;
+    L._t = setTimeout(function () { L.hidden = true; L.classList.remove('is-closing'); L._t = null; }, opts.instant ? 0 : ms);
+    var below = stack[stack.length - 1];
+    if (below) {
+      var BL = layerEl(below.name); BL.inert = false;
+      if (below.name === 'cart') renderCart();
+    } else { $('#app').inert = false; lockBg(false); }
+    moveTools();
+    if (top.name === 'drink') S.sheet = null;
+    if (top.name === 'screens' && S.demoId && Object.keys(S.orig).length && !below) {
+      var dd = K.drink(S.demoId);
+      toast(t('demoToast', name(dd), fmt(dd.price, 'full')), { label: t('demoReset'), act: 'demo-reset' });
+    }
+    if (!opts.noFocus) restoreFocus(top.opener, below);
+  }
+  function closeAll() { while (stack.length) closeLayer({ noFocus: stack.length > 1 }); }
+  function restoreFocus(key, below) {
+    var el = key ? document.querySelector('[data-k="' + key + '"]') : null;
+    if (el && !el.closest('[inert]') && !el.closest('[hidden]')) { el.focus({ preventScroll: false }); return; }
+    if (below) { var h = layerEl(below.name).querySelector('h2[tabindex="-1"]'); if (h) h.focus(); return; }
+    var c = $('#cart-btn'); if (c) c.focus();
+  }
+
+  /* ---------- Aviso flotante ---------- */
+  var toastT = null;
+  function toast(msg, action) {
+    var el = $('#toast');
+    el.innerHTML = '<div class="toast-in"><span>' + esc(msg) + '</span>' + (action ? '<button type="button" data-act="' + action.act + '">' + esc(action.label) + '</button>' : '') + '</div>';
+    void el.offsetWidth; el.classList.add('is-on');
+    clearTimeout(toastT); toastT = setTimeout(function () { hideToast(); }, 5200);
+  }
+  function hideToast(now) {
+    var el = $('#toast'); clearTimeout(toastT);
+    el.classList.remove('is-on');
+    if (now) el.innerHTML = ''; else setTimeout(function () { if (!el.classList.contains('is-on')) el.innerHTML = ''; }, 260);
+  }
+
+  /* ---------- Ficha ---------- */
+  function cupFor(d, cfg) { return KC.svg(d, { toppings: cfg.toppings, ice: cfg.ice || 'none', label: '' }); }
+  function openDrink(id, openerKey, preset) {
+    var d = K.drink(id); if (!d) return;
+    S.sheet = { id: id, cfg: preset ? JSON.parse(JSON.stringify(preset.cfg)) : K.defaultConfig(d), qty: preset ? preset.qty : 1, editKey: preset ? preset.key : null, msg: '' };
+    S.focus = id;
+    renderDrink();
+    $('#drink-body').scrollTop = 0;
+    openLayer('drink', openerKey);
+  }
+  function radio(group, v, label, val, on, valAttrs) {
+    return '<button type="button" role="radio" aria-checked="' + on + '" tabindex="' + (on ? 0 : -1) + '" class="opt" data-testid="' + group + '-' + v + '" data-k="' + group + '-' + v + '" data-act="opt" data-g="' + group + '" data-v="' + v + '">' +
+      '<span class="opt-mk" aria-hidden="true"></span>' + lnHTML(label, val, '', valAttrs) + '</button>';
+  }
+  function same(a, b) { return String(a).toLowerCase() === String(b).toLowerCase(); }
+  function secHead(id, key, extra) {
+    var o = other(), a = t(key), b = tl(o, key);
+    return '<h3 class="sec-h" id="h-' + id + '">' + a + (same(a, b) ? '' : ' <small lang="' + o + '">' + b + '</small>') + (extra ? '<em>' + extra + '</em>' : '') + '</h3>';
+  }
+  function topLabel(tp, cfg) {
+    if (tp.soldOut) return t('soldOut');
+    var i = cfg.toppings.indexOf(tp.id);
+    return K.toppingPriceLabel(i >= 0 ? i : cfg.toppings.length, S.lang, S.cur);
+  }
+  function renderDrink() {
+    var sh = S.sheet; if (!sh) return;
+    var body = $('#drink-body'), foot = $('#drink-foot'), st = body.scrollTop;
+    var d = K.drink(sh.id), o = K.optionsFor(d), c = K.category(d.cat), cfg = sh.cfg, sub = subLine(d);
+    var h = '<div class="dk-head" style="--c:' + d.colors.main + '"><div class="dk-cup" id="dk-cup" aria-hidden="true">' + cupFor(d, cfg) + '</div><div style="min-width:0">' +
+      '<p class="dk-kick">' + esc(K.catName(c, S.lang)) + ' · ' + t('boardN', boardOf(d) + 1) + '</p>' +
+      '<h2 class="dk-title" id="drink-title" tabindex="-1">' + esc(name(d)) + '</h2>' +
+      (sub ? '<p class="dk-sub" lang="' + sub.lang + '">' + esc(sub.text) + '</p>' : '') + tagsHTML(d) + '</div></div>' +
+      '<p class="dk-desc">' + esc(K.drinkDesc(d, S.lang)) + '</p>' +
+      '<button type="button" class="link-scr" data-act="screens-focus" data-k="dk-screens" aria-haspopup="dialog">' + I.screens + '<span>' + t('seeOnScreens') + '</span>' + I.chev + '</button>';
+    if (d.soldOut) {
+      var alts = K.recommend(d.profile, 3).filter(function (x) { return x.id !== d.id; }).slice(0, 2);
+      h += '<div class="dk-out"><p>' + t('soldOutMsg') + '</p><div class="alts">' + alts.map(function (a) {
+        return '<button type="button" class="alt" data-act="switch" data-id="' + a.id + '" data-k="alt-' + a.id + '">' + KC.svg(a, { mini: true }) + lnHTML(esc(name(a)), fmt(a.price)) + '</button>';
+      }).join('') + '</div></div>';
+    } else {
+      if (o.size) h += '<div class="sec">' + secHead('size', 'size') + '<div class="opts" role="radiogroup" aria-labelledby="h-size">' +
+        K.sizes.map(function (z) { return radio('size', z.id, esc(z[S.lang]), z.delta ? '+' + fmt(z.delta) : null, cfg.size === z.id); }).join('') + '</div></div>';
+      if (o.toppings) {
+        h += '<div class="sec">' + secHead('top', 'toppings', t('tpHint')) + '<p class="msg" id="top-msg" role="status">' + (sh.msg ? esc(t(sh.msg)) : '') + '</p><div class="opts' + (cfg.toppings.length >= K.meta.maxToppings ? ' is-max' : '') + '" id="top-opts">' +
+          K.toppingGroups.map(function (g) {
+            var og = other();
+            return '<div role="group" aria-labelledby="tg-' + g.id + '"><p class="sub-h" id="tg-' + g.id + '">' + esc(g[S.lang]) + (same(g[S.lang], g[og]) ? '' : ' <small lang="' + og + '">· ' + esc(g[og]) + '</small>') + '</p>' +
+              K.toppings.filter(function (tp) { return tp.group === g.id; }).map(function (tp) {
+                var on = cfg.toppings.indexOf(tp.id) >= 0;
+                return '<button type="button" class="opt opt--top" aria-pressed="' + on + '" data-testid="topping-' + tp.id + '" data-k="topping-' + tp.id + '" data-act="top" data-v="' + tp.id + '"' + (tp.soldOut ? ' disabled' : '') + '>' +
+                  '<span class="opt-mk" aria-hidden="true">' + I.check + '</span>' + topGlyph(tp) + lnHTML(esc(K.toppingName(tp, S.lang, true)), '<span class="tpv">' + esc(topLabel(tp, cfg)) + '</span>') + '</button>';
+              }).join('') + '</div>';
+          }).join('') + '</div></div>';
+      }
+      if (o.sweet) h += '<div class="sec">' + secHead('sweet', 'sweet') + '<div class="opts" role="radiogroup" aria-labelledby="h-sweet">' +
+        K.sweetness.slice().reverse().map(function (s) { return radio('sweet', s.v, esc(s[S.lang]), s.v + '%', cfg.sweet === s.v); }).join('') + '</div></div>';
+      if (o.ice) h += '<div class="sec">' + secHead('ice', 'ice') + '<div class="opts" role="radiogroup" aria-labelledby="h-ice">' +
+        K.ice.slice().reverse().map(function (x) { return radio('ice', x.id, esc(x[S.lang]), cubesHTML(x.cubes), cfg.ice === x.id); }).join('') + '</div></div>';
+    }
+    h += '<p class="dk-note">' + esc(K.meta.allergenNote[S.lang]) + ' ' + esc(K.meta.pricesNote[S.lang]) + '</p>';
+    body.innerHTML = h;
+    body.scrollTop = st;
+    if (d.soldOut) {
+      foot.innerHTML = '<div class="actions"><button type="button" class="btn btn--pri" data-testid="add-to-cart" disabled>' + t('soldOutBtn') + '</button></div>';
+    } else {
+      foot.innerHTML = '<div class="pricebar">' + lnHTML(t('perCup'), '<span data-testid="unit-price" id="unit-price"></span>') + '<span class="eq" id="unit-eq"></span></div>' +
+        '<div class="actions"><div class="qty" role="group" aria-label="' + t('qty') + '"><button type="button" data-testid="qty-dec" data-k="qty-dec" data-act="qty" data-v="-1" aria-label="' + t('qtyDec') + '">' + I.minus + '</button>' +
+        '<output id="qty-out" aria-live="polite"></output><button type="button" data-testid="qty-inc" data-k="qty-inc" data-act="qty" data-v="1" aria-label="' + t('qtyInc') + '">' + I.plus + '</button></div>' +
+        '<button type="button" class="btn btn--pri" data-testid="add-to-cart" data-k="add-to-cart" data-act="add" id="add-btn"></button></div>';
+    }
+    syncDrink(true);
+  }
+  function syncDrink(noCup) {
+    var sh = S.sheet; if (!sh) return;
+    var d = K.drink(sh.id), cfg = sh.cfg, body = $('#drink-body');
+    $$('[role="radio"]', body).forEach(function (b) {
+      var g = b.dataset.g, v = b.dataset.v;
+      var on = g === 'size' ? cfg.size === v : g === 'sweet' ? String(cfg.sweet) === v : cfg.ice === v;
+      b.setAttribute('aria-checked', String(on)); b.tabIndex = on ? 0 : -1;
+    });
+    $$('[data-act="top"]', body).forEach(function (b) {
+      var tp = K.topping(b.dataset.v), on = cfg.toppings.indexOf(tp.id) >= 0;
+      b.setAttribute('aria-pressed', String(on));
+      var v = $('.tpv', b); if (v) v.textContent = topLabel(tp, cfg);
+    });
+    var to = $('#top-opts'); if (to) to.classList.toggle('is-max', cfg.toppings.length >= K.meta.maxToppings);
+    var msg = $('#top-msg'); if (msg) msg.textContent = sh.msg ? t(sh.msg) : '';
+    if (d.soldOut) return;
+    var unit = K.unitPrice(d, cfg);
+    $('#unit-price').textContent = ap() + fmt(unit, 'full');
+    $('#unit-eq').textContent = S.cur === 'usd' ? t('charged', K.fmt(unit, 'mxn', 'full')) : '≈ ' + K.fmt(unit, 'usd', 'full');
+    $('#qty-out').textContent = sh.qty;
+    $('[data-testid="qty-dec"]').disabled = sh.qty <= 1;
+    var tot = ap() + K.money(K.conv(unit, S.cur) * sh.qty, S.cur, 'short');
+    $('#add-btn').textContent = sh.editKey ? t('save', tot) : t('add', sh.qty, tot);
+    if (!noCup) {
+      var cup = $('#dk-cup');
+      if (cup) {
+        cup.innerHTML = cupFor(d, cfg);
+        if (!RM.matches) { cup.classList.add('is-swap'); requestAnimationFrame(function () { requestAnimationFrame(function () { cup.classList.remove('is-swap'); }); }); }
+      }
+    }
+  }
+  function addFromSheet() {
+    var sh = S.sheet; if (!sh) return;
+    var d = K.drink(sh.id); if (d.soldOut) return;
+    var prev = S.cart, editing = !!sh.editKey;
+    if (editing) S.cart = K.setQty(S.cart, sh.editKey, 0);
+    S.cart = K.addToCart(S.cart, sh.id, sh.cfg, sh.qty);
+    S.focus = sh.id;
+    var q = sh.qty;
+    closeLayer();
+    cartChanged(true);
+    if (!editing) { S.undo = prev; toast(t('added', name(d), q), { label: t('undo'), act: 'undo' }); }
+  }
+
+  /* ---------- Carrito (comanda) ---------- */
+  function cartChanged(bump) {
+    if (!S.cart.length) S.code = null;
+    renderBar();
+    if (bump && !RM.matches) { var b = $('#cart-btn'); b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump'); }
+    if (stack.some(function (s) { return s.name === 'cart'; })) renderCart();
+  }
+  function renderCart() {
+    var body = $('#cart-body'), foot = $('#cart-foot'), st = body.scrollTop;
+    var undo = S.removed ? '<p class="undo" role="status"><span>' + esc(t('removed', S.removed.name)) + '</span><button type="button" class="lnk" data-act="unremove" data-k="unremove">' + t('undo') + '</button></p>' : '';
+    if (!S.cart.length) {
+      body.innerHTML = undo + '<div class="empty" data-testid="cart-empty">' + KC.svg(K.drink('classic'), { level: 0, toppings: [], ice: 'none' }) +
+        '<p class="pp-kick">' + t('orderKick') + '</p><h2 id="cart-title" tabindex="-1">' + t('emptyT') + '</h2><p>' + t('emptyP') + '</p>' +
+        '<button type="button" class="btn btn--sec" data-act="close" data-k="empty-back">' + I.back + t('emptyBtn') + '</button></div>';
+      foot.innerHTML = '';
+      return;
+    }
+    var n = K.cartCount(S.cart);
+    body.innerHTML = undo + '<p class="pp-kick">' + t('orderKick') + '</p><h2 class="pp-title" id="cart-title" tabindex="-1">' + t('yourOrder') + '</h2><p class="pp-meta">' + t('cups', n) + '</p>' +
+      '<ul class="pp-lines">' + S.cart.map(function (l) {
+        var d = K.drink(l.id), sub = subLine(d), nm = esc(name(d)), key = esc(l.key);
+        return '<li class="pl" data-testid="cart-line" data-key="' + key + '">' +
+          lnHTML('<span class="pl-q">' + l.qty + '×</span> ' + nm, ap() + K.money(K.lineTotal(l, S.cur), S.cur, 'short'), '', ' data-testid="line-total"') +
+          (sub ? '<p class="pl-sub" lang="' + sub.lang + '">' + esc(sub.text) + '</p>' : '') +
+          '<p class="pl-desc">' + esc(K.describe(d, l.cfg, S.lang)) + '</p>' +
+          '<div class="pl-ctl"><div class="qty" role="group" aria-label="' + t('qty') + ': ' + nm + '"><button type="button" data-testid="line-dec" data-act="ldec" data-key="' + key + '" data-k="ldec-' + key + '" aria-label="' + esc(t('lineDec', name(d))) + '"' + (l.qty <= 1 ? ' disabled' : '') + '>' + I.minus + '</button><span class="q" aria-hidden="true">' + l.qty + '</span>' +
+          '<button type="button" data-testid="line-inc" data-act="linc" data-key="' + key + '" data-k="linc-' + key + '" aria-label="' + esc(t('lineInc', name(d))) + '">' + I.plus + '</button></div><span class="grow"></span>' +
+          '<button type="button" class="lnk" data-act="ledit" data-key="' + key + '" data-k="ledit-' + key + '">' + t('edit') + '<span class="sr"> ' + nm + '</span></button>' +
+          '<button type="button" class="lnk" data-testid="line-remove" data-act="lrem" data-key="' + key + '" data-k="lrem-' + key + '">' + t('remove') + '<span class="sr"> ' + nm + '</span></button></div></li>';
+      }).join('') + '</ul>' +
+      '<div class="pp-total">' + lnHTML('TOTAL', totalTxt('full'), '', ' data-testid="cart-total"') + '<p class="pp-eq">' + (S.cur === 'usd' ? t('charged', K.money(K.cartTotal(S.cart, 'mxn'), 'mxn', 'full')) : '≈ ' + K.money(K.cartTotal(S.cart, 'usd'), 'usd', 'full')) + '</p></div>' +
+      '<p class="dk-note">' + (S.cur === 'usd' ? t('usdNote') + ' ' : '') + esc(K.meta.pricesNote[S.lang]) + '</p>';
+    body.scrollTop = st;
+    foot.innerHTML = '<div class="foot-2"><button type="button" class="btn btn--pri" data-testid="checkout-counter" data-act="counter" data-k="checkout-counter" aria-haspopup="dialog">' + I.receipt + '<span>' + t('counter') + '<small>' + t('counterS') + '</small></span></button>' +
+      '<button type="button" class="btn btn--sec" data-testid="checkout-whatsapp" data-act="wa" data-k="checkout-whatsapp" aria-haspopup="dialog">' + I.chat + '<span>' + t('wa') + '<small>' + t('waS') + '</small></span></button></div>';
+  }
+  function lineByKey(k) { for (var i = 0; i < S.cart.length; i++) if (S.cart[i].key === k) return S.cart[i]; return null; }
+
+  /* ---------- Ticket ---------- */
+  function fmtDate(dt) {
+    try {
+      var loc = S.lang === 'en' ? 'en-US' : 'es-MX';
+      return new Intl.DateTimeFormat(loc, { day: 'numeric', month: 'short', year: 'numeric' }).format(dt) + ' · ' + new Intl.DateTimeFormat(loc, { hour: '2-digit', minute: '2-digit' }).format(dt);
+    } catch (e) { return dt.toLocaleString(); }
+  }
+  function renderTicket() {
+    var body = $('#ticket-body'), en = S.lang === 'en';
+    body.innerHTML = '<div class="tk"><p class="tk-brand"><span class="wm-1">KOI TEA</span><span class="wm-2">BOBA SHOP</span></p>' +
+      '<p class="tk-c">Puerto Peñasco · Rocky Point</p><p class="tk-c">' + esc(fmtDate(S.tkTime || new Date())) + '</p><hr class="tk-cut">' +
+      '<h2 class="tk-h" id="ticket-title" tabindex="-1">' + t('tkTitle') + '</h2><p class="tk-h2" lang="' + other() + '">' + t('tkTitle2') + '</p>' +
+      '<p class="tk-c" style="margin-top:10px">' + t('tkCode') + '</p><p class="tk-code" data-testid="order-code">' + esc(S.code) + '</p>' +
+      '<div class="tk-mode" role="radiogroup" aria-label="' + t('modeLbl') + '">' + ['here', 'togo'].map(function (m) {
+        return '<button type="button" role="radio" aria-checked="' + (S.mode === m) + '" tabindex="' + (S.mode === m ? 0 : -1) + '" data-act="mode" data-v="' + m + '" data-k="mode-' + m + '">' + t(m) + '</button>';
+      }).join('') + '</div><hr class="tk-cut"><p class="tk-colh">' + t('tkCol') + '</p><ul class="tk-lines">' +
+      S.cart.map(function (l) {
+        var d = K.drink(l.id);
+        return '<li>' + lnHTML(l.qty + '× ' + esc(name(d)), K.money(K.lineTotal(l, 'mxn'), 'mxn', 'short')) + '<p class="tk-d">' + esc(K.describe(d, l.cfg, S.lang)) + '</p>' +
+          (en ? '<p class="tk-es" lang="es"><b>' + t('staff') + '</b> ' + esc(K.drinkName(d, 'es')) + ' · ' + esc(K.describe(d, l.cfg, 'es')) + '</p>' : '') + '</li>';
+      }).join('') + '</ul><div class="tk-total">' + lnHTML('TOTAL', K.money(K.cartTotal(S.cart, 'mxn'), 'mxn', 'full')) + '<p class="pp-eq">≈ ' + K.money(K.cartTotal(S.cart, 'usd'), 'usd', 'full') + '</p></div>' +
+      '<p class="tk-pay"><span>' + t('payAt') + '</span><small lang="' + other() + '">' + tl(other(), 'payAt') + '</small></p><hr class="tk-cut"><p class="tk-c" style="color:var(--ink)">' + t('thanks') + '</p>' +
+      '<p class="tk-c" style="font-size:13px">' + esc(K.meta.pricesNote[S.lang]) + ' ' + esc(K.meta.protoNote[S.lang]) + '</p></div>';
+    $('#ticket-foot').innerHTML = '<button type="button" class="btn btn--sec" data-act="close" data-k="tk-back">' + I.back + t('back') + '</button><button type="button" class="btn btn--pri" data-act="new-order" data-k="tk-new">' + t('newOrder') + '</button>';
+  }
+
+  /* ---------- WhatsApp ---------- */
+  function waMsg() { return K.waMessage(S.cart, S.lang, S.cur, S.code, S.wa.name.trim(), S.wa.time.trim()); }
+  function sizeTA(ta) {
+    ta.rows = Math.max(4, ta.value.split('\n').length);
+    if (ta.offsetParent) { ta.style.height = 'auto'; ta.style.height = (ta.scrollHeight + 2) + 'px'; }
+  }
+  function renderWA() {
+    var body = $('#wa-body'), st = body.scrollTop, closed = shopState() === 'closed';
+    body.innerHTML = '<h2 id="wa-title" tabindex="-1" style="font:600 26px/1.15 var(--f-sans)">' + t('waTitle') + '</h2><p class="wa-lead">' + t('waLead') + '</p>' +
+      (closed ? '<p class="closed-note">' + t('waClosed') + '</p>' : '') +
+      '<div class="fld"><label for="wa-name">' + t('waName') + ' <small>' + t('optional') + '</small></label><input id="wa-name" data-testid="wa-name" data-k="wa-name" type="text" autocomplete="name" maxlength="40"></div>' +
+      '<div class="fld"><label for="wa-time">' + t('waTime') + ' <small>' + t('optional') + '</small></label><input id="wa-time" data-testid="wa-time" data-k="wa-time" type="text" inputmode="text" maxlength="20" placeholder="' + t('waTimePh') + '"></div>' +
+      '<p class="pv-l" id="wa-pv">' + t('waPv') + '</p><div class="bubble"><textarea id="wa-msg" data-testid="wa-message" data-k="wa-message" readonly aria-labelledby="wa-pv"></textarea></div>' +
+      '<p class="wa-note">' + t('waNote') + '</p>';
+    $('#wa-name').value = S.wa.name; $('#wa-time').value = S.wa.time;
+    var ta = $('#wa-msg'); ta.value = waMsg(); sizeTA(ta);
+    body.scrollTop = st;
+    $('#wa-foot').innerHTML = '<button type="button" class="btn btn--pri" data-testid="wa-copy" data-act="copy" data-k="wa-copy" style="width:100%">' + I.copy + t('copy') + '</button><p class="copy-st" id="copy-st" role="status"></p>';
+  }
+  function copyMsg() {
+    var ta = $('#wa-msg'), st = $('#copy-st'), text = ta.value;
+    function ok() { st.textContent = t('copied'); }
+    function fail() {
+      ta.focus(); ta.select(); try { ta.setSelectionRange(0, text.length); } catch (e) { /* algunos navegadores */ }
+      var done = false; try { done = document.execCommand('copy'); } catch (e) { done = false; }
+      st.textContent = done ? t('copied') : t('copyFail');
+    }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(ok, fail);
+      else fail();
+    } catch (e) { fail(); }
+  }
+
+  /* ---------- Info ---------- */
+  function renderInfo() {
+    var st = shopState();
+    $('#info-body').innerHTML = '<div class="in-head"><img class="in-logo" src="img/logo.jpg" alt="' + esc(t('logoAlt')) + '" width="84" height="84"><div>' +
+      '<h2 id="info-title" tabindex="-1">' + esc(K.meta.fullName) + '</h2><p class="in-tag">' + t('infoTag') + '</p><p class="in-or">' + esc(K.meta.origin[S.lang]) + '</p></div></div>' +
+      '<ul class="in-rows"><li>' + lnHTML(t('hours'), hoursTxt()) + '</li>' + (st ? '<li>' + lnHTML(t('today'), t(st === 'open' ? 'openNow' : 'closedNow')) + '</li>' : '') +
+      '<li>' + lnHTML(t('ig'), esc(K.meta.instagram)) + '</li><li>' + lnHTML(t('waRow'), t('tbc')) + '</li><li>' + lnHTML(t('rate'), t('rateV')) + '</li></ul>' +
+      '<p class="in-addr">' + I.pin + '<span><span class="sr">' + t('addr') + ': </span>' + esc(K.meta.address) + '</span></p>' +
+      '<figure class="in-photo"><img src="img/bar.jpg" alt="' + esc(t('barAlt')) + '" loading="lazy" width="720" height="900"><figcaption>' + t('barCap') + '</figcaption></figure>' +
+      '<button type="button" class="link-scr" data-act="screens" data-k="info-screens" aria-haspopup="dialog">' + I.screens + '<span>' + t('infoScreens') + '</span>' + I.chev + '</button>' +
+      '<div class="in-notes"><p class="legal">' + t('thanksVisit') + '</p><p class="legal">' + esc(K.meta.allergenNote[S.lang]) + '</p><p class="legal">' + esc(K.meta.pricesNote[S.lang]) + '</p><p class="legal">' + esc(K.meta.protoNote[S.lang]) + '</p></div>';
+  }
+
+  /* ---------- Pantallas del local ---------- */
+  function qrSVG() {
+    var N = 25, seed = 20261101, d = '';
+    function rnd() { seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; }
+    var F = [[0, 0], [N - 7, 0], [0, N - 7]];
+    function finder(x, y) {
+      for (var i = 0; i < 3; i++) {
+        var lx = x - F[i][0], ly = y - F[i][1];
+        if (lx >= -1 && lx <= 7 && ly >= -1 && ly <= 7) {
+          if (lx < 0 || ly < 0 || lx > 6 || ly > 6) return 0;
+          return (lx === 0 || lx === 6 || ly === 0 || ly === 6 || (lx >= 2 && lx <= 4 && ly >= 2 && ly <= 4)) ? 1 : 0;
+        }
+      }
+      return -1;
+    }
+    for (var y = 0; y < N; y++) for (var x = 0; x < N; x++) {
+      var f = finder(x, y), on;
+      if (f >= 0) on = f;
+      else if (x >= 16 && x <= 20 && y >= 16 && y <= 20) { var ax = x - 18, ay = y - 18; on = (Math.max(Math.abs(ax), Math.abs(ay)) !== 1) ? 1 : 0; }
+      else if (y === 6) on = x % 2 === 0 ? 1 : 0;
+      else if (x === 6) on = y % 2 === 0 ? 1 : 0;
+      else on = rnd() > 0.5 ? 1 : 0;
+      if (on) d += 'M' + x + ' ' + y + 'h1v1h-1z';
+    }
+    return '<svg class="qr" viewBox="-2 -2 29 29" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><rect x="-2" y="-2" width="29" height="29" fill="#FFFCF7"/><path d="' + d + '" fill="#2A2523"/></svg>';
+  }
+  function sxRow(d) {
+    var hl = S.focus === d.id, sub = K.drinkName(d, 'en') !== K.drinkName(d, 'es') ? K.drinkName(d, 'en') : null;
+    return '<span class="sx-row' + (hl ? ' is-hl' : '') + (S.flash === d.id ? ' is-flash' : '') + '" data-id="' + d.id + '">' + lnHTML(esc(K.drinkName(d, 'es')) + (d.soldOut ? ' <span class="sx-sub" style="display:inline">· agotado</span>' : ''), K.fmt(d.price, 'mxn', 'short')) +
+      (sub ? '<span class="sx-sub" lang="en">' + esc(sub) + '</span>' : '') + '</span>';
+  }
+  function sxSection(cat) {
+    var c = K.category(cat);
+    return '<span class="sx-h">' + esc(c.es) + '</span><span class="sx-d">' + esc(c.descEs) + '</span><span class="sx-d2" lang="en">' + esc(c.descEn) + '</span>' +
+      '<span class="sx-rows">' + K.drinksIn(cat).map(sxRow).join('') + '</span>';
+  }
+  function screenInner(n) {
+    if (n === 1) return '<span class="scr-in scr-in--col">' + sxSection('milk') + sxSection('fruit') + '<span class="sx-foot">' + T.es.sxFree + ' · <span lang="en">Every drink includes 1 topping</span></span></span>';
+    if (n === 2) return '<span class="scr-in"><span class="sx-koi"><img class="sx-logo" src="img/logo.jpg" alt=""><span class="sx-mark"><span class="wm-1">KOI TEA</span><span class="wm-2">BOBA SHOP</span></span>' +
+      '<span class="sx-or">' + esc(K.meta.origin.es) + '<span lang="en">' + esc(K.meta.origin.en) + '</span></span>' +
+      '<span class="sx-ig">Síguenos en Instagram · <span lang="en">Follow us</span><b>' + esc(K.meta.instagram) + '</b>' + qrSVG() + '<span class="sx-qr">QR de ejemplo · <span lang="en">sample</span></span></span></span></span>';
+    var tg = K.toppingGroups.filter(function (g) { return g.id !== 'tapioca'; }).map(function (g) {
+      return '<span style="display:block"><span class="sx-gh">' + esc(g.es) + '<small lang="en">' + esc(g.en) + '</small></span>' + K.toppings.filter(function (tp) { return tp.group === g.id; }).map(function (tp) {
+        return '<span class="it"><i style="background:' + (tp.type === 'jelly' ? 'transparent;box-shadow:inset 0 0 0 1.5px #2A2523;border-radius:1.5px' : '#2A2523') + '"></i>' + esc(flavor(tp, 'es')) + (tp.soldOut ? '<em>agotado</em>' : '') + '</span>';
+      }).join('') + '</span>';
+    }).join('');
+    return '<span class="scr-in scr-in--col">' + sxSection('smooth') +
+      '<span class="sx-h" style="font-size:16px">Toppings para bebida</span><span class="sx-d">1 incluido · extra +$' + K.meta.extraToppingPrice + ' · máx. 3</span><span class="sx-d2" lang="en">1 included · extra +MX$' + K.meta.extraToppingPrice + ' · max 3</span>' +
+      '<span class="sx-gh">Tapioca<small lang="en">Tapioca pearls</small></span><span class="sx-tg"><span class="it"><i></i>Tapioca</span></span>' +
+      '<span class="sx-tg">' + tg + '</span></span>';
+  }
+  function renderScreens() {
+    var body = $('#scr-body'), st = body.scrollTop, z = S.scr.zoom, view = S.scr.view;
+    var fd = S.focus ? K.drink(S.focus) : null;
+    var h = '<h2 id="scr-title" tabindex="-1">' + t('scrTitle') + '</h2><p class="sv-lead">' + t('scrLead') + '</p>' +
+      '<div class="sv-ctl"><div class="seg seg--l" role="group" aria-label="' + t('compare') + '">' +
+      '<button type="button" data-act="scr-view" data-v="new" data-k="scr-new" aria-pressed="' + (view === 'new') + '">' + t('proposal') + '</button>' +
+      '<button type="button" data-act="scr-view" data-v="today" data-k="scr-today" aria-pressed="' + (view === 'today') + '">' + t('todayPhoto') + '</button></div>' +
+      (view === 'new' ? '<button type="button" class="chip" data-act="scr-zoom" data-k="scr-zoom" aria-pressed="' + z + '">' + (z ? I.screens + t('seeAll') : I.zoom + t('zoomIn')) + '</button>' : '') + '</div>';
+    if (view === 'new') {
+      h += '<div class="wall' + (z ? ' is-zoom' : '') + '" id="wall">' + (z ? '' : '<span class="lamps" aria-hidden="true"><i style="left:22%"></i><i style="left:41%"></i><i style="left:59%"></i><i style="left:78%"></i></span>') +
+        '<div class="wall-row" id="wall-row"' + (z ? ' tabindex="0" role="region" aria-label="' + t('wallLbl') + '"' : '') + '>' +
+        [1, 2, 3].map(function (n) {
+          var cap = '<span class="scr-cap" aria-hidden="true">' + (z ? t('scr' + n) : T[S.lang].scrShort[n - 1]) + '</span>';
+          return '<div class="scr-wrap" data-scr="' + n + '">' + (z ? '<div class="scr" role="img" aria-label="' + esc(t('scrImg', n)) + '">' + screenInner(n) + '</div>'
+            : '<button type="button" class="scr" data-act="scr-pick" data-v="' + n + '" data-k="scr-pick-' + n + '" aria-label="' + esc(t('zoomScr', n) + ': ' + t('scrImg', n)) + '"><span aria-hidden="true" style="display:block">' + screenInner(n) + '</span></button>') + cap + '</div>';
+        }).join('') + '</div></div>' +
+        '<p class="sv-cap">' + (fd ? t('hl', name(fd)) : t('hlNone')) + '</p><p class="sv-note">' + t('bilingual') + ' ' + t('contrast') + '</p>';
+    } else {
+      h += '<figure class="today"><img src="img/screens.jpg" alt="' + esc(t('todayAlt')) + '" width="900" height="820"><figcaption>' + t('todayCap') + '</figcaption></figure>' +
+        '<p class="sv-note">' + t('contrastNew') + '</p>';
+    }
+    var did = S.demoId || S.focus || 'taro', dd = K.drink(did);
+    h += '<section class="demo" aria-labelledby="demo-h"><p class="demo-k">' + t('demoK') + '</p><h3 id="demo-h">' + t('demoH') + '</h3>' +
+      '<div class="demo-row"><label class="sr" for="demo-sel">' + t('demoDrink') + '</label><select id="demo-sel" data-k="demo-sel">' +
+      K.drinks.map(function (d) { return '<option value="' + d.id + '"' + (d.id === did ? ' selected' : '') + '>' + esc(name(d)) + '</option>'; }).join('') + '</select>' +
+      '<div class="qty"><button type="button" data-act="demo" data-v="-5" data-k="demo-dec" aria-label="' + t('demoDec') + '">−5</button><output id="demo-out" aria-live="polite">' + K.fmt(dd.price, 'mxn', 'short') + '</output>' +
+      '<button type="button" data-act="demo" data-v="5" data-k="demo-inc" aria-label="' + t('demoInc') + '">+5</button></div></div>' +
+      '<button type="button" class="lnk" data-act="demo-reset" data-k="demo-reset">' + t('demoReset') + '</button><p class="sv-note">' + t('demoNote') + '</p></section>';
+    body.innerHTML = h;
+    body.scrollTop = st;
+    S.flash = null;
+    fitScreens(false);
+  }
+  function fitScreens(scrollTarget) {
+    var wall = $('#wall'); if (!wall || !wall.clientWidth) return;
+    var W = wall.clientWidth, s;
+    if (S.scr.zoom) s = Math.min(1.05, (W - 64) / 288);
+    else s = (W - 20 - 20 - 18) / 864;
+    wall.style.setProperty('--s', Math.max(0.2, s).toFixed(4));
+    if (scrollTarget && S.scr.zoom) {
+      var row = $('#wall-row'), tgt = row && row.querySelector('.scr-wrap[data-scr="' + (S.scr.target || 1) + '"]');
+      if (row && tgt) row.scrollLeft = tgt.offsetLeft - (row.clientWidth - tgt.offsetWidth) / 2;
+    }
+  }
+  function openScreens(opts, openerKey) {
+    S.scr.zoom = !!opts.zoom; S.scr.view = 'new'; S.scr.target = opts.target || 1;
+    renderScreens();
+    $('#scr-body').scrollTop = 0;
+    openLayer('screens', openerKey);
+  }
+  function demoShift(delta) {
+    var sel = $('#demo-sel'), id = sel ? sel.value : (S.demoId || 'taro'), d = K.drink(id);
+    if (!(id in S.orig)) S.orig[id] = d.price;
+    d.price = Math.max(30, Math.min(200, d.price + delta));
+    if (d.price === S.orig[id]) delete S.orig[id];
+    S.demoId = id; S.focus = id; S.flash = id;
+    renderBoards(); renderBar(); renderScreens();
+    var out = $('#demo-out'); if (out) out.textContent = K.fmt(d.price, 'mxn', 'short');
+  }
+  function demoReset() {
+    Object.keys(S.orig).forEach(function (id) { K.drink(id).price = S.orig[id]; });
+    S.orig = {}; S.demoId = null;
+    renderBoards(); renderBar();
+    if (stack.some(function (s) { return s.name === 'screens'; })) renderScreens();
+  }
+
+  /* ---------- Refresco global (idioma / moneda) ---------- */
+  function focusKey() {
+    var a = document.activeElement; if (!a || a === document.body) return null;
+    return { k: a.getAttribute('data-k') || a.getAttribute('data-testid') || (a.id ? '#' + a.id : null), s: a.selectionStart, e: a.selectionEnd };
+  }
+  function refocus(f) {
+    if (!f || !f.k) return;
+    var el = f.k.charAt(0) === '#' ? document.getElementById(f.k.slice(1)) : document.querySelector('[data-k="' + f.k + '"]') || document.querySelector('[data-testid="' + f.k + '"]');
+    if (el && el !== document.activeElement && !el.closest('[inert]')) { el.focus({ preventScroll: true }); try { if (f.s != null && el.setSelectionRange) el.setSelectionRange(f.s, f.e); } catch (e) { /* no es campo */ } }
+  }
+  function refreshAll() {
+    var f = focusKey();
+    renderChrome(); renderBoards();
+    stack.forEach(function (s) {
+      if (s.name === 'drink') renderDrink();
+      if (s.name === 'cart') renderCart();
+      if (s.name === 'ticket') renderTicket();
+      if (s.name === 'wa') renderWA();
+      if (s.name === 'screens') renderScreens();
+      if (s.name === 'info') renderInfo();
+    });
+    refocus(f);
+  }
+
+  /* ---------- Eventos ---------- */
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-act]'); if (!el || el.disabled) return;
+    var a = el.getAttribute('data-act'), v = el.getAttribute('data-v'), key = el.getAttribute('data-k');
+    switch (a) {
+      case 'lang': if (S.lang !== v) { S.lang = v; save(); hideToast(true); refreshAll(); } break;
+      case 'cur': if (S.cur !== v) { S.cur = v; save(); hideToast(true); refreshAll(); } break;
+      case 'board': goBoard(+v); break;
+      case 'next-board': { var nb = +v; goBoard(nb); var bt = $('#bt-' + nb), bd = $('#board-' + nb); if (bd) bd.scrollTop = 0; if (bt) bt.focus({ preventScroll: true }); break; }
+      case 'open': openDrink(el.getAttribute('data-id'), key); break;
+      case 'quick': {
+        var d = K.drink(el.getAttribute('data-id')); if (!d || d.soldOut) break;
+        S.undo = S.cart; S.cart = K.addToCart(S.cart, d.id, K.defaultConfig(d), 1); S.focus = d.id;
+        cartChanged(true);
+        var qb = $('[data-k="quick-add-' + d.id + '"]');
+        if (qb) { qb.classList.add('is-done'); qb.innerHTML = I.check; setTimeout(function () { var b2 = $('[data-k="quick-add-' + d.id + '"]'); if (b2) { b2.classList.remove('is-done'); b2.innerHTML = I.plus; } }, 1300); }
+        toast(t('added', name(d), 1), { label: t('undo'), act: 'undo' });
+        break;
+      }
+      case 'undo': if (S.undo) { S.cart = S.undo; S.undo = null; cartChanged(false); toast(t('undone')); } else hideToast(); break;
+      case 'close': closeLayer(); break;
+      case 'info': renderInfo(); openLayer('info', key); break;
+      case 'cart': S.removed = null; renderCart(); $('#cart-body').scrollTop = 0; openLayer('cart', key); break;
+      case 'screens': openScreens({ zoom: false, target: 1 }, key); break;
+      case 'screens-board': openScreens({ zoom: true, target: +v }, key); break;
+      case 'screens-focus': if (S.sheet) { S.focus = S.sheet.id; openScreens({ zoom: true, target: screenOf(K.drink(S.sheet.id)) }, key); } break;
+      case 'opt': {
+        var g = el.getAttribute('data-g'), cfg = S.sheet && S.sheet.cfg; if (!cfg) break;
+        if (g === 'size') cfg.size = v; else if (g === 'sweet') cfg.sweet = +v; else if (g === 'ice') cfg.ice = v;
+        S.sheet.msg = ''; syncDrink(); break;
+      }
+      case 'top': {
+        var c2 = S.sheet && S.sheet.cfg; if (!c2) break;
+        var i = c2.toppings.indexOf(v);
+        if (i >= 0) { c2.toppings.splice(i, 1); S.sheet.msg = ''; }
+        else if (c2.toppings.length < K.meta.maxToppings) { c2.toppings.push(v); S.sheet.msg = ''; }
+        else S.sheet.msg = 'maxMsg';
+        syncDrink(); break;
+      }
+      case 'qty': if (S.sheet) { S.sheet.qty = Math.max(1, Math.min(20, S.sheet.qty + (+v))); syncDrink(true); } break;
+      case 'add': addFromSheet(); break;
+      case 'switch': { var nid = el.getAttribute('data-id'); S.sheet = { id: nid, cfg: K.defaultConfig(K.drink(nid)), qty: 1, editKey: null, msg: '' }; S.focus = nid; renderDrink(); $('#drink-body').scrollTop = 0; var ht = $('#drink-title'); if (ht) ht.focus(); break; }
+      case 'linc': case 'ldec': {
+        var l = lineByKey(el.getAttribute('data-key')); if (!l) break;
+        S.removed = null; S.cart = K.setQty(S.cart, l.key, Math.max(1, l.qty + (a === 'linc' ? 1 : -1))); cartChanged(false);
+        refocus({ k: key }); break;
+      }
+      case 'lrem': {
+        var l2 = lineByKey(el.getAttribute('data-key')); if (!l2) break;
+        S.removed = { cart: S.cart, name: name(K.drink(l2.id)) };
+        S.cart = K.setQty(S.cart, l2.key, 0); cartChanged(false);
+        var nx = $('[data-testid="line-remove"]', $('#cart-body')) || $('[data-k="unremove"]'); if (nx) nx.focus();
+        break;
+      }
+      case 'unremove': if (S.removed) { S.cart = S.removed.cart; S.removed = null; cartChanged(false); var ct = $('#cart-title'); if (ct) ct.focus(); } break;
+      case 'ledit': { var l3 = lineByKey(el.getAttribute('data-key')); if (l3) { S.removed = null; openDrink(l3.id, key, l3); } break; }
+      case 'counter': if (!S.cart.length) break; if (!S.code) S.code = K.orderCode(); S.tkTime = new Date(); renderTicket(); $('#ticket-body').scrollTop = 0; openLayer('ticket', key); break;
+      case 'wa': if (!S.cart.length) break; if (!S.code) S.code = K.orderCode(); renderWA(); openLayer('wa', key); sizeTA($('#wa-msg')); break;
+      case 'mode': S.mode = v; $$('[data-act="mode"]').forEach(function (b) { var on = b.getAttribute('data-v') === v; b.setAttribute('aria-checked', String(on)); b.tabIndex = on ? 0 : -1; }); break;
+      case 'new-order': S.cart = []; S.code = null; S.removed = null; S.undo = null; S.wa = { name: '', time: '' }; closeAll(); cartChanged(false); toast(t('newToast')); break;
+      case 'copy': copyMsg(); break;
+      case 'scr-view': S.scr.view = v; renderScreens(); refocus({ k: key }); break;
+      case 'scr-zoom': S.scr.zoom = !S.scr.zoom; if (S.scr.zoom && S.focus) S.scr.target = screenOf(K.drink(S.focus)); renderScreens(); fitScreens(true); refocus({ k: 'scr-zoom' }); break;
+      case 'scr-pick': S.scr.zoom = true; S.scr.target = +v; renderScreens(); fitScreens(true); refocus({ k: 'scr-zoom' }); break;
+      case 'demo': demoShift(+v); refocus({ k: key }); break;
+      case 'demo-reset': demoReset(); if (key) refocus({ k: key }); hideToast(); break;
+    }
+  });
+  document.addEventListener('input', function (e) {
+    var id = e.target.id;
+    if (id === 'wa-name' || id === 'wa-time') {
+      if (id === 'wa-name') S.wa.name = e.target.value; else S.wa.time = e.target.value;
+      var ta = $('#wa-msg'); if (ta) { ta.value = waMsg(); sizeTA(ta); }
+      var cs = $('#copy-st'); if (cs) cs.textContent = '';
+    }
+  });
+  document.addEventListener('change', function (e) {
+    if (e.target.id === 'demo-sel') { S.demoId = e.target.value; S.focus = e.target.value; renderScreens(); refocus({ k: 'demo-sel' }); }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { if (stack.length) { e.preventDefault(); closeLayer(); } else hideToast(true); return; }
+    var r = e.target.closest && e.target.closest('[role="radio"]');
+    if (r && /^(ArrowDown|ArrowRight|ArrowUp|ArrowLeft|Home|End)$/.test(e.key)) {
+      var g = r.closest('[role="radiogroup"]'); if (!g) return;
+      var items = $$('[role="radio"]:not([disabled])', g), i = items.indexOf(r);
+      if (e.key === 'Home') i = 0; else if (e.key === 'End') i = items.length - 1;
+      else i = (i + (e.key === 'ArrowDown' || e.key === 'ArrowRight' ? 1 : -1) + items.length) % items.length;
+      e.preventDefault(); items[i].click(); items[i].focus();
+    }
+  });
+  var boardsEl = $('#boards'), rafB = 0;
+  boardsEl.addEventListener('scroll', function () {
+    if (rafB) return;
+    rafB = requestAnimationFrame(function () { rafB = 0; var i = Math.round(boardsEl.scrollLeft / Math.max(1, boardsEl.clientWidth)); if (i !== S.board && i >= 0 && i < 3) setBoard(i); });
+  }, { passive: true });
+  var rzT = 0;
+  window.addEventListener('resize', function () {
+    clearTimeout(rzT);
+    rzT = setTimeout(function () { boardsEl.scrollLeft = S.board * boardsEl.clientWidth; fitScreens(false); }, 80);
+  });
+
+  /* ---------- Arranque ---------- */
+  renderChrome();
+  renderBoards();
+})();
+</script>
+</body>
+</html>

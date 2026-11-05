@@ -1,0 +1,155 @@
+{
+ "track": "Mercado local y turista (Peñasco, Sonora, Arizona)",
+ "sources": [
+  {
+   "name": "Koi Tea Boba Shop · Instagram @koitea.mx (análisis de la copia local de la foto de las 3 pantallas)",
+   "url": "https://www.instagram.com/koitea.mx/",
+   "accessed": false,
+   "kind": "mercado local",
+   "observed": "No pude abrir Instagram: el proxy de la sesión responde 403 para www.instagram.com. Por eso no vi publicaciones nuevas, promociones, historias ni precios. Lo que sí revisé fue la copia local de la foto de las pantallas que el estudio previo bajó de este perfil (/tmp/claude-0/-home-user-vibeKOITEA/0b3b380c-8320-56fa-bf11-f547c3403f27/scratchpad/koi5/img/screens.jpg, 900×820). Hice recortes ampliados 5× con autocontraste (/tmp/claude-0/-home-user-vibeKOITEA/0b3b380c-8320-56fa-bf11-f547c3403f27/scratchpad/mkt/prices_col.png y /tmp/claude-0/-home-user-vibeKOITEA/0b3b380c-8320-56fa-bf11-f547c3403f27/scratchpad/mkt/foot_color.png). Esto es lo que se ve. (1) En la pantalla izquierda, cada una de las 11 bebidas (5 Milk Tea y 6 Fruit Tea) lleva puntos guía hasta un precio alineado a la derecha de solo 2 caracteres. Ninguna cifra se lee, pero el ancho cuadra con precios menores a MX$100. (2) Abajo a la derecha de esa pantalla, encima de la nota al pie, asoma una etiqueta más oscura que empieza con 'GRAN…'. La tapa la selladora de vasos que está en primer plano. Probablemente es una línea del tamaño Grande con su cargo. (3) La nota '*Todas las bebidas incluyen 1 topping gratis' sigue borrosa. (4) En la pantalla derecha, los 4 smoothies no tienen columna de precio por fila. (5) Hay una sola columna de precios, sin USD ni tipo de cambio. (6) La pantalla central dice 'Síguenos en Instagram'. (7) Los nombres mezclan inglés y español: 'Classic Milk Tea', 'Brown Sugar Milk Tea', 'Maracuyá Green Tea', 'Fresa Green Tea', 'Durazno Green Tea', los smoothies 'Mango · Fresa · Taro · Maracuyá', 'Toppings para bebida', 'Perlas explosivas' y 'Jellys'.",
+   "borrow": "El modelo de precio probable es un precio base por bebida más una línea de Grande, igual que el 'Mediano / Grande +$15' de los prototipos (por confirmar). En ES conviene respetar los nombres exactos del tablero, para que lo que se pide en el teléfono se reconozca en caja y en las pantallas.",
+   "avoid": "Publicar precios deducidos de la foto: siguen siendo ilustrativos hasta tener la lista de Koi Tea."
+  },
+  {
+   "name": "Atly · 'Koi Tea' en Okemos, Michigan (homónimo en EE. UU.)",
+   "url": "https://www.atly.com/location/KoiTea",
+   "accessed": false,
+   "kind": "mercado local (homónimos y búsqueda)",
+   "observed": "No la abrí: el dominio está fuera de la red permitida. El dato viene del resumen del buscador que recogió la línea 'Inspiración visual' de este mismo flujo: es otro negocio llamado 'Koi Tea', en Okemos, Michigan. Esa línea también reporta tres cosas: la búsqueda 'Koi Tea Boba Shop Puerto Peñasco Rocky Point' no devolvió el local; el único resultado fue Bubble Bee Tea, en una página de Casago; y KOI Thé es una cadena global con un nombre casi idéntico.",
+   "borrow": "Escribir siempre 'Koi Tea · Rocky Point' en el título de la página, la PWA, la ficha de Google y la tarjeta para compartir. Así, el turista que busca 'Koi Tea' llega a este local y no a un homónimo."
+  },
+  {
+   "name": "Gong cha México · tienda AICM en Uber Eats",
+   "url": "https://www.ubereats.com/mx-en/store/gong-cha-aicm/kHh25k1tWkGLAvutbgG2Qg",
+   "accessed": false,
+   "kind": "cadena de boba",
+   "observed": "No la abrí: www.ubereats.com responde 403 en el proxy. Según el resumen del buscador que recogió la línea 'Cadenas', Oolong, Black y Green Milk Tea cuestan MX$78.00 cada uno y llevan una línea de descripción. Las categorías van en español junto a nombres en inglés: 'Bebidas Temporada', 'Serie Gourmet' y 'Serie Pelonete' (con sabor de dulce mexicano), además de café, snacks y bebidas calientes. Es una tienda de aeropuerto vista en una app de entrega, así que su precio no equivale al de mostrador en Sonora.",
+   "borrow": "Sirve como ancla nacional: el milk tea clásico de una cadena conocida cuesta ≈ MX$78. También confirma el lenguaje que ya se acepta en México, nombre en inglés más categoría o descriptor en español, y el uso de una categoría de temporada.",
+   "avoid": "Tomarlo como precio de mostrador del noroeste."
+  },
+  {
+   "name": "Gong cha México · ficha en Rappi",
+   "url": "https://www.rappi.com.mx/restaurantes/1923788999-gong-cha",
+   "accessed": false,
+   "kind": "cadena de boba",
+   "observed": "No la abrí: www.rappi.com.mx responde 403. Según el resumen del buscador que recogió la línea 'Cadenas', en sucursales de Rappi aparecen 'Dulce de Calabaza Milk Tea con Tapioca' a $86.40 (Manzanillo) y a $108.00 (Monterrey y Oaxaca), 'Taro Milk Caliente' a $129, 'ChocoFresa Smoothie' a $138 y 'ElderFlower Fresa Lime Tea' a $150. No queda claro qué precio corresponde a esta URL en particular.",
+   "borrow": "El rango de cadena en apps mexicanas va de MX$86 a 150. El topping aparece en el nombre ('con Tapioca') y hay bebidas calientes para invierno.",
+   "avoid": "Comparar 1:1 con precios de mostrador: los de app pueden incluir sobreprecio de la plataforma, que aquí no se midió."
+  },
+  {
+   "name": "Mexico News Daily · Gong cha y su plan de 100 tiendas en México",
+   "url": "https://mexiconewsdaily.com/news/gong-cha-plans-100-outlets-for-its-bubble-tea-by-2024/",
+   "accessed": false,
+   "kind": "mercado (México)",
+   "observed": "No la abrí. El título dice que Gong cha planea 100 tiendas de bubble tea en México para 2024. Según el resumen que recogió la línea 'Cadenas', entró al país por Guadalajara en febrero de 2019 y ya pasa de 100 tiendas; esto último no está verificado. No hay datos de tiendas en Sonora.",
+   "borrow": "Da contexto: es probable que el visitante mexicano de ciudad (Hermosillo, Mexicali) ya conozca el boba de cadena y sus precios. Koi Tea se compara contra esa referencia, no contra la novedad."
+  },
+  {
+   "name": "Expansión · Mixue llega a México (17 feb 2026)",
+   "url": "https://expansion.mx/empresas/2026/02/17/mixue-llega-mexico-cadena-china-helados-8-pesos",
+   "accessed": false,
+   "kind": "mercado (México)",
+   "observed": "No la abrí. Según el título y el resumen que recogió la línea 'Cadenas', la cadena china Mixue abrió en el Centro Histórico de la CDMX en febrero de 2026, con helados desde 8 pesos. No hay datos de precios de sus tés en México ni de planes para Sonora.",
+   "borrow": "Es una señal de que en 2026 entró a México una gama de muy bajo precio. A Koi Tea le conviene competir por experiencia, marca y servicio bilingüe más que por precio, y vigilar si Mixue llega al noroeste."
+  },
+  {
+   "name": "Gong cha EE. UU. · menú en DoorDash (con versión es-US)",
+   "url": "https://www.doordash.com/business/gong-cha-892130/menu",
+   "accessed": false,
+   "kind": "cadena de boba",
+   "observed": "No la abrí. Según el resumen que recogió la línea 'Cadenas', aparecen Milk Foam Black Tea a $10.3 +, Passionfruit V a $11 + y Premium Jasmine MT a $9.5 +. El '+' indica que los extras se suman. DoorDash advierte que los precios son estimados según la ubicación. La versión es-US traduce la interfaz y deja los nombres de bebida en inglés.",
+   "borrow": "Es una convención bilingüe ya probada en EE. UU.: la interfaz se traduce y los nombres propios no. También el precio base con '+' en la lista.",
+   "avoid": "Tomarlo como precio de mostrador en Arizona."
+  },
+  {
+   "name": "The Santa Clara · guía de boba (precios de Sharetea y toppings de Teaspoon)",
+   "url": "https://thesantaclara.org/blog/ia17qwhyy1ux9m6tqcyv8ns5p7fxib",
+   "accessed": false,
+   "kind": "mercado (EE. UU.)",
+   "observed": "No la abrí. Según el resumen que recogió la línea 'Cadenas', las bebidas de Sharetea cuestan $6.25–8.25 y los toppings de Teaspoon $0.75–1, en Santa Clara, California.",
+   "borrow": "Es la referencia de mostrador en EE. UU.: la bebida cuesta US$6–8 y el topping se cobra aparte."
+  },
+  {
+   "name": "bubbleteas.moe · What is CHAGEE",
+   "url": "https://bubbleteas.moe/what-is-chagee/",
+   "accessed": false,
+   "kind": "cadena de boba",
+   "observed": "No la abrí. Según el resumen que recogió la línea 'Cadenas', en CHAGEE EE. UU. las perlas o la espuma cuestan +$1–1.50.",
+   "borrow": "Confirma que en EE. UU. el topping se cobra, así que '1 topping included' es un argumento de valor para el turista."
+  },
+  {
+   "name": "VRG blog · bebidas de Mixue en EE. UU. (3 jun 2026)",
+   "url": "https://www.vrg.org/blog/2026/06/03/mixue-usa-fruit-drinks-2026/",
+   "accessed": false,
+   "kind": "cadena de boba",
+   "observed": "No la abrí. Según el resumen que recogió la línea 'Cadenas', las bebidas de Mixue en EE. UU. cuestan de $1.99 a $5.69.",
+   "borrow": "Marca el extremo bajo del rango en EE. UU.: no todos los turistas comparan contra US$7–9. A 18 MXN/USD, Koi Tea (≈ US$4.75–5.25) queda en medio."
+  },
+  {
+   "name": "Kung Fu Tea · tienda de Naperville en Uber Eats",
+   "url": "https://www.ubereats.com/store/kung-fu-tea-naperville/2ULVySrxX62wtCEccGV0ng",
+   "accessed": false,
+   "kind": "cadena de boba",
+   "observed": "No la abrí: www.ubereats.com responde 403. Según el resumen que recogió la línea 'Cadenas', tiene un bloque 'Featured items' con colaboraciones y temporada. En otras tiendas aparecen 'What's New' (Malted Cocoa Bliss a $7.49) y 'Picked for you'. Las categorías son Milk Tea, Slush, Punch, Seasonal, Topping y Merch, en menús de unos 80 artículos.",
+   "borrow": "Da un precio de referencia de ≈ US$7.50 y dos patrones para el panel: una colección de temporada que se enciende y se apaga, y Merch al final del menú."
+  }
+ ],
+ "patterns": [
+  {
+   "pattern": "En México, el boba de cadena se vende a MX$78–150 en apps y mezcla nombres en inglés con descriptores o categorías en español",
+   "evidence": "Gong cha AICM en Uber Eats vende Oolong, Black y Green Milk Tea a MX$78. En Rappi, Gong cha lista 'Dulce de Calabaza Milk Tea con Tapioca' a $86.40–108, 'Taro Milk Caliente' a $129, 'ChocoFresa Smoothie' a $138 y 'ElderFlower Fresa Lime Tea' a $150, con categorías como 'Bebidas Temporada', 'Serie Gourmet' y 'Serie Pelonete'. Todo viene de resúmenes del buscador (accessed=false), son precios de app y no hay ningún dato de Sonora.",
+   "implication": "Los precios ilustrativos de Koi Tea (MX$85–95, extras +$15, Grande +$15) son verosímiles y quedan en la parte baja del rango nacional de cadena. El spanglish ('Milk Tea con Tapioca', 'Maracuyá Green Tea') ya es el idioma normal del boba en México, así que en ES se conservan los nombres del tablero."
+  },
+  {
+   "pattern": "En EE. UU. la bebida cuesta US$6–11 y el topping se cobra aparte (+US$0.75–1.50); Mixue es el extremo bajo",
+   "evidence": "Sharetea cuesta US$6.25–8.25 y los toppings de Teaspoon US$0.75–1 (guía de Santa Clara). En CHAGEE EE. UU., perlas o espuma cuestan +US$1–1.50. Gong cha en DoorDash va de US$9.5 a 11 con '+'. Kung Fu Tea marca US$7.49 en 'What's New'. Mixue en EE. UU. va de US$1.99 a 5.69. Ninguna referencia es de Phoenix o Tucson y todas son resúmenes del buscador.",
+   "implication": "A 18 MXN/USD, MX$85–95 equivale a US$4.75–5.25 con un topping incluido. Para el turista de Arizona, ver el USD desde la lista y leer '1 topping included' es un argumento de venta, no solo una comodidad. Falta validarlo con precios de mostrador de Phoenix y Tucson."
+  },
+  {
+   "pattern": "Al cambiar de idioma se traduce la interfaz y se conservan los nombres propios",
+   "evidence": "Gong cha en DoorDash es-US traduce la interfaz al español y deja los nombres de bebida en inglés. Gong cha México usa nombres en inglés con categorías en español. El tablero de Koi Tea (foto local) dice 'Classic Milk Tea', 'Maracuyá Green Tea', 'Fresa Green Tea', 'Toppings para bebida', 'Perlas explosivas' y 'Jellys'.",
+   "implication": "En EN se traducen el sabor y la descripción (Passion Fruit, Strawberry, Peach, Lychee Green Tea), pero no 'Koi Tea' ni 'Milk Tea'. El ticket para caja repite debajo el nombre del tablero en español para que el personal lo ubique."
+  },
+  {
+   "pattern": "Las cadenas encienden y apagan una colección de temporada, y la demanda de Rocky Point sube en fechas fijas",
+   "evidence": "Gong cha México tiene 'Bebidas Temporada' y bebidas calientes; Kung Fu Tea usa 'Featured items', 'Seasonal' y 'What's New' (resúmenes del buscador). Fechas calculadas localmente: Thanksgiving el 26 nov 2026; Navidad y Año Nuevo en viernes; puentes mexicanos el 16 nov 2026, el 1 feb 2027 y el 15 mar 2027; Semana Santa del 21 al 28 mar 2027; Memorial Day el 31 may 2027; Labor Day el 6 sep 2027. El brief cita ≈ 1 millón de turistas en 2026 (KJZZ).",
+   "implication": "El panel en Supabase necesita una colección 'Temporada' con fechas de inicio y fin, y un aviso de horario especial para festivos. Cada dirección debe tener dónde mostrarla: una sala temporal en v1, un tile en v3, una banda en el tablero de v5 o una recomendación del koi en v4."
+  },
+  {
+   "pattern": "Poca huella digital en lo local y un nombre que se confunde",
+   "evidence": "Según el brief, en Google Maps Bubble Bee Tea tiene 105 reseñas, BlueMoon 16, Bobalicious 15, Bubble Breeze 1 y Koi Tea 2. En una búsqueda de otra línea de este flujo el local no apareció; solo salió Bubble Bee Tea, en un resultado de Casago. Hay homónimos: KOI Thé (cadena global) y un 'Koi Tea' en Okemos, Michigan (atly.com).",
+   "implication": "El menú digital puede hacer de página web del local: HTML indexable en ES y EN, con el título 'Koi Tea · Boba Shop · Rocky Point (Puerto Peñasco)', datos schema.org y el enlace 'Menú' en Google Business Profile y en la bio de Instagram. En lo local, la vara para destacar está baja."
+  },
+  {
+   "pattern": "El tablero físico solo habla en MXN y sus cifras no se leen",
+   "evidence": "En la foto local de las 3 pantallas (copia de @koitea.mx), ampliada 5×, hay una sola columna de precios de 2 caracteres. La etiqueta 'GRAN…' queda tapada por la selladora de vasos y la nota de topping gratis está borrosa. No hay USD ni tipo de cambio. Según RESEARCH.md, el contraste es de 1.75:1.",
+   "implication": "El teléfono será el primer lugar donde Koi Tea muestre dólares. Hace falta un tipo de cambio de la casa editable y con fecha, el USD marcado como aproximado ('≈') y el MXN siempre a la vista. Además, las pantallas deben salir del mismo contenido (v5) para que precio y cambio no se contradigan entre teléfono y barra."
+  }
+ ],
+ "insights": [
+  "Hay que pedirle a Koi Tea su lista real antes de mostrar precios a nadie. Ni con ampliación se leen las cifras del tablero; solo se ve que son de 2 dígitos (menos de MX$100) y que hay una línea 'GRAN…'. Falta confirmar: el precio de cada bebida, si existe el tamaño Grande y cuánto cuesta (y los ml de cada vaso), el precio del topping extra, si el smoothie tiene precio único, las formas de pago, si aceptan dólares y a qué cambio, y si hay promociones de apertura.",
+  "Auditoría de campo de unas 2 horas, que Luis Mario puede hacer porque está en Peñasco. La misma ficha sirve para Bubble Bee Tea, BlueMoon, Bobalicious y Bubble Breeze: foto del tablero; precio por tamaño; cuánto cuesta el topping extra y si incluyen uno; si aceptan USD y a qué cambio; si cobran con tarjeta; si tienen menú QR o digital (PDF, Canva o plataforma) y en qué idioma; usuario y seguidores en Instagram y Facebook; fotos del menú en Google Maps. Con eso se cubren los huecos (a) y (d), que la red de esta sesión no dejó investigar.",
+  "Moneda: se cobra en MXN y el MXN se ve siempre. El USD va como referencia ('≈'), con un tipo de cambio de la casa que se edita en el panel y lleva fecha, por ejemplo 'Tipo de cambio de la casa: $18 = US$1 · act. 5 nov 2026'. Ese número mueve todo el USD visible: con redondeo a 0.25, MX$85 son US$5.00 a 17, US$4.75 a 18 y US$4.50 a 18.5. Un solo valor en Supabase debe alimentar el teléfono, las pantallas y el ticket. Hipótesis sin fuente, por verificar en campo: en Rocky Point muchos comercios aceptan dólares en efectivo con un cambio propio por debajo del de mercado. Si Koi Tea lo hace, el menú debe usar exactamente ese número.",
+  "En el ticket 'Mostrar en caja', el USD debe calcularse a partir del total en MXN, no sumando líneas ya redondeadas. Ejemplo: Classic con 1 topping extra (MX$100), Taro con 1 extra (105), Koi Tea Grande (110) y Strawberry (90) suman MX$405. A 18, la suma de las líneas da US$22.25, pero el total convertido es US$22.50; a 17, sale US$24.00 contra US$23.75. El cajero convertirá desde el total, y una diferencia de 25 centavos genera dudas en la fila. Hoy KOI.cartTotal suma las líneas ya convertidas (/tmp/claude-0/-home-user-vibeKOITEA/0b3b380c-8320-56fa-bf11-f547c3403f27/scratchpad/koi5/shared/koi-data.js). Propuesta: 'Total $405 MXN · ≈ US$22.50 (TC $18)'.",
+  "En modo EN, junto al precio: '1 topping included' y 'Final price, tax included'. En EE. UU. el impuesto se suma al pagar y el topping se cobra aparte (+US$0.75–1.50 según las referencias). Por confirmar con la LFPC vigente (PROFECO), que conozco de antes y no pude abrir aquí: los arts. 7 Bis y 34 piden mostrar el monto total con impuestos y la información en español y en moneda nacional, aunque además se use otro idioma. Si es así, el modo EN/USD nunca debe ocultar el MXN ni el nombre en español del ticket.",
+  "Visibilidad: la competencia local tiene poca huella en Google (solo Bubble Bee Tea pasa de 100 reseñas) y Koi Tea no salió en la búsqueda de otra línea de este flujo. Conviene que el menú sea indexable: SSR en Next.js, rutas /es y /en con hreflang, el título 'Koi Tea · Boba Shop · Rocky Point (Puerto Peñasco)', schema.org Restaurant + Menu con horario y priceRange, y el enlace 'Menú' en Google Business Profile y en la bio de @koitea.mx. Así se compite con Bubble Bee Tea y se evita la confusión con KOI Thé y con el 'Koi Tea' de Michigan.",
+  "Calendario: el primer pico real es Thanksgiving, el jueves 26 nov 2026 (fin de semana del 26 al 29), dentro de 3 semanas. Siguen Navidad y Año Nuevo, que caen en viernes (25 dic 2026 y 1 ene 2027), y los puentes mexicanos del 16 nov 2026, 1 feb 2027 y 15 mar 2027. Semana Santa 2027 cae temprano, del 21 al 28 mar (Pascua el 28), cerca de los spring breaks de las universidades de Arizona (fechas 2027 por confirmar), así que marzo de 2027 será probablemente el pico más largo. Después vienen Memorial Day (31 may), el 4 de julio (domingo) y Labor Day (6 sep 2027). Lo recomendable es tener un MVP (v3 o v5) con QR en el mostrador antes del 26 nov y la versión completa antes de marzo.",
+  "Sonora y Arizona usan UTC−7 todo el año. Lo verifiqué en la base tz local: America/Hermosillo coincide con America/Phoenix en noviembre, enero, marzo y julio; la CDMX está en UTC−6 y Los Ángeles alterna entre −8 y −7. Por eso 'Abierto ahora', el koi que 'duerme' de v4 y los avisos de horario deben calcularse con America/Hermosillo y no con el reloj del teléfono. El horario 11:00–21:30 no necesita nota de conversión para Arizona.",
+  "Temporada e invierno: Gong cha México vende bebidas calientes ('Taro Milk Caliente') y tiene 'Bebidas Temporada'; Kung Fu Tea usa 'Seasonal' y 'What's New'. Conviene preguntarle a Koi Tea si tendrá bebidas calientes o de temporada en invierno. El esquema debe prever la temperatura como opción, una colección 'Temporada' con fechas y un aviso de horario especial.",
+  "El tablero de hoy está en spanglish. En ES se queda igual. En EN se traduce solo el sabor (Maracuyá → Passion Fruit, Fresa → Strawberry, Durazno → Peach, Lichi → Lychee) y se dejan 'Koi Tea', 'Milk Tea' y 'Green Tea'. En el ticket para caja, el nombre del tablero va debajo del nombre en inglés. Hay que probar la cadena más larga ('Passion Fruit Green Tea') a 360 px.",
+  "Con los precios ilustrativos, Koi Tea queda en la parte baja del rango de Gong cha en apps mexicanas (MX$78–150). En dólares queda por debajo de las referencias de EE. UU. (US$6–11) y por encima de Mixue (US$1.99–5.69). Mixue llegó a la CDMX en febrero de 2026, así que la competencia por precio puede llegar. El valor de Koi Tea está en la experiencia (el local, la mascota, lo bilingüe), no en ser el más barato."
+ ],
+ "direction_notes": "La evidencia de esta línea es débil y las notas son provisionales. No se abrió ninguna fuente web: el presupuesto de búsqueda ya estaba agotado y la red de la sesión bloquea los sitios.\n\nLo que aplica a las cinco por igual:\n- El MXN siempre visible.\n- El USD como '≈', con un tipo de cambio de la casa editable y con fecha.\n- El ticket con el total en MXN y el USD calculado desde ese total.\n- Los nombres del tablero en ES y solo el sabor traducido en EN.\n- La hora calculada con America/Hermosillo.\n- Una colección 'Temporada'.\n- Estar listas para los picos: Thanksgiving (26–29 nov 2026) y marzo de 2027, con los spring breaks y Semana Santa (21–28 mar).\n\nv1 Galería: se mantiene como la más diferenciada para la marca y el SEO (una frase bilingüe por pieza, indexable). Ajuste: en picos, recorrer las salas puede frenar la fila. Por eso la cédula siempre lleva el precio en MXN y ≈USD y el botón '+', y conviene un acceso 'Pedido rápido' visible desde la entrada.\n\nv2 Armador: el mercado la apoya. En EE. UU. el topping cuesta +US$0.75–1.50, aquí va uno incluido, y el vaso lo hace visible. Ajuste: en EN/USD, la etiqueta 'Included' junto al primer topping y el precio vivo en las dos monedas. Riesgo en picos: armar desde cero es lento, así que hay que mantener los 3 favoritos que abren el armador ya lleno.\n\nv3 Express: es la más alineada con el turista en la fila y con datos lentos, y la mejor candidata a MVP antes del 26 nov. Ajustes: ticket bilingüe con el total en MXN y el ≈USD calculado desde el total; una línea con el tipo de cambio de la casa; 'Precio final, IVA incluido / Final price, tax included'; y en Info, las formas de pago y la política de dólares (por confirmar con Koi Tea).\n\nv4 Koi guía: apoyada para quien prueba el boba por primera vez. La tarjeta 9:16 con 'Rocky Point, MX' y @koitea.mx ayuda a la visibilidad frente a Bubble Bee Tea y a los homónimos. El estado 'duerme' debe usar America/Hermosillo. Si se confirma que el turista de Arizona ya conoce el boba (falta verificar las tiendas de Phoenix y Tucson), el quiz sirve más para elegir sabor y textura que para explicar qué es el boba.\n\nv5 Tablero: es la más reforzada. El tablero real tiene una sola columna de precios en MXN, ilegible, sin USD y en spanglish. Un solo contenido para el teléfono y las 3 pantallas resuelve los cambios de precio, del tipo de cambio de la casa (que cambia más seguido que el menú) y de las bebidas de temporada. Ajuste: en la vista de las pantallas, MXN grande con ≈USD secundario, y la línea de 'Grande' visible.",
+ "blocked": [
+  "WebSearch: el presupuesto de 200 búsquedas por turno, compartido por todos los agentes del flujo, ya estaba agotado cuando hice mi primera búsqueda. Ninguna de mis 4 búsquedas (Bubble Bee Tea, BlueMoon Bubble Tea & Coffee, Bobalicious Tea y Bubble Breeze en Puerto Peñasco) se ejecutó. Para seguir, el usuario puede mandar un mensaje de seguimiento después de esta respuesta o subir CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION.",
+  "WebFetch: en.wikipedia.org falló con 'getaddrinfo ENOTFOUND', es decir, el dominio está fuera de la red permitida de la sesión. En esta misma sesión ya habían fallado igual koithe.com, gong-cha.com, kungfutea.com, bobaguys.com, baymard.com, whatsapp.com, dribbble.com y behance.net (según las otras líneas), y el proxy registra 403 para www.google.com, www.instagram.com, www.ubereats.com, www.rappi.com.mx, www.pinterest.com, www.awwwards.com, www.nngroup.com y gong-cha-usa.com. Seguí la indicación de la herramienta y no intenté más sitios. Para abrir fuentes de primera mano hay que permitir esos dominios en la configuración de red de la sesión (Network access → Allowed domains).",
+  "Por eso las 10 fuentes web de esta entrega salen de resúmenes del buscador que recogieron otras líneas de este flujo (cadenas.json e inspiracion.json): todas van con accessed=false y hay que verificarlas abriéndolas.",
+  "Koi Tea: sin acceso a Instagram @koitea.mx (403), Facebook 'Koi Tea Boba Shop' (no lo intenté) ni Google Maps (google.com con 403). No hay información nueva verificada de precios, promociones ni tamaños. Lo único nuevo sale del análisis de la foto local de las pantallas: precios de 2 cifras y la línea 'GRAN…'.",
+  "(a) Competidores locales: no hay datos de menú digital o QR, precios publicados ni redes de Bubble Bee Tea, BlueMoon Bubble Tea & Coffee, Bobalicious Tea y Bubble Breeze. Solo quedan las cifras de Google Maps del brief.",
+  "(b) Precios en Sonora (Hermosillo, Mexicali, San Luis Río Colorado y Caborca): sin datos. Lo único de México son los precios de Gong cha en Uber Eats y Rappi, vistos en resúmenes del buscador.",
+  "(c) Tiendas de boba de Phoenix y Tucson: no pude identificarlas ni ver sus precios o menús digitales. Las referencias en USD son de California, Illinois, Nueva York y cadenas nacionales.",
+  "(d) Dólares en Rocky Point (tipo de cambio de la casa, aceptación de USD, cobro con tarjeta) y menús bilingües: sin fuentes; queda como hipótesis para verificar en campo. Tampoco pude consultar el FIX de Banxico del día, y la LFPC (arts. 7 Bis y 34) se cita de memoria, por confirmar.",
+  "(e) Calendario de eventos 2026-2027 de Puerto Peñasco, fechas de spring break 2027 de ASU, UA y NAU y calendario SEP 2026-2027: sin fuentes. Los feriados de EE. UU. y México, la Pascua y las zonas horarias los calculé localmente (algoritmo de Pascua y base tz de Python).",
+  "Foto local de las pantallas: ni con ampliación 5× y autocontraste se leen las cifras. Solo se distingue que tienen 2 caracteres y la etiqueta 'GRAN…', que tapa la selladora de vasos."
+ ]
+}

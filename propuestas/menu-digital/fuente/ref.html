@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Referencia de pruebas</title>
+<style>
+body{margin:0;font:16px system-ui;background:#FBF6EF;color:#27211E}
+.app{max-width:480px;margin:0 auto;padding:12px}
+button{font:inherit;min-height:44px;min-width:44px;border:1px solid #bbb;background:#fff;border-radius:10px;padding:6px 10px;cursor:pointer;color:#27211E}
+button[aria-pressed="true"]{background:#27211E;color:#fff}
+button:disabled{opacity:.45}
+.row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.drink{display:flex;justify-content:space-between;width:100%;text-align:left;margin:4px 0}
+dialog{width:min(460px,92vw);border:0;border-radius:16px;padding:14px}
+dialog::backdrop{background:rgba(0,0,0,.35)}
+textarea{width:100%;min-height:150px;font:13px ui-monospace,monospace}
+input{font:inherit;min-height:44px;width:100%;box-sizing:border-box}
+h2{font-size:1.1rem;margin:14px 0 6px}
+.muted{color:#5d524b}
+</style></head><body>
+<div class="app">
+  <div class="row">
+    <button data-testid="lang-es" aria-pressed="true">ES</button><button data-testid="lang-en" aria-pressed="false">EN</button>
+    <button data-testid="cur-mxn" aria-pressed="true">MXN</button><button data-testid="cur-usd" aria-pressed="false">USD</button>
+    <button data-testid="open-cart" id="openCart">Carrito (0)</button>
+  </div>
+  <div id="menu"></div>
+  <p class="muted" id="note"></p>
+</div>
+<dialog id="dlg" aria-labelledby="dlgTitle"><div id="dlgBody"></div></dialog>
+<script src="shared/koi-data.js"></script>
+<script src="shared/koi-cup.js"></script>
+<script>
+const S={lang:'es',cur:'mxn',cart:[],d:null,cfg:null,qty:1,code:null,view:null};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function menu(){
+  $('#menu').innerHTML=KOI.categories.map(c=>`<h2>${esc(KOI.catName(c,S.lang))}</h2>`+KOI.drinksIn(c.id).map(d=>`<button class="drink" data-testid="drink-${d.id}" data-id="${d.id}" ${d.soldOut?'disabled aria-disabled="true"':''}><span>${esc(KOI.drinkName(d,S.lang))}</span><span>${d.soldOut?(S.lang==='en'?'Sold out':'Agotado'):KOI.fmt(d.price,S.cur)}</span></button>`).join('')).join('');
+  $('#openCart').textContent=(S.lang==='en'?'Cart':'Carrito')+' ('+KOI.cartCount(S.cart)+')';
+  $('#note').textContent=KOI.meta.pricesNote[S.lang];
+  document.querySelectorAll('[data-testid^="lang-"]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.testid==='lang-'+S.lang));
+  document.querySelectorAll('[data-testid^="cur-"]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.testid==='cur-'+S.cur));
+}
+function openDlg(view){S.view=view;render();if(!$('#dlg').open)$('#dlg').showModal();}
+function render(){
+  const b=$('#dlgBody');
+  if(S.view==='detail'){const d=S.d,o=KOI.optionsFor(d),c=S.cfg;
+    b.innerHTML=`<h2 id="dlgTitle">${esc(KOI.drinkName(d,S.lang))}</h2><p>${esc(KOI.drinkDesc(d,S.lang))}</p>
+    <div class="row">${KOI.sizes.map(s=>`<button data-testid="size-${s.id}" data-a="size" data-v="${s.id}" aria-pressed="${c.size===s.id}">${s[S.lang]}</button>`).join('')}</div>
+    <div class="row">${KOI.toppings.map(t=>`<button data-testid="topping-${t.id}" data-a="top" data-v="${t.id}" aria-pressed="${c.toppings.includes(t.id)}" ${t.soldOut?'disabled aria-disabled="true"':''}>${esc(KOI.toppingName(t,S.lang,true))}</button>`).join('')}</div>
+    ${o.sweet?`<div class="row">${KOI.sweetness.map(s=>`<button data-testid="sweet-${s.v}" data-a="sweet" data-v="${s.v}" aria-pressed="${c.sweet===s.v}">${s.v}%</button>`).join('')}</div>`:''}
+    ${o.ice?`<div class="row">${KOI.ice.map(i=>`<button data-testid="ice-${i.id}" data-a="ice" data-v="${i.id}" aria-pressed="${c.ice===i.id}">${i[S.lang]}</button>`).join('')}</div>`:''}
+    <div class="row"><button data-testid="qty-dec" data-a="qdec">−</button><span>${S.qty}</span><button data-testid="qty-inc" data-a="qinc">+</button>
+    <strong data-testid="unit-price">${KOI.fmt(KOI.unitPrice(d,c),S.cur)}</strong></div>
+    <div class="row"><button data-testid="add-to-cart" data-a="add">${S.lang==='en'?'Add':'Agregar'}</button><button data-testid="close" data-a="close">×</button></div>`;}
+  if(S.view==='cart'){
+    b.innerHTML=`<h2 id="dlgTitle">${S.lang==='en'?'Your order':'Tu pedido'}</h2>`+(S.cart.length?S.cart.map(l=>{const d=KOI.drink(l.id);return `<div data-testid="cart-line"><b>${esc(KOI.drinkName(d,S.lang))}</b> × ${l.qty}<br><small>${esc(KOI.describe(d,l.cfg,S.lang))}</small><div class="row"><button data-testid="line-dec" data-a="ldec" data-k="${esc(l.key)}">−</button><button data-testid="line-inc" data-a="linc" data-k="${esc(l.key)}">+</button><button data-testid="line-remove" data-a="lrem" data-k="${esc(l.key)}">${S.lang==='en'?'Remove':'Quitar'}</button><span data-testid="line-total">${KOI.money(KOI.lineTotal(l,S.cur),S.cur)}</span></div></div>`}).join('')+`<p>Total <b data-testid="cart-total">${KOI.money(KOI.cartTotal(S.cart,S.cur),S.cur,'full')}</b></p><div class="row"><button data-testid="checkout-counter" data-a="counter">${S.lang==='en'?'Show at counter':'Mostrar en caja'}</button><button data-testid="checkout-whatsapp" data-a="wa">WhatsApp</button></div>`:`<p data-testid="cart-empty">${S.lang==='en'?'Your cart is empty':'Tu carrito está vacío'}</p>`)+`<button data-testid="close" data-a="close">×</button>`;}
+  if(S.view==='counter'){b.innerHTML=`<h2 id="dlgTitle">${S.lang==='en'?'Show this at the counter':'Muestra esto en caja'}</h2><p style="font-size:2rem" data-testid="order-code">${S.code}</p><p>${KOI.money(KOI.cartTotal(S.cart,S.cur),S.cur,'full')}</p><button data-testid="close" data-a="close">×</button>`;}
+  if(S.view==='wa'){const msg=KOI.waMessage(S.cart,S.lang,S.cur,S.code,$('#n')?$('#n').value:'',$('#t')?$('#t').value:'');
+    const nv=$('#n')?$('#n').value:'',tv=$('#t')?$('#t').value:'';
+    b.innerHTML=`<h2 id="dlgTitle">WhatsApp</h2><label>Nombre <input id="n" data-testid="wa-name" value="${esc(nv)}"></label><label>Hora <input id="t" data-testid="wa-time" value="${esc(tv)}"></label><textarea readonly data-testid="wa-message">${esc(KOI.waMessage(S.cart,S.lang,S.cur,S.code,nv,tv))}</textarea><button data-testid="wa-copy" data-a="copy">Copiar</button><button data-testid="close" data-a="close">×</button>`;}
+}
+$('#menu').addEventListener('click',e=>{const t=e.target.closest('[data-id]');if(!t||t.disabled)return;S.d=KOI.drink(t.dataset.id);S.cfg=KOI.defaultConfig(S.d);S.qty=1;openDlg('detail');});
+$('#openCart').addEventListener('click',()=>openDlg('cart'));
+document.querySelectorAll('[data-testid^="lang-"],[data-testid^="cur-"]').forEach(b=>b.addEventListener('click',()=>{const k=b.dataset.testid.split('-');if(k[0]==='lang')S.lang=k[1];else S.cur=k[1];menu();if($('#dlg').open)render();}));
+$('#dlg').addEventListener('input',e=>{if(e.target.id==='n'||e.target.id==='t'){const m=document.querySelector('[data-testid="wa-message"]');m.value=KOI.waMessage(S.cart,S.lang,S.cur,S.code,$('#n').value,$('#t').value);}});
+$('#dlg').addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t)return;const a=t.dataset.a,v=t.dataset.v,c=S.cfg;
+  if(a==='size')c.size=v;
+  if(a==='top'){const i=c.toppings.indexOf(v);if(i>=0)c.toppings.splice(i,1);else if(c.toppings.length<KOI.meta.maxToppings)c.toppings.push(v);}
+  if(a==='sweet')c.sweet=+v; if(a==='ice')c.ice=v;
+  if(a==='qinc')S.qty++; if(a==='qdec')S.qty=Math.max(1,S.qty-1);
+  if(a==='add'){S.cart=KOI.addToCart(S.cart,S.d.id,c,S.qty);$('#dlg').close();menu();return;}
+  if(a==='linc'||a==='ldec'||a==='lrem'){const l=S.cart.find(x=>x.key===t.dataset.k);S.cart=KOI.setQty(S.cart,l.key,a==='lrem'?0:l.qty+(a==='linc'?1:-1));menu();}
+  if(a==='counter'){if(!S.code)S.code=KOI.orderCode();S.view='counter';}
+  if(a==='wa'){if(!S.code)S.code=KOI.orderCode();S.view='wa';}
+  if(a==='copy'){const m=document.querySelector('[data-testid="wa-message"]');navigator.clipboard&&navigator.clipboard.writeText(m.value).catch(()=>m.select());return;}
+  if(a==='close'){$('#dlg').close();return;}
+  render();});
+menu();
+</script></body></html>

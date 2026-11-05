@@ -1,0 +1,276 @@
+{
+ "track": "Cadenas de bubble tea: menús y apps oficiales",
+ "sources": [
+  {
+   "name": "Gong cha USA — página oficial del menú",
+   "url": "https://gong-cha-usa.com/?p=4332",
+   "accessed": false,
+   "kind": "cadena de boba",
+   "observed": "No abierta; según título y resumen de WebSearch. El sitio oficial de EE. UU. organiza el menú en 4 familias (original tea, milk tea, smoothies, fruit mixes). Dice que el cliente elige entre cinco niveles de endulzante y ajusta hielo y toppings, y muestra diagramas separados para nivel de dulzor y nivel de hielo. Un anuncio de julio de 2026 (franchising.com, 'Gong cha Blends Up Summer with NEW Bobaccinos') repite que cada bebida es 'made to order' y totalmente personalizable.",
+   "borrow": "Explicar dulzor e hielo con un diagrama de vaso además del texto, y fijar 5 niveles de dulzor como estándar. El mismo diagrama puede vivir dentro del vaso del Armador y en la ficha de las otras direcciones.",
+   "avoid": "Una escala de porcentajes sin decir qué significa cada nivel."
+  },
+  {
+   "name": "Gong cha en DoorDash (menú de cadena, EE. UU.)",
+   "url": "https://www.doordash.com/business/gong-cha-892130/menu",
+   "accessed": false,
+   "kind": "app de pedido",
+   "observed": "No abierta; resumen de WebSearch. Categorías 'Milk Foam Series', 'Creative Mix' y 'Brewed Tea Series', más una sección 'Most Ordered'. Los precios llevan signo '+' para indicar que los extras suman (Milk Foam Black Tea $10.3 +, Passionfruit V $11 +, Premium Jasmine MT $9.5 +). El dulzor se ofrece en cinco palabras: standard, less, half, little, no. DoorDash advierte que los precios son estimados según la ubicación. Existe versión es-US de la misma página: la interfaz va traducida y los nombres de bebida se quedan en inglés.",
+   "borrow": "Precio base con '+' en la lista, una fila 'Lo más pedido' arriba y niveles de dulzor nombrados con palabras (con su % al lado).",
+   "avoid": "Nombres de serie largos y solo en inglés; precios que cambian según el canal sin avisar."
+  },
+  {
+   "name": "Gong cha México — tienda AICM en Uber Eats (con fichas de Rappi)",
+   "url": "https://www.ubereats.com/mx-en/store/gong-cha-aicm/kHh25k1tWkGLAvutbgG2Qg",
+   "accessed": false,
+   "kind": "mercado local",
+   "observed": "No abierta; resumen de WebSearch. Oolong, Black y Green Milk Tea a MX$78.00 cada uno, con una línea de descripción. Categorías en español junto a nombres en inglés: 'Bebidas Temporada', 'Serie Gourmet', 'Serie Pelonete' (sabor de dulce mexicano), café, snacks y bebidas calientes; envío MXN0 para clientes nuevos. En Rappi México otras sucursales listan 'Dulce de Calabaza Milk Tea con Tapioca' a $86.40 (Manzanillo) y $108.00 (Monterrey, Oaxaca), Taro Milk Caliente $129, ChocoFresa Smoothie $138 y ElderFlower Fresa Lime Tea $150 (una de esas fichas: https://www.rappi.com.mx/restaurantes/1923788999-gong-cha). Gong cha entró a México por Guadalajara en febrero de 2019 y supera las 100 tiendas (https://mexiconewsdaily.com/news/gong-cha-plans-100-outlets-for-its-bubble-tea-by-2024/).",
+   "borrow": "Referencia de precio y de lenguaje que el cliente mexicano ya conoce: nombre en inglés con descriptor en español ('Milk Tea con Tapioca') y series locales de temporada.",
+   "avoid": "Precios distintos por canal sin aviso."
+  },
+  {
+   "name": "Kung Fu Tea — comunicado oficial de su app (15 ago 2022)",
+   "url": "https://www.kungfutea.com/kft-unveils-brand-new-app/",
+   "accessed": false,
+   "kind": "cadena de boba",
+   "observed": "No abierta; resumen de WebSearch. App nueva hecha con Blue Label Labs: menú integrado y personalización completa (toppings, tipo de bebida, nivel de azúcar y de hielo), recomendaciones y promociones según las 'drink preferences and boba habits' de cada quien, y todos los usuarios inscritos automáticamente al programa de lealtad. La ficha de App Store (id1610755017) usa como mensaje de entrada 'Skip the lines. Skip the wait. Order ahead and pick up in-store.'",
+   "borrow": "Un 'Repetir / Tu última bebida' basado en historial local (sin cuenta) y una bienvenida centrada en la rapidez.",
+   "avoid": "Pedir registro para dar recomendaciones."
+  },
+  {
+   "name": "Blue Label Labs — caso de rediseño de la app de Kung Fu Tea",
+   "url": "https://bluelabellabs.com/work/kung-fu-tea",
+   "accessed": false,
+   "kind": "estudio/artículo UX",
+   "observed": "No abierta; resumen de WebSearch. La app anterior era de marca blanca y casi no permitía personalizar. El rediseño redujo pasos y pantallas, condensó procesos en una sola pantalla (por ejemplo, elegir tienda antes de pedir) y facilitó retroceder o cambiar selecciones. Resultados que reporta la agencia: usuarios semanales promedio x2 y 5 veces más interacción con lealtad, sin línea base. Un caso de Revel (PDF en revelsystems.com) cita 1.5 millones de usuarios y 20% de las ventas por la app.",
+   "borrow": "Que cualquier elección se pueda editar desde el resumen o el carrito sin rehacer el flujo, y con menos pantallas.",
+   "avoid": "Asistentes lineales que obligan a retroceder paso por paso."
+  },
+  {
+   "name": "Kung Fu Tea Naperville en Uber Eats",
+   "url": "https://www.ubereats.com/store/kung-fu-tea-naperville/2ULVySrxX62wtCEccGV0ng",
+   "accessed": false,
+   "kind": "app de pedido",
+   "observed": "No abierta; resumen de WebSearch. Bloque 'Featured items' con colaboraciones y temporada (KFT X Pokémon Legends: Z-A, Harvest Collection, La Colombe Cold Brew Milk Tea, Matcha Series). En otras tiendas aparecen 'What's New' (Malted Cocoa Bliss $7.49), 'Picked for you' y frases de 'most commonly ordered together' (Kung Fu Milk Tea con Honey Oolong y Taro Milk Tea). Categorías recurrentes: Milk Tea, Slush, Classic, Punch, Milk Strike, Oat Strike, Milk Cap, Espresso, Yogurt, Seasonal, Topping y Merch, en menús de unos 80 artículos. En DoorDash (https://www.doordash.com/business/kung-fu-tea-56674/menu/) se ven también Matcha Series y grupos de promoción.",
+   "borrow": "Una fila de destacados arriba, un 'se pide junto con' en la ficha y una categoría de merch al final del menú.",
+   "avoid": "Decenas de categorías; a Koi Tea le bastan 3 series más toppings."
+  },
+  {
+   "name": "CHAGEE USA — ficha de App Store",
+   "url": "https://apps.apple.com/mx/app/chagee-usa/id6737460668",
+   "accessed": false,
+   "kind": "app de pedido",
+   "observed": "No abierta; resumen de WebSearch. Promete buscar tiendas, pedir por adelantado, ganar puntos ('Loyal-Tea Rewards') y ver el menú completo, con personalización fácil y 'reordering'. Reseñas citadas: falta un recibo del pedido y una cuenta regresiva de cuándo estará lista la bebida; otra dice que la versión 2.8.1 no se actualiza.",
+   "borrow": "Ticket o recibo visible al cerrar y un 'Repetir' de un toque.",
+   "avoid": "Cerrar un pedido sin comprobante ni indicación de qué sigue."
+  },
+  {
+   "name": "CHAGEE — comunicado sobre su calculadora de calorías",
+   "url": "https://www.thaipr.net/?p=3765685",
+   "accessed": false,
+   "kind": "cadena de boba",
+   "observed": "No abierta; resumen de WebSearch. La calculadora de la app muestra calorías, azúcar, proteína, grasa, carbohidratos y cafeína de todo el menú: tés solos desde 4 kcal por vaso y milk teas desde 119 kcal. Su sala de prensa en EE. UU. (https://www.chagee.us/media-center?type=brand) dice que publicó calorías y nutrientes de un primer lote de 6 productos y creó una sección 'Low Calories' en el menú de tienda, el mini programa de WeChat y las plataformas de delivery. En Shanghái sus menús llevan la etiqueta Nutri-grade A–D, que cambia con tamaño, temperatura y nivel de azúcar (https://www.sixthtone.com/news/1015562).",
+   "borrow": "Retroalimentación inmediata al mover el dulzor (texto o indicador) y, solo si hubiera datos, una sección de bebidas ligeras.",
+   "avoid": "Inventar calorías: Koi Tea no tiene datos nutricionales."
+  },
+  {
+   "name": "CHAGEE Malasia — menú oficial (nombres bilingües)",
+   "url": "https://chagee.com.my/?p=16471",
+   "accessed": false,
+   "kind": "cadena de boba",
+   "observed": "No abierta; resumen de WebSearch. Marca 霸王茶姬 + CHAGEE; la Jasmine Green Milk Tea aparece bajo el nombre poético 伯牙绝弦 en 'Premium Brew Tea Series', y otra página la pone en 'Fresh Milk Tea Series'. En foodpanda se lee 'BO·YA JASMINE GREEN MILK TEA 伯牙绝弦', a RM14 la regular y RM16 la grande. Una guía de viaje 2026 (https://realchinatrip.com/blogs/food-tour/how-to-order-chagee-in-china-a-local-s-pro-guide-2026) recomienda pedirla al 30% de azúcar y con poco hielo para sentir el té.",
+   "borrow": "La fórmula nombre propio + nombre descriptivo, 2 tamaños con su precio cada uno y una 'recomendación de la casa' para el dulzor.",
+   "avoid": "Nombrar la misma serie de dos formas distintas en páginas propias."
+  },
+  {
+   "name": "HEYTEA — ficha de App Store",
+   "url": "https://apps.apple.com/us/app/-/id6468945008",
+   "accessed": false,
+   "kind": "app de pedido",
+   "observed": "No abierta; resumen de WebSearch. Pedir desde el teléfono, saltarse la fila y recoger cuando esté listo, con seguimiento en tiempo real; personalizar toppings, dulzor y hielo. Los textos de las capturas (reproducidos en https://mwm.ai/apps/heytea/6468945008) mencionan las categorías 'In Season' (bebidas de temporada limitada) y 'Staff Picks'. Las notas de versión hablan de un rediseño visual integral y de una función de stickers con creación DIY; versión 114 del 1 dic 2025. Reseñas: problemas de pago en Hong Kong y Singapur. HEYTEA GO nació en 2018 como mini programa de WeChat; la marca reportó que la recompra mensual se triplicó y que la app genera la mitad de sus pedidos (cifras propias, Marketing-Interactive).",
+   "borrow": "Filas 'Temporada' y 'Recomendado por el staff', y stickers coleccionables como capa social.",
+   "avoid": "Fricción en el pago; en Koi Tea se paga en caja o se coordina por WhatsApp."
+  },
+  {
+   "name": "Design Compass — rebranding de HEYTEA (14 ene 2026)",
+   "url": "https://designcompass.org/en/2026/01/14/heytea-subtly-younger-rebrand",
+   "accessed": false,
+   "kind": "dirección de arte",
+   "observed": "No abierta; resumen de WebSearch. HEYTEA renovó su identidad para crecer a nivel global: un logo nuevo bilingüe y un sistema de empaque con un solo lenguaje de diseño, ya presente en tiendas. El símbolo es de work by works, el logotipo de Makkaihang Design y los empaques del equipo interno. Otros resultados describen su logo histórico: el perfil de una persona bebiendo té a 45°, con variantes por ciudad que se coleccionan. Un estudio académico (ACL 2025) describe a las marcas chinas de té con colores apagados y diseño minimalista.",
+   "borrow": "Un bloque de marca bilingüe ES/EN con el mismo peso visual y un solo lenguaje entre menú, vaso, pantallas y merch.",
+   "avoid": "Tratar el inglés como traducción secundaria en letra pequeña."
+  },
+  {
+   "name": "Built for Mars — análisis UX de HeyTea",
+   "url": "https://builtformars.com/company/heytea",
+   "accessed": false,
+   "kind": "estudio/artículo UX",
+   "observed": "No abierta; resumen de WebSearch. Destaca cómo HeyTea quita fricción: muestra el mapa de la zona de entrega antes de que el usuario escriba su dirección, avisa antes de pagar que hay cupones válidos sin aplicar y permite personalizar el vaso con stickers.",
+   "borrow": "Mostrar las restricciones antes de que el cliente invierta esfuerzo (horario, pedido para recoger) y avisar antes del cierre si no eligió su topping incluido, igual que el cupón sin aplicar.",
+   "avoid": "Que las restricciones aparezcan hasta el final del pedido."
+  },
+  {
+   "name": "KOI Thé — página oficial 'Our Tea'",
+   "url": "https://koithe.com/en/ourtea.php",
+   "accessed": false,
+   "kind": "cadena de boba",
+   "observed": "No abierta (www.koithe.com falló por DNS); resumen de WebSearch. Categoría 'Chewy Tea' con Golden Bubble Milk Tea, descrita como 'classic Assam black tea as a base, velvety creamer and chewy golden bubbles'; Oolong Sweetened Milk Tea ('condensed milk with KOI's signature Oolong milk tea') e Ice Cream Black Tea. En otros mercados se ven grupos 'Best Sellers', 'Flavored Tea', 'Signature Macchiato' e 'Ice Cream', y tamaños M/L (Grab Camboya: 'Golden Bubble Milk Tea - M'). Reseñas citan dulzor 0/25/50/70/100% y quejas de demasiado hielo en el nivel estándar.",
+   "borrow": "Describir cada bebida en una frase de 3 componentes (base + cuerpo + textura) y nombrar una sección por textura.",
+   "avoid": "Parecerse a KOI Thé: el nombre es casi idéntico, así que Koi Tea debe apoyarse en su mascota kohaku y en 'Rocky Point'."
+  },
+  {
+   "name": "KOI Thé SG — ficha de App Store",
+   "url": "https://apps.apple.com/sg/app/macchi/id6748009365",
+   "accessed": false,
+   "kind": "app de pedido",
+   "observed": "No abierta; resumen de WebSearch. Se presenta como 'new and improved mobile ordering app' para bebidas, merch y postres, pero solo sirve en dos sucursales (KOI Thé Express @ myVillage y KOI Thé @ Yishun 10); calificación 1.2/5 con 44 reseñas.",
+   "borrow": "Merch dentro del mismo flujo de pedido.",
+   "avoid": "Una app de descarga con alcance limitado. Para un turista, una web que abre directo en el menú es mejor."
+  },
+  {
+   "name": "Tiger Sugar — menú en foodpanda Filipinas",
+   "url": "https://www.foodpanda.ph/restaurant/w46x/tiger-sugar-abreeza-mall-davao",
+   "accessed": false,
+   "kind": "app de pedido",
+   "observed": "No abierta; resumen de WebSearch. Categorías 'Brown Sugar Series', 'Chocolate Series', 'Premium Tea Series' y 'Tiger Cheese Series'. En el Brown Sugar Milk Pudding se elige cream mousse o cream cheese mousse, además de hielo y toppings. La insignia es la Brown Sugar Boba Milk with Cream Mousse (RM12.90 en Malasia, S$5.30 en Singapur). Su seña visual son las 'rayas de tigre' que deja el jarabe en la pared del vaso (https://www.timeout.com/singapore/restaurants/tiger-sugar), y desaparecen cuando el jarabe se asienta. La app Tiger Sugar NY (PEBLLA) tiene 'My Orders' con aviso de pedido listo y una galería para compartir fotos.",
+   "borrow": "Una seña visual dibujable para la insignia (en Koi Tea, el degradado rojo→naranja) y la crema como modificador aparte.",
+   "avoid": "Depender de un efecto que no aguanta en la foto real."
+  },
+  {
+   "name": "The Alley en DoorDash (con contexto de marca)",
+   "url": "https://www.doordash.com/business/The-Alley-112463/menu",
+   "accessed": false,
+   "kind": "cadena de boba",
+   "observed": "No abierta; resumen de WebSearch. Categorías: Monthly Special, Crunchy Milk Tea Series, Brown Sugar Deerioca Series, Milk Tea Series, Tea Latte Series, Snow Velvet Series, The Alley Specialty, Lulu Fresh Fruit Series y The Alley Original Brewed Tea. 'Royal No.9' es té negro infusionado con mora azul; 'Deerioca' toma su nombre del venado del logo; en Reino Unido se avisa 'Snow Velvet contains DAIRY'. Según Dallas Observer, la marca la creó el diseñador gráfico Mao Ting Chiu pensando en la estética, y el venado sugiere algo 'místico pero refinado'; en Toronto la tienda evita mascotas tiernas y paletas chillonas.",
+   "borrow": "Un espacio 'Especial del mes', nombres que conectan con la mascota y avisos de alérgenos en la ficha.",
+   "avoid": "9 series para un menú corto."
+  },
+  {
+   "name": "Snackpass — caso Xing Fu Tang (kiosco y pantalla de retiro)",
+   "url": "https://www.snackpass.co/testimonials/how-xing-fu-tang-successfully-delivered-a-luxury-boba-experience",
+   "accessed": false,
+   "kind": "plataforma QR",
+   "observed": "No abierta; resumen de WebSearch. En Hudson Yards (primavera de 2023), Xing Fu Tang quería hardware y software a la altura de su imagen de lujo. Convirtió su POS en un kiosco de autoservicio con interfaz con imágenes y un flujo de personalización fluido, sumó una pantalla de retiro con estados 'in progress' y 'ready', y da puntos en todos los canales. Su insignia, la Brown Sugar Boba Milk (azúcar morena flameada, perlas caramelizadas en wok a la vista del cliente), cuesta $9.60 en Flushing (https://www.allmenus.com/ny/flushing/838705-xing-fu-tang-flushing/menu/).",
+   "borrow": "Estados claros del pedido ('en preparación' / 'listo') y un ticket con código grande en el estilo de la marca.",
+   "avoid": "Tomar como dato las afirmaciones de un proveedor que no da métricas."
+  },
+  {
+   "name": "OMPI/WIPO — Mixue y su mascota Snow King",
+   "url": "https://www.wipo.int/web/ip-advantage/w/stories/mixue-ice-cream-and-tea-from-china-s-streets-to-global-fast-food-giant",
+   "accessed": false,
+   "kind": "dirección de arte",
+   "observed": "No abierta; resumen de WebSearch. Snow King se lanzó como nueva imagen de marca en noviembre de 2018, protagoniza una serie animada (2023) y 'pone cara a la marca'; la imagen de las tiendas se unificó en 2008, en rojo y blanco. Hay pósters con la mascota sosteniendo un milk tea y guiñando el ojo. En Nueva York usa kioscos bilingües de autoservicio con dulzor de 0 a 200% (https://www.dailyherald.com/?p=1343977) y precios de $1.99 a $5.69 (https://www.vrg.org/blog/2026/06/03/mixue-usa-fruit-drinks-2026/). En México abrió en el Centro Histórico de CDMX en febrero de 2026, con helados desde 8 pesos (https://expansion.mx/empresas/2026/02/17/mixue-llega-mexico-cadena-china-helados-8-pesos).",
+   "borrow": "La mascota como sistema (estados vacíos, pósters, stickers, merch) y no solo como adorno.",
+   "avoid": "Extremos de personalización (200% de azúcar) y un posicionamiento de precio bajo que no es el de Koi Tea."
+  },
+  {
+   "name": "CoCo Fresh Tea & Juice (Westgate, Ann Arbor) en order.online",
+   "url": "https://order.online/store/-26115047",
+   "accessed": false,
+   "kind": "app de pedido",
+   "observed": "No abierta; resumen de WebSearch. Hielo: Normal, Less, No, More, Hot y Warm, con la temperatura mezclada en el mismo selector. Azúcar: 100%, 70%, 50%, 30%, 0% y More. En otra tienda (Surrey) el Brown Sugar Pearl Latte tiene 'Fixed Sugar Level' y el taro slush tiene el hielo fijo. Categorías en DoorDash: Yakult Series, Milk Tea Series, Slush/Smoothie, Fresh Milk, Salty Cream, Fruit Tea Series y Pure Tea Series. Snappy, su proveedor, afirma que su app genera el 40% de las ventas de CoCo (https://gosnappy.io/case-studies/coco.html).",
+   "borrow": "La escala 100/70/50/30/0 y marcar como fijas las opciones que dicta la receta.",
+   "avoid": "Meter 'caliente' o 'tibio' dentro del selector de hielo."
+  },
+  {
+   "name": "Tsaocaa — rediseño de kiosco de boba (portafolio UX)",
+   "url": "https://lilac-sponge-h6hh.squarespace.com/work/tsaocaa",
+   "accessed": false,
+   "kind": "estudio/artículo UX",
+   "observed": "No abierta; resumen de WebSearch. Kiosco de Tsaocaa cerca de Purdue (West Lafayette). El autor, como UX writer e investigador, atacó 4 problemas: demasiadas opciones, categorías confusas, poca transparencia de ingredientes y falta de guía para quien pide por primera vez. Método: análisis de reseñas, estudios de satisfacción con kioscos, mapa de afinidad y flujos de tarea. Las fichas de Tsaocaa en línea usan 'regular', 'normal' y '100%' para lo mismo, y ponen 'hot' como opción de hielo.",
+   "borrow": "Una guía de primera vez ('¿Primera vez con boba?') y los ingredientes visibles en la ficha.",
+   "avoid": "Vocabulario distinto entre pantallas para la misma opción."
+  }
+ ],
+ "patterns": [
+  {
+   "pattern": "Personalización con las mismas 4–5 variables, resuelta en una sola ficha",
+   "evidence": "Gong cha USA (5 niveles de dulzor + hielo + toppings), Kung Fu Tea (toppings, tipo de bebida, azúcar, hielo), HEYTEA (toppings, dulzor, hielo), Chatime Australia en App Store ('how much ice, sugar level, mix-ins', https://apps.apple.com/au/app/id1350285225) y Tiger Sugar (tipo de mousse + hielo + toppings). En kioscos, todos los modificadores se ven a la vez y la selección se actualiza en tiempo real (Snackpass, https://www.snackpass.co/customer-stories/blog/why-self-ordering-kiosks-are-a-game-changer-for-bubble-tea-shops; Xing Fu Tang). Chowbus (https://www.chowbus.com/blog/pos-system-for-bubble-tea-shops) dice que el boba necesita modificadores anidados y no extras planos (fuente de proveedor).",
+   "implication": "Las 5 propuestas deben compartir orden y vocabulario: Tamaño → Topping incluido → Extras → Dulzor → Hielo (± leche si aplica), en una hoja con resumen y precio vivos. El Armador puede escenificar ese orden sin volverlo pantallas obligatorias."
+  },
+  {
+   "pattern": "Dulzor en 5 pasos (100/70/50/30/0) y bebidas con dulzor fijo",
+   "evidence": "Gong cha: standard/less/half/little/no (DoorDash) y 'Fixed Sweetness' en algunas bebidas (https://www.openrice.com/en/hongkong/menu/716706/ORCM-1). CoCo: 100/70/50/30/0 + More, y 'Fixed Sugar Level' en el Brown Sugar Pearl Latte. KOI Thé: reseñas citan 0/25/50/70/100. Presotea (https://ritual.co/order/presotea-irvine-irvine/5616): bebidas de azúcar morena recomendadas al 100% y no disponibles por debajo de 50%. Extremos: Chatime USA hasta 120% y Mixue NYC hasta 200%.",
+   "implication": "Koi Tea: 5 niveles con palabra y % en ES/EN. El Brown Sugar Milk Tea probablemente tiene dulzor fijo o con mínimo (confirmar con el cliente), y la interfaz debe decirlo ('receta de la casa') en vez de esconder la opción."
+  },
+  {
+   "pattern": "Hielo con vocabulario inconsistente y la temperatura mezclada",
+   "evidence": "CoCo pone Normal, Less, No, More, Hot y Warm en un solo selector. Tsaocaa usa 'regular', 'normal' y '100%' para lo mismo y pone 'hot' como nivel de hielo. Gong cha usa regular/less/no (y 'light' en Hong Kong). Presotea y CoCo bloquean el hielo en algunas bebidas ('ice adjustment is not available for this item').",
+   "implication": "Separar Hielo (Normal · Poco · Sin hielo) de Temperatura (solo si hay bebidas calientes), con un glosario ES/EN único para los 5 prototipos, y marcar los smoothies con hielo fijo si así se preparan."
+  },
+  {
+   "pattern": "Toppings en una sección aparte, con costo extra visible",
+   "evidence": "DoorDash pone '+' junto al precio base (Gong cha $10.3 +). En CHAGEE EE. UU., perlas o espuma cuestan +$1–1.50 (https://bubbleteas.moe/what-is-chagee/). Una guía de Santa Clara da toppings de Teaspoon a $0.75–1 y bebidas de Sharetea a $6.25–8.25 (https://thesantaclara.org/blog/ia17qwhyy1ux9m6tqcyv8ns5p7fxib). Menusifu (jul 2026, https://www.menusifu.com/blog/boba-tea-menu-template) recomienda agrupar perlas, jellies, pudding, espuma y popping boba en una sección de extras y mostrar los cargos antes del cierre. Las fichas de Sharetea en Ritual (https://store.ritual.co/order/sharetea-6th-h-washington-dc/629c) indican si el topping va incluido o es extra.",
+   "implication": "Hacer visible la regla '1 topping gratis': chip 'Incluido / Included' en el primero y '+$X MXN (≈ $Y USD)' en los demás. En la lista, el precio como 'desde $X +', y el desglose visible antes de 'Mostrar en caja' o 'Pedir por WhatsApp'."
+  },
+  {
+   "pattern": "Menú por 'series' con una fila de destacados o temporada arriba",
+   "evidence": "The Alley (Monthly Special + 8 series), Tiger Sugar (Brown Sugar, Chocolate, Premium Tea y Tiger Cheese Series), Gong cha (Milk Foam Series, Creative Mix; en México 'Bebidas Temporada' y 'Serie Pelonete'), CHAGEE (Fresh Milk Tea Series), KOI (Best Sellers, Signature Macchiato), Chatime Indonesia con juegos de palabras ('Tearrific', 'Tea-presso', 'Mood Refresh', https://kawanlamagroup.com/en/brand/food-and-beverage/chatime), Uber Eats de Kung Fu Tea ('Featured items', 'What's New', 'Picked for you') y HEYTEA ('In Season', 'Staff Picks').",
+   "implication": "Koi Tea: 3 series (Milk Tea · Fruit Tea · Smoothies) más Toppings como pestañas fijas, una sola fila superior 'Favoritos de la casa' (Koi Tea + combos de la reseña) y un espacio administrable 'Temporada / Especial del mes'."
+  },
+  {
+   "pattern": "La bebida insignia se presenta con componentes, historia y una seña visual",
+   "evidence": "KOI Golden Bubble: 'Assam black tea as a base, velvety creamer and chewy golden bubbles'. Tiger Sugar: las rayas del jarabe en el vaso. Xing Fu Tang: perlas caramelizadas en wok y azúcar flameada a la vista. The Alley: 'Deerioca', por el venado del logo. CHAGEE: nombre poético BO·YA más nombre descriptivo. Yi Fang: resultados de búsqueda describen su Signature Fruit Tea con la receta de piña de la abuela que da nombre a la marca (no pude atribuirlo a una página concreta).",
+   "implication": "'Koi Tea' merece una ficha propia: nombre con subtítulo descriptivo bilingüe, una frase de 3 componentes, por qué se llama así (kohaku: rojo, naranja y blanco) y el degradado como firma visual en las 5 direcciones."
+  },
+  {
+   "pattern": "Bilingüismo: nombre propio estable, descripción e interfaz en el idioma activo",
+   "evidence": "CHAGEE escribe 'BO·YA JASMINE GREEN MILK TEA 伯牙绝弦'. HEYTEA estrenó logo bilingüe en 2026. Mixue NYC usa kioscos bilingües (https://www.dailyherald.com/?p=1343977). Gong cha México mezcla: 'Dulce de Calabaza Milk Tea con Tapioca', 'Bebidas Temporada'. DoorDash ofrece el mismo menú en versión es-US con los nombres de bebida en inglés.",
+   "implication": "No traducir los nombres de Koi Tea, que ya son mixtos ('Maracuyá Green Tea'). Sí traducir descripción, chips, botones y ticket; MXN primero con USD aproximado, y el selector de idioma en la primera pantalla."
+  },
+  {
+   "pattern": "La fricción de entrada es la queja más repetida de las apps de cadena",
+   "evidence": "KOI Thé SG: app limitada a 2 sucursales, 1.2/5. Machi Machi obliga a elegir una tienda base antes de pedir (https://apps.apple.com/au/app/machi-machi/id1618373987). Gong cha Australia bloquea las recompensas hasta verificar SMS o email (https://gongchatea.com.au/?p=60571). CHAGEE USA: fallas de actualización y sin recibo. HEYTEA: pagos fallidos en HK/SG. Blue Label condensó la selección de tienda de Kung Fu Tea en una sola pantalla.",
+   "implication": "La ventaja de la web de Koi Tea es no tener login, tienda que elegir ni descarga. La bienvenida debe ser el menú mismo (con el koi y el selector ES/EN), no un onboarding."
+  },
+  {
+   "pattern": "Cierre con estado y comprobante",
+   "evidence": "Xing Fu Tang: pantalla de retiro con 'in progress' y 'ready'. Tiger Sugar NY: 'My Orders' con aviso de pedido listo (https://apps.apple.com/fr/app/tiger-sugar-ny/id6448785560?l=en-GB). HEYTEA: seguimiento en tiempo real. CHAGEE: reseñas reclaman la falta de recibo y de cuenta regresiva.",
+   "implication": "'Mostrar en caja' debe ser un ticket grande con código, resumen y total. El mensaje de WhatsApp lleva el mismo código y el texto dice qué sigue ('Muéstralo en caja')."
+  },
+  {
+   "pattern": "Foto de producto para pedir; ilustración para la marca y para explicar",
+   "evidence": "El kiosco de Xing Fu Tang trabaja 'with images'. Mixue usa pósters con imágenes de colores y la mascota. Usuarios elogian las fotos del menú de HEYTEA (https://www.lemon8-app.com/@natalieest/7633642389340537357?region=us). Gong cha USA explica dulzor e hielo con diagramas. The Alley, HEYTEA y Mixue usan ilustración en logo o mascota.",
+   "implication": "Koi Tea no tiene fotos por bebida: ilustrar los vasos como sistema (forma común + color del té + capa de topping) y dejar el contenedor listo para cambiar a foto. Las ilustraciones que explican dulzor y hielo se quedan aunque lleguen fotos."
+  },
+  {
+   "pattern": "Identidad: mascota como sistema expresivo o sobriedad estética",
+   "evidence": "Mixue: Snow King como cara de la marca, con animación, merch y tiendas de merch. The Alley: venado creado por un diseñador gráfico, 'místico pero refinado', sin paletas chillonas (https://www.dallasobserver.com/restaurants/dallas-gets-a-new-deer-themed-boba-shop-18045046). HEYTEA: figura bebiendo té con variantes por ciudad y renovación bilingüe. Gong cha 2.0: materiales cálidos, rojo y blanco, candiles de 'perla' (resultado 'Gong Cha Debuts New Store Design', https://www.rli.uk.com/?p=217605; atribución no verificada).",
+   "implication": "El koi puede trabajar como Snow King (estados vacíos, confirmación, stickers) pero con el trazo y la paleta japandi de The Alley o HEYTEA. Sus variantes 'Rocky Point' pueden volverse coleccionables."
+  },
+  {
+   "pattern": "Más transparencia de dieta y salud",
+   "evidence": "CHAGEE: calculadora de kcal, azúcar y cafeína, y sección 'Low Calories'. Shanghái: grados A–D que cambian con tamaño, temperatura y azúcar (https://www.sixthtone.com/news/1015562). Kung Fu Tea: las categorías Punch y Milk Strike no tienen cafeína (https://eathealthy365.com/understanding-the-kung-fu-tea-menu/). The Alley avisa de lácteos; Xing Fu Tang ofrece un Oolong Boba Milk Tea sin lácteos.",
+   "implication": "Sin datos, no mostrar calorías. Sí poner chips que el cliente confirme ('Con lácteos', 'Sin cafeína / Con té') y una nota con el dulzor recomendado."
+  }
+ ],
+ "insights": [
+  "Glosario único ES/EN para las 5 propuestas. Dulzor: 'Normal 100% · Menos 70% · Mitad 50% · Poco 30% · Sin azúcar 0%' / 'Regular · Less · Half · Light · No sugar'. Hielo: 'Normal · Poco · Sin hielo' / 'Regular · Light · No ice'. Se basa en las 5 palabras de Gong cha y en la escala 100/70/50/30/0 de CoCo.",
+  "Representar dulzor e hielo con un mini diagrama de vaso (nivel de jarabe, cubos de hielo), como los diagramas de Gong cha USA. En el Armador, ese diagrama es el vaso mismo.",
+  "Volver explícita la regla '1 topping gratis' (por confirmar): el primer topping se marca 'Incluido / Included' y los demás '+$X'. Si el cliente llega al carrito sin elegirlo, avisarle en la página sin bloquear, igual que HeyTea avisa del cupón sin aplicar (Built for Mars).",
+  "En la lista, precio base con '+' o 'desde' (como DoorDash); en la ficha, total vivo; antes de cerrar, el desglose de extras (Menusifu 2026). Los precios siguen marcados como ilustrativos.",
+  "Rango ilustrativo anclado al mercado. Gong cha México cobra MX$78 por milk tea en Uber Eats AICM y MX$86–150 en Rappi; en EE. UU. las bebidas van de $6 a $9 USD (CHAGEE $7–8, Xing Fu Tang $9.60) y los toppings de +$0.75 a +$1.50. Para Koi Tea: MX$75–95 milk/fruit tea (≈ $4.25–5.25 USD) y extras de MX$15–20.",
+  "Bloquear con explicación lo que no se cambia: si el Brown Sugar Milk Tea o los smoothies tienen dulzor u hielo fijo, mostrar 'Dulzor fijo · receta de la casa' (Gong cha 'Fixed Sweetness', CoCo 'Fixed Sugar Level', Presotea con mínimo de 50%). Confirmar con el cliente cuáles aplican.",
+  "Dos tamaños con precio cada uno, como CHAGEE (Regular/Large) y KOI (M/L): 'Mediano / Grande' – 'Medium / Large'. Confirmar las medidas reales de Koi Tea.",
+  "Tratar 'Koi Tea' como insignia: nombre con subtítulo bilingüe (fórmula CHAGEE), descripción de 3 componentes (fórmula KOI Golden Bubble: base + cuerpo + textura) y el degradado rojo→naranja como firma visual, como las rayas de Tiger Sugar.",
+  "Arquitectura: 3 pestañas fijas (Milk Tea · Fruit Tea · Smoothies), Toppings como sección y una fila superior 'Favoritos de la casa' con combos ya armados a partir de la reseña de Google: Taro + tapioca y Durazno/Mango Green Tea + jelly de lichi. Es el equivalente de 'Most Ordered' y 'ordered together' en delivery. Con 15 bebidas la búsqueda es opcional; si existe, que busque por sabor (fresa, mango, taro).",
+  "Badges: solo 'Nuevo', 'Temporada' y 'Favorito de la casa', más el estado 'Agotado' (atenuado y sin botón, no oculto). 'Lo más pedido' solo cuando haya datos reales de los QR.",
+  "Chips útiles para turistas con niños: 'Con lácteos' y 'Sin cafeína / Con té verde' (Kung Fu Tea agrupa sus bebidas sin cafeína; The Alley avisa de lácteos). No mostrar calorías: CHAGEE las publica con datos medidos y Koi Tea no los tiene.",
+  "Bienvenida sin fricción: ni login, ni elegir tienda, ni descarga. El menú abre directo con el koi, el selector ES/EN y MXN/USD. El mensaje puede prometer rapidez, como Kung Fu Tea ('Skip the lines') y HEYTEA ('skip the queue'): 'Arma tu pedido y muéstralo en caja'.",
+  "Ticket de cierre con código grande, resumen, total y 'Muéstralo en caja'. El mismo código va en el mensaje de WhatsApp, siguiendo la pantalla de retiro de Xing Fu Tang y las reseñas que le reclaman a CHAGEE la falta de recibo.",
+  "Merch al final del menú: Kung Fu Tea lista 'Merch' en delivery y KOI Thé SG lo vende en su app. Koi Tea tiene playeras, gorras y tote 'Rocky Point, MX'; una tarjeta informativa aprovecha al turista sin complicar el carrito.",
+  "Temporada local administrable desde el panel: Gong cha México creó una 'Serie Pelonete' con sabor de dulce mexicano. Koi Tea puede reservar un espacio de temporada para un sabor local cuando el cliente lo decida.",
+  "Mascota como sistema y no como adorno, igual que Snow King en Mixue (pósters con la bebida, merch, animación), pero con la contención estética de The Alley y HEYTEA: el koi aparece en carrito vacío, búsqueda sin resultados, confirmación y stickers que se pueden compartir (HEYTEA tiene stickers DIY).",
+  "Diferenciarse de KOI Thé, cadena global de nombre casi idéntico: evitar nombres o recursos que la evoquen (perlas 'golden', 'Chewy Tea') y reforzar 'Koi Tea · Rocky Point' y la mascota kohaku para no parecer imitación."
+ ],
+ "direction_notes": "1 · Galería 'Sabor y arte': la evidencia apoya el fondo pero no la mecánica. The Alley nació de un diseñador gráfico con foco en la estética y le pone historia a los nombres; HEYTEA trata su identidad como objeto de diseño y en 2026 hizo un logo bilingüe; KOI describe su insignia por componentes; Yi Fang cuenta la receta de la abuela. Pero ninguna cadena usa una metáfora de museo para pedir: todas convergen en pedir rápido. Ajuste: la 'cédula' debe ser la descripción de 3 componentes + origen + chips (dulzor sugerido, lácteos, cafeína) y llevar dentro el precio y '+ Agregar'; las 'salas' son las 3 series. Las cadenas se apoyan en la foto de producto, así que la galería debe estar lista para cambiar ilustración por foto.\n\n2 · Armador 'Arma tu boba': es la más respaldada. Todas las cadenas comparten las mismas 4–5 variables, Gong cha USA explica dulzor e hielo con diagramas, los kioscos (Snackpass, Xing Fu Tang) muestran los modificadores y la selección en tiempo real, y Tsaocaa identifica la falta de guía para primerizos como problema. Ajuste: no convertirlo en un asistente de 5 pantallas forzosas. Blue Label redujo pasos y pantallas en Kung Fu Tea y facilitó volver y cambiar. Mejor una hoja con el vaso como vista previa viva, secciones ancladas, valores por defecto, precio vivo y las opciones fijas bloqueadas con explicación. Que los favoritos de la casa precarguen el armador equivale al 'Most ordered' / 'ordered together' de delivery.\n\n3 · Express bilingüe: muy respaldada. La sostienen Uber Eats y DoorDash (destacados, 'Most Ordered', pestañas por categoría, precios con '+', versión es-US), los kioscos bilingües de Mixue y la mezcla ES/EN de Gong cha México. Ajuste: con 15 bebidas la búsqueda es secundaria. Prioridad: fila de favoritos, pestañas por serie, un '+' rápido que agrega con valores por defecto pero ofrece 'Personalizar', y 'Repetir pedido' con historial local (Kung Fu Tea, CHAGEE y Machi Machi lo tienen). Hay que evitar la fricción de las apps de cadena: login, elegir tienda, verificar.\n\n4 · Koi guía: apoyo parcial. Mixue demuestra que una mascota puede ser todo el sistema de marca (pósters, merch, animación, tiendas de merch); HEYTEA tiene stickers DIY y logos por ciudad que se coleccionan; Kung Fu Tea recomienda según preferencias y hábitos. Pero no encontré ninguna cadena líder que use un cuestionario para recomendar, así que es un diferenciador sin validar que puede estorbar a quien ya sabe qué quiere. Ajuste: quiz opcional y saltable (máximo 3 preguntas y un botón 'Ya sé lo que quiero'), resultado que abre la ficha con valores ya puestos y tarjeta compartible. El koi debe mantener el trazo sobrio de The Alley o HEYTEA para no volverse infantil.\n\n5 · Linterna (noche): la evidencia más débil. A favor: el 'teatro' de las insignias (rayas de Tiger Sugar, flameado y wok de Xing Fu Tang) es muy visual y luce a pantalla completa, y Gong cha 2.0 usa materiales cálidos, lo que liga con nogal y ámbar. En contra: ninguna cadena encontrada usa un feed tipo historias o reels como menú. Sus apps y plataformas se organizan en listas por categoría, un feed vertical dificulta comparar, y se parece a la propuesta B 'Pop' que el cliente ya vio. Ajuste: usar el feed solo para los destacados de arriba y dejar una lista o cuadrícula como vista principal o alterna, con contraste AA en oscuro. Sin fotos reales, todo depende de ilustraciones de calidad.\n\nComún a las 5: mismo glosario de personalización, la regla del topping incluido a la vista, opciones fijas explicadas, ticket con código y cero login.",
+ "blocked": [
+  "WebFetch: www.koithe.com, www.gong-cha.com, www.kungfutea.com/menu y www.bobaguys.com/menu fallaron con 'getaddrinfo ENOTFOUND', que en esta sesión significa dominio fuera de la lista de red permitida. Siguiendo la indicación de la herramienta, no intenté más sitios ni rodeé la restricción. Hay que permitir esos dominios en la configuración de red de la sesión para verificar los datos de primera mano.",
+  "Por esa restricción no se abrió ninguna página: sitios oficiales de CHAGEE (chagee.us, chagee.com.my), HEYTEA, Tiger Sugar, Chatime, Sharetea, The Alley, Yi Fang, Xing Fu Tang, Mixue, CoCo, Machi Machi y Presotea; plataformas Uber Eats, DoorDash, Rappi, order.online, Ritual y foodpanda; fichas de App Store; artículos de diseño. Todo lo reportado sale de títulos y resúmenes de WebSearch (accessed=false en las 20 fuentes) y debería verificarse abriendo las páginas.",
+  "Google Play e Instagram no se consultaron: no aparecieron en los resultados y requieren abrir la página o iniciar sesión.",
+  "WebSearch con 'site:koithe.com' no devolvió ninguna página del dominio; solo apareció koithe.com/en/ourtea.php en búsquedas abiertas.",
+  "Hubo resúmenes de búsqueda contradictorios. La correspondencia palabra↔% del dulzor de Gong cha atribuida a OpenRice Hong Kong no se confirmó en una segunda búsqueda (solo se confirmó la etiqueta 'Fixed Sweetness'). La cifra '35–50 s vs 15–20 s por pedido' atribuida al blog de Chowbus no se pudo ubicar en una página concreta y la descarté.",
+  "Evidencia débil o solo de terceros para Boba Guys (fichas en order.online: 'No additives or syrups' en Strawberry Matcha Latte, algunas bebidas sin ajuste de dulzor), Yi Fang (historia de la abuela sin atribución exacta), Sharetea, Presotea, Machi Machi y Chatime. No hallé sitio ni app oficial de Boba Guys.",
+  "No encontré evidencia sobre 'color por bebida' (fondos o acentos por sabor) en los menús digitales de las cadenas, ni a favor ni en contra: requiere ver capturas de las apps."
+ ]
+}

@@ -1,0 +1,1350 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Koi Tea · Colección permanente</title>
+<meta name="description" content="Menú de Koi Tea Boba Shop (Puerto Peñasco · Rocky Point) presentado como una exposición: salas, cédulas y boleto de pedido.">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#FAF7F2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=Instrument+Serif:ital@1&family=Schibsted+Grotesk:wght@400;500;600&display=swap">
+<style>
+/* =====================================================================
+   PLAN · v1 «Galería — Sabor y arte»
+   Layout en una línea: recorrido vertical por salas como catálogo de exposición;
+   cada bebida es una pieza enmarcada con su cédula al lado (precio y «+» siempre
+   visibles), la pieza que cruza el centro de la pantalla se enciende con un haz
+   cálido y un plano de sala fijo abajo marca «estás aquí».
+
+   COLOR · rol → token (contraste medido sobre --wall salvo que se indique)
+   --wall   #FAF7F2  muro de galería: fondo general
+   --paper  #FFFFFF  cédula destacada, boleto, campos, hojas
+   --mat    #FDFBF7  passe-partout de los marcos
+   --niche  #F1E6D8  interior del arco (nicho de la obra destacada)
+   --ink    #1F1B19  texto principal · 16:1
+   --stone  #6A5F57  texto secundario · 5.8:1
+   --rule   #8A7F76  borde de controles (no texto) · 3.6:1
+   --hair   #E6DCCF  filetes decorativos  · --hair-2 #D8CAB8
+   --oak    #C8A27A  marcos y filetes; como texto SOLO sobre nogal · 6.4:1
+   --walnut #2A2523  bandas oscuras, plano de sala, botón principal (crema encima 13.9:1)
+   --cream  #FEF4EB  texto sobre nogal
+   --seal   #B33A22  sello hanko, punto rojo de «agotado», acentos de texto · 5.5:1
+   --light  #FFE9C7  luz de galería: haz, sala activa (tinta encima 14.4:1)
+   --sel    #FFF6E6  fondo de opción elegida (tinta encima 15:1)
+   --koi    #F94E2B  rojo vivo: solo ilustración
+
+   TIPOGRAFÍA · escala
+   Display  Instrument Serif itálica: --fs-room 54 · --fs-hero 38 · --fs-dlg 36 · --fs-feat 34 · --fs-piece 25 · --fs-phrase 16
+   UI       Schibsted Grotesk: --fs-body 16/1.45 · --fs-sm 14 · --fs-xs 12 · --fs-caps 11.5 (+.16em, versalitas)
+   Datos    IBM Plex Mono, cifras tabulares: --fs-code 58 · --fs-price 16 · --fs-mono 12.5
+
+   ESPACIO  4·8·12·16·24·32·48·64 (--s1…--s8) · gutter 16–22
+   FORMAS   marcos y cédulas a escuadra · celdas 2px · botones y arcos 999 · boleto con muescas
+   ===================================================================== */
+:root{
+  --wall:#FAF7F2;--paper:#FFFFFF;--mat:#FDFBF7;--niche:#F1E6D8;
+  --ink:#1F1B19;--stone:#6A5F57;--rule:#8A7F76;--hair:#E6DCCF;--hair-2:#D8CAB8;
+  --oak:#C8A27A;--walnut:#2A2523;--cream:#FEF4EB;--seal:#B33A22;--light:#FFE9C7;--sel:#FFF6E6;--koi:#F94E2B;
+  --on-walnut-2:#D9CBB8;
+  --f-display:'Instrument Serif','Iowan Old Style','Palatino Linotype',Georgia,serif;
+  --f-ui:'Schibsted Grotesk',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --fs-room:clamp(42px,12.5vw,54px);--fs-hero:clamp(27px,8.6vw,38px);--fs-dlg:clamp(30px,8.8vw,36px);
+  --fs-feat:clamp(28px,8.4vw,34px);--fs-piece:clamp(21px,6.2vw,25px);--fs-phrase:17px;
+  --fs-body:16px;--fs-sm:14px;--fs-xs:12px;--fs-caps:11.5px;
+  --fs-code:clamp(44px,14.5vw,58px);--fs-price:16px;--fs-mono:12.5px;
+  --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:24px;--s6:32px;--s7:48px;--s8:64px;
+  --gut:clamp(16px,5.2vw,22px);
+  --top-h:56px;--plan-h:61px;--safe-b:env(safe-area-inset-bottom,0px);
+  --ease:cubic-bezier(.2,.7,.2,1);--t-light:900ms;--t-ui:220ms;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;background:var(--wall);scroll-padding-top:calc(var(--top-h) + var(--s2));scroll-padding-bottom:calc(var(--plan-h) + var(--safe-b) + var(--s2))}
+html.lock{overflow:hidden}
+body{margin:0;background:var(--wall);color:var(--ink);font:400 var(--fs-body)/1.45 var(--f-ui);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;-webkit-tap-highlight-color:transparent;font-synthesis:none}
+img,svg{display:block;max-width:100%}
+button,input,textarea{font:inherit;color:inherit}
+button{background:none;border:0;padding:0;margin:0;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+button:disabled{cursor:not-allowed}
+h1,h2,h3,p,ul,ol,dl,dd,figure{margin:0;padding:0}
+ul,ol{list-style:none}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+[tabindex="-1"]:focus{outline:none}
+[tabindex="-1"]:focus-visible{outline:2px dashed var(--oak);outline-offset:4px}
+.sr{position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.caps{font:600 var(--fs-caps)/1.3 var(--f-ui);letter-spacing:.16em;text-transform:uppercase;color:var(--stone)}
+.fine{font-size:var(--fs-xs);line-height:1.45;color:var(--stone)}
+.ic{width:20px;height:20px;flex:none}
+.skip{position:fixed;z-index:60;left:var(--s3);top:-64px;display:inline-flex;align-items:center;min-height:44px;padding:0 var(--s4);background:var(--walnut);color:var(--cream);border-radius:999px;font-weight:600;text-decoration:none;transition:top .2s}
+.skip:focus{top:var(--s2)}
+
+/* ---------- encabezado ---------- */
+.top{position:fixed;z-index:30;top:0;left:0;right:0;max-width:480px;margin:0 auto;height:var(--top-h);display:flex;align-items:center;gap:6px;padding:0 var(--s2);background:var(--wall);border-bottom:1px solid var(--hair)}
+@supports ((-webkit-backdrop-filter:blur(8px)) or (backdrop-filter:blur(8px))){.top{background:rgba(250,247,242,.9);-webkit-backdrop-filter:saturate(1.15) blur(10px);backdrop-filter:saturate(1.15) blur(10px)}}
+.brand{display:flex;align-items:center;gap:var(--s2);min-height:44px;min-width:44px;padding:0 5px;border-radius:999px}
+.brand img{width:34px;height:34px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 1px var(--hair-2)}
+.brand-name{display:none;font:italic 400 23px/1 var(--f-display);white-space:nowrap}
+@media (min-width:420px){.brand-name{display:inline}}
+.spacer{flex:1 1 auto;min-width:0}
+.prefs{display:flex;gap:6px;flex:none}
+.seg{display:inline-flex;border:1px solid var(--rule);border-radius:999px;background:var(--paper);overflow:hidden;flex:none}
+.seg-b{min-width:44px;min-height:44px;padding:0 9px;font:500 12.5px/1 var(--f-mono);letter-spacing:.04em;color:var(--ink);border-radius:999px;transition:background var(--t-ui),color var(--t-ui)}
+.seg-b[aria-pressed="true"]{background:var(--ink);color:var(--wall)}
+.seg-b:focus-visible{outline:2px solid var(--seal);outline-offset:-5px}
+.seg-b[aria-pressed="true"]:focus-visible{outline-color:var(--light)}
+.bag{position:relative;display:inline-grid;place-items:center;min-width:44px;min-height:44px;border-radius:999px;flex:none}
+.bag .ic{width:24px;height:24px}
+.bag-n{position:absolute;top:2px;right:0;min-width:19px;height:19px;padding:0 5px;border-radius:10px;background:var(--seal);color:#fff;font:500 11px/19px var(--f-mono);text-align:center;font-variant-numeric:tabular-nums}
+.bag-n[hidden]{display:none}
+.bag.glowing{animation:glowp .9s var(--ease)}
+@keyframes glowp{from{box-shadow:0 0 0 0 rgba(255,210,140,.95)}to{box-shadow:0 0 0 14px rgba(255,233,199,0)}}
+
+/* ---------- columna ---------- */
+.app{position:relative;max-width:480px;margin:0 auto;background:var(--wall);padding-top:var(--top-h);padding-bottom:calc(var(--plan-h) + var(--safe-b));overflow-x:clip;min-height:100vh}
+@media (min-width:601px){
+  html,body{background-color:#ECE3D7}
+  body{background-image:repeating-linear-gradient(90deg,rgba(200,162,122,.22) 0 2px,transparent 2px 22px)}
+  .app{box-shadow:0 0 0 1px rgba(42,37,35,.08),0 40px 90px -40px rgba(42,37,35,.4)}
+}
+
+/* ---------- entrada (breve: las primeras piezas asoman en la guía) ---------- */
+.hall{position:relative;padding:18px var(--gut) 34px}
+.hall-k{max-width:34ch}
+.hall-grid{display:grid;grid-template-columns:44% minmax(0,1fr);gap:18px;align-items:start;margin-top:14px}
+.arch{position:relative}
+.arch-frame{position:relative;padding:6px 6px 0}
+.arch-frame::before{content:"";position:absolute;inset:0;border:1px solid var(--oak);border-bottom:0;border-radius:999px 999px 0 0;pointer-events:none}
+.arch-frame::after{content:"";position:absolute;left:-8px;right:-8px;bottom:0;height:1px;background:var(--oak)}
+.arch-photo{position:relative;overflow:hidden;aspect-ratio:249/376;border-radius:999px 999px 0 0;background:#E9DFD2}
+.arch-photo img{position:absolute;max-width:none;width:289.16%;height:auto;left:-158.63%;top:-13.83%}
+.medal{position:absolute;left:-10px;bottom:-18px;width:50px;height:50px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 3px var(--wall),0 0 0 4px var(--oak)}
+.medal img{width:100%;height:100%;object-fit:cover}
+.arch figcaption{margin-top:26px;padding-left:46px;font-size:var(--fs-xs);line-height:1.35;color:var(--stone)}
+.hall-txt{display:flex;flex-direction:column;gap:10px;min-width:0}
+.hall-t{font:italic 400 var(--fs-hero)/1.04 var(--f-display);letter-spacing:-.01em}
+.hall-place{font-size:14px;font-weight:600;line-height:1.3}
+.hall-origin{font-size:14px;line-height:1.35;color:var(--stone)}
+.hall-open{display:flex;align-items:center;gap:8px;font:500 13px/1.3 var(--f-ui)}
+.dot-open{width:8px;height:8px;border-radius:50%;background:#2F7D4F;flex:none;box-shadow:0 0 0 3px rgba(47,125,79,.16)}
+.is-closed .dot-open{background:var(--rule);box-shadow:none}
+.hall-cta{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s3) var(--s4);margin-top:22px}
+.hall-hint{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--stone)}
+.hall-hint .ic{width:16px;height:16px}
+.guide{margin-top:26px;padding-top:14px;border-top:1px solid var(--hair-2)}
+.guide-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:10px}
+.g-room{display:flex;flex-direction:column;align-items:flex-start;gap:2px;width:100%;min-height:44px;padding:0 0 4px;text-align:left}
+.g-frame{display:grid;place-items:center;width:100%;aspect-ratio:1/.92;margin-bottom:8px;background:var(--mat);border:3px solid var(--oak);box-shadow:0 12px 16px -12px rgba(42,37,35,.5);transition:box-shadow .5s var(--ease),background .5s var(--ease)}
+.g-frame .koi-cup{width:44%;height:auto}
+.g-room:hover .g-frame{background:#FFF8EA;box-shadow:0 12px 16px -12px rgba(42,37,35,.5),0 -18px 30px -12px rgba(255,214,150,.9)}
+.g-num{font:600 11px/1.2 var(--f-ui);letter-spacing:.14em;text-transform:uppercase;color:var(--stone)}
+.g-name{font:italic 400 20px/1.15 var(--f-display)}
+.g-from{font:500 12.5px/1.3 var(--f-mono);color:var(--stone);font-variant-numeric:tabular-nums}
+.hall-fine{margin-top:20px;max-width:46ch}
+
+/* ---------- botones ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 20px;border-radius:999px;font:600 15px/1.15 var(--f-ui);text-align:center;transition:background var(--t-ui),color var(--t-ui),border-color var(--t-ui),transform .15s}
+.btn:active{transform:scale(.98)}
+.btn-dark{background:var(--walnut);color:var(--cream)}
+.btn-dark:hover{background:#3B3330}
+.btn-line{border:1.5px solid var(--ink);color:var(--ink);background:transparent}
+.btn-line:hover{background:var(--light)}
+.btn-light{background:var(--cream);color:var(--ink)}
+.btn-light:hover{background:var(--light)}
+.btn-ghost{border:1.5px solid rgba(254,244,235,.75);color:var(--cream)}
+.btn-ghost:hover{background:rgba(254,244,235,.1)}
+.btn-block{width:100%}
+.btn[disabled]{background:#E9E1D7;color:var(--stone);border-color:transparent}
+.btn small{font-weight:500;font-size:12.5px}
+.btn.done{background:var(--seal);color:#fff;border-color:var(--seal)}
+
+/* ---------- salas ---------- */
+.room{position:relative}
+.room-head{position:relative;padding:60px var(--gut) var(--s2)}
+.rail{position:absolute;top:0;left:0;right:0;height:32px;display:flex;justify-content:space-evenly;border-top:2px solid var(--walnut)}
+.fx{width:18px;height:28px;margin-top:-2px;overflow:visible}
+.lens{fill:#8A7F76;transition:fill var(--t-light) var(--ease)}
+.room.is-here .rail .lens{fill:#FFD9A0}
+.room-n{display:flex;align-items:baseline;gap:10px}
+.room-n .roman{font:400 26px/1 var(--f-display);color:var(--seal);letter-spacing:.02em}
+.room-t{margin-top:6px;font:italic 400 var(--fs-room)/.95 var(--f-display);letter-spacing:-.015em}
+.room-l{margin-top:var(--s3);color:var(--stone);max-width:34ch}
+.room-m{margin-top:var(--s3);font:500 var(--fs-mono)/1 var(--f-mono);letter-spacing:.03em;color:var(--stone);font-variant-numeric:tabular-nums}
+
+/* ---------- piezas (muro) ---------- */
+.wall{display:flex;flex-direction:column}
+.piece{position:relative;isolation:isolate;overflow:clip;display:grid;grid-template-columns:38% minmax(0,1fr);column-gap:var(--s4);padding:40px var(--gut) 26px}
+.pz-art{position:relative;align-self:start}
+.spot{position:absolute;left:50%;top:-31px;width:16px;height:26px;margin-left:-8px;overflow:visible}
+.beam{position:absolute;z-index:-1;left:50%;top:-14px;width:186%;height:calc(100% + 30px);transform:translateX(-50%);background:linear-gradient(180deg,rgba(255,210,140,1) 0%,rgba(255,226,180,.78) 36%,rgba(255,233,199,.28) 78%,rgba(255,233,199,0) 100%);clip-path:polygon(45.5% 0,54.5% 0,100% 100%,0 100%);opacity:0;transition:opacity var(--t-light) var(--ease)}
+.glow{position:absolute;z-index:-1;left:-40%;right:-40%;top:-10%;bottom:-22%;background:radial-gradient(closest-side,rgba(255,226,180,1),rgba(255,233,199,.55) 55%,rgba(255,233,199,0));opacity:0;transition:opacity var(--t-light) var(--ease)}
+.frame{position:relative;background:var(--mat);border:4px solid var(--oak);padding:10px 10px 12px;box-shadow:0 18px 22px -18px rgba(42,37,35,.55),0 2px 3px rgba(42,37,35,.08);transition:box-shadow var(--t-light) var(--ease)}
+.frame::after{content:"";position:absolute;inset:-4px;background:rgba(42,37,35,.12);transition:opacity var(--t-light) var(--ease);pointer-events:none}
+.canvas{display:grid;box-shadow:inset 0 0 0 1px var(--hair)}
+.canvas>*{grid-area:1/1}
+.halo{align-self:center;justify-self:center;width:88%;aspect-ratio:1;border-radius:50%;background:radial-gradient(closest-side,var(--tint),rgba(255,255,255,0));opacity:.22;transition:opacity var(--t-light) var(--ease)}
+.canvas .koi-cup{width:74%;height:auto;justify-self:center;margin:12% 0 6%}
+.piece.is-lit .beam,.piece.is-lit .glow{opacity:1}
+.piece.is-lit .halo{opacity:.55}
+.piece.is-lit .frame{box-shadow:0 22px 26px -18px rgba(42,37,35,.6),0 0 0 1px rgba(255,214,150,.9),0 -10px 28px -6px rgba(255,214,150,.75)}
+.piece.is-lit .frame::after{opacity:0}
+.piece.is-lit .lens{fill:#FFD9A0}
+
+/* cédula */
+.cedula{display:flex;flex-direction:column;min-width:0}
+.cd-top{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+.cd-no{font:500 var(--fs-mono)/1 var(--f-mono);color:var(--stone);letter-spacing:.05em;font-variant-numeric:tabular-nums}
+.cd-feat{color:var(--seal)}
+.cd-h{margin-top:2px;font:inherit}
+.open{display:flex;flex-direction:column;justify-content:center;width:100%;min-height:44px;text-align:left;color:inherit}
+.open::after{content:"";position:absolute;inset:0;z-index:1}
+.open:focus-visible{outline:none}
+.open:focus-visible::after{outline:2px solid var(--ink);outline-offset:-5px}
+.cd-t{display:block;font:italic 400 var(--fs-piece)/1.08 var(--f-display);letter-spacing:-.005em;overflow-wrap:break-word}
+.cd-alt{display:block;margin-top:5px;font:600 11px/1.3 var(--f-ui);letter-spacing:.14em;text-transform:uppercase;color:var(--stone)}
+.cd-tec{margin-top:8px;font-size:14px;line-height:1.4;color:var(--stone)}
+.cd-tec i{font-style:normal;font-weight:600;color:var(--ink)}
+.cd-ph{margin-top:6px;font:italic 400 var(--fs-phrase)/1.22 var(--f-display)}
+.plaques{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.plaque{display:inline-flex;align-items:center;gap:6px;padding:4px 7px;border:1px solid currentColor;font:600 11px/1.15 var(--f-ui);letter-spacing:.1em;text-transform:uppercase}
+.plaque-casa{color:var(--seal)}
+.plaque-resena{color:var(--ink)}
+.plaque-out{color:var(--seal);border-style:dashed}
+.dot-out{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--seal);flex:none}
+.cd-buy{display:flex;align-items:center;gap:10px;margin-top:auto;padding-top:14px}
+.price{font:500 var(--fs-price)/1 var(--f-mono);font-variant-numeric:tabular-nums}
+.is-out .price{color:var(--stone);text-decoration:line-through;text-decoration-thickness:1px}
+.cd-view{font-size:13px;color:var(--stone);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--hair-2);white-space:nowrap}
+.grow{flex:1}
+.plus{position:relative;z-index:2;flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1.5px solid var(--ink);color:var(--ink);background:var(--wall);transition:background .45s var(--ease),color .45s var(--ease),border-color .45s var(--ease),transform .15s}
+.plus .ic{width:20px;height:20px}
+.piece.is-lit .plus{background:var(--ink);color:var(--wall)}
+.plus:active{transform:scale(.94)}
+.plus.done,.piece.is-lit .plus.done{background:var(--seal);border-color:var(--seal);color:#fff}
+.plus:disabled,.piece.is-lit .plus:disabled{border-style:dashed;border-color:var(--rule);color:var(--rule);background:transparent}
+.plus:focus-visible{outline-offset:3px}
+@media (max-width:350px){.cd-view{display:none}}
+
+/* obra destacada: nicho en arco + cédula montada */
+.piece-f{display:block;padding:34px var(--gut) 44px}
+.niche{display:grid;isolation:isolate;width:64%;aspect-ratio:3/4.15;border-radius:999px 999px 0 0;overflow:hidden;background:linear-gradient(180deg,#F7EFE4 0%,var(--niche) 58%,#E8DACA 100%);box-shadow:inset 0 0 0 1px rgba(200,162,122,.75),inset 0 -26px 30px -26px rgba(42,37,35,.25)}
+.niche>*{grid-area:1/1}
+.n-light{background:radial-gradient(75% 55% at 50% 0%,rgba(255,233,199,1),rgba(255,233,199,0));opacity:.3;transition:opacity var(--t-light) var(--ease)}
+.n-beam{align-self:start;justify-self:center;width:92%;height:70%;margin-top:15%;background:linear-gradient(180deg,rgba(255,224,176,.9),rgba(255,233,199,0) 92%);clip-path:polygon(45% 0,55% 0,100% 100%,0 100%);opacity:0;transition:opacity var(--t-light) var(--ease)}
+.niche .spot{position:static;align-self:start;justify-self:center;margin:9% 0 0;width:16px;height:26px}
+.n-halo{align-self:end;justify-self:center;width:70%;aspect-ratio:1;margin-bottom:22%;border-radius:50%;background:radial-gradient(closest-side,var(--tint),rgba(255,255,255,0));opacity:.2;transition:opacity var(--t-light) var(--ease)}
+.n-plinth{align-self:end;justify-self:center;width:62%;height:27%;background:linear-gradient(180deg,#F3E9DB,#E4D5C1);border-top:1px solid var(--oak);box-shadow:inset 1px 0 0 rgba(255,255,255,.6),0 -1px 0 rgba(255,255,255,.7)}
+.n-cup{align-self:end;justify-self:center;width:50%;margin-bottom:27%}
+.n-cup .koi-cup{width:100%;height:auto}
+.n-shade{background:rgba(42,37,35,.13);transition:opacity var(--t-light) var(--ease)}
+.piece.is-lit .n-light,.piece.is-lit .n-beam{opacity:1}
+.piece.is-lit .n-halo{opacity:.45}
+.piece.is-lit .n-shade{opacity:0}
+.cedula-f{isolation:isolate;width:72%;margin:-18% 0 0 auto;background:var(--paper);border:1px solid var(--hair-2);padding:14px 14px 12px var(--s4);box-shadow:0 16px 28px -22px rgba(42,37,35,.6)}
+.cedula-f .cd-t{font-size:var(--fs-feat);line-height:1}
+
+/* ---------- gabinete de toppings ---------- */
+.cab-body{padding:var(--s2) var(--gut) 48px}
+.vitrine{margin-top:var(--s3);border:4px solid var(--oak);background:#F5ECE0;padding:var(--s3);box-shadow:inset 0 0 0 1px rgba(255,255,255,.6),0 18px 26px -22px rgba(42,37,35,.5)}
+.drawer+.drawer{margin-top:14px;padding-top:14px;border-top:1px solid var(--hair-2)}
+.drawer-h{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin-bottom:10px}
+.drawer-t{display:inline-block;padding:5px 9px;background:var(--paper);border:1px solid var(--hair-2);font:600 11px/1.1 var(--f-ui);letter-spacing:.14em;text-transform:uppercase}
+.drawer-p{font-size:12.5px;line-height:1.35;color:var(--stone)}
+.cubbies{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.cubby{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:98px;padding:10px 6px;background:var(--paper);border:1px solid var(--hair-2);text-align:center}
+.cubby .spec{width:44px;height:44px}
+.cubbies.one{grid-template-columns:minmax(0,1fr)}
+.cubbies.one .cubby{flex-direction:row;justify-content:flex-start;gap:14px;min-height:72px;padding:10px 14px;text-align:left}
+.cubby-n{font-size:12.5px;line-height:1.2}
+.cubby-out{display:inline-flex;align-items:center;gap:5px;font:600 10.5px/1 var(--f-ui);letter-spacing:.1em;text-transform:uppercase;color:var(--seal)}
+.cubby.is-out .spec{opacity:.4}
+.cab-foot{margin-top:var(--s3)}
+
+/* ---------- tienda y salida ---------- */
+.shop{display:grid;grid-template-columns:40% minmax(0,1fr);gap:var(--s4);align-items:center;margin:0 var(--gut) 48px;padding:14px;border:1px solid var(--hair-2);background:var(--paper)}
+.shop-ph{aspect-ratio:4/5;overflow:hidden;border:3px solid var(--oak)}
+.shop-ph img{width:100%;height:100%;object-fit:cover;object-position:56% 40%}
+.shop-t{margin-top:6px;font:italic 400 26px/1.05 var(--f-display)}
+.shop-p{margin-top:var(--s2);font-size:var(--fs-sm);color:var(--stone)}
+.visit{background:var(--walnut);color:var(--cream);padding:44px var(--gut) 40px}
+.visit .caps{color:var(--oak)}
+.visit-ph{margin-top:var(--s4);aspect-ratio:5/4;overflow:hidden;border-radius:999px 999px 0 0;box-shadow:0 0 0 1px rgba(200,162,122,.6)}
+.visit-ph img{width:100%;height:100%;object-fit:cover;object-position:40% 46%}
+.visit-t{margin-top:22px;font:italic 400 44px/1 var(--f-display)}
+.visit-p{margin-top:10px;color:var(--on-walnut-2)}
+.visit-list{margin-top:22px;display:grid;gap:14px}
+.visit-list li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:var(--s3);align-items:start;font-size:14.5px;line-height:1.4}
+.visit-list .ic{color:var(--oak);margin-top:1px}
+.visit .fine{color:var(--on-walnut-2);margin-top:var(--s3)}
+.visit .fine:first-of-type{margin-top:26px}
+.visit-proto{padding-top:var(--s3);border-top:1px solid rgba(200,162,122,.35)}
+
+/* ---------- plano de sala ---------- */
+.plan{position:fixed;z-index:30;left:0;right:0;bottom:0;max-width:480px;margin:0 auto;background:var(--walnut);color:var(--cream);padding:7px 10px calc(7px + var(--safe-b))}
+.plan-in{position:relative}
+.plan-rooms{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1.5px solid var(--oak)}
+.plan-rooms li{position:relative;display:flex;min-width:0}
+.plan-rooms li+li::before{content:"";position:absolute;z-index:1;left:-1px;top:0;bottom:0;width:1.5px;background:linear-gradient(var(--oak) 0 27%,transparent 27% 73%,var(--oak) 73%);pointer-events:none}
+.plan-door{position:absolute;z-index:1;left:-1px;top:28%;bottom:28%;width:2px;background:var(--walnut)}
+.rb{display:flex;flex-direction:column;justify-content:center;gap:3px;width:100%;min-width:0;min-height:44px;padding:5px 7px;text-align:left;color:var(--cream);transition:background .5s var(--ease),color .5s var(--ease)}
+.rb-n{display:flex;align-items:center;height:14px;font:italic 400 16px/1 var(--f-display);color:var(--oak)}
+.rb-n .ic{width:13px;height:13px}
+.rb-name{font:600 clamp(11px,3.3vw,12.5px)/1.15 var(--f-ui);white-space:nowrap}
+.rb[aria-current]{background:var(--light);color:var(--ink)}
+.rb[aria-current] .rb-n{color:var(--seal)}
+.rb:focus-visible{outline:2px solid var(--light);outline-offset:-4px}
+.rb[aria-current]:focus-visible{outline-color:var(--seal)}
+.plan-dot{position:absolute;z-index:2;top:-5px;left:0;width:11px;height:11px;margin-left:-5.5px;border-radius:50%;background:var(--seal);box-shadow:0 0 0 2px var(--cream);transition:transform .18s linear;pointer-events:none}
+
+/* ---------- aviso flotante ---------- */
+.toast{position:fixed;z-index:40;left:0;right:0;bottom:calc(var(--plan-h) + var(--safe-b) + 10px);width:calc(100% - 24px);max-width:456px;margin:0 auto;display:flex;align-items:center;gap:var(--s3);padding:10px 8px 10px var(--s4);background:var(--walnut);color:var(--cream);border-radius:14px;box-shadow:0 14px 30px -12px rgba(31,27,25,.5);opacity:0;transform:translateY(8px);visibility:hidden;pointer-events:none;transition:opacity .25s,transform .3s var(--ease),visibility 0s .3s}
+.toast.show{opacity:1;transform:none;visibility:visible;transition:opacity .25s,transform .35s var(--ease)}
+.toast-m{flex:1;min-width:0;font-size:var(--fs-sm);line-height:1.35}
+.toast-m small{display:block;margin-top:2px;font-size:var(--fs-xs);color:var(--on-walnut-2)}
+.toast-a{pointer-events:auto;flex:none;min-height:44px;min-width:56px;padding:0 var(--s4);border-radius:999px;background:var(--light);color:var(--ink);font-weight:600}
+.toast-a[hidden]{display:none}
+
+/* ---------- diálogos ---------- */
+.dlg{padding:0;border:0;margin:0;max-width:none;max-height:none;color:var(--ink);background:var(--wall);overflow:hidden}
+.dlg::backdrop{background:rgba(31,27,25,.5)}
+.dlg-full{top:0;bottom:0;left:0;right:0;width:min(100%,480px);height:100%;margin:0 auto}
+.dlg-sheet{top:auto;bottom:0;left:0;right:0;width:min(100%,480px);max-height:min(92%,780px);margin:0 auto;border-radius:22px 22px 0 0}
+.dlg[open]{display:flex;flex-direction:column}
+.dlg-in{display:flex;flex-direction:column;flex:1 1 auto;min-height:0}
+.dlg-dark{background:var(--walnut);color:var(--cream)}
+.dlg-bar{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:var(--s2);min-height:57px;padding:6px var(--s2) 6px var(--gut);background:rgba(250,247,242,.97);border-bottom:1px solid var(--hair)}
+.bar-k{flex:1;min-width:0;font:500 12px/1.3 var(--f-mono);letter-spacing:.02em;color:var(--stone)}
+.x{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;flex:none;color:var(--ink)}
+.x:hover{background:var(--light)}
+.scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+
+/* ficha de obra */
+.pc-hero{display:grid;grid-template-columns:60% minmax(0,1fr);gap:var(--s4);align-items:end;padding:var(--s5) var(--gut) 0}
+.pc-hero .niche{width:100%}
+.pc-hero .n-light,.pc-hero .n-beam{opacity:1}
+.pc-hero .n-halo{opacity:.45}
+.pc-hero .n-cup{transition:transform .5s var(--ease);transform-origin:50% 100%;transform:scale(.88)}
+.pc-hero .n-cup.is-big{transform:scale(1)}
+.dlg[open] .pc-hero .n-beam{animation:rise 1.1s var(--ease) .12s both}
+.no-anim .pc-hero .n-beam{animation:none}
+@keyframes rise{from{opacity:0;transform:scaleY(.35);transform-origin:50% 0}to{opacity:1;transform:none;transform-origin:50% 0}}
+.pour .kc-top{animation:pour .55s var(--ease) both;animation-delay:calc(var(--i) * 18ms)}
+@keyframes pour{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:none}}
+.pc-side{display:flex;flex-direction:column;gap:10px;padding-bottom:var(--s2)}
+.pc-num{font:500 46px/1 var(--f-mono);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.pc-side .caps{line-height:1.45}
+.pc-label{padding:22px var(--gut) var(--s2)}
+.pc-t{font:italic 400 var(--fs-dlg)/1 var(--f-display);letter-spacing:-.01em}
+.pc-desc{margin-top:10px;line-height:1.5}
+.pc-form{padding:var(--s2) var(--gut) var(--s2)}
+.opt{padding:18px 0;border-top:1px solid var(--hair-2)}
+.opt-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 12px;margin-bottom:var(--s3)}
+.opt-t{font:600 12px/1.2 var(--f-ui);letter-spacing:.16em;text-transform:uppercase}
+.opt-r{font-size:12.5px;color:var(--stone)}
+.opt-r b{font:500 12.5px var(--f-mono);color:var(--ink)}
+.cells{display:grid;gap:6px}
+.cells-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.cells-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.cells-5{grid-template-columns:repeat(5,minmax(0,1fr))}
+.cell{position:relative;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:4px;min-height:58px;padding:9px 10px;background:var(--paper);border:1px solid var(--rule);border-radius:2px;text-align:left;transition:border-color var(--t-ui),background var(--t-ui),box-shadow var(--t-ui)}
+.cell[aria-pressed="true"],.chip[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink);background:var(--sel)}
+.cell-w{font-weight:600;font-size:14px;line-height:1.15}
+.cell-v{font:500 12px/1.1 var(--f-mono);color:var(--stone)}
+.cell .sz-ic,.cell .ice-ic{color:var(--ink)}
+.sz-ic{width:22px;height:24px}
+.ice-ic{width:46px;height:14px}
+.tick{position:absolute;top:7px;right:7px;width:17px;height:17px;border-radius:50%;background:var(--ink);color:var(--wall);display:grid;place-items:center;opacity:0;transform:scale(.6);transition:opacity var(--t-ui),transform var(--t-ui)}
+.tick svg{width:11px;height:11px}
+[aria-pressed="true"]>.tick{opacity:1;transform:none}
+.cells-5 .cell{align-items:center;text-align:center;padding:8px 4px 9px;min-height:70px}
+.cells-5 .cell-v{font-size:13px;color:var(--ink)}
+.cells-5 .cell-w{font-weight:500;font-size:11.5px;color:var(--stone);overflow-wrap:anywhere}
+.cells-5 .cell[aria-pressed="true"] .cell-w{color:var(--ink);font-weight:600}
+.cells-5 .tick{display:none}
+.meter{width:72%;height:3px;margin-top:3px;background:var(--hair)}
+.meter i{display:block;height:100%;background:var(--oak)}
+.cell[aria-pressed="true"] .meter i{background:var(--ink)}
+.tgrp+.tgrp{margin-top:14px}
+.tgrp-t{font-size:12.5px;font-weight:600;color:var(--stone);margin-bottom:var(--s2)}
+.chips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.chip{position:relative;display:grid;grid-template-columns:22px minmax(0,1fr);column-gap:var(--s2);align-items:center;min-height:52px;padding:7px 28px 7px 9px;background:var(--paper);border:1px solid var(--rule);border-radius:2px;text-align:left;transition:border-color var(--t-ui),background var(--t-ui),box-shadow var(--t-ui)}
+.chip .spec{grid-row:1/3;width:22px;height:22px}
+.chip-n{font-size:13.5px;line-height:1.2;font-weight:500}
+.chip-p{font:500 11.5px/1.2 var(--f-mono);color:var(--seal)}
+.chip-p:empty{display:none}
+.chip.is-extra .chip-p{color:var(--ink)}
+.chip:disabled{background:transparent;border-style:dashed;color:var(--stone)}
+.chip:disabled .spec{opacity:.4}
+.chip:disabled .chip-p{display:flex;align-items:center;gap:5px;color:var(--seal)}
+.chip .tick{top:50%;margin-top:-8.5px}
+.opt-msg{margin-top:10px;padding:8px 10px;background:var(--sel);border:1px dashed var(--seal);font-size:13px;color:var(--ink)}
+.opt-msg:empty{display:none}
+.pc-note{padding:18px 0 4px;border-top:1px solid var(--hair-2);font-size:13px;color:var(--stone)}
+.pc-fine{padding:var(--s2) var(--gut) var(--s5)}
+.pc-out{margin:var(--s2) var(--gut) var(--s2);padding:var(--s4);border:1px dashed var(--seal);background:var(--paper)}
+.pc-out p{display:flex;gap:var(--s2);align-items:baseline}
+.pc-out .dot-out{transform:translateY(1px)}
+.pc-out .btn{margin-top:var(--s3)}
+.pc-buy{flex:none;display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:var(--s2) var(--s3);padding:10px var(--gut) calc(12px + var(--safe-b));background:var(--paper);border-top:1px solid var(--hair-2);box-shadow:0 -12px 26px -22px rgba(42,37,35,.45)}
+.pc-unit{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 10px;font-size:12.5px;color:var(--stone)}
+.pc-unit .lbl{flex:1 1 auto}
+.pc-unit strong{font:500 17px/1 var(--f-mono);color:var(--ink);padding:3px 6px;margin:-3px -6px;border-radius:3px;font-variant-numeric:tabular-nums}
+.pc-eq{font:500 12.5px/1 var(--f-mono);color:var(--stone);font-variant-numeric:tabular-nums}
+.pc-sum{grid-column:1/-1;font-size:12.5px;line-height:1.35;color:var(--stone)}
+.pc-edit{color:var(--seal)}
+.pc-buy.is-out{grid-template-columns:minmax(0,1fr)}
+.flash{animation:flash 1.1s var(--ease)}
+@keyframes flash{from{background:var(--light)}to{background:rgba(255,233,199,0)}}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--rule);border-radius:999px;background:var(--paper);flex:none}
+.qty button{display:grid;place-items:center;width:44px;height:44px;border-radius:50%}
+.qty button:disabled{color:#B5A796}
+.qty-n{min-width:24px;text-align:center;font:500 15px/1 var(--f-mono);font-variant-numeric:tabular-nums}
+
+/* tu selección */
+.sheet-head{display:flex;align-items:flex-start;gap:var(--s3);padding:18px var(--s2) 14px var(--gut);border-bottom:1px solid var(--hair)}
+.sheet-head>div{flex:1;min-width:0}
+.sheet-t{margin-top:4px;font:italic 400 var(--fs-dlg)/1 var(--f-display)}
+.sheet-body{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:var(--s1) var(--gut) var(--s3)}
+.line{display:grid;grid-template-columns:54px minmax(0,1fr) auto;gap:4px var(--s3);padding:14px 0;border-bottom:1px solid var(--hair)}
+.line-art{grid-row:1/span 2;width:54px;height:70px;display:grid;place-items:center;background:var(--mat);border:3px solid var(--oak)}
+.line-art .koi-cup{width:34px;height:auto}
+.line-n{font:italic 400 22px/1.1 var(--f-display)}
+.line-d{margin-top:4px;font-size:12.5px;line-height:1.35;color:var(--stone)}
+.line-c{grid-column:2/-1;grid-row:2;display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px}
+.rm{display:inline-flex;align-items:center;gap:5px;min-height:44px;min-width:44px;padding:0 7px;border-radius:999px;font-size:13px;color:var(--stone)}
+.rm .ic{width:18px;height:18px}
+.rm:hover{color:var(--seal);background:var(--sel)}
+.line-t{grid-column:3;grid-row:1;font:500 16px/1.2 var(--f-mono);text-align:right;padding-top:3px;font-variant-numeric:tabular-nums;white-space:nowrap}
+@media (max-width:359px){.rm span{display:none}.rm{padding:0 12px}}
+.undo{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--s2) var(--s3);margin-top:var(--s3);padding:6px 6px 6px var(--s3);background:var(--light);font-size:var(--fs-sm)}
+.undo .btn{min-height:44px;padding:0 14px;font-size:var(--fs-sm)}
+.sheet-foot{flex:none;padding:14px var(--gut) calc(14px + var(--safe-b));border-top:1px solid var(--hair-2);background:var(--paper)}
+.total{display:flex;align-items:center;gap:10px}
+.total-l{font:600 12px/1 var(--f-ui);letter-spacing:.16em;text-transform:uppercase}
+.total-v{margin-left:auto;font:500 22px/1 var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.total-eq{margin-top:6px;text-align:right;font:500 13px/1.3 var(--f-mono);color:var(--stone);font-variant-numeric:tabular-nums}
+.sheet-foot .fine{margin-top:var(--s2)}
+.checkout{display:grid;gap:var(--s2);margin-top:var(--s3)}
+.empty{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:var(--s4) 0 var(--s5)}
+.empty-art{width:110px;height:150px}
+.empty-t{font:italic 400 28px/1.05 var(--f-display)}
+.empty-p{color:var(--stone);max-width:30ch}
+.empty .btn{margin-top:6px}
+
+/* boleto de museo */
+.tk-body{padding:0 var(--gut) calc(24px + var(--safe-b))}
+.dlg-dark .dlg-bar{background:rgba(42,37,35,.97);border-bottom-color:rgba(254,244,235,.14)}
+.dlg-dark .bar-k{color:var(--oak)}
+.dlg-dark .x{color:var(--cream)}
+.dlg-dark .x:hover{background:rgba(254,244,235,.12)}
+.ticket{margin-top:20px;background:var(--paper);color:var(--ink);box-shadow:0 34px 50px -30px rgba(0,0,0,.7)}
+.tk-main{position:relative;padding:22px 20px 18px}
+.tk-head{padding-right:88px}
+.tk-t{margin-top:6px;font:italic 400 32px/1 var(--f-display)}
+.hanko{position:absolute;top:14px;right:10px;width:92px;height:92px;transform:rotate(-9deg);mix-blend-mode:multiply;opacity:.92}
+.tk-label{margin-top:22px;font-size:13px;color:var(--stone)}
+.tk-code{margin-top:4px;font:500 var(--fs-code)/1 var(--f-mono);letter-spacing:.04em;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tk-date{margin-top:10px;font:500 12.5px/1.3 var(--f-mono);color:var(--stone)}
+.tk-lines{margin-top:18px;border-top:1.5px solid var(--ink)}
+.tk-line{display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:10px;padding:11px 0;border-bottom:1px solid var(--hair)}
+.tk-q{font:500 15px/1.3 var(--f-mono)}
+.tk-n{font-weight:600;font-size:18px;line-height:1.25}
+.tk-d{margin-top:2px;font-size:13px;line-height:1.35;color:var(--stone)}
+.tk-p{font:500 16px/1.3 var(--f-mono);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tk-es{margin-top:5px;padding:5px 8px;background:var(--sel);border-left:0;font-size:13px;line-height:1.35}
+.tk-es b{font:600 10.5px/1 var(--f-ui);letter-spacing:.12em;text-transform:uppercase;margin-right:6px}
+.tk-pay{margin-top:4px;text-align:right;font:500 13px/1.3 var(--f-mono);color:var(--stone)}
+.tk-mode{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:7px 12px 7px 9px;border:1.5px solid var(--ink);font:600 12.5px/1.2 var(--f-ui);letter-spacing:.12em;text-transform:uppercase}
+.tk-mode .ic{width:18px;height:18px}
+.tk-modes{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 14px;margin-top:20px}
+.tk-modes .caps{color:var(--oak)}
+.tk-modes .seg-b{padding:0 14px;font:600 13px/1 var(--f-ui);letter-spacing:0}
+.tk-total{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:var(--s2) var(--s3);padding-top:14px}
+.tk-total span{font:600 12px/1 var(--f-ui);letter-spacing:.16em;text-transform:uppercase}
+.tk-total strong{font:500 22px/1 var(--f-mono);font-variant-numeric:tabular-nums}
+.perf{position:relative;height:26px;background:radial-gradient(circle at 0 50%,var(--walnut) 12px,rgba(42,37,35,0) 12.5px),radial-gradient(circle at 100% 50%,var(--walnut) 12px,rgba(42,37,35,0) 12.5px),var(--paper)}
+.perf::before{content:"";position:absolute;left:20px;right:20px;top:50%;border-top:2px dashed var(--hair-2)}
+.tk-stub{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:4px var(--s3);padding:12px 20px 18px}
+.tk-stub-code{margin-top:6px;font:500 22px/1 var(--f-mono)}
+.tk-stub-i{font-size:12.5px;line-height:1.4;color:var(--stone);text-align:right}
+.tk-thanks{margin-top:22px;font:italic 400 22px/1.15 var(--f-display);color:var(--cream)}
+.tk-fine{margin-top:6px;color:var(--on-walnut-2)}
+.tk-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:18px}
+.dlg-dark.stamp .hanko{animation:stamp .5s cubic-bezier(.2,.8,.2,1) .4s both}
+@keyframes stamp{0%{opacity:0;transform:scale(1.55) rotate(-17deg)}100%{opacity:.92;transform:scale(1) rotate(-9deg)}}
+
+/* para llevar por WhatsApp */
+.wa-body{padding:22px var(--gut) calc(26px + var(--safe-b))}
+.wa-t{margin-top:4px;font:italic 400 var(--fs-dlg)/1 var(--f-display)}
+.wa-p{margin-top:10px;color:var(--stone)}
+.fields{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:var(--s3);margin-top:18px}
+.fld{display:block;min-width:0}
+.fld-l{display:block;font:600 11.5px/1.25 var(--f-ui);letter-spacing:.14em;text-transform:uppercase}
+.fld-l small{display:block;font:400 12px/1.3 var(--f-ui);letter-spacing:0;text-transform:none;color:var(--stone)}
+.fld input{display:block;width:100%;min-height:48px;margin-top:6px;padding:10px 12px;border:1px solid var(--rule);border-bottom-width:2px;border-radius:2px;background:var(--paper);font-size:16px}
+.fld input:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.fld-h{margin-top:var(--s2);font-size:12.5px;color:var(--stone)}
+.slip{margin-top:22px;background:var(--paper);border:1px solid var(--hair-2);box-shadow:0 18px 26px -24px rgba(42,37,35,.6)}
+.slip-h{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px;padding:12px 14px;border-bottom:2px dashed var(--hair-2)}
+.slip-h .mono{font-size:12.5px;color:var(--stone)}
+.slip textarea{display:block;width:100%;border:0;resize:none;padding:14px;background:transparent;font:400 13px/1.55 var(--f-mono);color:var(--ink);overflow:hidden}
+.slip textarea:focus-visible{outline:2px solid var(--ink);outline-offset:-4px}
+.wa-act{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-top:var(--s4)}
+.wa-status{font-size:13px;min-height:1.2em}
+.wa-note{margin-top:var(--s3);padding-top:var(--s3);border-top:1px solid var(--hair)}
+.wa-closed{display:flex;gap:10px;align-items:flex-start;margin-top:14px;padding:10px 12px;background:var(--sel);border:1px dashed var(--rule);font-size:14px}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;animation-delay:0s!important;transition-duration:.12s!important;transition-delay:0s!important;scroll-behavior:auto!important}
+  .btn:active,.plus:active{transform:none}
+  .toast{transform:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#sala-milk" data-go="milk" data-t="skip">Saltar a las salas</a>
+
+<header class="top">
+  <button type="button" class="brand" data-go="hall" data-fk="brand" data-t-aria="brand" aria-label="Koi Tea, ir a la entrada"><img src="img/logo.jpg" width="34" height="34" alt=""><span class="brand-name" aria-hidden="true">Koi Tea</span></button>
+  <span class="spacer"></span>
+  <div id="prefs-top" class="prefs"></div>
+  <button type="button" class="bag" data-testid="open-cart" data-open-cart data-fk="bag" aria-label="Tu selección"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8.5h14l-1.2 11.5H6.2z"/><path d="M9 8.5V7a3 3 0 0 1 6 0v1.5"/></svg><span class="bag-n" hidden>0</span></button>
+</header>
+
+<main class="app" id="app">
+  <section class="hall" id="entrada" data-anchor="hall" aria-labelledby="hall-title">
+    <p class="caps hall-k" data-t="kicker">Koi Tea Boba Shop · Colección permanente</p>
+    <div class="hall-grid">
+      <figure class="arch">
+        <div class="arch-frame"><div class="arch-photo"><img src="img/gallery.jpg" width="720" height="900" alt="" data-t-alt="archAlt" fetchpriority="high"></div><div class="medal"><img src="img/logo.jpg" width="50" height="50" alt="" data-t-alt="logoAlt"></div></div>
+        <figcaption data-t="archCap">El arco de la galería en Koi Tea. Foto: @koitea.mx</figcaption>
+      </figure>
+      <div class="hall-txt">
+        <h1 class="hall-t" id="hall-title" tabindex="-1" data-t="m.tagline">El sabor y el arte se unen en un mismo espacio</h1>
+        <p class="hall-place">Puerto Peñasco · Rocky Point</p>
+        <p class="hall-origin" data-t="m.origin">Ingredientes importados de Taiwán</p>
+        <p class="hall-open" id="hall-open"><i class="dot-open" aria-hidden="true"></i><span></span></p>
+      </div>
+    </div>
+    <div class="hall-cta">
+      <button type="button" class="btn btn-dark" data-testid="go-menu" data-go="milk" data-fk="go-menu"><span data-t="enter">Entrar a la colección</span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg></button>
+      <p class="hall-hint"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15M6 13l6 6 6-6"/></svg><span data-t="hint">o desliza para recorrer las salas</span></p>
+    </div>
+    <div class="guide">
+      <p class="caps" id="guide-t" data-t="guideT">Guía de salas</p>
+      <ol class="guide-list" id="guide-list" aria-labelledby="guide-t"></ol>
+    </div>
+    <p class="fine hall-fine"><span data-t="m.pricesNote"></span> <span data-t="m.protoNote"></span></p>
+  </section>
+
+  <div id="rooms"><noscript><p class="fine" style="padding:24px">Activa JavaScript para recorrer el menú de Koi Tea.</p></noscript></div>
+
+  <section class="shop" data-anchor="shop" aria-labelledby="shop-t">
+    <div class="shop-ph"><img src="img/merch.jpg" width="720" height="900" alt="" data-t-alt="shopAlt" loading="lazy"></div>
+    <div>
+      <p class="caps" data-t="shopK">Tienda del museo</p>
+      <h2 class="shop-t" id="shop-t" data-t="shopT">Llévate Rocky Point a casa</h2>
+      <p class="shop-p" data-t="shopP"></p>
+    </div>
+  </section>
+
+  <footer class="visit" id="visitanos" data-anchor="visit" aria-labelledby="visit-t">
+    <p class="caps" data-t="visitK">Salida</p>
+    <div class="visit-ph"><img src="img/bar.jpg" width="720" height="900" alt="" data-t-alt="visitAlt" loading="lazy"></div>
+    <h2 class="visit-t" id="visit-t" data-t="visitT">Visítanos</h2>
+    <p class="visit-p" data-t="visitP"></p>
+    <ul class="visit-list">
+      <li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5s-6-5.6-6-10.5a6 6 0 0 1 12 0c0 4.9-6 10.5-6 10.5z"/><circle cx="12" cy="10" r="2.2"/></svg><span data-t="m.address"></span></li>
+      <li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 7.5V12l3 2"/></svg><span><span data-t="hoursL">Horario</span> <span class="mono" data-t="m.hours"></span></span></li>
+      <li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="4.5"/><circle cx="12" cy="12" r="3.6"/><circle cx="16.8" cy="7.2" r=".7" fill="currentColor"/></svg><span>Instagram <span data-t="m.instagram"></span></span></li>
+      <li><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-8 5-13.5 14-14 0 9-5.5 14-14 14z"/><path d="M5 19l8.5-8.5"/></svg><span data-t="m.origin"></span></li>
+    </ul>
+    <p class="fine" data-t="rate"></p>
+    <p class="fine"><span data-t="m.pricesNote"></span> <span data-t="m.allergenNote"></span></p>
+    <p class="fine visit-proto" data-t="m.protoNote"></p>
+  </footer>
+</main>
+
+<nav class="plan" data-t-aria="planLabel" aria-label="Plano de sala">
+  <div class="plan-in"><span class="plan-door" aria-hidden="true"></span><ol class="plan-rooms" id="plan-rooms"></ol><span class="plan-dot" id="plan-dot" aria-hidden="true"></span></div>
+</nav>
+
+<div class="toast" id="toast"><p class="toast-m" role="status" aria-live="polite"></p><button type="button" class="toast-a" data-open-cart data-toast-cart hidden>Ver</button></div>
+
+<dialog class="dlg dlg-full" id="dlg-piece" role="dialog" aria-modal="true" aria-labelledby="pc-t"><div class="dlg-in"></div><p class="sr" role="status" aria-live="polite" id="pc-live"></p></dialog>
+<dialog class="dlg dlg-sheet" id="dlg-cart" role="dialog" aria-modal="true" aria-labelledby="cart-t"><div class="dlg-in"></div><p class="sr" role="status" aria-live="polite" id="cart-live"></p></dialog>
+<dialog class="dlg dlg-full dlg-dark" id="dlg-ticket" role="dialog" aria-modal="true" aria-labelledby="tk-t"><div class="dlg-in"></div></dialog>
+<dialog class="dlg dlg-full" id="dlg-wa" role="dialog" aria-modal="true" aria-labelledby="wa-t"><div class="dlg-in"></div></dialog>
+
+<script src="shared/koi-data.js"></script>
+<script src="shared/koi-cup.js"></script>
+<script>
+(function () {
+  'use strict';
+  var K = window.KOI, CUP = window.KoiCup;
+  if (!K || !CUP) return;
+  var D = document, root = D.documentElement;
+  var mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+  function reduced() { return !!(mq && mq.matches); }
+  function $(s, r) { return (r || D).querySelector(s); }
+  function $$(s, r) { return Array.prototype.slice.call((r || D).querySelectorAll(s)); }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+  function low(s) { return s.charAt(0).toLowerCase() + s.slice(1); }
+  var uid = 0;
+
+  /* ---------- estado ---------- */
+  var S = { mode: 'here', lang: 'es', cur: 'mxn', cart: [], code: null, codeAt: null, piece: null, wa: { name: '', time: '' }, removed: null, lit: null, here: undefined };
+  function store(k, v) { try { if (v === undefined) return window.localStorage.getItem('koi-v1:' + k); window.localStorage.setItem('koi-v1:' + k, v); } catch (e) { /* sin almacenamiento: la app sigue igual */ } return null; }
+  (function () { var p = store('prefs'); if (!p) return; try { p = JSON.parse(p); if (p.lang === 'en' || p.lang === 'es') S.lang = p.lang; if (p.cur === 'usd' || p.cur === 'mxn') S.cur = p.cur; } catch (e) {} })();
+  function savePrefs() { store('prefs', JSON.stringify({ lang: S.lang, cur: S.cur })); }
+
+  /* ---------- textos ---------- */
+  var L = {
+    es: {
+      docTitle: 'Koi Tea · Colección permanente', skip: 'Saltar a las salas', brand: 'Koi Tea, ir a la entrada',
+      langGroup: 'Idioma', curGroup: 'Moneda', curMxn: 'pesos mexicanos', curUsd: 'dólares',
+      bagEmpty: 'Tu selección, vacía', bagN: function (n, tot) { return 'Tu selección: ' + n + (n === 1 ? ' pieza, ' : ' piezas, ') + tot; },
+      kicker: 'Koi Tea Boba Shop · Colección permanente',
+      archAlt: 'El arco del local que enmarca la galería de fotografías, iluminada por un riel de spots',
+      archCap: 'El arco de la galería en Koi Tea. Foto: @koitea.mx', logoAlt: 'Logo de Koi Tea: un koi blanco con mancha roja que bebe boba',
+      enter: 'Entrar a la colección', hint: 'o desliza para recorrer las salas',
+      sala: 'Sala', cabinet: 'Gabinete', featured: 'Obra destacada',
+      pieces: function (n) { return n + (n === 1 ? ' pieza' : ' piezas'); }, from: 'desde', no: 'N.º', tec: 'Técnica', view: 'Ver pieza',
+      pCasa: 'De la casa', pResena: 'Recomendado en reseñas', pOut: 'Agotado',
+      quick: function (n, r) { return 'Agregar ' + n + ' con la receta sugerida: ' + r; }, quickOut: function (n) { return n + ': agotado'; },
+      addedQuick: function (n) { return 'Agregaste ' + n + ' a tu selección'; }, addedN: function (q, n) { return 'Agregaste ' + q + ' × ' + n + ' a tu selección'; },
+      see: 'Ver', tops: 'Toppings',
+      topsLine: function (p) { return 'Cada bebida incluye 1 topping. Los extras cuestan ' + p + ' y puedes elegir hasta 3.'; },
+      grpNote: { tapioca: 'Masticable y oscura: el topping clásico.', pops: 'Esferas con jugo que revientan al morderlas.', jelly: 'Cubos suaves y refrescantes.' },
+      cabFoot: 'Los toppings se eligen en la ficha de cada pieza.',
+      shopK: 'Tienda del museo', shopT: 'Llévate Rocky Point a casa', shopP: 'Playeras, gorras y bolsa tote con el koi y «Rocky Point, MX». Pregunta en caja.', shopAlt: 'Muro de merch de Koi Tea con playeras, gorras y una tote',
+      visitK: 'Salida', visitT: 'Visítanos', visitP: 'Gracias por recorrer la colección. Te esperamos en la barra.', visitAlt: 'La barra de Koi Tea con plafón curvo de luz cálida, lámparas de globo y las tres pantallas del menú',
+      hoursL: 'Horario', rate: 'Precios en USD con tipo de cambio de ejemplo: $18 MXN = US$1.', planLabel: 'Plano de sala',
+      close: 'Cerrar', size: 'Tamaño', basePrice: 'Precio base', sweet: 'Dulzor', ice: 'Hielo',
+      topsRule: function (p) { return '1 incluido · extras ' + p + ' · máx. 3'; }, topsCount: function (n, m) { return n + ' de ' + m; },
+      maxTops: 'Máximo 3 toppings. Quita uno para elegir otro.', smoothNote: 'En los smoothies no se ajustan dulzor ni hielo.',
+      unitL: 'Tu receta, por pieza', qty: 'Cantidad', less: 'Una menos', more: 'Una más', add: 'Agregar', addN: function (q) { return 'Agregar ' + q; },
+      soldOutT: 'Agotado por hoy.', soldOutP: 'Vuelve pronto o prueba otra pieza con la misma fruta:', viewAlt: function (n) { return 'Ver ' + n; },
+      cartT: 'Tu selección', cartK0: 'Aún sin piezas', total: 'Total', counter: 'Mostrar en caja', wa: 'Pedir por WhatsApp', waSub: 'para llevar',
+      remove: 'Quitar', lessOf: function (n) { return 'Una menos de ' + n; }, moreOf: function (n) { return 'Una más de ' + n; }, removeOf: function (n) { return 'Quitar ' + n; }, qtyOf: function (n) { return 'Cantidad de ' + n; },
+      removed: function (n) { return 'Quitaste ' + n + '.'; }, undo: 'Deshacer',
+      emptyT: 'Tu selección está vacía', emptyP: 'Toca + en la cédula de cualquier pieza para agregarla.', emptyBtn: 'Recorrer las salas',
+      tkK: 'Boleto para caja', tkT: 'Boleto de pedido', tkShow: 'Muestra este código en caja', stub: 'Talón', admits: 'Válido para un pedido',
+      thanks: '¡Gracias por tu visita!', back: 'Volver', newOrder: 'Nuevo pedido', newDone: 'Listo: empezamos un pedido nuevo.', seal: 'Sello de Koi Tea',
+      waK: 'Para llevar', waT: 'Pedir por WhatsApp', waP: 'Escribe tu nombre y la hora, copia el mensaje y recoge en la barra.',
+      waName: 'Nombre', waTime: 'Hora para recoger', opt: 'Opcional', waHours: function (h) { return 'Horario del local: ' + h; },
+      waPrev: 'Vista previa del mensaje', copy: 'Copiar mensaje', copied: 'Mensaje copiado. Pégalo en WhatsApp.', copyManual: 'Texto seleccionado: cópialo con tu teléfono.',
+      waProd: 'En producción este botón abre WhatsApp con el mensaje listo.',
+      guideT: 'Guía de salas', openNow: function (c) { return 'Abierto · cierra ' + c; }, closedNow: function (o) { return 'Cerrado · abre ' + o; },
+      payAt: function (m) { return 'Pagas en caja: ' + m; }, payCounter: 'Paga en caja', staff: 'Barra',
+      edit: 'Editar', editOf: function (n) { return 'Editar ' + n; }, save: 'Guardar', editing: 'Editando tu selección', saved: function (n) { return 'Guardaste los cambios de ' + n + '.'; },
+      modeL: 'Modo de entrega', modeHere: 'Para tomar aquí', modeTogo: 'Para llevar',
+      waClosed: function (o) { return 'Ahora el local está cerrado. Tu mensaje llega igual y lo verán al abrir, a las ' + o + '.'; }
+    },
+    en: {
+      docTitle: 'Koi Tea · Permanent collection', skip: 'Skip to the rooms', brand: 'Koi Tea, go to the entrance',
+      langGroup: 'Language', curGroup: 'Currency', curMxn: 'Mexican pesos', curUsd: 'US dollars',
+      bagEmpty: 'Your selection, empty', bagN: function (n, tot) { return 'Your selection: ' + n + (n === 1 ? ' piece, ' : ' pieces, ') + tot; },
+      kicker: 'Koi Tea Boba Shop · Permanent collection',
+      archAlt: 'The arch at Koi Tea framing its photo gallery, lit by a track of spotlights',
+      archCap: 'The gallery arch at Koi Tea. Photo: @koitea.mx', logoAlt: 'Koi Tea logo: a white koi with a red patch sipping boba',
+      enter: 'Enter the collection', hint: 'or scroll to tour the rooms',
+      sala: 'Room', cabinet: 'Cabinet', featured: 'Featured work',
+      pieces: function (n) { return n + (n === 1 ? ' piece' : ' pieces'); }, from: 'from', no: 'No.', tec: 'Materials', view: 'View piece',
+      pCasa: 'House signature', pResena: 'Recommended in reviews', pOut: 'Sold out',
+      quick: function (n, r) { return 'Add ' + n + ' with the suggested recipe: ' + r; }, quickOut: function (n) { return n + ': sold out'; },
+      addedQuick: function (n) { return 'Added ' + n + ' to your selection'; }, addedN: function (q, n) { return 'Added ' + q + ' × ' + n + ' to your selection'; },
+      see: 'View', tops: 'Toppings',
+      topsLine: function (p) { return 'Every drink includes 1 topping. Extras are ' + p + ' each, up to 3.'; },
+      grpNote: { tapioca: 'Chewy and dark: the classic topping.', pops: 'Juice-filled spheres that burst when you bite.', jelly: 'Soft, refreshing cubes.' },
+      cabFoot: 'Pick your toppings on each piece’s page.',
+      shopK: 'Museum shop', shopT: 'Take Rocky Point home', shopP: 'Tees, caps and a tote with the koi and “Rocky Point, MX.” Ask at the counter.', shopAlt: 'Koi Tea merch wall with tees, caps and a tote',
+      visitK: 'Exit', visitT: 'Visit us', visitP: 'Thank you for touring the collection. See you at the bar.', visitAlt: 'The Koi Tea bar with its warm curved ceiling, globe lamps and three menu screens',
+      hoursL: 'Hours', rate: 'USD prices use a sample rate: MX$18 = US$1.', planLabel: 'Floor plan',
+      close: 'Close', size: 'Size', basePrice: 'Base price', sweet: 'Sugar', ice: 'Ice',
+      topsRule: function (p) { return '1 included · extras ' + p + ' · max 3'; }, topsCount: function (n, m) { return n + ' of ' + m; },
+      maxTops: 'Up to 3 toppings. Remove one to pick another.', smoothNote: 'Sugar and ice aren’t adjustable on smoothies.',
+      unitL: 'Your recipe, each', qty: 'Quantity', less: 'One less', more: 'One more', add: 'Add', addN: function (q) { return 'Add ' + q; },
+      soldOutT: 'Sold out today.', soldOutP: 'Check back soon, or try another piece with the same fruit:', viewAlt: function (n) { return 'View ' + n; },
+      cartT: 'Your selection', cartK0: 'No pieces yet', total: 'Total', counter: 'Show at the counter', wa: 'Order on WhatsApp', waSub: 'for pickup',
+      remove: 'Remove', lessOf: function (n) { return 'One less ' + n; }, moreOf: function (n) { return 'One more ' + n; }, removeOf: function (n) { return 'Remove ' + n; }, qtyOf: function (n) { return 'Quantity of ' + n; },
+      removed: function (n) { return 'You removed ' + n + '.'; }, undo: 'Undo',
+      emptyT: 'Your selection is empty', emptyP: 'Tap + on any piece’s label to add it.', emptyBtn: 'Tour the rooms',
+      tkK: 'Counter ticket', tkT: 'Order ticket', tkShow: 'Show this code at the counter', stub: 'Stub', admits: 'Valid for one order',
+      thanks: 'Thank you for visiting!', back: 'Back', newOrder: 'New order', newDone: 'Done — starting a new order.', seal: 'Koi Tea seal',
+      waK: 'For pickup', waT: 'Order on WhatsApp', waP: 'Add your name and a time, copy the message and pick up at the bar.',
+      waName: 'Name', waTime: 'Pickup time', opt: 'Optional', waHours: function (h) { return 'Shop hours: ' + h; },
+      waPrev: 'Message preview', copy: 'Copy message', copied: 'Message copied. Paste it in WhatsApp.', copyManual: 'Text selected: copy it with your phone.',
+      waProd: 'In production this button opens WhatsApp with the message ready.',
+      guideT: 'Room guide', openNow: function (c) { return 'Open · closes ' + c; }, closedNow: function (o) { return 'Closed · opens ' + o; },
+      payAt: function (m) { return 'You pay at the counter: ' + m; }, payCounter: 'Pay at the counter', staff: 'Bar (ES)',
+      edit: 'Edit', editOf: function (n) { return 'Edit ' + n; }, save: 'Save', editing: 'Editing your selection', saved: function (n) { return 'Saved your changes to ' + n + '.'; },
+      modeL: 'Order type', modeHere: 'For here', modeTogo: 'To go',
+      waClosed: function (o) { return 'The shop is closed right now. Your message still arrives and they’ll see it when they open at ' + o + '.'; }
+    }
+  };
+  function t(k) { var v = L[S.lang][k]; return v === undefined ? L.es[k] : v; }
+  function val(k) {
+    if (k.indexOf('m.') === 0) { var m = K.meta[k.slice(2)]; return m && typeof m === 'object' ? m[S.lang] : m; }
+    var v = t(k); return typeof v === 'string' ? v : '';
+  }
+  function money(mxn, style) { return K.fmt(mxn, S.cur, style || 'short'); }
+  function usdRef(mxn) { return '≈ ' + K.money(K.conv(mxn, 'usd'), 'usd', 'full'); }
+  function priceMain(mxn) { return S.cur === 'usd' ? usdRef(mxn) : K.money(mxn, 'mxn', 'full'); }
+  function priceEq(mxn) { return S.cur === 'usd' ? K.money(mxn, 'mxn', 'full') : usdRef(mxn); }
+  function lineAmt(l) { return S.cur === 'usd' ? '≈ ' + K.money(K.lineTotal(l, 'usd'), 'usd', 'short') : K.money(K.lineTotal(l, 'mxn'), 'mxn', 'short'); }
+  /* horario: Sonora no cambia de horario (America/Hermosillo, igual que Arizona) */
+  var HOURS = (function () { var m = /(\d{1,2}):(\d{2})\D+(\d{1,2}):(\d{2})/.exec(K.meta.hours || ''); return m ? { o: +m[1] * 60 + +m[2], c: +m[3] * 60 + +m[4], os: m[1] + ':' + m[2], cs: m[3] + ':' + m[4] } : null; })();
+  function isOpenNow() {
+    if (!HOURS) return null; var mins;
+    try { var parts = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Hermosillo', hour: 'numeric', minute: 'numeric', hourCycle: 'h23' }).formatToParts(new Date()), h = 0, mi = 0;
+      parts.forEach(function (x) { if (x.type === 'hour') h = +x.value % 24; if (x.type === 'minute') mi = +x.value; }); mins = h * 60 + mi; }
+    catch (e) { var dd = new Date(); mins = dd.getHours() * 60 + dd.getMinutes(); }
+    return mins >= HOURS.o && mins < HOURS.c;
+  }
+  function renderOpen() {
+    var el = $('#hall-open'); if (!el || !HOURS) return; var open = isOpenNow();
+    el.classList.toggle('is-closed', !open); $('span', el).textContent = open ? t('openNow')(HOURS.cs) : t('closedNow')(HOURS.os);
+  }
+
+  /* ---------- curaduría (texto propio de cada pieza) ---------- */
+  var ROOMS = [
+    { id: 'milk', num: 'I', feat: 'taro', line: ['Té negro de Taiwán con leche: el clásico del boba.', 'Taiwanese black tea with milk: boba’s classic.'] },
+    { id: 'fruit', num: 'II', feat: 'koi', line: ['Té verde con fruta y sin leche: color, luz y frescura.', 'Green tea with fruit and no milk: color, light and freshness.'] },
+    { id: 'smooth', num: 'III', feat: 'smooth-mango', line: ['Frappés cremosos y sin té, para el calor de Rocky Point.', 'Creamy blends with no tea, made for Rocky Point heat.'] }
+  ];
+  var ROOM_BY = {}; ROOMS.forEach(function (r) { ROOM_BY[r.id] = r; });
+  var PLAN = ['milk', 'fruit', 'smooth', 'tops'];
+  var NUM = {}; K.drinks.forEach(function (d, i) { NUM[d.id] = (i < 9 ? '0' : '') + (i + 1); });
+  var TEC = {
+    'classic': [['té negro de Taiwán', 'leche'], ['Taiwanese black tea', 'milk']],
+    'brown-sugar': [['té negro', 'leche', 'jarabe de azúcar morena'], ['black tea', 'milk', 'brown sugar syrup']],
+    'taro': [['té negro', 'leche', 'taro'], ['black tea', 'milk', 'taro']],
+    'strawberry-milk': [['té negro', 'leche', 'fresa'], ['black tea', 'milk', 'strawberry']],
+    'mango-milk': [['té negro', 'leche', 'mango'], ['black tea', 'milk', 'mango']],
+    'koi': [['té verde', 'capas de rojo a naranja'], ['green tea', 'red-to-orange layers']],
+    'maracuya-green': [['té verde', 'maracuyá'], ['green tea', 'passion fruit']],
+    'fresa-green': [['té verde', 'fresa'], ['green tea', 'strawberry']],
+    'durazno-green': [['té verde', 'durazno'], ['green tea', 'peach']],
+    'mango-green': [['té verde', 'mango'], ['green tea', 'mango']],
+    'lichi-green': [['té verde', 'lichi'], ['green tea', 'lychee']],
+    'smooth-mango': [['frappé de mango', 'leche'], ['blended mango', 'milk']],
+    'smooth-fresa': [['frappé de fresa', 'leche'], ['blended strawberry', 'milk']],
+    'smooth-taro': [['frappé de taro', 'leche'], ['blended taro', 'milk']],
+    'smooth-maracuya': [['frappé de maracuyá', 'leche'], ['blended passion fruit', 'milk']]
+  };
+  var PHRASE = {
+    'classic': ['Suave, tostado y balanceado: el clásico para empezar.', 'Smooth, toasty and balanced: the classic to start with.'],
+    'brown-sugar': ['El jarabe baja por el vaso en rayas de caramelo.', 'The syrup streaks down the cup like caramel.'],
+    'taro': ['Cremoso y suave; una reseña lo recomienda con tapioca.', 'Creamy and mellow; a reviewer recommends it with tapioca.'],
+    'strawberry-milk': ['Rosado, suave y afrutado.', 'Pink, smooth and fruity.'],
+    'mango-milk': ['Cremoso, con un toque tropical.', 'Creamy, with a tropical touch.'],
+    'koi': ['En capas de rojo a naranja, como un koi.', 'Layered red to orange, like a koi.'],
+    'maracuya-green': ['Ácido, tropical y muy fresco.', 'Tangy, tropical and very fresh.'],
+    'fresa-green': ['Dulce y ligero.', 'Sweet and light.'],
+    'durazno-green': ['Frutal y fresco; una reseña lo recomienda con jelly de lichi.', 'Fruity and fresh; a reviewer recommends it with lychee jelly.'],
+    'mango-green': ['Tropical y fresco; una reseña lo recomienda con jelly de lichi.', 'Tropical and fresh; a reviewer recommends it with lychee jelly.'],
+    'lichi-green': ['Floral y delicado.', 'Floral and delicate.'],
+    'smooth-mango': ['Espeso, frío y cremoso.', 'Thick, icy and creamy.'],
+    'smooth-fresa': ['Cremoso y rosado.', 'Creamy and pink.'],
+    'smooth-taro': ['Suave y dulce, color lavanda.', 'Mellow and sweet, lavender-hued.'],
+    'smooth-maracuya': ['Ácido y tropical.', 'Tangy and tropical.']
+  };
+  var SOLD_ALT = { 'smooth-maracuya': 'maracuya-green' };
+  var SWEET_ORDER = [100, 70, 50, 30, 0];
+  function li() { return S.lang === 'en' ? 1 : 0; }
+  function altName(d) { var a = S.lang === 'en' ? d.name : d.nameEn; return a && a !== K.drinkName(d, S.lang) ? a : ''; }
+  function tecText(d) { var parts = (TEC[d.id] || [[], []])[li()].slice(), tp = K.topping(d.topping); if (tp) parts.push(low(K.toppingName(tp, S.lang, true))); return cap(parts.join(' · ')); }
+
+  /* ---------- íconos (trazo 1.6) ---------- */
+  function I(p) { return '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' + p + '</svg>'; }
+  var ICON = {
+    plus: I('<path d="M12 5v14M5 12h14"/>'), minus: I('<path d="M5 12h14"/>'), close: I('<path d="M6 6l12 12M18 6L6 18"/>'),
+    arrow: I('<path d="M4 12h15M13 6l6 6-6 6"/>'), check: I('<path d="M5 12.5l4.2 4.2L19 7"/>'),
+    trash: I('<path d="M4.5 7h15M10 11v6M14 11v6M6.5 7l1 13h9l1-13M9.5 7V4.5h5V7"/>'),
+    ticket: I('<path d="M3.5 7.5h17v3a1.8 1.8 0 0 0 0 3.6v3.4h-17v-3.4a1.8 1.8 0 0 0 0-3.6z"/><path d="M14.5 8v9" stroke-dasharray="1.6 2.2"/>'),
+    chat: I('<path d="M4.5 5.5h15v10h-9l-4.5 4v-4h-1.5z"/><path d="M8.5 10.5h7"/>'),
+    copy: I('<rect x="8.5" y="8.5" width="11" height="11" rx="1.5"/><path d="M15.5 8.5v-4h-11v11h4"/>'),
+    undo: I('<path d="M9 6.5L5 10.5l4 4"/><path d="M5 10.5h9.5a4.5 4.5 0 0 1 0 9H12"/>'),
+    pen: I('<path d="M5 19l1-4L15.5 5.5a2.1 2.1 0 0 1 3 3L9 18z"/><path d="M13.5 7.5l3 3"/>'),
+    tote: I('<path d="M5 8.5h14l-1.2 11.5H6.2z"/><path d="M9 8.5V7a3 3 0 0 1 6 0v1.5"/>'),
+    cupI: I('<path d="M6.5 7.5h11l-1.4 12.5H7.9z"/><path d="M5.5 7.5h13M13 7.5l1.5-4.5"/>'),
+    grid: I('<rect x="4.5" y="4.5" width="15" height="15"/><path d="M9.5 4.5v15M14.5 4.5v15M4.5 9.5h15M4.5 14.5h15"/>')
+  };
+  var TICK = '<span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg></span>';
+  var SPOT = '<svg class="spot" viewBox="0 0 16 26" aria-hidden="true" focusable="false"><path d="M8 0v7" stroke="#2A2523" stroke-width="1.4"/><rect x="3.5" y="6.5" width="9" height="12" rx="2" fill="#2A2523"/><ellipse class="lens" cx="8" cy="18.6" rx="4.2" ry="1.6"/></svg>';
+  var FX = '<svg class="fx" viewBox="0 0 18 28" aria-hidden="true" focusable="false"><path d="M9 0v8" stroke="#2A2523" stroke-width="1.5"/><g transform="rotate(16 9 8)"><rect x="4" y="8" width="10" height="14" rx="2.4" fill="#2A2523"/><ellipse class="lens" cx="9" cy="22" rx="4.6" ry="1.7"/></g></svg>';
+  function sizeIcon(id) {
+    var big = id === 'grande', w = big ? 15 : 12, h = big ? 21 : 16, x = (22 - w) / 2, y = 23 - h;
+    return '<svg class="sz-ic" viewBox="0 0 22 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M' + x + ' ' + y + 'H' + (x + w) + 'L' + (x + w * 0.86) + ' 23H' + (x + w * 0.14) + 'Z"/><path d="M' + (x - 1) + ' ' + y + 'H' + (x + w + 1) + '"/></svg>';
+  }
+  function iceIcon(n) {
+    var s = '<svg class="ice-ic" viewBox="0 0 46 14" aria-hidden="true" focusable="false">';
+    for (var i = 0; i < 4; i++) { var on = i < n; s += '<rect x="' + (1 + i * 11.3).toFixed(1) + '" y="2" width="10" height="10" rx="2" fill="' + (on ? '#E3EFF3' : 'none') + '" stroke="' + (on ? '#1F1B19' : '#A99C90') + '" stroke-width="1.3"' + (on ? '' : ' stroke-dasharray="2 2"') + '/>'; }
+    return s + '</svg>';
+  }
+  function specimen(tp) {
+    var c = tp.color, dk = CUP.shade(c, -0.32), id = 'sp' + (++uid), s = '<svg class="spec" viewBox="0 0 40 40" aria-hidden="true" focusable="false">';
+    if (tp.type === 'tapioca') s += '<circle cx="20" cy="21" r="12.5" fill="' + c + '"/><circle cx="15.5" cy="16" r="3.4" fill="#fff" fill-opacity=".28"/>';
+    else if (tp.type === 'pop') s += '<defs><radialGradient id="' + id + '" cx="36%" cy="32%" r="72%"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset=".32" stop-color="' + c + '" stop-opacity=".94"/><stop offset="1" stop-color="' + dk + '"/></radialGradient></defs><circle cx="20" cy="21" r="12.5" fill="url(#' + id + ')" stroke="' + dk + '" stroke-opacity=".5"/>';
+    else s += '<g transform="rotate(-11 20 21)"><rect x="8.5" y="9.5" width="23" height="23" rx="4.5" fill="' + c + '" fill-opacity=".86" stroke="' + dk + '" stroke-opacity=".55"/><rect x="12" y="13" width="8" height="3" rx="1.5" fill="#fff" fill-opacity=".6"/></g>';
+    return s + '</svg>';
+  }
+  function hanko() {
+    return '<svg class="hanko" viewBox="0 0 120 120" role="img" aria-label="' + esc(t('seal')) + '"><defs><path id="hk-p" d="M60 60m-41 0a41 41 0 1 1 82 0a41 41 0 1 1-82 0"/><filter id="hk-ink" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="2.4"/></filter></defs>' +
+      '<g filter="url(#hk-ink)" fill="none" stroke="#B33A22" stroke-linecap="round" stroke-linejoin="round"><circle cx="60" cy="60" r="55" stroke-width="5"/><circle cx="60" cy="60" r="30" stroke-width="1.6"/>' +
+      '<text fill="#B33A22" stroke="none" font-family="Schibsted Grotesk, Arial, sans-serif" font-weight="700" font-size="11" letter-spacing="1"><textPath href="#hk-p" textLength="250" lengthAdjust="spacing">KOI TEA · ROCKY POINT · MX · 2026 ·</textPath></text>' +
+      '<g stroke-width="2"><path d="M57.4 43L60 36.6 62.6 43"/><circle cx="60" cy="54" r="12.2"/><path d="M50.5 47.5c3-5.5 9-7.6 14-5.4 3 1.4 4.6 3.6 5 6.3-2.6-1.6-5.5-.6-7.2 1.4-3.8 3.2-8.3 1.8-11.8-2.3z" fill="#B33A22" stroke="none"/>' +
+      '<circle cx="55.6" cy="55.4" r="1.4" fill="#B33A22" stroke="none"/><circle cx="64.4" cy="55.4" r="1.4" fill="#B33A22" stroke="none"/><path d="M48.2 57.4c-6.4-4.6-11.2-2.8-12.4 1.2 4 2.6 8.6 2.4 12.4-1.2zM71.8 57.4c6.4-4.6 11.2-2.8 12.4 1.2-4 2.6-8.6 2.4-12.4-1.2z"/>' +
+      '<path d="M60 60.5v10"/><path d="M53 70.5h14l-1.6 13h-10.8z"/><circle cx="57.6" cy="79.4" r="1.3" fill="#B33A22" stroke="none"/><circle cx="62.2" cy="80.2" r="1.3" fill="#B33A22" stroke="none"/></g></g></svg>';
+  }
+  var EMPTY_ART = '<svg class="empty-art" viewBox="0 0 110 150" aria-hidden="true" focusable="false"><circle cx="55" cy="8" r="3" fill="#2A2523"/><path d="M55 8L20 44M55 8l35 36" stroke="#8A7F76" stroke-width="1.2" fill="none"/><rect x="12" y="40" width="86" height="104" fill="#FDFBF7" stroke="#C8A27A" stroke-width="6"/><rect x="25" y="53" width="60" height="78" fill="none" stroke="#D8CAB8" stroke-dasharray="4 4"/><path d="M47 92h16M55 84v16" stroke="#8A7F76" stroke-width="1.6" stroke-linecap="round"/></svg>';
+
+  /* ---------- preferencias visibles ---------- */
+  function prefsHTML(scope, testids) {
+    function tid(id) { return testids ? ' data-testid="' + id + '"' : ''; }
+    function b(kind, v, label, extra) {
+      var on = kind === 'lang' ? S.lang === v : S.cur === v;
+      return '<button type="button" class="seg-b" data-' + kind + '="' + v + '" data-fk="' + scope + '-' + kind + '-' + v + '"' + tid(kind === 'lang' ? 'lang-' + v : 'cur-' + v) + ' aria-pressed="' + on + '"' + (extra || '') + '>' + label + '</button>';
+    }
+    return '<div class="seg" role="group" data-t-aria="langGroup" aria-label="' + esc(t('langGroup')) + '">' + b('lang', 'es', 'ES<span class="sr"> Español</span>', ' lang="es"') + b('lang', 'en', 'EN<span class="sr"> English</span>', ' lang="en"') + '</div>' +
+      '<div class="seg" role="group" data-t-aria="curGroup" aria-label="' + esc(t('curGroup')) + '">' + b('cur', 'mxn', 'MXN<span class="sr" data-t="curMxn"> ' + esc(t('curMxn')) + '</span>') + b('cur', 'usd', 'USD<span class="sr" data-t="curUsd"> ' + esc(t('curUsd')) + '</span>') + '</div>';
+  }
+  function curSegHTML(scope) {
+    function b(v, label) { return '<button type="button" class="seg-b" data-cur="' + v + '" data-fk="' + scope + '-cur-' + v + '" aria-pressed="' + (S.cur === v) + '">' + label + '</button>'; }
+    return '<div class="seg" role="group" aria-label="' + esc(t('curGroup')) + '">' + b('mxn', 'MXN') + b('usd', 'USD') + '</div>';
+  }
+  function closeBtn() { return '<button type="button" class="x" data-close data-testid="close" data-fk="close" aria-label="' + esc(t('close')) + '">' + ICON.close + '</button>'; }
+
+  /* ---------- salas ---------- */
+  function plaquesHTML(d) {
+    var p = '';
+    if (d.tags.indexOf('casa') >= 0) p += '<li class="plaque plaque-casa">' + t('pCasa') + '</li>';
+    if (d.tags.indexOf('resena') >= 0) p += '<li class="plaque plaque-resena">' + t('pResena') + '</li>';
+    if (d.soldOut) p += '<li class="plaque plaque-out"><i class="dot-out" aria-hidden="true"></i>' + t('pOut') + '</li>';
+    return p ? '<ul class="plaques">' + p + '</ul>' : '';
+  }
+  function pieceHTML(d, feat) {
+    var name = K.drinkName(d, S.lang), alt = altName(d), cfg = K.defaultConfig(d), out = !!d.soldOut;
+    var cup = CUP.svg(d, { toppings: cfg.toppings.length ? cfg.toppings : [d.topping] });
+    var art = feat
+      ? '<div class="niche" aria-hidden="true" style="--tint:' + d.colors.main + '"><span class="n-light"></span><span class="n-beam"></span>' + SPOT + '<span class="n-halo"></span><span class="n-plinth"></span><div class="n-cup">' + cup + '</div><span class="n-shade"></span></div>'
+      : '<div class="pz-art" aria-hidden="true">' + SPOT + '<span class="beam"></span><span class="glow"></span><div class="frame"><div class="canvas" style="--tint:' + d.colors.main + '"><span class="halo"></span>' + cup + '</div></div></div>';
+    var ced = '<div class="cedula' + (feat ? ' cedula-f' : '') + '">' +
+      '<div class="cd-top"><span class="cd-no">' + t('no') + ' ' + NUM[d.id] + '</span>' + (feat ? '<span class="caps cd-feat">' + t('featured') + '</span>' : '') + '</div>' +
+      '<h3 class="cd-h"><button type="button" class="open" data-open="' + d.id + '" data-testid="drink-' + d.id + '" data-fk="open-' + d.id + '" aria-describedby="tec-' + d.id + ' pr-' + d.id + '"><span class="cd-t">' + esc(name) + '</span>' + (alt ? '<span class="cd-alt">' + esc(alt) + '</span>' : '') + '</button></h3>' +
+      '<p class="cd-tec" id="tec-' + d.id + '"><i>' + t('tec') + ':</i> ' + esc(tecText(d)) + '</p>' +
+      '<p class="cd-ph">' + esc(PHRASE[d.id][li()]) + '</p>' + plaquesHTML(d) +
+      '<div class="cd-buy"><span class="price" id="pr-' + d.id + '">' + (out ? '<span class="sr">' + t('pOut') + ' · </span>' : '') + money(d.price) + '</span><span class="cd-view" aria-hidden="true">' + t('view') + '</span><span class="grow"></span>' +
+      '<button type="button" class="plus" data-quick="' + d.id + '" data-testid="quick-add-' + d.id + '" data-fk="quick-' + d.id + '" aria-label="' + esc(out ? t('quickOut')(name) : t('quick')(name, K.describe(d, cfg, S.lang))) + '"' + (out ? ' disabled' : '') + '>' + ICON.plus + '</button></div></div>';
+    return '<article class="piece' + (feat ? ' piece-f' : '') + (out ? ' is-out' : '') + (S.lit === d.id ? ' is-lit' : '') + '" data-piece="' + d.id + '" data-anchor="pz-' + d.id + '">' + art + ced + '</article>';
+  }
+  function roomHTML(r) {
+    var c = K.category(r.id), list = K.drinksIn(r.id), feat = K.drink(r.feat);
+    var min = Math.min.apply(null, list.map(function (d) { return d.price; }));
+    return '<section class="room" id="sala-' + r.id + '" data-room="' + r.id + '" aria-labelledby="rt-' + r.id + '">' +
+      '<header class="room-head" data-anchor="rh-' + r.id + '"><div class="rail" aria-hidden="true">' + FX + FX + FX + '</div>' +
+      '<p class="room-n"><span class="caps">' + t('sala') + '</span><span class="roman">' + r.num + '</span></p>' +
+      '<h2 class="room-t" id="rt-' + r.id + '" tabindex="-1">' + esc(K.catName(c, S.lang)) + '</h2>' +
+      '<p class="room-l">' + esc(r.line[li()]) + '</p>' +
+      '<p class="room-m">' + t('pieces')(list.length) + ' · ' + t('from') + ' ' + money(min) + '</p></header>' +
+      pieceHTML(feat, true) +
+      '<div class="wall">' + list.filter(function (d) { return d.id !== r.feat; }).map(function (d) { return pieceHTML(d, false); }).join('') + '</div></section>';
+  }
+  function cabinetHTML() {
+    var p = '+' + money(K.meta.extraToppingPrice);
+    return '<section class="room cab" id="sala-tops" data-room="tops" aria-labelledby="rt-tops">' +
+      '<header class="room-head" data-anchor="rh-tops"><div class="rail" aria-hidden="true">' + FX + FX + FX + '</div>' +
+      '<p class="room-n"><span class="caps">' + t('cabinet') + '</span></p><h2 class="room-t" id="rt-tops" tabindex="-1">' + t('tops') + '</h2>' +
+      '<p class="room-l">' + esc(t('topsLine')(p)) + '</p></header>' +
+      '<div class="cab-body" data-anchor="cab"><div class="vitrine">' + K.toppingGroups.map(function (g) {
+        var items = K.toppings.filter(function (tp) { return tp.group === g.id; });
+        return '<div class="drawer"><div class="drawer-h"><h3 class="drawer-t">' + esc(g[S.lang]) + '</h3><p class="drawer-p">' + esc(t('grpNote')[g.id]) + '</p></div><ul class="cubbies' + (items.length === 1 ? ' one' : '') + '">' +
+          items.map(function (tp) {
+            return '<li class="cubby' + (tp.soldOut ? ' is-out' : '') + '">' + specimen(tp) + '<span class="cubby-n">' + esc(K.toppingName(tp, S.lang, true)) + '</span>' + (tp.soldOut ? '<span class="cubby-out"><i class="dot-out" aria-hidden="true"></i>' + t('pOut') + '</span>' : '') + '</li>';
+          }).join('') + '</ul></div>';
+      }).join('') + '</div><p class="fine cab-foot">' + t('cabFoot') + '</p></div></section>';
+  }
+  function renderRooms() { $('#rooms').innerHTML = ROOMS.map(roomHTML).join('') + cabinetHTML(); }
+  function renderGuide() {
+    $('#guide-list').innerHTML = ROOMS.map(function (r) {
+      var d = K.drink(r.feat), min = Math.min.apply(null, K.drinksIn(r.id).map(function (x) { return x.price; }));
+      return '<li><button type="button" class="g-room" data-go="' + r.id + '" data-fk="guide-' + r.id + '"><span class="g-frame" aria-hidden="true">' + CUP.svg(d, { shadow: false }) + '</span><span class="g-num">' + t('sala') + ' ' + r.num + '</span><span class="g-name">' + esc(K.catName(K.category(r.id), S.lang)) + '</span><span class="g-from">' + t('from') + ' ' + money(min) + '</span></button></li>';
+    }).join('');
+  }
+  function renderPlan() {
+    $('#plan-rooms').innerHTML = PLAN.map(function (id) {
+      var top = id === 'tops', r = ROOM_BY[id];
+      var name = top ? t('tops') : K.catName(K.category(id), S.lang), pre = top ? t('cabinet') : t('sala') + ' ' + r.num;
+      return '<li><button type="button" class="rb" data-go="' + id + '" data-fk="plan-' + id + '"' + (S.here === id ? ' aria-current="location"' : '') + '><span class="rb-n" aria-hidden="true">' + (top ? ICON.grid : r.num) + '</span><span class="rb-name"><span class="sr">' + esc(pre) + ' · </span>' + esc(name) + '</span></button></li>';
+    }).join('');
+  }
+
+  /* ---------- foco ---------- */
+  function focusKey() { var a = D.activeElement; return a && a.getAttribute ? a.getAttribute('data-fk') : null; }
+  function restoreFocus(key, scope) {
+    if (!key) return;
+    var el = (scope || D).querySelector('[data-fk="' + key + '"]');
+    if (el && el !== D.activeElement && !el.disabled) { try { el.focus({ preventScroll: true }); } catch (e) { el.focus(); } }
+  }
+
+  /* ---------- render general (idioma / moneda) ---------- */
+  function captureAnchor() {
+    var cy = window.innerHeight / 2, els = $$('[data-anchor]');
+    for (var i = 0; i < els.length; i++) { var r = els[i].getBoundingClientRect(); if (r.top <= cy && r.bottom >= cy) return { k: els[i].getAttribute('data-anchor'), top: r.top }; }
+    return null;
+  }
+  function restoreAnchor(a) {
+    if (!a) return; var el = $('[data-anchor="' + a.k + '"]'); if (!el) return;
+    var dy = el.getBoundingClientRect().top - a.top; if (Math.abs(dy) > 1) window.scrollBy(0, dy);
+  }
+  function syncPrefs() {
+    $$('[data-lang]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === S.lang)); });
+    $$('[data-cur]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-cur') === S.cur)); });
+  }
+  function renderAll(initial) {
+    var fk = focusKey(), anchor = initial ? null : captureAnchor();
+    root.lang = S.lang; D.title = t('docTitle');
+    $$('[data-t]').forEach(function (el) { var v = val(el.getAttribute('data-t')); if (el.classList.contains('sr')) v = ' ' + v; if (v) el.textContent = v; });
+    $$('[data-t-alt]').forEach(function (el) { el.alt = val(el.getAttribute('data-t-alt')); });
+    $$('[data-t-aria]').forEach(function (el) { el.setAttribute('aria-label', val(el.getAttribute('data-t-aria'))); });
+    renderRooms(); renderPlan(); renderGuide(); renderOpen();
+    if (anchor) restoreAnchor(anchor);
+    setupLights(); updatePlan(true); updateBag(); syncPrefs();
+    if (S.piece && $('#dlg-piece').open) renderPiece(true);
+    if ($('#dlg-cart').open) renderCart();
+    if ($('#dlg-ticket').open) renderTicket();
+    if ($('#dlg-wa').open) renderWA();
+    if (fk && !D.activeElement.getAttribute('data-fk')) restoreFocus(fk);
+  }
+  function setLang(l) { if (l === S.lang || !L[l]) return; S.lang = l; savePrefs(); renderAll(); }
+  function setCur(c) { if (c === S.cur) return; S.cur = c; savePrefs(); renderAll(); }
+
+  /* ---------- iluminación de galería ---------- */
+  var io = null, crossing = [];
+  function lightUp(p) {
+    var id = p ? p.getAttribute('data-piece') : null;
+    if (id === S.lit) return; S.lit = id;
+    $$('.piece.is-lit').forEach(function (x) { x.classList.remove('is-lit'); });
+    if (p) p.classList.add('is-lit');
+  }
+  function pickLit() {
+    var cy = window.innerHeight / 2, best = null, bd = 1e9;
+    crossing.forEach(function (p) { if (!p.isConnected) return; var r = p.getBoundingClientRect(), dd = Math.abs(r.top + r.height / 2 - cy); if (dd < bd) { bd = dd; best = p; } });
+    lightUp(best);
+  }
+  function setupLights() {
+    if (io) io.disconnect(); crossing = [];
+    if (!('IntersectionObserver' in window)) return;
+    io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { var i = crossing.indexOf(e.target); if (e.isIntersecting) { if (i < 0) crossing.push(e.target); } else if (i >= 0) crossing.splice(i, 1); });
+      pickLit();
+    }, { rootMargin: '-47% 0px -47% 0px', threshold: 0 });
+    $$('.piece').forEach(function (p) { io.observe(p); });
+  }
+
+  /* ---------- plano de sala: «estás aquí» ---------- */
+  var ticking = false;
+  function updatePlan(force) {
+    var list = $('#plan-rooms'), dot = $('#plan-dot'); if (!list || !dot) return;
+    var cy = window.innerHeight * 0.5, idx = -1, frac = 0, secs = PLAN.map(function (id) { return D.getElementById('sala-' + id); });
+    for (var i = 0; i < secs.length; i++) { var s = secs[i]; if (!s) continue; var r = s.getBoundingClientRect(); if (r.top <= cy && r.bottom > cy) { idx = i; frac = (cy - r.top) / r.height; break; } }
+    var pos = idx >= 0 ? idx + frac : (secs[0] && secs[0].getBoundingClientRect().top > cy ? 0 : PLAN.length);
+    dot.style.transform = 'translateX(' + (pos / PLAN.length * list.clientWidth).toFixed(1) + 'px)';
+    var cur = idx >= 0 ? PLAN[idx] : null;
+    if (cur !== S.here || force) {
+      S.here = cur;
+      $$('.rb', list).forEach(function (b) { if (b.getAttribute('data-go') === cur) b.setAttribute('aria-current', 'location'); else b.removeAttribute('aria-current'); });
+      $$('.room').forEach(function (s) { s.classList.toggle('is-here', s.getAttribute('data-room') === cur); });
+    }
+  }
+  function onScroll() { if (ticking) return; ticking = true; window.requestAnimationFrame(function () { ticking = false; updatePlan(); }); }
+  function go(id) {
+    var el = id === 'hall' ? $('#entrada') : $('#sala-' + id); if (!el) return;
+    var behavior = reduced() ? 'auto' : 'smooth';
+    if (id === 'hall') window.scrollTo({ top: 0, behavior: behavior }); else el.scrollIntoView({ behavior: behavior, block: 'start' });
+    var h = id === 'hall' ? $('#hall-title') : $('#rt-' + id);
+    if (h) { try { h.focus({ preventScroll: true }); } catch (e) {} }
+  }
+
+  /* ---------- selección (carrito) ---------- */
+  function updateBag() {
+    var n = K.cartCount(S.cart), b = $('[data-testid="open-cart"]'), c = $('.bag-n', b);
+    c.textContent = n; c.hidden = !n;
+    b.setAttribute('aria-label', n ? t('bagN')(n, priceMain(K.cartTotal(S.cart, 'mxn'))) : t('bagEmpty'));
+  }
+  function glowBag() { var b = $('.bag'); if (!b || reduced()) return; b.classList.remove('glowing'); void b.offsetWidth; b.classList.add('glowing'); }
+  function cartChanged() { S.code = null; S.codeAt = null; updateBag(); }
+  function quickAdd(id, btn) {
+    var d = K.drink(id); if (!d || d.soldOut) return;
+    var cfg = K.defaultConfig(d);
+    S.cart = K.addToCart(S.cart, id, cfg, 1); S.removed = null; cartChanged(); glowBag();
+    if (btn) { btn.classList.add('done'); btn.innerHTML = ICON.check; setTimeout(function () { if (btn.isConnected) { btn.classList.remove('done'); btn.innerHTML = ICON.plus; } }, 1300); }
+    toast(t('addedQuick')(K.drinkName(d, S.lang)), K.describe(d, cfg, S.lang), true);
+  }
+
+  /* ---------- aviso ---------- */
+  var toastTimer = null;
+  function toast(msg, sub, withAction) {
+    var el = $('#toast'), m = $('.toast-m', el), a = $('.toast-a', el);
+    m.innerHTML = esc(msg) + (sub ? '<small>' + esc(sub) + '</small>' : '');
+    a.hidden = !withAction; a.textContent = t('see');
+    el.classList.add('show'); clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { el.classList.remove('show'); }, 4200);
+  }
+  function announce(dlg, msg) { var l = $('[aria-live]', dlg); if (l) { l.textContent = ''; setTimeout(function () { l.textContent = msg; }, 30); } }
+
+  /* ---------- diálogos ---------- */
+  var DLGS = ['dlg-piece', 'dlg-cart', 'dlg-ticket', 'dlg-wa'];
+  var stack = [];
+  function anyOpen() { return stack.length > 0; }
+  function animateIn(dlg, kind, origin) {
+    if (!dlg.animate) return;
+    if (reduced()) { dlg.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 150, easing: 'ease-out' }); return; }
+    var ease = 'cubic-bezier(.2,.7,.2,1)';
+    if (kind === 'approach') {
+      var b = dlg.getBoundingClientRect(), ox = origin ? origin.x - b.left : b.width / 2, oy = origin ? origin.y - b.top : b.height / 3;
+      dlg.style.transformOrigin = ox.toFixed(0) + 'px ' + oy.toFixed(0) + 'px';
+      dlg.animate([{ opacity: 0, transform: 'scale(.86)' }, { opacity: 1, transform: 'scale(1)' }], { duration: 520, easing: ease });
+    } else if (kind === 'sheet') {
+      dlg.animate([{ opacity: 0, transform: 'translateY(48px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 320, easing: ease });
+    } else if (kind === 'ticket') {
+      dlg.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 220, easing: 'ease-out' });
+      var tk = $('.ticket', dlg); if (tk && tk.animate) tk.animate([{ opacity: 0, transform: 'translateY(40px)' }, { opacity: 1, transform: 'none' }], { duration: 600, easing: ease });
+    } else {
+      dlg.animate([{ opacity: 0, transform: 'translateY(18px)' }, { opacity: 1, transform: 'none' }], { duration: 300, easing: ease });
+    }
+  }
+  function openDialog(dlg, o) {
+    o = o || {};
+    if (!dlg.open) {
+      var ret = o.returnTo || D.activeElement;
+      dlg._ret = ret; dlg._retKey = ret && ret.getAttribute ? ret.getAttribute('data-fk') : null;
+      try { dlg.showModal(); } catch (e) { dlg.setAttribute('open', ''); }
+      stack.push(dlg);
+      animateIn(dlg, o.anim, o.origin);
+    }
+    root.classList.add('lock');
+    var f = o.focus ? $(o.focus, dlg) : null; f = f || $('[data-fk="close"]', dlg) || dlg;
+    try { f.focus({ preventScroll: true }); } catch (e) { f.focus(); }
+  }
+  function onClose(e) {
+    var dlg = e.target, i = stack.indexOf(dlg);
+    if (i >= 0) stack.splice(i, 1);
+    if (!anyOpen()) root.classList.remove('lock');
+    if (dlg.id === 'dlg-piece') S.piece = null;
+    if (dlg.id === 'dlg-cart') S.removed = null;
+    var r = dlg._ret, key = dlg._retKey; dlg._ret = null; dlg._retKey = null;
+    var top = stack[stack.length - 1];
+    if (r && (!r.isConnected || r.closest('dialog:not([open])'))) r = null;
+    if (!r && key) { r = (top || D).querySelector('[data-fk="' + key + '"]'); if (r && r.closest('dialog:not([open])')) r = null; }
+    if (!r || (top && !top.contains(r))) r = top ? ($('h2[tabindex]', top) || top) : $('[data-testid="open-cart"]');
+    if (r) { try { r.focus({ preventScroll: true }); } catch (err) {} }
+  }
+  function closeAll() { stack.slice().reverse().forEach(function (d) { d._ret = null; d._retKey = null; try { d.close(); } catch (e) {} }); }
+
+  /* ---------- ficha de obra ---------- */
+  function artCenter(el) {
+    var p = el && el.closest ? el.closest('.piece') : null, a = p && (p.querySelector('.frame') || p.querySelector('.niche'));
+    if (!a) return null; var r = a.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+  }
+  function openPiece(id, from, keepOpen) {
+    var d = K.drink(id); if (!d) return;
+    S.piece = { id: id, cfg: K.defaultConfig(d), qty: 1, msg: '' };
+    var dlg = $('#dlg-piece');
+    if (keepOpen && dlg.open) { renderPiece(false); var sc = $('.scroll', dlg); if (sc) sc.scrollTop = 0; var h = $('#pc-t', dlg); if (h) h.focus({ preventScroll: true }); return; }
+    renderPiece(false);
+    openDialog(dlg, { returnTo: from, focus: '#pc-t', anim: 'approach', origin: artCenter(from) });
+  }
+  function editLine(key, from) {
+    var l = S.cart.filter(function (x) { return x.key === key; })[0]; if (!l) return;
+    S.piece = { id: l.id, cfg: JSON.parse(JSON.stringify(l.cfg)), qty: l.qty, msg: '', editKey: key };
+    renderPiece(false);
+    openDialog($('#dlg-piece'), { returnTo: from, focus: '#pc-t', anim: 'rise' });
+  }
+  function group(id, label, extra, body) {
+    return '<div class="opt" role="group" aria-labelledby="g-' + id + '"><div class="opt-head"><h3 class="opt-t" id="g-' + id + '">' + esc(label) + '</h3>' + (extra || '') + '</div>' + body + '</div>';
+  }
+  function formHTML(d) {
+    var o = K.optionsFor(d), h = '<div class="pc-form">';
+    if (o.size) h += group('size', t('size'), '', '<div class="cells cells-2">' + K.sizes.map(function (s) {
+      return '<button type="button" class="cell" data-testid="size-' + s.id + '" data-size="' + s.id + '" data-fk="size-' + s.id + '" aria-pressed="false">' + sizeIcon(s.id) + '<span class="cell-w">' + esc(s[S.lang]) + '</span><span class="cell-v">' + (s.delta ? '+' + money(s.delta) : t('basePrice')) + '</span>' + TICK + '</button>';
+    }).join('') + '</div>');
+    if (o.toppings) h += group('tops', t('tops'), '<p class="opt-r">' + esc(t('topsRule')('+' + money(K.meta.extraToppingPrice))) + ' · <b id="tops-count"></b></p>',
+      K.toppingGroups.map(function (g) {
+        return '<div class="tgrp"><p class="tgrp-t">' + esc(g[S.lang]) + '</p><div class="chips">' + K.toppings.filter(function (tp) { return tp.group === g.id; }).map(function (tp) {
+          return '<button type="button" class="chip" data-testid="topping-' + tp.id + '" data-top="' + tp.id + '" data-fk="top-' + tp.id + '" aria-pressed="false"' + (tp.soldOut ? ' disabled' : '') + '>' + specimen(tp) +
+            '<span class="chip-n">' + esc(K.toppingName(tp, S.lang, true)) + '</span><span class="chip-p">' + (tp.soldOut ? '<i class="dot-out" aria-hidden="true"></i>' + t('pOut') : '') + '</span>' + TICK + '</button>';
+        }).join('') + '</div></div>';
+      }).join('') + '<p class="opt-msg" id="tops-msg" aria-live="polite"></p>');
+    if (o.sweet) h += group('sweet', t('sweet'), '', '<div class="cells cells-5">' + SWEET_ORDER.map(function (v) {
+      var sw = K.sweetness.filter(function (x) { return x.v === v; })[0];
+      return '<button type="button" class="cell" data-testid="sweet-' + v + '" data-sweet="' + v + '" data-fk="sweet-' + v + '" aria-pressed="false"><span class="cell-v">' + v + '%</span><span class="cell-w">' + esc(sw[S.lang]) + '</span><span class="meter" aria-hidden="true"><i style="width:' + Math.max(v, 4) + '%"></i></span></button>';
+    }).join('') + '</div>');
+    if (o.ice) h += group('ice', t('ice'), '', '<div class="cells cells-3">' + K.ice.map(function (ic) {
+      return '<button type="button" class="cell" data-testid="ice-' + ic.id + '" data-ice="' + ic.id + '" data-fk="ice-' + ic.id + '" aria-pressed="false">' + iceIcon(ic.cubes) + '<span class="cell-w">' + esc(ic[S.lang]) + '</span>' + TICK + '</button>';
+    }).join('') + '</div>');
+    if (!o.sweet && !o.ice) h += '<p class="pc-note">' + t('smoothNote') + '</p>';
+    return h + '</div>';
+  }
+  function renderPiece(keep) {
+    var P = S.piece; if (!P) return;
+    var d = K.drink(P.id), dlg = $('#dlg-piece'), box = $('.dlg-in', dlg), room = ROOM_BY[d.cat], feat = room.feat === d.id;
+    var sc = $('.scroll', box), top = keep && sc ? sc.scrollTop : 0, fk = keep ? focusKey() : null;
+    var name = K.drinkName(d, S.lang), alt = altName(d), catN = K.catName(K.category(d.cat), S.lang);
+    var h = '<div class="scroll">' +
+      '<div class="dlg-bar"><p class="bar-k">' + t('no') + ' ' + NUM[d.id] + '</p>' + '<div class="prefs">' + prefsHTML('pc', false) + '</div>' + closeBtn() + '</div>' +
+      '<div class="pc-hero"><div class="niche" aria-hidden="true" style="--tint:' + d.colors.main + '"><span class="n-light"></span><span class="n-beam"></span>' + SPOT + '<span class="n-halo"></span><span class="n-plinth"></span><div class="n-cup"></div></div>' +
+      '<div class="pc-side"><p class="caps">' + t('no') + '</p><p class="pc-num">' + NUM[d.id] + '</p><p class="caps">' + t('sala') + ' ' + room.num + '<br>' + esc(catN) + '</p>' + (feat ? '<p class="caps cd-feat">' + t('featured') + '</p>' : '') + '</div></div>' +
+      '<div class="pc-label"><h2 class="pc-t" id="pc-t" tabindex="-1">' + esc(name) + '</h2>' + (alt ? '<p class="cd-alt">' + esc(alt) + '</p>' : '') +
+      '<p class="cd-tec"><i>' + t('tec') + ':</i> ' + esc(tecText(d)) + '</p><p class="pc-desc">' + esc(K.drinkDesc(d, S.lang)) + '</p>' + plaquesHTML(d) + '</div>';
+    if (d.soldOut) {
+      var altD = K.drink(SOLD_ALT[d.id]) || K.recommend(d.profile, 1)[0];
+      h += '<div class="pc-out"><p><i class="dot-out" aria-hidden="true"></i><span><strong>' + t('soldOutT') + '</strong> ' + t('soldOutP') + '</span></p>' +
+        (altD ? '<button type="button" class="btn btn-line" data-alt="' + altD.id + '" data-fk="alt">' + esc(t('viewAlt')(K.drinkName(altD, S.lang))) + ICON.arrow + '</button>' : '') + '</div>';
+    } else h += formHTML(d);
+    h += '<p class="fine pc-fine">' + esc(K.meta.allergenNote[S.lang]) + ' ' + esc(K.meta.pricesNote[S.lang]) + '</p></div>';
+    if (d.soldOut) h += '<div class="pc-buy is-out"><button type="button" class="btn btn-dark btn-block" data-testid="add-to-cart" disabled aria-disabled="true">' + t('pOut') + '</button></div>';
+    else h += '<div class="pc-buy"><p class="pc-unit"><span class="lbl">' + (P.editKey ? '<span class="pc-edit">' + t('editing') + '</span> · ' : '') + t('unitL') + '</span><strong data-testid="unit-price" id="pc-unit"></strong><span class="pc-eq" id="pc-eq"></span></p><p class="pc-sum" id="pc-sum"></p>' +
+      '<div class="qty" role="group" aria-label="' + esc(t('qty')) + '"><button type="button" data-testid="qty-dec" data-qty="dec" data-fk="qty-dec" aria-label="' + esc(t('less')) + '">' + ICON.minus + '</button><span class="qty-n" id="pc-qty" aria-live="polite"></span><button type="button" data-testid="qty-inc" data-qty="inc" data-fk="qty-inc" aria-label="' + esc(t('more')) + '">' + ICON.plus + '</button></div>' +
+      '<button type="button" class="btn btn-dark" data-testid="add-to-cart" data-add data-fk="add"><span class="add-l"></span></button></div>';
+    dlg.classList.toggle('no-anim', !!keep);
+    box.innerHTML = h;
+    syncPiece(true);
+    if (keep) { var ns = $('.scroll', box); if (ns) ns.scrollTop = top; restoreFocus(fk, dlg); }
+  }
+  function syncPiece(initial, pour) {
+    var P = S.piece; if (!P) return;
+    var d = K.drink(P.id), dlg = $('#dlg-piece'), cfg = P.cfg;
+    $$('[data-size]', dlg).forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-size') === cfg.size)); });
+    $$('[data-sweet]', dlg).forEach(function (b) { b.setAttribute('aria-pressed', String(+b.getAttribute('data-sweet') === cfg.sweet)); });
+    $$('[data-ice]', dlg).forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-ice') === cfg.ice)); });
+    $$('[data-top]', dlg).forEach(function (b) {
+      var tp = K.topping(b.getAttribute('data-top')), i = cfg.toppings.indexOf(tp.id), on = i >= 0;
+      b.setAttribute('aria-pressed', String(on)); b.classList.toggle('is-extra', on && i >= K.meta.freeToppings);
+      if (!tp.soldOut) $('.chip-p', b).textContent = on ? K.toppingPriceLabel(i, S.lang, S.cur) : '';
+    });
+    var cnt = $('#tops-count', dlg); if (cnt) cnt.textContent = t('topsCount')(cfg.toppings.length, K.meta.maxToppings);
+    var msg = $('#tops-msg', dlg), mt = P.msg ? t(P.msg) : ''; if (msg && msg.textContent !== mt) msg.textContent = mt;
+    var cupBox = $('.pc-hero .n-cup', dlg);
+    if (cupBox) {
+      cupBox.innerHTML = CUP.svg(d, { toppings: cfg.toppings, ice: cfg.ice || 'none' });
+      cupBox.classList.toggle('is-big', cfg.size === 'grande');
+      if (pour && !reduced()) { cupBox.classList.remove('pour'); void cupBox.offsetWidth; cupBox.classList.add('pour'); }
+    }
+    if (d.soldOut) return;
+    var unit = K.unitPrice(d, cfg), up = $('#pc-unit', dlg), txt = priceMain(unit);
+    if (up && up.textContent !== txt) { up.textContent = txt; if (!initial && !reduced()) { up.classList.remove('flash'); void up.offsetWidth; up.classList.add('flash'); } }
+    var q = $('#pc-qty', dlg); if (q) q.textContent = P.qty;
+    var dec = $('[data-qty="dec"]', dlg); if (dec) dec.disabled = P.qty <= 1;
+    var eq = $('#pc-eq', dlg); if (eq) eq.textContent = priceEq(unit);
+    var sum = $('#pc-sum', dlg); if (sum) sum.textContent = K.describe(d, cfg, S.lang);
+    var each = S.cur === 'usd' ? '≈ ' + K.money(K.conv(unit, 'usd') * P.qty, 'usd', 'short') : K.money(unit * P.qty, 'mxn', 'short');
+    var add = $('.add-l', dlg); if (add) add.textContent = (P.editKey ? t('save') : (P.qty > 1 ? t('addN')(P.qty) : t('add'))) + ' · ' + each;
+  }
+  function toggleTopping(id) {
+    var P = S.piece, tp = K.topping(id); if (!P || !tp || tp.soldOut) return;
+    var list = P.cfg.toppings.slice(), i = list.indexOf(id);
+    if (i >= 0) { list.splice(i, 1); P.msg = ''; }
+    else if (list.length >= K.meta.maxToppings) { P.msg = 'maxTops'; syncPiece(); return; }
+    else { list.push(id); P.msg = ''; }
+    P.cfg.toppings = list; syncPiece(false, true);
+  }
+  function addFromPiece() {
+    var P = S.piece; if (!P) return; var d = K.drink(P.id); if (!d || d.soldOut) return;
+    var qty = P.qty, cfg = JSON.parse(JSON.stringify(P.cfg)), dlg = $('#dlg-piece');
+    if (P.editKey) {
+      var idx = -1; S.cart.forEach(function (x, i) { if (x.key === P.editKey) idx = i; });
+      var fresh = K.addToCart([], d.id, cfg, qty)[0], rest = S.cart.filter(function (x) { return x.key !== P.editKey; });
+      var same = rest.filter(function (x) { return x.key === fresh.key; })[0];
+      if (same) rest = K.setQty(rest, same.key, same.qty + qty); else rest.splice(Math.max(0, Math.min(idx, rest.length)), 0, fresh);
+      S.cart = rest; S.removed = null; cartChanged();
+      dlg._ret = null; dlg._retKey = 'edit:' + fresh.key;
+      renderCart(); dlg.close(); announce($('#dlg-cart'), t('saved')(K.drinkName(d, S.lang)));
+      return;
+    }
+    S.cart = K.addToCart(S.cart, d.id, cfg, qty); S.removed = null; cartChanged();
+    $('#dlg-piece').close();
+    glowBag();
+    toast(t('addedN')(qty, K.drinkName(d, S.lang)), K.describe(d, cfg, S.lang), true);
+  }
+
+  /* ---------- tu selección ---------- */
+  function lineHTML(l) {
+    var d = K.drink(l.id), name = K.drinkName(d, S.lang), k = esc(l.key);
+    return '<li class="line" data-testid="cart-line" data-key="' + k + '"><div class="line-art" aria-hidden="true">' + CUP.svg(d, { toppings: l.cfg.toppings, ice: l.cfg.ice || 'none', mini: true, shadow: false }) + '</div>' +
+      '<div><p class="line-n">' + esc(name) + '</p><p class="line-d">' + esc(K.describe(d, l.cfg, S.lang)) + '</p></div>' +
+      '<div class="line-c"><div class="qty" role="group" aria-label="' + esc(t('qtyOf')(name)) + '"><button type="button" data-testid="line-dec" data-line="dec" data-key="' + k + '" data-fk="dec:' + k + '" aria-label="' + esc(l.qty > 1 ? t('lessOf')(name) : t('removeOf')(name)) + '">' + ICON.minus + '</button><span class="qty-n">' + l.qty + '</span>' +
+      '<button type="button" data-testid="line-inc" data-line="inc" data-key="' + k + '" data-fk="inc:' + k + '" aria-label="' + esc(t('moreOf')(name)) + '"' + (l.qty >= 20 ? ' disabled' : '') + '>' + ICON.plus + '</button></div>' +
+      '<button type="button" class="rm" data-line="edit" data-key="' + k + '" data-fk="edit:' + k + '" aria-label="' + esc(t('editOf')(name)) + '">' + ICON.pen + '<span aria-hidden="true">' + t('edit') + '</span></button>' +
+      '<button type="button" class="rm" data-testid="line-remove" data-line="rm" data-key="' + k + '" data-fk="rm:' + k + '" aria-label="' + esc(t('removeOf')(name)) + '">' + ICON.trash + '<span aria-hidden="true">' + t('remove') + '</span></button></div>' +
+      '<p class="line-t" data-testid="line-total">' + lineAmt(l) + '</p></li>';
+  }
+  function renderCart(fkOverride) {
+    var dlg = $('#dlg-cart'), box = $('.dlg-in', dlg), fk = fkOverride || focusKey(), body = $('.sheet-body', box), st = body ? body.scrollTop : 0, n = K.cartCount(S.cart);
+    var h = '<div class="sheet-head"><div><p class="caps">' + (n ? t('pieces')(n) : t('cartK0')) + '</p><h2 class="sheet-t" id="cart-t" tabindex="-1">' + t('cartT') + '</h2></div>' + closeBtn() + '</div><div class="sheet-body">';
+    if (S.removed) h += '<div class="undo"><p>' + esc(t('removed')(K.drinkName(K.drink(S.removed.line.id), S.lang))) + '</p><button type="button" class="btn btn-line" data-undo data-fk="undo">' + ICON.undo + t('undo') + '</button></div>';
+    h += S.cart.length ? '<ul class="lines">' + S.cart.map(lineHTML).join('') + '</ul>'
+      : '<div class="empty" data-testid="cart-empty">' + EMPTY_ART + '<h3 class="empty-t">' + t('emptyT') + '</h3><p class="empty-p">' + t('emptyP') + '</p><button type="button" class="btn btn-line" data-go="milk" data-close-all data-fk="empty-go">' + t('emptyBtn') + ICON.arrow + '</button></div>';
+    h += '</div>';
+    var mx = K.cartTotal(S.cart, 'mxn');
+    if (S.cart.length) h += '<div class="sheet-foot"><div class="total"><span class="total-l">' + t('total') + '</span>' + curSegHTML('cart') + '<strong class="total-v" data-testid="cart-total">' + priceMain(mx) + '</strong></div>' +
+      '<p class="total-eq">' + (S.cur === 'usd' ? esc(t('payAt')(K.money(mx, 'mxn', 'full'))) : usdRef(mx)) + '</p>' +
+      '<p class="fine">' + esc(K.meta.pricesNote[S.lang]) + '</p><div class="checkout">' +
+      '<button type="button" class="btn btn-dark btn-block" data-testid="checkout-counter" data-checkout="counter" data-fk="co-counter">' + ICON.ticket + '<span>' + t('counter') + '</span></button>' +
+      '<button type="button" class="btn btn-line btn-block" data-testid="checkout-whatsapp" data-checkout="wa" data-fk="co-wa">' + ICON.chat + '<span>' + t('wa') + ' <small>· ' + t('waSub') + '</small></span></button></div></div>';
+    box.innerHTML = h;
+    var nb = $('.sheet-body', box); if (nb) nb.scrollTop = st;
+    if (fk) restoreFocus(fk, dlg);
+    if (dlg.contains(D.activeElement) === false && dlg.open) { var tt = $('#cart-t', dlg); if (tt) tt.focus({ preventScroll: true }); }
+  }
+  function openCart(from) { S.removed = null; renderCart(); openDialog($('#dlg-cart'), { returnTo: from, focus: '#cart-t', anim: 'sheet' }); }
+  function lineAct(key, kind) {
+    var l = null, idx = -1; S.cart.forEach(function (x, i) { if (x.key === key) { l = x; idx = i; } }); if (!l) return;
+    var name = K.drinkName(K.drink(l.id), S.lang), dlg = $('#dlg-cart');
+    if (kind === 'inc') { S.cart = K.setQty(S.cart, key, Math.min(20, l.qty + 1)); cartChanged(); renderCart(); return; }
+    if (kind === 'dec' && l.qty > 1) { S.cart = K.setQty(S.cart, key, l.qty - 1); cartChanged(); renderCart(); return; }
+    S.removed = { line: l, idx: idx }; S.cart = K.setQty(S.cart, key, 0); cartChanged();
+    renderCart('undo'); announce(dlg, t('removed')(name));
+  }
+  function undoRemove() {
+    var r = S.removed; if (!r) return;
+    var arr = S.cart.slice(), dup = arr.filter(function (x) { return x.key === r.line.key; })[0];
+    if (dup) arr = K.setQty(arr, dup.key, dup.qty + r.line.qty); else arr.splice(Math.min(r.idx, arr.length), 0, r.line);
+    S.cart = arr; S.removed = null; cartChanged(); renderCart('rm:' + r.line.key);
+  }
+
+  /* ---------- cierre: boleto y WhatsApp ---------- */
+  function ensureCode() { if (!S.code) { S.code = K.orderCode(); S.codeAt = new Date(); } }
+  function fmtDate(dt) {
+    var loc = S.lang === 'en' ? 'en-US' : 'es-MX';
+    try { return new Intl.DateTimeFormat(loc, { day: 'numeric', month: 'short', year: 'numeric' }).format(dt) + ' · ' + new Intl.DateTimeFormat(loc, { hour: '2-digit', minute: '2-digit' }).format(dt); }
+    catch (e) { return dt.toLocaleString(); }
+  }
+  function renderTicket() {
+    var box = $('#dlg-ticket .dlg-in'), fk = focusKey(), n = K.cartCount(S.cart), mx = K.cartTotal(S.cart, 'mxn'), tot = K.money(mx, 'mxn', 'full'), en = S.lang === 'en';
+    var lines = S.cart.map(function (l) {
+      var d = K.drink(l.id);
+      return '<li class="tk-line"><p class="tk-q">' + l.qty + '×</p><div><p class="tk-n">' + esc(K.drinkName(d, S.lang)) + '</p><p class="tk-d">' + esc(K.describe(d, l.cfg, S.lang)) + '</p>' +
+        (en ? '<p class="tk-es" lang="es"><b>' + t('staff') + '</b>' + esc((d.name !== K.drinkName(d, 'en') ? d.name + ' · ' : '') + K.describe(d, l.cfg, 'es')) + '</p>' : '') +
+        '</div><p class="tk-p">' + K.money(K.lineTotal(l, 'mxn'), 'mxn', 'short') + '</p></li>';
+    }).join('');
+    box.innerHTML = '<div class="scroll"><div class="dlg-bar"><p class="bar-k">' + t('tkK') + '</p>' + closeBtn() + '</div><div class="tk-body">' +
+      '<article class="ticket"><div class="tk-main"><div class="tk-head"><p class="caps">Koi Tea · ' + esc(t('kicker').split('·')[1].trim()) + '</p><h2 class="tk-t" id="tk-t" tabindex="-1">' + t('tkT') + '</h2></div>' + hanko() +
+      '<p class="tk-label">' + t('tkShow') + '</p><p class="tk-code" data-testid="order-code">' + esc(S.code) + '</p><p class="tk-date">' + esc(fmtDate(S.codeAt)) + '</p>' +
+      '<p class="tk-mode">' + (S.mode === 'togo' ? ICON.tote : ICON.cupI) + '<span>' + t(S.mode === 'togo' ? 'modeTogo' : 'modeHere') + (en ? '<span lang="es"> · ' + L.es[S.mode === 'togo' ? 'modeTogo' : 'modeHere'] + '</span>' : '') + '</span></p>' +
+      '<ul class="tk-lines">' + lines + '</ul><div class="tk-total"><span>' + t('payCounter') + '</span><strong>' + tot + '</strong></div>' + (S.cur === 'usd' || en ? '<p class="tk-pay">' + usdRef(mx) + '</p>' : '') + '</div>' +
+      '<div class="perf" aria-hidden="true"></div>' +
+      '<div class="tk-stub"><div><p class="caps">' + t('stub') + '</p><p class="tk-stub-code">' + esc(S.code) + '</p></div><p class="tk-stub-i">' + t('admits') + '<br>' + t('pieces')(n) + ' · ' + tot + '</p></div></article>' +
+      '<div class="tk-modes"><p class="caps" id="tk-mode-l">' + t('modeL') + '</p><div class="seg" role="group" aria-labelledby="tk-mode-l">' +
+      ['here', 'togo'].map(function (m) { return '<button type="button" class="seg-b" data-mode="' + m + '" data-fk="mode-' + m + '" aria-pressed="' + (S.mode === m) + '">' + t(m === 'togo' ? 'modeTogo' : 'modeHere') + '</button>'; }).join('') + '</div></div>' +
+      '<p class="tk-thanks">' + t('thanks') + '</p><p class="fine tk-fine">' + esc(K.meta.pricesNote[S.lang]) + '</p>' +
+      '<div class="tk-actions"><button type="button" class="btn btn-light" data-tk="back" data-fk="tk-back">' + t('back') + '</button><button type="button" class="btn btn-ghost" data-tk="new" data-fk="tk-new">' + t('newOrder') + '</button></div></div></div>';
+    if (fk) restoreFocus(fk, $('#dlg-ticket'));
+  }
+  function openTicket(from) {
+    ensureCode(); renderTicket();
+    var dlg = $('#dlg-ticket'); dlg.classList.remove('stamp');
+    openDialog(dlg, { returnTo: from, focus: '#tk-t', anim: 'ticket' });
+    void dlg.offsetWidth; dlg.classList.add('stamp');
+  }
+  function waText() { return K.waMessage(S.cart, S.lang, S.cur, S.code, S.wa.name.trim(), S.wa.time); }
+  function fitRows(ta) { ta.rows = Math.max(6, ta.value.split('\n').length + 1); if (ta.offsetParent) { ta.style.height = 'auto'; ta.style.height = (ta.scrollHeight + 4) + 'px'; } }
+  function renderWA() {
+    var box = $('#dlg-wa .dlg-in'), fk = focusKey(), sc = $('.scroll', box), st = sc ? sc.scrollTop : 0, sel = null;
+    var a = D.activeElement; if (a && (a.id === 'wa-name') && a.selectionStart != null) sel = [a.selectionStart, a.selectionEnd];
+    box.innerHTML = '<div class="scroll"><div class="dlg-bar"><p class="bar-k">' + esc(S.code) + '</p><div class="prefs">' + prefsHTML('wa', false) + '</div>' + closeBtn() + '</div><div class="wa-body">' +
+      '<p class="caps">' + t('waK') + '</p><h2 class="wa-t" id="wa-t" tabindex="-1">' + t('waT') + '</h2><p class="wa-p">' + t('waP') + '</p>' +
+      '<div class="fields"><label class="fld"><span class="fld-l">' + t('waName') + ' <small>' + t('opt') + '</small></span><input id="wa-name" data-testid="wa-name" data-fk="wa-name" type="text" autocomplete="given-name" maxlength="40" value="' + esc(S.wa.name) + '"></label>' +
+      '<label class="fld"><span class="fld-l">' + t('waTime') + ' <small>' + t('opt') + '</small></span><input id="wa-time" data-testid="wa-time" data-fk="wa-time" type="time" value="' + esc(S.wa.time) + '"></label></div>' +
+      '<p class="fld-h">' + esc(t('waHours')(K.meta.hours)) + '</p>' + (HOURS && isOpenNow() === false ? '<p class="wa-closed"><i class="dot-out" aria-hidden="true" style="margin-top:6px"></i><span>' + esc(t('waClosed')(HOURS.os)) + '</span></p>' : '') +
+      '<div class="slip"><div class="slip-h"><p class="caps" id="wa-prev">' + t('waPrev') + '</p><p class="mono">' + esc(S.code) + '</p></div><textarea id="wa-msg" data-testid="wa-message" readonly aria-labelledby="wa-prev" spellcheck="false"></textarea></div>' +
+      '<div class="wa-act"><button type="button" class="btn btn-dark" data-testid="wa-copy" data-copy data-fk="wa-copy">' + ICON.copy + '<span>' + t('copy') + '</span></button><p class="wa-status" id="wa-status" role="status" aria-live="polite"></p></div>' +
+      '<p class="fine wa-note">' + t('waProd') + '</p></div></div>';
+    var ta = $('#wa-msg', box); ta.value = waText(); fitRows(ta);
+    var ns = $('.scroll', box); if (ns) ns.scrollTop = st;
+    if (fk) restoreFocus(fk, $('#dlg-wa'));
+    if (sel) { var ni = $('#wa-name', box); try { ni.setSelectionRange(sel[0], sel[1]); } catch (e) {} }
+  }
+  function openWA(from) { ensureCode(); renderWA(); openDialog($('#dlg-wa'), { returnTo: from, focus: '#wa-t', anim: 'rise' }); var ta = $('#wa-msg'); if (ta) fitRows(ta); }
+  function copyWA(btn) {
+    var ta = $('#wa-msg'), txt = ta ? ta.value : waText(), st = $('#wa-status');
+    function ok() { if (st) st.textContent = t('copied'); btn.classList.add('done'); setTimeout(function () { btn.classList.remove('done'); }, 1600); }
+    function manual() {
+      if (!ta) return; ta.focus(); ta.select(); try { ta.setSelectionRange(0, ta.value.length); } catch (e) {}
+      var done = false; try { done = D.execCommand('copy'); } catch (e) { done = false; }
+      if (done) ok(); else if (st) st.textContent = t('copyManual');
+    }
+    try { if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(ok, manual); else manual(); } catch (e) { manual(); }
+  }
+  function newOrder() {
+    S.cart = []; S.code = null; S.codeAt = null; S.removed = null; S.wa.time = ''; cartChanged();
+    closeAll();
+    setTimeout(function () { toast(t('newDone'), '', false); var b = $('[data-testid="open-cart"]'); if (b) b.focus({ preventScroll: true }); }, 40);
+  }
+
+  /* ---------- eventos ---------- */
+  function onClick(e) {
+    var b = e.target.closest ? e.target.closest('button, a') : null; if (!b || b.disabled) return;
+    var g = function (a) { return b.getAttribute(a); };
+    if (g('data-lang')) return setLang(g('data-lang'));
+    if (g('data-cur')) return setCur(g('data-cur'));
+    if (g('data-go')) { e.preventDefault(); if (b.hasAttribute('data-close-all')) closeAll(); var to = g('data-go'); setTimeout(function () { go(to); }, b.hasAttribute('data-close-all') ? 30 : 0); return; }
+    if (g('data-open')) return openPiece(g('data-open'), b);
+    if (g('data-quick')) return quickAdd(g('data-quick'), b);
+    if (b.hasAttribute('data-open-cart')) { var from = b.hasAttribute('data-toast-cart') ? $('[data-testid="open-cart"]') : b; $('#toast').classList.remove('show'); return openCart(from); }
+    if (b.hasAttribute('data-close')) { var dl = b.closest('dialog'); if (dl) dl.close(); return; }
+    var P = S.piece;
+    if (P) {
+      if (g('data-size')) { P.cfg.size = g('data-size'); return syncPiece(); }
+      if (g('data-top')) return toggleTopping(g('data-top'));
+      if (g('data-sweet') != null) { P.cfg.sweet = +g('data-sweet'); return syncPiece(); }
+      if (g('data-ice')) { P.cfg.ice = g('data-ice'); return syncPiece(false, false); }
+      if (g('data-qty')) { P.qty = Math.max(1, Math.min(20, P.qty + (g('data-qty') === 'inc' ? 1 : -1))); return syncPiece(); }
+      if (b.hasAttribute('data-add')) return addFromPiece();
+    }
+    if (g('data-alt')) return openPiece(g('data-alt'), null, true);
+    if (g('data-line') === 'edit') return editLine(g('data-key'), b);
+    if (g('data-line')) return lineAct(g('data-key'), g('data-line'));
+    if (b.hasAttribute('data-undo')) return undoRemove();
+    if (g('data-checkout') === 'counter') return openTicket(b);
+    if (g('data-checkout') === 'wa') return openWA(b);
+    if (g('data-mode')) { S.mode = g('data-mode') === 'togo' ? 'togo' : 'here'; renderTicket(); return; }
+    if (g('data-tk') === 'back') { $('#dlg-ticket').close(); return; }
+    if (g('data-tk') === 'new') return newOrder();
+    if (b.hasAttribute('data-copy')) return copyWA(b);
+  }
+  function onInput(e) {
+    var el = e.target; if (!el || !el.id) return;
+    if (el.id === 'wa-name' || el.id === 'wa-time') {
+      S.wa[el.id === 'wa-name' ? 'name' : 'time'] = el.value;
+      var ta = $('#wa-msg'); if (ta) { ta.value = waText(); fitRows(ta); }
+      var st = $('#wa-status'); if (st) st.textContent = '';
+    }
+  }
+
+  /* gancho de solo lectura para la batería de pruebas */
+  window.KoiV1 = { cart: function () { return JSON.parse(JSON.stringify(S.cart)); }, cur: function () { return S.cur; }, lang: function () { return S.lang; } };
+
+  /* ---------- arranque ---------- */
+  $('#prefs-top').innerHTML = prefsHTML('top', true);
+  renderAll(true);
+  DLGS.forEach(function (id) {
+    var dl = D.getElementById(id);
+    dl.addEventListener('close', onClose);
+    dl.addEventListener('click', function (e) { if (e.target === dl && dl.classList.contains('dlg-sheet')) dl.close(); });
+  });
+  D.addEventListener('click', onClick);
+  D.addEventListener('input', onInput);
+  D.addEventListener('change', onInput);
+  D.addEventListener('focusin', function (e) { var p = e.target.closest ? e.target.closest('.piece') : null; if (p) lightUp(p); });
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', function () { updatePlan(true); });
+})();
+</script>
+</body>
+</html>

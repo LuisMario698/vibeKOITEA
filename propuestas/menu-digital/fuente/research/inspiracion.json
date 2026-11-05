@@ -1,0 +1,273 @@
+{
+ "track": "Inspiración visual: Instagram, Pinterest, Dribbble, Behance",
+ "sources": [
+  {
+   "name": "BLOOP — Brand Identity for Bubble Tea & Coffee (Katya Vlasenko, Behance, jul 2026)",
+   "url": "https://www.behance.net/gallery/252871673/BLOOP-Brand-Identity-for-Bubble-Tea-Coffee",
+   "accessed": false,
+   "kind": "dirección de arte",
+   "observed": "No abierto (Behance bloqueado por la red de la sesión); solo índice de búsqueda. Identidad conceptual para una tienda de bubble tea y café, publicada en julio de 2026. Según la descripción indexada: estética retro pixel/arcade; la mascota es una rana en pixel art que muestra 'estados de ánimo y antojos' con animaciones e ilustraciones simples; tipografía bold, colores ácidos y gráficos modulares pensados para empaque, merch, pósters y contenido digital. Etiquetas: Mascot, Character design. No vi las láminas.",
+   "borrow": "Una mascota con un repertorio corto de estados que se reutiliza en todos los soportes. Para Koi: 5 o 6 poses del koi de línea (saluda, piensa, celebra, guiña, triste por agotado, duerme fuera de horario), cada una en SVG o Lottie de pocos KB y ligada a eventos reales del menú.",
+   "avoid": "Pixel art, colores ácidos y nostalgia arcade: chocan con el japandi cálido del local y son de lo que más rápido envejece."
+  },
+  {
+   "name": "OOO Tea (ODD ONE OUT): A Sip of Spring / A Sip of Summer / Pistachill Dog (Lung-Hao Chiang)",
+   "url": "https://behance.net/gallery/195711953/A-SIP-OF-SPRING-Bubble-Tea-Visual-Identity-Design",
+   "accessed": false,
+   "kind": "dirección de arte",
+   "observed": "No abierto; índice de búsqueda. Serie de sub-identidades por temporada para una marca taiwanesa de bubble tea. Spring: flor de jengibre blanco y mariposa, 'ikebana con formas de globo', tono ligero y juvenil (créditos: Lung-Hao Chiang en diseño y copy, Ya-Ju Chan, foto de Hang-Rong Lee). Summer (Packaging of the World, oct 2024: https://packagingoftheworld.com/2024/10/a-sip-of-summer-bubble-tea-visual-identity-design.html): sandía, colores intensos y personajes excéntricos. Pistachill Dog (https://behance.net/gallery/187260063/Pistachill-Dog-Bubble-Tea-Visual-Identity-Design; The Dieline, ene 2024): juego de palabras 開心果→開心狗 ('perro feliz'), personaje de edición limitada para un lanzamiento, frase 'WOOOF!'.",
+   "borrow": "Tratar las temporadas como mini-identidades montadas sobre el sistema base: cada bebida de temporada recibe un color, una frase corta y un accesorio para el koi. Sirve para spring break y el verano de Arizona sin rediseñar el menú, y se maneja desde el panel.",
+   "avoid": "Multiplicar personajes (perro, sandía...) diluye la mascota. En Koi lo que cambia es el vestuario o los accesorios del mismo koi."
+  },
+  {
+   "name": "Shenzhen Bubble Milktea (Unused Mark), Dribbble",
+   "url": "https://dribbble.com/shots/11298466-Shenzhen-Bubble-Milktea-Unused-Mark",
+   "accessed": false,
+   "kind": "inspiración visual",
+   "observed": "No abierto (Dribbble bloqueado); índice de búsqueda. Propuesta de rebrand que no se usó: el cliente pedía un símbolo de bubble tea y el estudio planteó un logo flexible que cambia para representar distintos niveles de azúcar, de hielo y la temperatura. El índice no muestra al autor; por el número de shot sería de ≈2020 (no verificado).",
+   "borrow": "El vaso como indicador vivo: un solo SVG del vaso Koi donde la altura de una franja marca el dulzor, los cubos marcan el hielo y el color del líquido marca el sabor. Va igual en la lista, el armador, el carrito, el ticket 'Mostrar en caja' y las pantallas verticales.",
+   "avoid": "El logo-koi no debe volverse indicador (la mascota tiene que ser estable); el que cambia es el vaso. Es una marca no usada: sirve como idea, no como prueba de mercado."
+  },
+  {
+   "name": "Dribbble: tag 'Bubble Tea' y búsqueda 'Boba-tea'",
+   "url": "https://dribbble.com/tags/bubble-tea",
+   "accessed": false,
+   "kind": "inspiración visual",
+   "observed": "No abierto; índice de búsqueda. El tag dice tener más de 500 diseños. Entre los indexados: 'Mobile App — Bubble Tea Ordering Experience'; una pantalla de pedido estilo Gong Cha de un reto '100 Days of UI'; proyectos que juntan logo-mascota, tarjeta de lealtad, empaque y stickers. En https://dribbble.com/search/Boba-tea aparece una hoja de stickers kawaii de shiba con boba. Los shots de apps de boba con fecha visible son de 2019 a 2022 (p. ej. 'Bubble tea Delivery App' de Tanya Konvalyuk, ago 2019; 'Bubble Tea Concept App' de Nick Karras).",
+   "borrow": "Confirma el 'kit' típico del rubro: mascota, tarjeta de lealtad, stickers y vaso. Para Koi: stickers solo como insignias que informan (De la casa, Nuevo, Agotado, Favorito) y, más adelante, un sello de lealtad digital.",
+   "avoid": "El lenguaje de 2019-2022 (tarjetas pastel con vaso flat genérico y sombras suaves) ya se ve fechado y es el que traen las plantillas."
+  },
+  {
+   "name": "Behance Blog: moodboard de boba (National Bubble Tea Day)",
+   "url": "https://www.behance.net:443/blog/boba",
+   "accessed": false,
+   "kind": "inspiración visual",
+   "observed": "No abierto; índice de búsqueda. Selección de Behance sin fecha visible que incluye un vaso de bubble tea sin popote, empaque de bubble tea en lata, un concepto de bubble tea para Starbucks, la identidad de una cafetería de bubble tea, branding y app de Kittaya Treseangrat, y stickers.",
+   "borrow": "Muestra que en el boba la identidad vive sobre todo en el vaso y la tapa. Koi ya tiene tapas selladas con ilustración de tinta y caligrafía: ese arte debería ser la textura principal del menú (fondo de la ficha, separadores, ticket).",
+   "avoid": "No sirve como referencia de UI de pedido: casi todo es empaque e identidad."
+  },
+  {
+   "name": "Cha.ology, Manchester (estudio Alphabet): retícula de tatami y señalética bilingüe",
+   "url": "https://Behance.net/gallery/41111003/Chaology",
+   "accessed": false,
+   "kind": "dirección de arte",
+   "observed": "No abierto; índice de búsqueda. Es un clásico (≈2016, fecha no verificada): casa de té japonesa en Manchester. El logo es modular y reparte el nombre en bloques de tatami que se recombinan; el menú y la papelería usan la retícula del tatami; unos íconos mínimos explican cómo se prepara el té; la señalética ilustrada es bilingüe inglés/japonés (p. ej. quitarse los zapatos) y está pensada para cruzar la barrera del idioma (LSN Global: https://www.lsnglobal.com/news/article/19937/beyond-words).",
+   "borrow": "Una retícula tipo tatami como 'bento' con raíz japonesa real, que va mejor con la celosía del local que un bento de SaaS. Íconos de proceso para el turista que no conoce el boba (base → sabor → topping incluido → dulzor/hielo). Bilingüe en paralelo (ES grande, EN debajo) y no solo con un botón de idioma.",
+   "avoid": "Japonés decorativo sin sentido. Koi es una tienda mexicana con ingredientes de Taiwán y decoración japonesa; si se usa una palabra (p. ej. kohaku), hay que explicarla."
+  },
+  {
+   "name": "Yokō: branding de matcha bar (Elen Chris), en Abduzeedo",
+   "url": "https://abduzeedo.com/node/89284",
+   "accessed": false,
+   "kind": "dirección de arte",
+   "observed": "No abierto; índice de búsqueda. Identidad de matcha bar que cambia el minimalismo japonés por color intenso, ilustración plana y tipografía expresiva. Paleta: verde oliva profundo, rosa coral y chartreuse pálido. Incluye un lockup bilingüe con kanji, un menú con íconos ilustrados, empaque y pósters de calle. Solo Abduzeedo confirma al autor; hay otros proyectos 'Yokō' de otros diseñadores (Packaging of the World feb 2026, Studiorevv).",
+   "borrow": "El lockup bilingüe como pieza tipográfica (KOI TEA · Rocky Point, ES/EN) y un menú con un ícono ilustrado por categoría. La pareja coral + oliva es casi la de Koi (rojo koi + salvia): apoya usar el rojo como acento sobre neutros verdes o crema.",
+   "avoid": "Kanji decorativo y color saturado en áreas grandes (rompe el japandi cálido)."
+  },
+  {
+   "name": "NINELIVES Boba: caso de marca 2025 (Valerie Amoaku)",
+   "url": "https://valerieamoaku.com/ninelives-case-study/",
+   "accessed": false,
+   "kind": "dirección de arte",
+   "observed": "No abierto; índice de búsqueda. Estrategia, identidad, empaque y merch para un boba shop. Eligieron el rojo por audaz y por asociarse con el apetito, y descartaron el rosa por genérico para un menú experimental. La marca principal es una funda de vaso con silueta de orejas de gato, para que el vaso identifique la tienda de un vistazo.",
+   "borrow": "El rojo como diferenciador en boba (Koi ya lo tiene en el kohaku) y el vaso como firma. Para el menú: la silueta del vaso Koi, con el koi bebiendo, como ícono de la PWA, favicon, botón de carrito y marco de la tarjeta para compartir.",
+   "avoid": "Rojo en superficies grandes o en texto chico. Cálculo propio WCAG: #F94E2B sobre crema da 3.15:1 y #D9442A da 4.02:1; ninguno pasa AA en texto normal."
+  },
+  {
+   "name": "Pinterest Predicts 2026 (reporte de tendencias)",
+   "url": "https://business.pinterest.com/en-gb/pdf/pinterest-predicts/2026-trend-report/",
+   "accessed": false,
+   "kind": "inspiración visual",
+   "observed": "No abierto; índice y prensa (Axios, 9 dic 2025: https://axios.com/2025/12/09/2026-pinterest-trend-report; PPC Land; NSS). Son 21 tendencias; Pinterest dice que acertó 88% en 6 años; los datos son búsquedas de sep 2024 a ago 2025. 'Gimme Gummy': 'jelly candy aesthetic' +100%, 'gummy bears aesthetic' +50%, 'jelly blush' +130%, 'agar agar' +35%, yokan +60%; acabados brillantes, translúcidos y táctiles. 'Cool Blue': 'blue drinks aesthetic' +55%, 'ice blue' +50%, 'glacier aesthetic' +35%. La prensa lo resume como un año 'ruidoso, harto del minimalismo' (SunStar).",
+   "borrow": "Los jellys y las perlas explosivas de Koi SON la estética gummy. Conviene dibujarlos en el selector de toppings como gotas translúcidas con brillo (radial-gradient en CSS, 0 KB de imagen). Si algún día hay una bebida azul de temporada, encaja con 'Cool Blue'.",
+   "avoid": "Teñir la identidad base con colores de moda (azul hielo, gummy): solo para temporadas."
+  },
+  {
+   "name": "Pinterest: ideas 'Bubble Tea Menu Design' y 'Boba Branding'",
+   "url": "https://www.pinterest.com/ideas/bubble-tea-menu-design/955150158266/",
+   "accessed": false,
+   "kind": "inspiración visual",
+   "observed": "No abierto (Pinterest fuera de la red permitida); índice de búsqueda. Página que agrupa pines de menús modernos, menús tipo póster, 'boba menu boards', plantillas editables estilo acuarela y de pizarrón. La página hermana 'Boba Branding' (https://www.pinterest.com/ideas/boba-branding/913564779119/) describe el alcance típico de un branding de boba: logo principal, patrón, mascota, stickers y diseño de vaso.",
+   "borrow": "Sirve como 'mapa del cliché': lo que hace todo el mundo (vasos flat, pasteles, fondos de acuarela) es lo que Koi debe evitar para destacar. El alcance logo + patrón + mascota + stickers + vaso sí sirve como checklist de componentes del menú.",
+   "avoid": "El look de plantilla Canva/MustHaveMenus (pastel con vaso clipart), común en boba shops."
+  },
+  {
+   "name": "Matcha Cartel: Mención Honorífica de Awwwards (28 jun 2026)",
+   "url": "https://www.awwwards.com/sites/matcha-cartel",
+   "accessed": false,
+   "kind": "inspiración visual",
+   "observed": "No abierto; índice de búsqueda. Se presenta como 'archivo interactivo' sobre la obsesión mundial por el matcha, tratado como mercancía controlada. Mención Honorífica el 28 jun 2026 (Surd Studio, Wildy Riftian, Agnes Andreyana), hecho en Framer. Elementos que lista Awwwards: preloader con contraseña, tarjetas de historia, sección de productos en 3D, interacción de cursor-linterna y una 'Confiscated Goods Gallery'. Design Compass (2 sep 2026: https://designcompass.org/en/matcha-cartel-brand-identity-3d-design/) describe fondos oscuros, alto contraste, texturas metálicas, tipografía bold, el verde como color-señal, 3D hecho en Cinema 4D/Redshift/Substance y secciones de historia, producción, popularidad y beneficios.",
+   "borrow": "Para Galería: 'tarjetas de historia' y una galería con cédulas, organizada en salas (aquí, salas por categoría). Para Linterna: el efecto de un foco cálido que revela la bebida, que se puede hacer con un radial-gradient en CSS sin 3D.",
+   "avoid": "Preloaders, contraseñas, 3D renderizado e interacciones que dependen del cursor: justo lo contrario de un menú para un turista con datos lentos que usa el dedo."
+  },
+  {
+   "name": "Boba Ice Cream: Site of the Day en Awwwards (Synchronized)",
+   "url": "https://Awwwards.com/sites/boba-ice-cream",
+   "accessed": false,
+   "kind": "inspiración visual",
+   "observed": "No abierto; índice de búsqueda. Sitio promocional y tienda de un helado 'Boba', Site of the Day (una ficha da 7.62/10 y otra un Dev Award de 7.88). Design Shack (https://www.designshack.co.uk/design/boba-ice-cream/) destaca un header que cambia de color al cambiar de sabor. Synchronized publicó la versión móvil en Dribbble (https://WWW.dribbble.com/shots/21528529-Boba-Ice-Cream-Website-Mobile-Experience, ≈2023) diciendo que es tan interactiva como la de escritorio.",
+   "borrow": "El color de cada sabor como señal de navegación: cada bebida tiene un token de color que tiñe su halo o chip y la transición al abrir su ficha, sin pintar todo el fondo.",
+   "avoid": "Que todo el fondo cambie de color con cada swipe: eso es la propuesta B 'Pop' que el cliente ya vio; no repetirla."
+  },
+  {
+   "name": "CHAGEE: primera casa de té en EE. UU. (2025), refresh de marca (nov 2025) y Evening Tea",
+   "url": "https://dailybruin.com/2025/05/18/restaurant-review-chagee-modern-tea-houses-1st-us-location-delivers-both-aesthetic-and-flavor",
+   "accessed": false,
+   "kind": "cadena de boba",
+   "observed": "No abierto; índice de búsqueda. Westfield Century City, Los Ángeles (soft opening 26 abr, gran apertura 9 may 2025). Menú en 3 series (Tea Lattes, Pure Teas, Specialty Teas) con una bebida firma, BOYA; en la apertura el menú se recortó a 4 bebidas y 1 pan (Daily Bruin). Decoración con un motivo escénico que imita porcelana; vasos con patrón cobalto tipo porcelana azul y blanca (The New Yorker); Time Out LA criticó que el patrón y el vaso parecen copia del Dior Book Tote. Refresh por su 8º aniversario (nov 2025, https://marketech-apac.com/chagee-revitalises-brand-with-design-refresh-in-celebration-of-8th-anniversary/): vaso inspirado en la Ruta del Té y el Caballo; símbolos de rosa, árbol de té, caballo y barco. Su página Evening Tea (https://eveningteaservice.chagee.us) anuncia una degustación guiada de 3 tés con 'tea sommelier', marcada 'launching soon'.",
+   "borrow": "Un menú curado en series con la bebida firma al frente (en Koi, la 'Koi Tea' de la casa); el patrimonio convertido en patrón propio; y un ritual de noche (degustación guiada) como contenido para una versión nocturna.",
+   "avoid": "Patrones que parecen prestados de otra marca (la crítica por Dior). Los patrones de Koi tienen que salir de lo suyo: celosía, tapas con tinta, arco de la galería, escamas kohaku."
+  },
+  {
+   "name": "Mixue: Snow King en su llegada a EE. UU. (caso WIPO)",
+   "url": "https://www.wipo.int/en/web/ip-advantage/w/stories/mixue-ice-cream-and-tea-from-china-s-streets-to-global-fast-food-giant",
+   "accessed": false,
+   "kind": "cadena de boba",
+   "observed": "No abierto; índice de búsqueda. Según WIPO, Snow King se adoptó en 2018 como mascota oficial y 'embajador' para humanizar la marca y conectar con jóvenes, y la marca se protegió con el sistema de Madrid. La primera tienda en EE. UU. abrió el 19 dic 2025 en Hollywood. El lanzamiento giró en torno a la mascota: pop-ups callejeros, experiencias de foto temáticas y regalos; precios de US$1.19 a 4.99 (Dao Insights: https://daoinsights.com/?p=48937).",
+   "borrow": "La mascota como momento para la foto: una tarjeta de resultado en formato historia (1080×1920) con el koi, la bebida y 'Rocky Point, MX', como en el merch.",
+   "avoid": "La mascota por todos lados y la estética de cadena masiva (rojo y blanco saturados). El koi de Koi es de línea fina y refinada: hay que dosificarlo."
+  },
+  {
+   "name": "The Alley: el venado como marca y las perlas 'Deerioca'",
+   "url": "https://www.dallasobserver.com/restaurants/dallas-gets-a-new-deer-themed-boba-shop-18045046",
+   "accessed": false,
+   "kind": "cadena de boba",
+   "observed": "No abierto; índice de búsqueda. Cadena taiwanesa fundada por el diseñador gráfico Mao-ting Chiu. Su marca es una cabeza de venado que, según la empresa, se inspiró en el letrero de 'Diagon Alley' (Star-Advertiser). Llaman 'Deerioca' a sus perlas (deer + tapioca). Su representante dice que el venado evoca lo 'místico y refinado' para ir con la sofisticación del menú y del local (Dallas Observer; Wikipedia: https://en.wikipedia.org/wiki/The_Alley_(company)).",
+   "borrow": "Es el antecedente más directo de Koi: un animal dibujado en línea como sello de refinamiento, no como caricatura, y un nombre derivado de la mascota para la línea firma (p. ej. una serie 'Kohaku' para las bebidas de la casa).",
+   "avoid": "Demasiados juegos de palabras: con un nombre firma basta."
+  },
+  {
+   "name": "Creative Bloq: 'Mascots are back, but not as you know them'",
+   "url": "https://www.creativebloq.com/design/branding/mascots-are-back-but-not-as-you-know-them",
+   "accessed": false,
+   "kind": "estudio/artículo UX",
+   "observed": "No abierto; índice de búsqueda. Habla de mascotas de la 'era del comportamiento': participantes activos, hechos para la interacción y la presencia, que guían, recompensan y llevan a la gente por la experiencia de marca. Cita a Duolingo y Android, que reforzaron sus mascotas en sus rebrands, y advierte que una mascota no debe ser un accesorio ni existir solo para vender. Pieza hermana: https://www.creativebloq.com/design/from-microsoft-mico-to-apples-little-finder-guy-why-a-cute-brand-mascot-isnt-enough ('no basta con que sea tierna').",
+   "borrow": "Fundamenta 'Koi guía': el koi reacciona a acciones reales (agregar al carrito, bebida agotada, pedido listo) y la guía es opcional, de 3 preguntas.",
+   "avoid": "Que la mascota estorbe la tarea, por ejemplo con diálogos obligatorios antes de dejar ver el menú."
+  },
+  {
+   "name": "Infinum: 'Liquid Glass' de iOS 26 y su accesibilidad dudosa",
+   "url": "https://infinum.com/blog/apples-ios-26-liquid-glass-sleek-shiny-and-questionably-accessible/",
+   "accessed": false,
+   "kind": "estudio/artículo UX",
+   "observed": "No abierto; índice de búsqueda. En las pruebas de la beta, Infinum encontró pantallas muy por debajo del contraste mínimo de WCAG. Recomienda alternativas de alto contraste, sacar los controles críticos de las zonas difuminadas y probar con los ajustes de accesibilidad activados. Apple volvió el vidrio más esmerilado en la beta 3 tras las quejas, y la beta 4 de iOS 26.1 agregó un control 'Tinted' para atenuarlo (Gulf News). MacRumors (17 sep 2025: https://www.macrumors.com/2025/09/17/ios-26-liquid-glass-critiques/) recogió críticas de usuarios.",
+   "borrow": "Si se usa vidrio, solo en la barra fija del carrito o las pestañas, casi opaca y con fondo sólido de respaldo (@supports y prefers-reduced-transparency).",
+   "avoid": "Texto o precios sobre fotos desenfocadas; tarjetas de vidrio encima de la foto del local."
+  },
+  {
+   "name": "Nielsen Norman Group: modo oscuro vs. claro (2020) y cómo lo usan las personas (2023)",
+   "url": "https://www.nngroup.com/articles/dark-mode/",
+   "accessed": false,
+   "kind": "estudio/artículo UX",
+   "observed": "No abierto; resúmenes secundarios del estudio. Con visión normal, el modo claro da mejor lectura la mayor parte del tiempo; de noche, el texto pequeño costó más en modo oscuro; los participantes no notaron la diferencia. El artículo de 2023 (https://www.nngroup.com/articles/dark-mode-users-issues/) dice que la gente decide el modo oscuro a nivel sistema y que es popular pero no esencial. Recomiendan ofrecerlo como opción.",
+   "borrow": "Hacer de 'Linterna' un tema y no la única versión: respetar prefers-color-scheme, cuerpo de 17 px o más, pesos de 500 o más, y serif fina solo en títulos grandes. El ámbar para texto debe aclararse (#E0B07A da 5.27:1 sobre nogal; #C39056 solo 3.68:1).",
+   "avoid": "Un menú solo oscuro en un destino de playa con sol directo y con turistas mayores de Arizona."
+  },
+  {
+   "name": "Creative Bloq: 'Texture, warmth and tactile rebellion' (tendencias gráficas 2026) y tendencias de ilustración 2026",
+   "url": "https://creativebloq.com/design/graphic-design/texture-warmth-and-tactile-rebellion-the-big-graphic-design-trends-for-2026",
+   "accessed": false,
+   "kind": "estudio/artículo UX",
+   "observed": "No abierto; índice de búsqueda. La primera tendencia es 'Anti-AI Crafting' (Jane Lee, de Interstate): sistemas expresivos con texturas de ilustración táctiles. La nota de ilustración 2026 ('Messy, meaningful and made by humans': https://www.creativebloq.com/art/illustration/messy-meaningful-and-made-by-humans-the-biggest-illustration-trends-for-2026) presenta el dibujo a mano como autenticidad frente a la imagen generada por IA. La de tipografía 2026 (https://www.creativebloq.com/design/fonts-typography/breaking-rules-and-bringing-joy-top-typography-trends-for-2026) habla de alegría, grano e imperfección.",
+   "borrow": "Koi ya tiene lo auténtico: tapas con tinta y caligrafía, y un logo de línea. Ilustrar cada bebida con ese mismo trazo (no en 3D) y agregar un grano de papel sutil en SVG. Así el menú se ve completo sin fotos y sigue funcionando cuando lleguen las fotos reales.",
+   "avoid": "Exceso de textura o ruido que ensucie la lectura o pese: un SVG de ruido de menos de 2 KB, o nada."
+  },
+  {
+   "name": "saasframe: 'Designing Bento Grids That Actually Work: A 2026 Practical Guide'",
+   "url": "https://www.saasframe.io/blog/designing-bento-grids-that-actually-work-a-2026-practical-guide",
+   "accessed": false,
+   "kind": "estudio/artículo UX",
+   "observed": "No abierto; índice de búsqueda. Describe el bento como bloques asimétricos tipo revista sobre una retícula común, que crean jerarquía sin agregar UI. Se arma con CSS Grid (grid-auto-flow: dense) y con auto layout en Figma. Dice que sigue vigente de 2025 a 2026 y que lo usan Apple, Notion, Linear y Vercel (las cifras de adopción vienen de blogs secundarios y no están verificadas).",
+   "borrow": "Una portada 'Hoy en Koi' en bento de 4 a 6 tiles (la de la casa, lo más pedido, temporada, arma tu boba, toppings), en 2 columnas a 360 px y anclada a la retícula de tatami o de la celosía.",
+   "avoid": "Bento con look de SaaS (gradientes, microetiquetas grises, 12 tiles): pasando de unos 6 tiles se lee como un muro."
+  }
+ ],
+ "patterns": [
+  {
+   "pattern": "El vaso es la firma de la marca y también la interfaz",
+   "evidence": "Shenzhen Bubble Milktea (Dribbble 11298466): logo flexible que indica azúcar, hielo y temperatura. NINELIVES (2025): la funda con orejas de gato es la marca principal, para que el vaso identifique la tienda. CHAGEE: el refresh de nov 2025 gira en torno a un vaso inspirado en la Ruta del Té, y sus vasos cobalto tipo porcelana son lo más comentado (Daily Bruin, The New Yorker, Time Out). En Pinterest ('Boba Branding') y en el moodboard de Behance el diseño de vaso es parte fija del kit.",
+   "implication": "Las 5 propuestas deberían compartir un componente 'vaso Koi' en SVG de línea con estados (sabor, topping, dulzor, hielo, tapa con tinta). Resuelve la falta de fotos, pesa pocos KB y hace reconocible el menú aunque cambie la dirección."
+  },
+  {
+   "pattern": "Mascota con comportamiento, no como decoración",
+   "evidence": "Creative Bloq: 'era del comportamiento', mascotas que guían y recompensan (Duolingo y Android las reforzaron). BLOOP (Behance, jul 2026): rana pixel con animaciones de estados de ánimo y antojos. Mixue (EE. UU., dic 2025): lanzamiento con Snow King en pop-ups y experiencias de foto; mascota desde 2018 'para humanizar' (WIPO). Pistachill Dog: personaje limitado para un lanzamiento. The Alley: venado y perlas 'Deerioca'.",
+   "implication": "Darle al koi 5 o 6 estados ligados a eventos reales del menú y una tarjeta para compartir. Ni sticker estático ni chatbot obligatorio."
+  },
+  {
+   "pattern": "Menú curado: bebida firma, pocas series y una temporada",
+   "evidence": "CHAGEE: 3 series y una bebida firma (BOYA); en la apertura recortó a 4 bebidas y 1 pan. OOO Tea: identidades por temporada (primavera, verano, pistache). The Alley: línea firma con nombre derivado de la mascota.",
+   "implication": "La 'Koi Tea' de la casa al frente; 3 categorías más toppings; un espacio de 'temporada' con mini-identidad (color, frase y accesorio del koi). Un recomendado por categoría (la reseña de Google ya sugiere taro con tapioca y durazno/mango green tea con jelly de lichi)."
+  },
+  {
+   "pattern": "El patrimonio se vuelve un sistema gráfico propio, no prestado",
+   "evidence": "Cha.ology: retícula de tatami en logo y menú, íconos de proceso, señalética bilingüe. CHAGEE: porcelana, caligrafía de sello y mapas de la Ruta del Té; la crítica de Time Out (patrón que parece del Dior Book Tote) muestra el costo de un patrón prestado. Yokō: lockup bilingüe con kanji. Matcha Cartel: el verde como color-señal derivado del concepto.",
+   "implication": "Sacar los patrones de lo que Koi ya tiene: el ritmo vertical de la celosía, el arco de la galería (como máscara para imágenes), las escamas kohaku, la tinta y caligrafía de las tapas, y los cubos de luz (torii, vaso, koi, hoja) como íconos de categoría. Nada de kanji decorativo."
+  },
+  {
+   "pattern": "Color por sabor sobre fondos neutros estables",
+   "evidence": "Boba Ice Cream (Site of the Day en Awwwards): el header cambia de color según el sabor. Yokō: coral y oliva como acentos sobre neutros. Pinterest Predicts 2026: 'Gimme Gummy' ('jelly candy aesthetic' +100%) y 'Cool Blue' ('blue drinks aesthetic' +55%) confirman que el color de la bebida es el gancho visual.",
+   "implication": "Un token de color por bebida o categoría para el líquido del vaso, los halos y los chips; el texto siempre sobre crema #FEF4EB o nogal #483D42. Nada de fondos completos por bebida (eso fue B 'Pop')."
+  },
+  {
+   "pattern": "Después del efecto, regresa la legibilidad",
+   "evidence": "Liquid Glass: Infinum encontró pantallas muy por debajo de WCAG; Apple lo hizo más opaco en la beta 3 y agregó 'Tinted' en la beta 4 de iOS 26.1. NN/g: el modo claro se lee mejor con visión normal y de noche el texto chico cuesta más en oscuro. Mindful Design (https://mindfuldesignconsulting.com/designing-boba-shops-juice-bars-brands/): tableros de alto contraste cuando el menú tiene mucha personalización. Cálculo propio: crema sobre salvia da 1.75:1 (así se ven las pantallas actuales) y #D9442A sobre crema da 4.02:1.",
+   "implication": "AA estricto como regla de dirección de arte: rojo para texto #C63F26 (4.67:1) o #B83A22 (5.28:1); vidrio solo en barras con fondo de respaldo opaco; modo oscuro solo como tema y con tipografía más grande."
+  },
+  {
+   "pattern": "En 2026 lo hecho a mano gana al 3D pulido",
+   "evidence": "Creative Bloq 2026: 'Anti-AI Crafting' es la primera tendencia gráfica; la ilustración 'messy, meaningful, made by humans'; tipografía con grano e imperfección. En contraste, Matcha Cartel usa 3D (Cinema 4D/Redshift) como espectáculo de escritorio premiado, no como menú.",
+   "implication": "Ilustrar las bebidas con el trazo de tinta del logo y de las tapas, sin renders 3D ni Three.js, con un grano de papel sutil. Además es lo más ligero y lo más fácil de mantener."
+  },
+  {
+   "pattern": "Bilingüe como sistema tipográfico, no como traducción pegada",
+   "evidence": "Cha.ology: señalética ilustrada en inglés y japonés, diseñada para cruzar la barrera del idioma. Yokō: lockup bilingüe. Brief: el turismo de Arizona hace obligatorios el inglés y el precio en USD.",
+   "implication": "El español como titular y el inglés como subtítulo en la misma tarjeta (o un botón que invierte la jerarquía), probado con la cadena más larga a 360 px, más íconos de proceso que no dependen del idioma."
+  },
+  {
+   "pattern": "La noche como ritual, no solo como colores invertidos",
+   "evidence": "CHAGEE Evening Tea: degustación guiada de 3 tés con tea sommelier. Matcha Cartel: interacción de cursor-linterna sobre fondo oscuro.",
+   "implication": "Si 'Linterna' sigue, que se distinga por contenido de noche (selección de la noche, un foco que ilumina la bebida) y no solo por el tema oscuro. El foco se logra con un radial-gradient en CSS, sin 3D."
+  }
+ ],
+ "insights": [
+  "Hacer primero un 'kit Koi' común a las 5 propuestas: vaso SVG de línea con estados, 6 poses del koi, 4 íconos de categoría tomados de los cubos de luz (torii, vaso, koi, hoja), el patrón de celosía y la textura de tinta. Así las direcciones se distinguen por estructura y no por la calidad de la ilustración, y desde el panel solo se cambian datos (color, topping, agotado).",
+  "Rojo para texto: el #D9442A que sugiere el brief da solo 4.02:1 sobre crema #FEF4EB, así que no pasa AA en texto normal (solo en texto de 24 px o más, o de 18.7 px bold). Usar #C63F26 (4.67:1) como mínimo o #B83A22 (5.28:1). El #F94E2B (3.15:1) queda para la mancha del koi, la ilustración y bloques grandes. Sobre crema, milk tea #D0A585 (2.06:1) y taro #AA81B3 (2.98:1) son solo decorativos: ni siquiera llegan al 3:1 que piden los bordes de controles. (Cálculo propio, WCAG 2.x.)",
+  "Paleta para la noche: crema sobre nogal #483D42 da 9.57:1 (excelente). El ámbar del plafón #C39056 da 3.68:1, suficiente solo para íconos y texto grande; para texto en ámbar usar #E0B07A (5.27:1). El rojo koi sobre nogal (3.04:1) es solo decorativo.",
+  "Pantallas verticales: texto crema sobre salvia #AFC0B6 da 1.75:1, lo que explica que se lean mal; con texto #2A2523 sobre salvia sube a 7.96:1. Conviene proponer que las 3 pantallas usen los mismos colores y el mismo vaso que el menú del teléfono, para que el QR y la barra se sientan uno solo, con tableros de alto contraste como recomienda Mindful Design para menús con mucha personalización.",
+  "Cuidar que no se confunda el nombre: KOI Thé es una cadena taiwanesa de perlas doradas que festeja 20 años con el lema 'A Bubbling Golden Era' (https://koithe.com/en/news_detail.php?id=1155; https://www.timeout.com/tokyo/shopping/koi-the), y hay otros 'Koi Tea' en EE. UU., como el de Okemos, Michigan (https://www.atly.com/location/KoiTea). Buscar 'Koi Tea Boba Shop Puerto Peñasco Rocky Point' no devolvió el local; solo salió Bubble Bee Tea en Casago. En menú, PWA, título y tarjeta para compartir conviene escribir siempre 'Koi Tea · Rocky Point' y apoyarse en el rojo kohaku y la mascota de línea, evitando el dorado o amarillo como color principal.",
+  "Toppings estilo gummy: dibujar perlas explosivas y jellys como gotas translúcidas con brillo (radial-gradient con un reflejo blanco de 30-40%) en el color del sabor, y la tapioca como esfera oscura y mate. Es una tendencia medida por Pinterest para 2026, es literalmente el producto y no requiere imágenes.",
+  "Portada 'Hoy en Koi' en bento tipo tatami: 2 columnas de 360 a 430 px, máximo 4 a 6 tiles (la de la casa, lo más pedido, temporada, arma tu boba, toppings), esquinas de 16 a 20 px y sin gradientes. El tile grande lleva el vaso de la Koi Tea con su degradado rojo→naranja, que la foto real de los fruit teas confirma.",
+  "Íconos de proceso para el turista que no conoce el boba, como hace Cha.ology con el té: 'Elige base → sabor → topping incluido → dulzor/hielo' con mini-vasos, en la ficha y en una ayuda '¿Qué es el boba? / What is boba?'.",
+  "Tarjeta para compartir en formato 9:16 (1080×1920), generada en el propio teléfono con canvas y sin llamadas externas: koi, vaso elegido, nombre ES/EN, 'Rocky Point, MX' (como el merch) y @koitea.mx. Es el 'momento foto' que Mixue explota con Snow King.",
+  "Temporadas como mini-identidades (como OOO Tea): un espacio en el panel con color, frase corta y accesorio del koi (lentes de playa para spring break, flor de cempasúchil en noviembre). Mismo koi con otro vestuario.",
+  "Cédula de Galería: nombre en español en serif itálica (como los pósters de 'Grand Opening'), nombre en inglés en sans geométrica en mayúsculas, una línea 'Técnica: té verde · maracuyá · jelly de lichi', precio MXN/USD y botón '+' siempre visible. La ilustración o la foto va en una máscara de arco, como el arco del local.",
+  "Regla para el vidrio: solo en la barra fija del carrito o las pestañas, con opacidad de 0.85 o más y fondo sólido de respaldo (@supports not (backdrop-filter) y prefers-reduced-transparency). Nunca texto sobre la foto desenfocada del local.",
+  "Regla para el modo oscuro: es un tema, no una imposición. Que se active por prefers-color-scheme o por hora (después de las 19:00 aprox.), con cuerpo de 17 px o más, peso de 500 o más, y la serif itálica solo en títulos de 24 px o más.",
+  "Tendencia: vaso ilustrado propio. Constante en el boba (Shenzhen, NINELIVES, CHAGEE). Envejece bien si usa el trazo de la marca y mal si es clipart flat pastel de plantilla. Para Koi es el núcleo del sistema.",
+  "Tendencia: hecho a mano, tinta y grano (reacción a la IA). En alza en 2026 (Creative Bloq). Envejece bien porque es auténtico, y Koi ya tiene tapas con tinta y caligrafía. Para Koi: el estilo de ilustración de todas las bebidas.",
+  "Tendencia: editorial (serif itálica, cédulas, mucho aire). Estable y en alza (tarjetas de historia de Matcha Cartel, relatos de CHAGEE, tipografía expresiva 2026). Envejece bien; el riesgo es la serif fina en tamaño chico o sobre fondo oscuro. Para Koi: Galería y titulares.",
+  "Tendencia: color por sabor. Constante en bebidas (Boba Ice Cream, Site of the Day). Envejece bien como sistema de tokens y mal si cada bebida pinta toda la pantalla, que ya fue B 'Pop'.",
+  "Tendencia: mascota con estados. En alza en 2025-2026 (Creative Bloq, BLOOP, Mixue). Envejece bien si es propia y su comportamiento ayuda; mal si solo decora o interrumpe.",
+  "Tendencia: bento. En meseta de 2023 a 2026 (saasframe). Envejece regular; aguanta más si se ancla a una retícula con sentido (tatami o celosía) y no pasa de 6 tiles. Para Koi: portada de Express o de Galería.",
+  "Tendencia: stickers y scrapbook. Viva en marcas jóvenes (stickers de shiba con boba en Dribbble, el kit de Pinterest). Envejece regular; usarlos solo como insignias que informan (Nuevo, De la casa, Agotado, Favorito), nunca como layout.",
+  "Tendencia: tipografía gigante y expresiva. Viva (tipografía 2026 de Creative Bloq: alegría, romper reglas). Envejece regular y se rompe fácil con ES/EN de distinto largo a 360 px ('Maracuyá Green Tea' / 'Passion Fruit Green Tea'). Si se usa: clamp() y máximo 2 líneas. Ya se exploró en B.",
+  "Tendencia: gummy/jelly (Pinterest Predicts 2026). Emergente. Como estética general envejecerá rápido, pero aplicada a jellys y perlas explosivas es literal y segura.",
+  "Tendencia: kawaii y 'feo-tierno' (Labubu). Pico en 2025; Campaign Asia ya pregunta si tocó techo (https://www.campaignasia.com/article/has-labubu-already-peaked-charting-the-rise-and-fall-of-the-ugly-cute-viral-toy/4srnm12tf6hr6ya8v71hjfvhxk). ENVEJECE MAL si se copia la cara chibi o el feo-tierno; el koi de línea no debe 'kawaiizarse'.",
+  "Tendencia: modo oscuro. Más que tendencia es una preferencia del sistema (NN/g). Envejece bien como opción y mal como única versión en un destino de playa.",
+  "Tendencia: glass / Liquid Glass. Moda de 2025 impulsada por Apple, con retroceso ('Tinted' en iOS 26.1). ENVEJECE MAL en menús con texto y precios; solo en barras con fondo de respaldo.",
+  "Tendencia: 3D (renders, Three.js, Cinema 4D). Ya pasó su pico en menús; Matcha Cartel lo usa como espectáculo de escritorio. ENVEJECE MAL para Koi por peso, batería, datos lentos y aspecto de 'IA pulida', y además el brief lo prohíbe.",
+  "Tendencia: pixel/arcade, colores ácidos y maximalismo 'dopamina' (BLOOP; la prensa dice que 2026 es 'ruidoso, harto del minimalismo'). De nicho y cíclica. ENVEJECE MAL y contradice el japandi cálido del local."
+ ],
+ "direction_notes": "1 · Galería 'Sabor y arte': APOYADA. Matcha Cartel (Mención Honorífica de Awwwards, jun 2026) muestra que el formato de archivo o galería con tarjetas de historia está vigente. Cha.ology y CHAGEE enseñan cómo el patrimonio se vuelve sistema (retícula de tatami, porcelana, Ruta del Té). Ajustes: la cédula siempre muestra precio y '+ agregar' para que la galería no frene el pedido; cada sala es una categoría con una obra destacada; nada de preloaders ni 3D; máscara de arco como el arco del local; patrones propios (celosía, tinta), no prestados (la crítica a CHAGEE por Dior). Es la más diferenciada frente a la competencia local y la que mejor envejece (editorial y hecho a mano).\n\n2 · Armador 'Arma tu boba': APOYADA, con un matiz. El logo flexible de Shenzhen Bubble Milktea (azúcar, hielo y temperatura en el símbolo) y el vaso como firma (NINELIVES, CHAGEE) respaldan usar el vaso como interfaz, y los toppings estilo gummy (Pinterest 2026) dan un selector táctil. Ajustes: vaso SVG 2D de línea, no 3D; valores de la casa para poder saltar pasos; el '1 topping incluido' visible en el vaso; el vaso armado se reutiliza en el carrito y el ticket. Riesgo: con pasos obligatorios se vuelve lento para quien ya sabe qué quiere, así que necesita un atajo 'pedir como está'.\n\n3 · Express bilingüe: NEUTRA en lo visual. Las referencias visuales no aportan un patrón nuevo (Mobbin estaba bloqueado) y el riesgo es que se vea como plantilla (Pinterest, Dribbble 2019-2022). Ajustes: darle identidad con el vaso-indicador, los micro-estados del koi y una portada bento de 4 a 6 tiles sobre retícula de tatami; bilingüe en paralelo; vidrio solo en la barra fija con fondo opaco de respaldo.\n\n4 · Koi guía: APOYADA con fuerza. La 'era del comportamiento' (Creative Bloq), el Snow King de Mixue (fotos y pop-ups), la rana de BLOOP con estados y el venado de The Alley confirman que una mascota propia con comportamiento es tendencia en 2025-2026 y que no pasa de moda si está bien resuelta. Ajustes: guía opcional de 3 preguntas con salida 'ver menú'; koi de línea fina, sin volverlo chibi, kawaii genérico ni feo-tierno; stickers solo como insignias; tarjeta para compartir 9:16 con 'Rocky Point, MX'. Riesgo: que la mascota se vuelva un obstáculo.\n\n5 · Linterna (noche): CONTRADICHA EN PARTE. A favor: el Evening Tea de CHAGEE (ritual nocturno guiado) y el efecto linterna de Matcha Cartel. En contra: NN/g (el modo claro se lee mejor y de noche el texto chico cuesta más en oscuro), el sol de playa de Puerto Peñasco, el público mayor de Arizona, y que el feed a pantalla completa tipo reels se parece a la B 'Pop' ya presentada. Ajustes: convertirla en tema nocturno (por hora o prefers-color-scheme) aplicable a otra dirección, o mantenerla como dirección con lista fácil de recorrer y 'destacados de la noche'; tipografía de 17 px o más; ámbar aclarado #E0B07A para texto (5.27:1 sobre nogal); el foco de linterna como efecto ligero en CSS; los precios nunca escondidos detrás de swipes.\n\nPara todas: lo que mejor envejece en Koi es vaso de línea propio + tinta y grano + editorial + color por sabor. Lo que peor envejece es 3D, vidrio con texto encima, kawaii o feo-tierno prestado, pixel con colores ácidos y bento con look de SaaS. Ojo: todo lo de este track viene del índice de búsqueda; no vi las imágenes.",
+ "blocked": [
+  "dribbble.com: WebFetch falló con 'getaddrinfo ENOTFOUND' porque la política de red de esta sesión no permite el dominio. Hay que agregarlo en Network access del entorno (menú del entorno en la barra de título → Edit → Allowed domains). Todo lo de Dribbble viene del índice de WebSearch.",
+  "www.behance.net: el mismo error ENOTFOUND; hay que permitirlo igual. Lo de Behance viene del índice de búsqueda.",
+  "Siguiendo la indicación de la propia herramienta (tras dos hosts con el mismo fallo, no probar más), no intenté abrir pinterest.com, instagram.com, mobbin.com, screensdesign.com, awwwards.com, siteinspire.com, creativebloq.com, abduzeedo.com, nngroup.com, infinum.com ni otros. Por eso todas las fuentes van con accessed=false y no rodeé el bloqueo por otras vías.",
+  "Instagram: con site:instagram.com solo salen perfiles con su bio (p. ej. CoCo Bubble Tea, que menciona un premio de World Branding Awards); ningún post de menú. #bobamenu y #bubbleteamenu no dieron nada indexado y @koitea.mx no aparece. Sin evidencia visual de Instagram.",
+  "Pinterest: solo aparecen páginas /ideas/ y pines de plantillas; casi no indexa tableros. Sin evidencia visual directa.",
+  "Mobbin y ScreensDesign: ningún resultado indexado de esos dominios (piden sesión), así que no hay evidencia de pantallas de apps de comida.",
+  "Siteinspire: site:siteinspire.com no devolvió nada del dominio.",
+  "Dribbble 'Pagoda - Tea Brand - Design Applications' (shot 25763933): identidad de una casa de té en Ensenada, B.C., que mezcla estética asiática tradicional y moderna. Solo apareció en un espejo no oficial (workers.dev), así que no la incluí como fuente. Es la referencia regional más cercana que encontré: verificarla en Dribbble cuando se permita el dominio.",
+  "Behance 'Teaee — Bubble Tea QR Ordering App | UI/UX Case Study' (Hoang Viet) y 'MOCHU — Bubble Tea Mobile App UX/UI Case Study': solo salen como títulos en las búsquedas de Behance; no pude verificar su contenido. Vale la pena revisarlos para el flujo QR cuando haya acceso."
+ ]
+}

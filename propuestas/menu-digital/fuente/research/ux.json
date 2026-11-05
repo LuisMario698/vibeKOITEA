@@ -1,0 +1,303 @@
+{
+ "track": "UX, psicología de menú y accesibilidad",
+ "sources": [
+  {
+   "name": "Nielsen Norman Group — QR-Code Usability Guidelines",
+   "url": "https://www.nngroup.com/articles/qr-code-guidelines/",
+   "kind": "estudio/artículo UX",
+   "accessed": false,
+   "observed": "Extracto del buscador (página no abierta): los QR son para conveniencia, no para awareness, así que “el número de escaneos es mucho menos significativo que la usabilidad del flujo” que abren; recomienda evaluarlos con pruebas cualitativas; mostrar la URL junto al código para quien use un dispositivo sin cámara; asumir que quien escanea está en el teléfono y llevarlo a un sitio móvil dedicado o responsive.",
+   "borrow": "QR que abre directo la lista del menú (sin portada, sin descarga de app, sin selector de idioma bloqueante); URL corta impresa bajo el QR de cada mesa; KPI = sesiones que llegan a “Mostrar en caja” o “Pedir por WhatsApp” y el tiempo hasta ese punto, no escaneos.",
+   "avoid": "Medir el éxito por escaneos; QR que abre un PDF, una imagen o una landing intermedia."
+  },
+  {
+   "name": "Nielsen Norman Group — PDF: Still Unfit for Human Consumption, 20 Years Later",
+   "url": "https://nngroup.com/articles/pdf-unfit-for-human-consumption",
+   "kind": "estudio/artículo UX",
+   "accessed": false,
+   "observed": "Extracto: desaconseja usar PDF para contenido que debería ser página web; los PDF pueden ser “excruciatingly slow” en escritorio y móvil; en móvil es más engorroso cerrar y volver a la pantalla anterior; obligan a “pinch, zoom, squint, and scroll” fuera de contexto; suelen venir de documentos pensados para imprenta. Una fuente secundaria resume la alternativa: página web con lo esencial y descarga opcional.",
+   "borrow": "Menú 100% en HTML con texto real que se reacomoda de 360 a 430 px; la misma base de datos del panel alimenta también las 3 pantallas de la barra (hoy imagen fija gris salvia de bajo contraste).",
+   "avoid": "Subir la imagen de las pantallas o un PDF como “menú digital”; bloquear el zoom del navegador."
+  },
+  {
+   "name": "Nielsen Norman Group — Progressive Disclosure",
+   "url": "https://nngroup.com/articles/progressive-disclosure/",
+   "kind": "estudio/artículo UX",
+   "accessed": false,
+   "observed": "Extracto: diferir opciones secundarias a un área secundaria; mejora 3 de los 5 componentes de usabilidad (facilidad de aprendizaje, eficiencia y tasa de error); el reto es acertar la división entre lo inicial y lo secundario; la variante “staged disclosure” lleva al usuario por una secuencia lineal con un subconjunto de opciones en cada paso; “rara vez” conviene ofrecer varias formas de llegar a las opciones secundarias.",
+   "borrow": "Ficha con sólo 2 decisiones visibles (tamaño y topping incluido) y un renglón resumen “Dulzor 100% · Hielo normal · Cambiar” que despliega el resto; en el Armador, pasos lineales con un solo camino a cada opción.",
+   "avoid": "Mostrar de golpe ~15 toppings, niveles de dulzor y de hielo; ofrecer acordeón + pestaña + modal para lo mismo."
+  },
+  {
+   "name": "Nielsen Norman Group — Login Walls Stop Users in Their Tracks",
+   "url": "https://www.nngroup.com/articles/login-walls/",
+   "kind": "estudio/artículo UX",
+   "accessed": false,
+   "observed": "Extracto: los muros de login tienen un costo de interacción alto (recordar credenciales o crear cuenta) y sólo se justifican si el usuario gana mucho con ellos (correo, banca); en comercio electrónico recomienda compra como invitado junto al registro; cita mostrar el contenido antes del login para que el visitante decida si le sirve.",
+   "borrow": "Cero cuenta: menú, carrito, favoritos y “Repetir pedido” funcionan sin registro (guardado local); el nombre es opcional y sólo sirve para llamar el pedido o firmar el WhatsApp.",
+   "avoid": "Pedir teléfono o correo para ver el menú, para el ticket de caja o a cambio de Wi-Fi o promos como puerta de entrada."
+  },
+  {
+   "name": "Nielsen Norman Group — The Anchoring Principle",
+   "url": "https://nngroup.com/articles/anchoring-principle/",
+   "kind": "estudio/artículo UX",
+   "accessed": false,
+   "observed": "Extracto: el anclaje es apoyarse en una sola pieza de información para decidir; un precio original junto al rebajado ancla el valor percibido (ejemplo de tours en un sitio de viajes); los valores por defecto (calculadora hipotecaria) también fijan expectativas. Contrapeso: dos ensayos en línea con un “señuelo” vegetariano más caro en el menú (Attwood, Chesworth y Parkin; registro en https://westminsterresearch.westminster.ac.uk/item/qy35z/menu-engineering-to-encourage-sustainable-food-choices-when-dining-out-an-online-trial-of-priced-based-decoys) no hallaron efecto principal (OR 1.08, IC95% 0.45–2.57), con elecciones hipotéticas.",
+   "borrow": "Anclas honestas: el primer número que ve el turista es el precio total del vaso estándar con el topping incluido; tamaños lado a lado; promos reales con precio anterior visible.",
+   "avoid": "Precios tachados ficticios o señuelos artificiales: la evidencia en menús es débil y el riesgo de desconfianza es alto."
+  },
+  {
+   "name": "Baymard Institute — Food Delivery & Takeout UX Benchmark 2026",
+   "url": "https://baymard.com/blog/food-delivery-and-takeout-ux-benchmark-2026",
+   "kind": "estudio/artículo UX",
+   "accessed": false,
+   "observed": "Resumen de búsqueda (WebFetch falló con ENOTFOUND): publicado el 13 ago 2026; 8 sitios y apps (McDonald's, Burger King, KFC, Domino's, Just Eat, Uber Eats, Deliveroo, DoorDash); 3,100+ puntuaciones de desempeño y 1,900+ ejemplos de buenas prácticas; desempeño global entre “poor” y “mediocre”, ninguno llega a “decent”; faltan ayudas de orientación, el soporte para reordenar es débil y “las necesidades dietéticas y de personalización no tenían un camino soportado en ningún punto de decisión”; no hay filtros específicos por categoría y las opciones de personalización no se describen en la página del producto (“no son refinamientos sino la sustancia de la tarea”). Relacionados: “3 High-Level UX Takeaways” (https://baymard.com/blog/food-delivery-takeout-launch; 1,100+ h de pruebas y 600+ problemas; los usuarios buscan en la portada dónde reordenar; la propina fue un tropiezo común) y “Past Purchases” (https://baymard.com/blog/grocery-food-delivery-orders; la gente tiene un pedido de siempre y conviene agregarlo al carrito desde la portada). Otro resumen menciona un post previo de Baymard en el que un usuario de DoorDash móvil no pudo editar las personalizaciones de un producto ya en el carrito.",
+   "borrow": "Explicar cada opción en 1 línea (qué es taro, jelly, perla explosiva), insignias dietéticas (lácteos, cafeína), pestañas fijas como ayuda de orientación, tarjeta “Repetir” en la portada y carrito con “Editar” que reabre la ficha.",
+   "avoid": "Copiar la plantilla genérica de delivery con un modal largo de personalización sin explicaciones; cualquier pantalla de propina."
+  },
+  {
+   "name": "Baymard Institute — How to Reduce Cart Abandonment (estadísticas de abandono)",
+   "url": "https://baymard.com/blog/reduce-cart-abandonment",
+   "kind": "estudio/artículo UX",
+   "accessed": false,
+   "observed": "Resumen: la página de Baymard indica que 19% abandona un checkout si lo obligan a crear cuenta; fuentes secundarias citan 24–26% en otras ediciones o muestras; “costos extra demasiado altos” encabeza la mayoría de los rankings (39% en uno, 48% en otro; secundarios); un secundario afirma que 62% de los sitios no hace del pago como invitado la opción más prominente (benchmark 2025).",
+   "borrow": "Cierre sin cuenta y sin sorpresas: el total final se ve desde el primer “Agregar” (barra fija con total MXN/USD), cada extra muestra su precio en la opción (“+15 MXN”) y no aparecen cargos al final.",
+   "avoid": "Cargos o propinas sorpresa en el último paso; formularios que piden datos que no se usan."
+  },
+  {
+   "name": "Toast — How Guests Really Feel About QR Code Menus (encuesta)",
+   "url": "https://pos.toasttab.com/blog/on-the-line/qr-code-menu-insights",
+   "kind": "estudio/artículo UX",
+   "accessed": false,
+   "observed": "Resumen: encuesta ciega a 850 adultos de EE. UU. (fecha probable sept 2024): 81% prefiere menú físico y sólo 1% el QR; 90% de los mayores de 55 prefiere el tradicional; 20% dice que no le gusta nada del QR y 17% valora no tocar menús sucios; 26% dice que es difícil leer el texto pequeño en el teléfono; 14% encuentra algo difícil abrir el menú con el QR; 42% dice que la variedad es lo más importante de un menú; ~66% prefiere menús con fotos (6% no); 60% quiere que los recargos se avisen con una nota clara en el menú.",
+   "borrow": "Texto grande por defecto (nombre ≥18 px, cuerpo ≥16 px), imagen para cada bebida y nota visible de condiciones (“incluye 1 topping”, “precios ilustrativos”).",
+   "avoid": "Asumir que el QR es lo preferido: tiene que superar a la pantalla física en claridad y rapidez."
+  },
+  {
+   "name": "PYMNTS — Restaurants Reintroduce Paper Menus Amid Customer Complaints About QR Codes",
+   "url": "https://www.pymnts.com/?p=1951730",
+   "kind": "estudio/artículo UX",
+   "accessed": false,
+   "observed": "Resumen: a partir de una nota del WSJ, los comensales se quejan de lo difícil que es navegar, de la privacidad y del efecto en el ambiente; sólo 31% de casi 2,400 consumidores (PYMNTS Intelligence y Paytronix) se siente positivo al ver menús por QR. En los mismos resultados: Technomic (1,000 personas, mayo 2022) 88% prefiere papel, 57% siente el QR “como una tarea”, 55% lo encuentra difícil de leer y recorrer y 67% lo considera más higiénico (Restaurant Business Online: https://www.restaurantbusinessonline.com/technology/customers-really-dont-qr-code-menus); CTV Ottawa reporta un grupo restaurantero con 10% menos de ticket promedio porque los comensales no recorrían todas las opciones (https://ottawa.ctvnews.ca/restaurants-reintroducing-paper-menus-amid-qr-code-backlash-1.6913501).",
+   "borrow": "Que todo el menú se pueda recorrer en 2–3 pantallas (lista compacta + pestañas fijas) y que la pantalla física siga siendo una alternativa coherente con el digital.",
+   "avoid": "Scroll infinito, una bebida por pantalla como única vista, o tener que abrir cada producto para ver su precio."
+  },
+  {
+   "name": "Cornell (Yang, Kimes y Sessarego, 2009) — “$ or Dollars”: formatos de precio en el menú",
+   "url": "https://phys.org/news/2009-12-diners-menus-dont-dollar.html",
+   "kind": "estudio/artículo UX",
+   "accessed": false,
+   "observed": "Resumen: estudio de campo en St. Andrew's Café (Culinary Institute of America, Hyde Park, NY), en almuerzo, con 3 formatos: con signo “$”, sólo numeral y en palabras; en el reporte de trabajo, quien recibió sólo numerales gastó significativamente más (≈US$5.55, ~8% según Phys.org, en un “upscale casual”); la explicación propuesta es que el “$” recuerda el “dolor de pagar”. La versión publicada (International Journal of Hospitality Management, 2009) es más cauta: el formato no fue predictor significativo del gasto, y los autores advierten que puede aplicar sólo a esa comida y restaurante. Posible PDF del reporte en eCommons: https://ecommons.cornell.edu/bitstream/1813/72131/1/Kimes14_Menu_price.pdf (news.cornell.edu no resolvió).",
+   "borrow": "En listas, precio como numeral limpio (“85”, sin “$” ni “.00”) con un indicador global de moneda junto al conmutador MXN/USD.",
+   "avoid": "Prometer al cliente “+8% de venta”: el efecto no se sostuvo en la versión publicada."
+  },
+  {
+   "name": "Stanford (Turnwald, Boles y Crum, 2017, JAMA Internal Medicine) — descripciones indulgentes",
+   "url": "https://news.stanford.edu/2017/06/12/decadent-sounding-labeling-may-lead-people-eat-vegetables/",
+   "kind": "estudio/artículo UX",
+   "accessed": false,
+   "observed": "Resumen: comedor universitario durante 46 días (otra cobertura dice un trimestre), misma preparación y 4 tipos de etiqueta (básica, saludable restrictiva, saludable positiva, indulgente). La indulgente aumentó 25% los comensales que eligieron la verdura frente a la básica, 41% frente a la restrictiva y 35% frente a la saludable positiva, y 23% la masa servida frente a la básica; las etiquetas siempre describían con exactitud el platillo. Contraste: el muy citado “+27% de ventas por etiquetas descriptivas” de Wansink (cafetería, 2001; FoodService Director: https://www.foodservicedirector.com/menu-trends/menu-descriptions-help-sales-study-says) está en entredicho: en 2018 Cornell determinó mala conducta académica y más de una docena de sus artículos fueron retractados.",
+   "borrow": "Una línea sensorial y exacta por bebida (sabor, textura, origen: “té de Taiwán”, “azúcar morena tostada”, “perlas tibias y suaves”), en ES y EN.",
+   "avoid": "Citar el 27% de Wansink; vender por “ligero/saludable”; textos largos o adornos falsos."
+  },
+  {
+   "name": "Cai, Chen y Fang (2009, American Economic Review) — Observational Learning",
+   "url": "https://www.nber.org/papers/w13516",
+   "kind": "estudio/artículo UX",
+   "accessed": false,
+   "observed": "Resumen: experimento natural aleatorizado en restaurantes Mei Zhou Dong Po de Beijing (nota de Duke: https://today.duke.edu/2009/06/dining_study.html). La mitad de las mesas recibió un letrero con los 5 platillos más pedidos de la semana anterior; la otra mitad, 5 platillos de muestra sin etiqueta de popularidad. Mostrar el ranking subió la demanda de esos platillos 13–20% (versión publicada; 13–18% en el working paper); sólo destacar, sin decir que eran populares (saliencia), no tuvo efecto significativo; el efecto fue mayor en clientes poco frecuentes y mejoró la satisfacción reportada.",
+   "borrow": "Fila “Lo más pedido” con ranking numerado 1–5 tomado de ventas reales del panel; especialmente útil para el turista que viene una sola vez.",
+   "avoid": "Etiquetar como “más pedido” algo que no lo es: lo que funciona es la información de popularidad, no un destacado cualquiera."
+  },
+  {
+   "name": "Johns, Edwards y Hartwell (2013) — “Menu Choice: Satisfaction or Overload?” (estudio de Bournemouth University, vía TastyIgniter)",
+   "url": "https://tastyigniter.com/blog/creating-effective-online-menu",
+   "kind": "estudio/artículo UX",
+   "accessed": false,
+   "observed": "Resumen: el blog cita un estudio de Bournemouth University según el cual el número ideal de opciones por categoría depende del tipo de lugar: 6 por categoría en comida rápida; en alta cocina, unas 7 entradas y 10 platos fuertes. Otro resumen atribuye el hallazgo a Johns, Edwards y Hartwell (2013, Journal of Culinary Science & Technology): menús idénticos salvo el número de opciones por categoría, con un ideal de 6 en servicio rápido y de 7–10 en alta cocina. Heather Hartwell es investigadora de Bournemouth, lo que probablemente reconcilia ambas atribuciones; en los resultados aparece un registro de Bournemouth (https://qastaffprofiles.bournemouth.ac.uk/display/journal-article/161366) cuyo contenido no pude confirmar.",
+   "borrow": "Koi Tea ya está en rango (Milk Tea 5, Fruit Tea 6, Smoothies 4); la sobrecarga está en los toppings (~15 sabores): agruparlos en 3 familias con 4–7 chips cada una y preseleccionar el incluido.",
+   "avoid": "Llevar las categorías a más de 6–7 opciones visibles o mostrar los toppings como lista plana."
+  },
+  {
+   "name": "DoorDash for Merchants — fotos y calidad de menú (Learning Center)",
+   "url": "https://get.doordash.com/en-us/learning-center/photos",
+   "kind": "app de pedido",
+   "accessed": false,
+   "observed": "Resumen: estudio de DoorDash (abr–jun 2022, más de 15,000 restaurantes pequeños): los menús con fotos de producto logran “hasta” 44% más ventas mensuales; imagen de encabezado hasta +50% y logo +23%. Su guía de calidad de menú (https://merchants.doordash.com/en-us/learning-center/menu-quality-tips-to-improve-restaurant-ranking) dice que ≥50% de cobertura con fotos sube las ventas ~13% en promedio y que poner descripción en ≥50% del menú las sube más de 6%. Un blog de fotografía (Snappr) atribuye ~30% a Grubhub y 24% a Deliveroo (autorreportados).",
+   "borrow": "Cubrir 100% del menú con imagen: ilustración coherente mientras no haya fotos, en un marco de proporción fija para cambiarla por foto real; encabezado con la foto real del local (barra o cubos de luz).",
+   "avoid": "Presentar el 44% como promedio (es un máximo de la propia plataforma); fotos pesadas sin compresión."
+  },
+  {
+   "name": "Jachimowicz, Duncan, Weber y Johnson (2019) — meta-análisis de efectos de los defaults",
+   "url": "https://business.columbia.edu/faculty/research/when-and-why-defaults-influence-decisions-meta-analysis-default-effects",
+   "kind": "estudio/artículo UX",
+   "accessed": false,
+   "observed": "Resumen: Behavioural Public Policy 3(2):159–186; 58 estudios y 73,675 participantes; efecto combinado d = 0.68 (IC95% 0.53–0.83) con gran variación (algunos efectos negativos); según el comunicado de Columbia (https://business.columbia.edu/press-release/cbs-press-releases/defaults-are-not-same-default), la opción preseleccionada se elige ~27% más; los defaults funcionan mejor en decisiones de consumo y cuando comunican recomendación o el statu quo. Complemento (https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8588652/): en una cafetería de la Universidad de Konstanz, cambiar el diseño del azucarero redujo 20% el azúcar añadida (d = 1.35) frente al default, y la mayoría de los clientes aprobó el cambio. NN/g (video “The Danger of Defaults”: https://www.nngroup.com/videos/the-danger-of-defaults/) aconseja asumir que el usuario no cambiará el default.",
+   "borrow": "Preselección “Como lo prepara la casa” (tamaño, topping incluido, dulzor, hielo), etiquetada como recomendación de Koi e idéntica a la receta estándar de la barra.",
+   "avoid": "Defaults que cobran (extra preseleccionado) o que no coinciden con lo que prepara la barra: generan errores y desconfianza."
+  },
+  {
+   "name": "NYU Stern (Raghubir, Morwitz y Santana, Journal of Retailing 2012) — “Europoly Money”: ilusión monetaria en turistas",
+   "url": "https://www.stern.nyu.edu/experience-stern/news/con_037307",
+   "kind": "estudio/artículo UX",
+   "accessed": false,
+   "observed": "Resumen: en 6 estudios, los turistas sufren “ilusión monetaria”: se anclan en el valor nominal del precio y ajustan poco por el tipo de cambio; ejemplo: un estadounidense en Japón (US$1 = 78 yenes) tiende a gastar de menos porque 800 yenes “asustan” aunque son poco más de US$10; también describe redondeos al calcular; recomiendan calculadoras y apps. Complemento: Saayman et al. (Current Issues in Tourism, 2022; https://econpapers.repec.org/RePEc:taf:rcitxx:v:25:y:2022:i:5:p:792-807): más de 80% de los encuestados mostró ilusión monetaria, mayor en bienes baratos.",
+   "borrow": "Conmutador MXN/USD visible y persistente, total del carrito en ambas monedas, USD con “≈” y redondeo a 0.25.",
+   "avoid": "Mostrar sólo “$95” al turista: con ~18 MXN por dólar el número nominal parece caro y, además, el signo “$” lo comparten peso y dólar."
+  },
+  {
+   "name": "U.S. Web Design System — Select a language: two languages",
+   "url": "https://designsystem.digital.gov/patterns/select-a-language/two-languages/",
+   "kind": "estudio/artículo UX",
+   "accessed": false,
+   "observed": "Resumen: con dos idiomas, colocar el botón selector arriba de la pantalla, sobre la navegación, para alternar; sugiere además un aviso o enlace prominente dentro de la página; el patrón de 3+ idiomas nombra cada idioma en su propio idioma (English, Español). Complementos: el sistema de diseño de DWP (Reino Unido; https://design-system.dwp.gov.uk/components/language-toggle) muestra las dos opciones en su propio idioma separadas por una barra, con etiqueta accesible tipo “Change the language to English”; SimpleLocalize (https://simplelocalize.io/blog/posts/flags-as-language-in-language-selector/) y otros: las banderas representan países, no idiomas; usar nombres nativos y ubicar el selector en el encabezado o el pie.",
+   "borrow": "Botón “English”/“Español” arriba a la derecha (≥44 px) con el nombre del idioma destino y aria-label en ese idioma; idioma inicial según el navegador, siempre cambiable.",
+   "avoid": "Banderas de México o EE. UU.; esconder el idioma dentro de un menú hamburguesa o en un modal inicial."
+  },
+  {
+   "name": "W3C — WCAG 2.2 Understanding 2.5.8 Target Size (Minimum) y criterios relacionados",
+   "url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html",
+   "kind": "estudio/artículo UX",
+   "accessed": false,
+   "observed": "Resumen (WebFetch falló con ENOTFOUND): 2.5.8 (AA) pide objetivos de al menos 24×24 px CSS, con 5 excepciones (espaciado, con un círculo de 24 px centrado en cada objetivo que no toque a otro; equivalente; en línea; control del agente de usuario; esencial); como buena práctica, cumplir el tamaño aunque haya espacio y, en controles importantes, apuntar a 2.5.5 Target Size (Enhanced, AAA): 44×44 px CSS, pensado para temblor o poca destreza (https://w3.org/WAI/WCAG22/Understanding/target-size-enhanced.html). 2.4.11 Focus Not Obscured (AA): un contenido fijo (banner de cookies, barra pegajosa) no debe tapar por completo el elemento con foco; una guía práctica sugiere scroll-padding (https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured). 1.4.3, según fuentes secundarias (https://tabnav.com/academy/wcag/success-criterion-1.4.3): 4.5:1 para texto normal y 3:1 para texto grande (≥18 pt o ≥14 pt negrita). NN/g (https://www.nngroup.com/articles/touch-target-size/): 1 cm × 1 cm es sólo el mínimo; si el usuario está en movimiento, más grande.",
+   "borrow": "Todos los controles ≥44×44 px (incluidos +/−, chips de topping, cerrar ficha y conmutadores), separación ≥8 px, scroll-padding-bottom igual a la altura de la barra de carrito y foco visible de 3 px.",
+   "avoid": "Chips de 32 px pegados; barra fija de carrito que tapa el foco o el último producto."
+  },
+  {
+   "name": "web.dev — How the Core Web Vitals metrics thresholds were defined",
+   "url": "https://web.dev/articles/defining-core-web-vitals-thresholds",
+   "kind": "estudio/artículo UX",
+   "accessed": false,
+   "observed": "Resumen: umbrales “bueno” medidos en el percentil 75: LCP ≤2.5 s (malo >4 s, según tablas secundarias consistentes), INP ≤200 ms (malo >500 ms), CLS ≤0.1 (malo >0.25); una página es “buena” si al menos 75% de las visitas cumple. Complementos: Think with Google (https://thinkwithgoogle.com/consumer-insights/consumer-trends/mobile-site-load-time-statistics/): 53% de las visitas móviles se abandona si la página tarda más de 3 s (análisis de 2016 con 10,000+ dominios) y en 2017 una landing móvil tardaba 22 s en cargar por completo; Web Almanac 2025 (https://almanac.httparchive.org/en/2025/page-weight): la página de inicio móvil mediana pesa ≈2,362 KB (julio 2025) frente a 845 KB en 2015 (otras fuentes dicen 2.56 MB).",
+   "borrow": "Metas para el prototipo: LCP <2.5 s en red lenta, CLS <0.1 (aspect-ratio fijo en imágenes e ilustraciones), INP <200 ms (sin animaciones pesadas en el hilo principal).",
+   "avoid": "Aceptar el peso “normal” de la web: 2.3 MB a 256 kbps son ~76 s."
+  },
+  {
+   "name": "T-Mobile — Canada & Mexico included (roaming del turista de EE. UU.) + Opensignal México 2025",
+   "url": "https://t-mobile.com/support/coverage/canada-mexico-included",
+   "kind": "mercado local",
+   "accessed": false,
+   "observed": "Resumen: según el plan, 5, 10, 15 o 30 GB de alta velocidad en México; después, datos ilimitados a hasta 256 kbps (planes como Experience Beyond o Go5G Plus) o 128 kbps (la mayoría); la página también habla de “velocidades 2G”. Verizon: 500 MB/día de alta velocidad al cruzar la frontera (fuente secundaria sin fecha); de AT&T EE. UU. no hubo datos. Contraste con SIM local, Opensignal México (oct 2025; https://insights.opensignal.com/reports/2025/10/mexico/mobile-network-experience): descarga promedio Telcel 46.0 Mbps y AT&T 27.2 Mbps; subida 9.7 y 7.7 Mbps; 5G de Telcel ~180.7 Mbps (jun–ago 2025).",
+   "borrow": "Diseñar para el peor caso realista del turista con el roaming agotado: 128–256 kbps. Cálculo propio (sólo transferencia, sin latencia): en 3 s caben ≈47 KB a 128 kbps y ≈94 KB a 256 kbps; 150 KB tardan 9.6 s y 4.8 s respectivamente.",
+   "avoid": "Probar sólo con el Wi-Fi del estudio o con 4G/5G local."
+  }
+ ],
+ "patterns": [
+  {
+   "pattern": "El menú tiene que ser texto HTML legible, no PDF ni imagen",
+   "evidence": "NN/g (PDF): los PDF son lentos y en móvil obligan a pellizcar, hacer zoom, entrecerrar los ojos y desplazarse fuera de contexto. Toast: 26% dice que es difícil leer el texto pequeño en el teléfono. Technomic (vía Restaurant Business): 55% encuentra los menús QR difíciles de leer y recorrer. Brief: las 3 pantallas actuales son imagen fija sobre gris salvia; cálculo propio: blanco sobre #AFC0B6 = 1.90:1 (falla) y #2A2523 sobre #AFC0B6 = 7.96:1.",
+   "implication": "Regla: nombres, precios y descripciones como texto real en una sola página responsive (360–430 px sin scroll horizontal); cuerpo ≥16 px, nombre de bebida ≥18 px, precio ≥16 px con cifras tabulares; nunca bloquear el zoom (sin maximum-scale=1 ni user-scalable=no); el mismo contenido del panel alimenta las pantallas de la barra, con texto oscuro sobre salvia."
+  },
+  {
+   "pattern": "El QR vale por el flujo que abre, no por los escaneos",
+   "evidence": "NN/g (QR): los QR son de conveniencia; el número de escaneos importa mucho menos que la usabilidad del flujo; asumir teléfono y sitio móvil; mostrar la URL junto al código; evaluar con pruebas cualitativas.",
+   "implication": "Regla: el QR aterriza directo en la lista, con pestañas de categoría y las primeras 3–4 bebidas visibles en la primera pantalla de 390×844 (sin splash, sin “instala la app”, sin elegir idioma antes de ver); un QR por mesa con parámetro de mesa y URL corta impresa debajo; métrica principal = % de sesiones que llegan a “Mostrar en caja” o “Pedir por WhatsApp”."
+  },
+  {
+   "pattern": "La mayoría prefiere el menú físico: el digital debe ofrecer algo que la pantalla no da",
+   "evidence": "Toast (850 adultos): 81% prefiere menú físico, 1% el QR, 20% no le gusta nada del QR, 90% de los mayores de 55 prefiere el tradicional. PYMNTS/Paytronix (~2,400): sólo 31% se siente positivo. Technomic (1,000, 2022): 88% prefiere papel y 57% siente el QR como una tarea. CTV: un grupo vio 10% menos de ticket porque la gente no recorría todas las opciones.",
+   "implication": "Regla: cada prototipo justifica el QR con 3 ventajas visibles desde la primera pantalla: entender la bebida (imagen + qué es), ES/EN y MXN/USD, y armar el pedido para mostrarlo en caja sin dictarlo; la pantalla física sigue siendo una alternativa válida y coherente (misma información, mismo orden)."
+  },
+  {
+   "pattern": "Cero muros: ni registro, ni ventanas emergentes, ni descarga",
+   "evidence": "NN/g (Login Walls): costo de interacción alto, sólo se justifica en apps muy personales; ofrecer acceso como invitado. Baymard: 19% abandona si lo obligan a crear cuenta. Google (vía Smashing Magazine: https://www.smashingmagazine.com/2017/05/intrusive-interstitials-guidelines-avoid-google-penalty/): desde enero de 2017, las páginas móviles cuyo contenido queda tapado por intersticiales difíciles de cerrar pueden posicionarse peor. PYMNTS: la privacidad es una de las quejas del QR.",
+   "implication": "Regla: ningún modal al entrar (ni newsletter, ni promo, ni “agrega a inicio”, ni muro de cookies si no hay obligación legal); favoritos y último pedido en almacenamiento local; datos personales sólo opcionales (nombre para llamar el pedido) y nunca requeridos para “Mostrar en caja”; avisos como banner pequeño descartable que no tapa contenido ni foco."
+  },
+  {
+   "pattern": "Personalización compleja: divulgación progresiva con todo preseleccionado",
+   "evidence": "NN/g (Progressive Disclosure): mejora aprendizaje, eficiencia y errores si se acierta qué va primero; “staged disclosure” = pasos lineales. Meta-análisis de defaults (58 estudios, 73,675 personas): d = 0.68, la opción preseleccionada se elige ~27% más y funciona mejor cuando comunica recomendación. NN/g: asumir que el usuario no cambiará el default. Baymard 2026: las opciones de personalización no se describen en la página del producto.",
+   "implication": "Regla: la ficha abre con “Como lo prepara la casa” ya elegido y el botón “Agregar · 85 MXN” activo desde el inicio; sólo tamaño y topping incluido visibles; dulzor, hielo y extras en un renglón resumen expandible; cada opción con una línea que la explica; en el Armador, pasos lineales con “Agregar” disponible en cualquier paso y “Atrás” sin perder elecciones; el default es la receta estándar de la barra."
+  },
+  {
+   "pattern": "Repetir pedido sin cuenta",
+   "evidence": "Baymard: en las pruebas, la gente busca en la portada cómo reordenar; muchos tienen un pedido de siempre y conviene agregar las compras anteriores al carrito desde la portada; benchmark 2026: soporte débil para reordenar.",
+   "implication": "Regla: si el dispositivo tiene un pedido previo, mostrar arriba “Tu último pedido” con botón “Repetir” (1 toque al carrito) y una fila de favoritos con corazón; todo local, sin login y con opción de borrar."
+  },
+  {
+   "pattern": "Carrito editable y total sin sorpresas",
+   "evidence": "Baymard: un usuario de DoorDash móvil no pudo editar las personalizaciones ya en el carrito; los costos extra son la primera causa de abandono en los rankings (39–48%, secundarios). Toast: 60% quiere que los recargos se indiquen claramente en el menú.",
+   "implication": "Regla: cada línea del carrito muestra la receta abreviada (“M · tapioca · 50% · poco hielo”); “Editar” reabre la ficha con esos valores; +/− de 44 px; eliminar con “Deshacer” dentro de la página (nunca confirm()); barra fija con artículos y total MXN/USD desde el primer agregado; cada extra muestra su precio en la opción (“+15 MXN”) y el total del botón se actualiza en vivo."
+  },
+  {
+   "pattern": "La información de popularidad mueve la demanda, sobre todo en clientes nuevos",
+   "evidence": "Cai, Chen y Fang (AER 2009): mostrar los 5 más pedidos subió su demanda 13–20%; destacar sin decir que eran populares no tuvo efecto significativo; el efecto fue mayor en clientes poco frecuentes.",
+   "implication": "Regla: fila “Lo más pedido” con ranking numerado 1–5 alimentado por ventas reales del panel; mientras no haya datos (abrió el 1 nov 2026), usar “Favoritos de la casa” y la reseña real de Google (“taro con tapioca”, “durazno o mango green tea con jelly de lichi”) como “Recomendado por clientes”; nunca inventar popularidad."
+  },
+  {
+   "pattern": "Pocas opciones por grupo: la sobrecarga de Koi está en los toppings",
+   "evidence": "Johns, Edwards y Hartwell (2013, Bournemouth): ideal de 6 opciones por categoría en servicio rápido (7–10 en alta cocina). Menú de Koi: Milk Tea 5, Fruit Tea 6, Smoothies 4, pero ~15 toppings (tapioca + 7 perlas explosivas + 7 jellys).",
+   "implication": "Regla: categorías de bebida tal cual (ya están en rango); toppings en 3 familias (Tapioca · Perlas explosivas · Jellys) con 4–7 chips por familia y el incluido preseleccionado por bebida; el Koi guía termina en 1 recomendación principal + 2 alternativas, no en una lista."
+  },
+  {
+   "pattern": "Cada bebida necesita imagen, aunque todavía no haya fotos",
+   "evidence": "DoorDash (15,000+ restaurantes, 2022): fotos de producto hasta +44% de ventas mensuales, imagen de encabezado hasta +50%, logo +23%; ≥50% de cobertura ≈ +13% en promedio. Toast: ~66% prefiere menús con fotos y sólo 6% no.",
+   "implication": "Regla: 100% de las bebidas con imagen: ilustración SVG paramétrica (capas con el color de cada bebida, perlas y jellys como formas) de pocos KB, dentro de un marco con proporción fija (p. ej., 4:5) para cambiarla por foto real sin mover el layout; encabezado con foto real del local en WebP/AVIF ligera, cargada después del texto."
+  },
+  {
+   "pattern": "Descripciones sensoriales cortas y exactas",
+   "evidence": "Stanford (2017): etiquetas indulgentes +25% de elección frente a las básicas y +41% frente a las “saludables restrictivas”. DoorDash: descripciones en ≥50% del menú ≈ +6% de ventas. El +27% de Wansink no es confiable (mala conducta y retractaciones).",
+   "implication": "Regla: una línea de ≤12 palabras por bebida en ES y EN que hable de sabor, textura y origen; glosario de un toque para taro, jelly, perlas explosivas y lichi; nada de “light/saludable” como gancho; ninguna promesa que la barra no cumpla."
+  },
+  {
+   "pattern": "Precio: numeral limpio en las listas, moneda explícita donde se decide y se paga",
+   "evidence": "Cornell (2009): sin “$” se gastó ~8% más en el reporte de trabajo, pero la versión publicada no halló efecto significativo (evidencia débil). NN/g: el primer precio visto ancla el valor percibido. Ensayos de señuelo en menú (Westminster): sin efecto principal.",
+   "implication": "Regla: en la lista, “85” sin “$” ni “.00” y la moneda fija en el conmutador (“MXN”); en ficha, carrito y ticket, moneda explícita (“85 MXN · ≈ US$4.75”); sin precios tachados falsos ni señuelos; el precio mostrado ya incluye el topping incluido."
+  },
+  {
+   "pattern": "Turistas: doble moneda contra la ilusión monetaria",
+   "evidence": "NYU Stern: los turistas se anclan en el valor nominal y ajustan poco; cuando la moneda local es un múltiplo grande del dólar (yen 78:1) tienden a gastar de menos. Saayman et al. (2022): más de 80% muestra ilusión monetaria, más en bienes baratos. El peso está a ~18:1 (tipo de ejemplo del brief).",
+   "implication": "Regla: conmutador MXN/USD siempre visible en la barra superior y recordado; si el idioma es EN, sugerir USD como inicial; total del carrito siempre en ambas monedas; USD con “≈” y redondeo a 0.25; nota “Tipo de cambio de ejemplo: 18 MXN = 1 USD · Precios ilustrativos”."
+  },
+  {
+   "pattern": "Idioma: conmutador textual arriba, sin banderas, con traducción humana",
+   "evidence": "USWDS: con dos idiomas, botón arriba sobre la navegación y aviso dentro de la página; DWP: opciones en su propio idioma y etiqueta accesible “Change the language to English”; SimpleLocalize: las banderas son países, no idiomas. Estudios de traducción de menús (p. ej., Ginebra 2025: https://archive-ouverte.unige.ch/unige:184230) señalan errores por traductor automático sin edición, traducción literal y falta de terminología culinaria; un estudio liga las traducciones confusas con menor satisfacción del turista (evidencia cualitativa).",
+   "implication": "Regla: botón “English”/“Español” arriba a la derecha, ≥44 px, con lang y aria-label en el idioma destino; cambia todo sin recargar ni perder el carrito; nombres de producto estables en ambos idiomas (Taro Milk Tea); descripciones con glosario fijo (Lichi/Lychee, Maracuyá/Passion fruit, Durazno/Peach, Perlas explosivas/Popping boba)."
+  },
+  {
+   "pattern": "Objetivos táctiles grandes y foco que nunca queda tapado",
+   "evidence": "WCAG 2.2: 2.5.8 (AA) 24×24 px mínimo; 2.5.5 (AAA) 44×44 px para temblor y poca destreza; 2.4.11 (AA) el contenido fijo no debe tapar el elemento con foco. NN/g: 1 cm × 1 cm es sólo el mínimo y hay que agrandar si el usuario se mueve (de pie en la fila, caminando).",
+   "implication": "Regla: todos los controles ≥44×44 px con ≥8 px entre chips; barra de carrito fija con scroll-padding-bottom igual a su altura; foco visible de 3 px (#2A2523 sobre claro, #FEF4EB sobre oscuro) con offset; Escape cierra fichas; diálogos con role=dialog, aria-modal y retorno del foco al disparador; animaciones desactivables con prefers-reduced-motion."
+  },
+  {
+   "pattern": "La paleta de marca necesita tokens propios para texto",
+   "evidence": "WCAG 1.4.3: 4.5:1 texto normal, 3:1 texto grande. Cálculo propio sobre crema #FEF4EB: rojo koi #F94E2B 3.15:1; #D9442A 4.02:1 (falla para texto normal aunque el brief lo sugiere); #C23A22 4.93:1; #B5361F 5.51:1; milk tea #D0A585 2.06:1; taro #AA81B3 2.98:1; plafón #C39056 2.60:1. Blanco sobre #D9442A 4.37:1 (falla) y sobre #C23A22 5.35:1. Fondo noche #1F1A1C: crema 15.83:1, ámbar #E0B074 8.69:1, rojo koi 5.03:1; sobre nogal #483D42, el plafón #C39056 da 3.68:1 y el rojo koi 3.04:1.",
+   "implication": "Regla: --rojo-texto #C23A22 (texto rojo y botón primario con texto blanco); --rojo-deco #F94E2B sólo en ilustración, bordes (≥3:1) o texto ≥24 px; tonos de texto sobre crema: taro #7E5689 (5.41:1), milk tea #8A5F3F (5.11:1), ámbar #8C6230 (4.96:1), salvia #5E7468 (4.64:1); en modo noche, #1F1A1C como fondo base y #483D42 sólo para tarjetas con texto crema."
+  },
+  {
+   "pattern": "Presupuesto de peso pensado para el roaming lento",
+   "evidence": "T-Mobile: tras el cupo de alta velocidad en México, 256 o 128 kbps (“velocidades 2G”); Verizon: 500 MB/día (secundario). web.dev: LCP ≤2.5 s, INP ≤200 ms, CLS ≤0.1 en el p75. Think with Google: 53% abandona si tarda más de 3 s (2016). Web Almanac 2025: página móvil mediana ≈2,362 KB. Cálculo propio: en 3 s caben ≈47 KB a 128 kbps; la página mediana tardaría ≈151 s.",
+   "implication": "Regla: primera vista útil (HTML + CSS crítico + datos del menú + ilustraciones SVG) ≤50 KB comprimidos; total inicial ≤150 KB; fotos diferidas y opcionales; 1–2 familias de Google Fonts con display=swap y respaldo de sistema; sin video, sin librerías 3D, mascota animada diferida; tamaños fijos (aspect-ratio) para CLS <0.1; Service Worker/PWA para visitas repetidas; probar con la red limitada a 256 kbps."
+  },
+  {
+   "pattern": "Orientación y filtros que sí importan en una tienda de boba",
+   "evidence": "Baymard 2026: faltan ayudas de orientación, no hay filtros por categoría y las necesidades dietéticas no tienen un camino soportado. CTV: el ticket cayó 10% cuando la gente no recorría todo el menú. Toast: 42% dice que la variedad es lo más importante.",
+   "implication": "Regla: pestañas de categoría fijas con scroll-spy y conteo (Milk Tea 5 · Fruit Tea 6 · Smoothies 4 · Toppings); búsqueda bilingüe con sinónimos (lychee→lichi, passion fruit→maracuyá, pearls/boba→tapioca) y estado vacío útil; insignias por bebida “Con lácteos” y “Con té/cafeína” (por confirmar con Koi); “Agotado” visible en su lugar, sin ocultar la bebida ni romper el orden."
+  }
+ ],
+ "insights": [
+  "Corrección al brief: #D9442A sobre crema da 4.02:1 y el blanco sobre #D9442A da 4.37:1; ambos fallan AA para texto normal. Usar #C23A22 como rojo funcional (4.93:1 sobre crema; 5.35:1 con texto blanco) y dejar #F94E2B para la ilustración del koi y el texto de ≥24 px.",
+  "Las pantallas de la barra son ilegibles por diseño (texto claro sobre salvia ≈1.9:1). Oportunidad comercial para VIBE: el mismo panel que administra el menú digital puede publicar las 3 pantallas con texto oscuro sobre salvia (7.96:1) y precios reales.",
+  "Presupuesto realista: el turista de Arizona con el roaming agotado navega a 128–256 kbps. A 128 kbps, 3 s ≈ 47 KB. Los prototipos deben pintar la lista completa de bebidas con ese peso; las fotos del local (bar.jpg, fruit-teas.jpg) van después y comprimidas.",
+  "Ticket “Mostrar en caja” (inferencia; no encontré un estudio específico): pantalla completa, código de 4 caracteres sin ambiguos (sin 0/O ni 1/I) en ≥48 px, una línea por bebida con receta abreviada en ≥18 px, total en MXN y ≈USD, trazo #2A2523 sobre crema (13.95:1); se genera en el teléfono y funciona sin red.",
+  "El ticket y el mensaje de WhatsApp deben generarse en español, con los nombres canónicos de la barra, aunque el cliente navegue en inglés (la barra lee un solo idioma); al cliente se le muestra la traducción debajo.",
+  "WhatsApp: según resúmenes secundarios, 93–96% de los internautas en México lo usa (Statista/DataReportal, vía https://marketing4ecommerce.mx/whatsapp-popularidad-en-mexico/), lo que respalda “Pedir por WhatsApp” para locales y pedidos para llevar; “Mostrar en caja” es la salida que no depende de ninguna app ni de datos.",
+  "“Lo más pedido” honesto: Koi abrió el 1 nov 2026, así que hasta tener datos del panel conviene mostrar “Favoritos de la casa” y la reseña real de Google. El ranking real es además un argumento de venta del panel (Cai et al.: +13–20% en los platillos listados).",
+  "El “1 topping gratis” (por confirmar) es el mejor default del menú: preseleccionar el topping recomendado de cada bebida con la etiqueta “Incluido” resuelve la decisión más difícil y comunica valor; los extras se muestran con “+precio”.",
+  "Dulzor por defecto: lo que se preseleccione será lo que más se pida (d = 0.68). Debe ser la receta estándar de la barra; si Koi quiere empujar menos azúcar, hay antecedente de defaults bajos aceptados por los clientes (Konstanz: −20% de azúcar añadida).",
+  "Mayores de 55: 90% prefiere el menú tradicional (Toast). Si una parte del turismo de Arizona es de ese grupo, pesan más el tamaño de texto, el contraste y los controles grandes que la animación.",
+  "No vender cifras como promesa: el +8% sin “$” (Cornell) no se sostuvo en la versión publicada, el +27% de Wansink está desacreditado, el +44% de DoorDash es un máximo de la propia plataforma y el 53% de Google es de 2016. Úsense como dirección de diseño, y mídase en Koi con un QR por mesa.",
+  "Validación barata: 5 turistas angloparlantes y 5 locales con tareas reales (“pide un taro con tapioca menos dulce y muéstralo en caja”, “¿cuánto es en dólares?”), con el teléfono limitado a 256 kbps; medir el tiempo hasta el ticket y los errores (NN/g recomienda pruebas cualitativas para evaluar los QR).",
+  "Animación de la mascota en producción (Rive/Lottie): cargarla diferida después de la lista, nunca condicionar una tarea a la animación, y respetar prefers-reduced-motion. Así no rompe el presupuesto de ≈50 KB de la primera vista.",
+  "Limitación de esta línea: no se pudo abrir ninguna página. WebFetch no resolvió los hosts y el presupuesto de búsqueda se agotó, así que todas las cifras vienen de resúmenes del buscador y conviene verificarlas antes de citarlas al cliente. Los cálculos de contraste y de tiempos de carga sí son propios y reproducibles."
+ ],
+ "direction_notes": "1 · Galería “Sabor y arte”. SE APOYA en que las imágenes y las descripciones venden (DoorDash: fotos hasta +44%, ≥50% de cobertura ≈ +13%; Toast: 66% quiere fotos; Stanford: descripciones indulgentes +25%); la “cédula de museo” es justo una descripción sensorial con origen (“té de Taiwán”). AJUSTAR: las “salas” no deben esconder el menú (CTV: −10% de ticket cuando la gente no recorre las opciones; Baymard 2026: faltan ayudas de orientación). El índice de salas debe funcionar como pestañas de categoría fijas, con una lista compacta como vista principal y una cédula de ≤12 palabras con detalle al tocar. Las “obras” deben ser ilustraciones SVG ligeras, no fotos grandes (≤50 KB en la primera vista). Riesgo: una navegación sólo horizontal tipo carrusel.\n\n2 · Armador “Arma tu boba”. Es LA MÁS RESPALDADA para la personalización: NN/g (divulgación progresiva y “staged disclosure”), el meta-análisis de defaults (d = 0.68; funcionan mejor si comunican recomendación) y el hueco que señala Baymard (personalización sin describir ni camino soportado). AJUSTAR: el armador nunca obliga a recorrer todos los pasos. Todo va preseleccionado “como la casa”, con “Agregar” activo en cualquier paso, precio en vivo en el botón, cada opción explicada en una línea, toppings en 3 familias (≤6–7 chips) y un carrito que reabre el armador para editar. Los “favoritos de la casa” que precargan el armador son a la vez default y prueba social (Cai et al.: la información de popularidad pesa más en clientes poco frecuentes, como los turistas). Riesgo: es lento para quien ya sabe qué quiere; añadir el atajo “Agregar como la casa” desde la lista.\n\n3 · Express bilingüe. Es LA MÁS ALINEADA con la evidencia de usabilidad: pestañas fijas y búsqueda (orientación), “+” rápido con defaults, carrito editable, “Repetir” sin cuenta (Baymard), cero registro (NN/g; Baymard: 19% abandona) y una lista ligera que aguanta roaming a 128–256 kbps. AJUSTAR: agregar justo lo que el benchmark dice que les falta a los grandes (insignias dietéticas, opciones explicadas, búsqueda bilingüe con sinónimos) y una marca fuerte (ilustración del koi, paleta japandi) para no parecer OlaClick o MENU TIGER, porque el diferenciador de VIBE es el diseño a la medida. Debe ser más rápido que leer la pantalla de la barra (81% prefiere el menú físico).\n\n4 · Koi guía. PARCIALMENTE RESPALDADA: reducir las opciones a 1–3 recomendaciones combate la sobrecarga (Johns et al.) y ayuda a quien no conoce el boba; la tarjeta de resultado es prueba social compartible. La CONTRADICE convertir el cuestionario en una puerta obligatoria, porque actuaría como muro o intersticial (NN/g sobre muros de login; Google castiga los intersticiales que tapan contenido). Debe ser opcional (“¿No sabes qué pedir? 3 preguntas”), con “Ver menú completo” siempre visible, ≤3 toques y una mascota animada con CSS/SVG ligero, diferida y con prefers-reduced-motion. El resultado debe aterrizar en la ficha con los defaults ya aplicados, no en una lista.\n\n5 · Linterna (noche). El contraste FUNCIONA si el fondo base es #1F1A1C: crema 15.83:1, ámbar #E0B074 8.69:1 y rojo koi #F94E2B 5.03:1 pasan AA. En cambio, sobre nogal #483D42 el ámbar del plafón (#C39056) da 3.68:1 y el rojo koi 3.04:1, así que sólo sirven para texto grande. La evidencia CONTRADICE el feed a pantalla completa como vista principal: una bebida por pantalla oculta el resto del menú (CTV: −10% de ticket), no da orientación (Baymard) y, en formato reels, depende de imágenes grandes que no existen (no hay fotos por bebida) y pesan en roaming. AJUSTAR: una lista compacta oscura como base y un modo “Descubrir” opcional tipo historias; los “Destacados” son el “Lo más pedido” real; favoritos locales; el foco nunca queda tapado por la barra de carrito (WCAG 2.4.11). No encontré evidencia directa de que el modo oscuro aumente las ventas; su justificación es de marca y ambiente (el horario llega a las 21:30).\n\nGeneral: la evidencia de rendimiento confirma que fue correcto dejar Three.js y el vaso 3D de la iteración anterior. Cualquier dirección debe pintar la lista con ≈50 KB y dejar las animaciones como mejora diferida.",
+ "blocked": [
+  "baymard.com: WebFetch falló con getaddrinfo ENOTFOUND (host fuera de los dominios de red permitidos en esta sesión). Los datos del benchmark 2026 salen sólo de resúmenes de WebSearch; además, las puntuaciones y ejemplos completos están detrás de Baymard Premium.",
+  "news.cornell.edu: WebFetch falló con ENOTFOUND; se usaron Phys.org y el resumen del buscador.",
+  "www.w3.org: WebFetch falló con ENOTFOUND; los criterios WCAG 2.2 salen de resúmenes del buscador (y de fuentes secundarias para 1.4.3).",
+  "Tras fallar 3 hosts distintos, la propia herramienta indicó dejar de intentar más sitios y no reintentar hasta que se permitan; tampoco lo rodeé con curl. Por eso NINGUNA fuente se abrió (accessed=false en todas). Dominios a permitir en la configuración de red de la sesión para verificar: nngroup.com, baymard.com, pos.toasttab.com, pymnts.com, restaurantbusinessonline.com, ottawa.ctvnews.ca, ecommons.cornell.edu, news.cornell.edu, phys.org, news.stanford.edu, foodservicedirector.com, nber.org, today.duke.edu, tastyigniter.com, qastaffprofiles.bournemouth.ac.uk, get.doordash.com, merchants.doordash.com, business.columbia.edu, ncbi.nlm.nih.gov, stern.nyu.edu, econpapers.repec.org, designsystem.digital.gov, design-system.dwp.gov.uk, simplelocalize.io, w3.org, tabnav.com, web.dev, thinkwithgoogle.com, almanac.httparchive.org, t-mobile.com, insights.opensignal.com, smashingmagazine.com, westminsterresearch.westminster.ac.uk, archive-ouverte.unige.ch, marketing4ecommerce.mx.",
+  "Se agotó el presupuesto de WebSearch (límite de 200 búsquedas por turno, compartido entre agentes). Quedaron sin buscar la ambigüedad del signo “$” entre MXN y USD para turistas y la evidencia específica sobre tickets o códigos para recoger en mostrador. Se puede continuar en un mensaje posterior o subiendo CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION.",
+  "La página oficial de Google Search Central sobre intersticiales y el informe DataReportal Digital 2025 México no aparecieron en los resultados; se usaron Smashing Magazine y resúmenes secundarios.",
+  "No hallé un artículo de NN/g dedicado a menús de restaurante ni datos de roaming de AT&T EE. UU. en México."
+ ]
+}

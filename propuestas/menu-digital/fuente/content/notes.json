@@ -1,0 +1,87 @@
+{
+  "v1": {
+    "name": "Galería",
+    "kicker": "Versión 1 · Sabor y arte",
+    "accent": "#9C6B3F",
+    "concept": "El menú como catálogo de exposición. Las categorías son salas, cada bebida es una pieza numerada con su cédula de museo, y la pieza que queda al centro de la pantalla se ilumina como bajo el riel de spots del local. La cédula siempre lleva precio y botón para agregar, así que la metáfora no frena el pedido.",
+    "why": "Nace de la frase de la propia marca, \"el sabor y el arte se unen en un mismo espacio\", y del arco con la galería de fotos. Es la más diferenciada frente a la competencia de Peñasco y la que mejor envejece según las tendencias editoriales de 2026.",
+    "refs": [
+      {"name": "Matcha Cartel (Awwwards, 2026)", "url": "https://www.awwwards.com/sites/matcha-cartel"},
+      {"name": "Cha.ology, Behance", "url": "https://Behance.net/gallery/41111003/Chaology"},
+      {"name": "The Alley: marca de línea", "url": "https://www.dallasobserver.com/restaurants/dallas-gets-a-new-deer-themed-boba-shop-18045046"},
+      {"name": "Creative Bloq: tendencias 2026", "url": "https://creativebloq.com/design/graphic-design/texture-warmth-and-tactile-rebellion-the-big-graphic-design-trends-for-2026"}
+    ],
+    "pros": ["La más fiel al interior japandi y a la galería del local", "Da valor percibido: se siente casa de té de autor, no puesto de boba", "Lista para cambiar ilustraciones por fotos de producto"],
+    "cons": ["Más texto que leer que en Express", "Pide fotos o ilustraciones cuidadas para sostener el nivel"],
+    "ideal": "Clientes que llegan a quedarse en el local y turistas que comparan con calma.",
+    "complexity": "Media"
+  },
+  "v2": {
+    "name": "Armador",
+    "kicker": "Versión 2 · Arma tu boba",
+    "accent": "#B8741A",
+    "concept": "El vaso es la interfaz. Arriba, un vaso grande que cambia de color, sube de nivel, recibe las perlas una por una y suma o quita hielo mientras eliges; abajo, las secciones en el orden de la barra: base, sabor, toppings, dulzor y hielo, tamaño. Los favoritos de la casa abren el armador ya lleno, para quien no quiere armar desde cero.",
+    "why": "Todas las cadenas personalizan con las mismas 4 o 5 variables y Gong cha explica dulzor e hielo con dibujos de vaso. La investigación pidió no forzar un asistente de 5 pantallas (Kung Fu Tea redujo pasos), así que todo vive en una sola pantalla con valores de la casa.",
+    "refs": [
+      {"name": "Gong cha USA: menú y niveles", "url": "https://gong-cha-usa.com/?p=4332"},
+      {"name": "Shenzhen Bubble Milktea, Dribbble", "url": "https://dribbble.com/shots/11298466-Shenzhen-Bubble-Milktea-Unused-Mark"},
+      {"name": "Kung Fu Tea: rediseño de su app", "url": "https://bluelabellabs.com/work/kung-fu-tea"},
+      {"name": "Xing Fu Tang: kiosco (Snackpass)", "url": "https://www.snackpass.co/testimonials/how-xing-fu-tang-successfully-delivered-a-luxury-boba-experience"}
+    ],
+    "pros": ["Enseña qué es el boba sin explicarlo: el turista lo ve", "Hace visible la venta adicional (segundo topping, tamaño)", "Muy fotografiable y fácil de presumir en la reunión"],
+    "cons": ["Para quien ya sabe qué quiere, la lista de Express es más directa", "Más trabajo de animación para producción"],
+    "ideal": "Primerizos, familias y turistas que no conocen el boba.",
+    "complexity": "Media-alta"
+  },
+  "v3": {
+    "name": "Express",
+    "kicker": "Versión 3 · Rápido y bilingüe",
+    "accent": "#C24A2C",
+    "concept": "Pedir en tres toques, en tu idioma y tu moneda. Patrón de tienda de app de delivery que todos conocen, con identidad de Koi Tea: portada \"Hoy en Koi\" en mosaico, pestañas por serie, botón + que agrega la receta de la casa en un toque, glosario para quien no conoce el boba y un ticket para caja que el cajero lee en español aunque el cliente pida en inglés.",
+    "why": "Es el patrón de Uber Eats, DoorDash y Rappi (destacados, pestañas, agregar rápido) que la investigación señala como el más eficiente; Gong cha México ya mezcla nombres en inglés con descriptores en español. La investigación pidió darle identidad propia para que no parezca plantilla.",
+    "refs": [
+      {"name": "Gong cha México en Uber Eats", "url": "https://www.ubereats.com/mx-en/store/gong-cha-aicm/kHh25k1tWkGLAvutbgG2Qg"},
+      {"name": "Kung Fu Tea en Uber Eats", "url": "https://www.ubereats.com/store/kung-fu-tea-naperville/2ULVySrxX62wtCEccGV0ng"},
+      {"name": "Tsaocaa: kiosco para primerizos", "url": "https://lilac-sponge-h6hh.squarespace.com/work/tsaocaa"},
+      {"name": "Bento con sentido (saasframe 2026)", "url": "https://www.saasframe.io/blog/designing-bento-grids-that-actually-work-a-2026-practical-guide"}
+    ],
+    "pros": ["La más rápida para pedir y la más fácil de mantener", "Pensada para la fila y para el cajero (ticket bilingüe)", "Escala sin cambios si el menú crece"],
+    "cons": ["La menos sorprendente: su valor está en lo práctico", "Depende de detalles finos para no verse genérica"],
+    "ideal": "Horas pico, turistas con prisa y clientes frecuentes.",
+    "complexity": "Baja"
+  },
+  "v4": {
+    "name": "Koi guía",
+    "kicker": "Versión 4 · Pregúntale al koi",
+    "accent": "#8A63B8",
+    "concept": "La mascota recibe al cliente y, si quiere, le hace tres preguntas (¿cremoso o frutal?, ¿qué tan dulce?, ¿qué textura?) para recomendarle su boba con el topping y el dulzor que eligió. El resultado trae una tarjeta vertical para historias de Instagram con el koi, la bebida y \"Rocky Point, MX\". Quien ya sabe qué quiere entra al menú con un toque.",
+    "why": "Las mascotas con comportamiento son tendencia 2025–2026 (Creative Bloq, Snow King de Mixue). La investigación pidió que la guía sea opcional y que el koi conserve su trazo de línea, sin volverse caricatura.",
+    "refs": [
+      {"name": "Creative Bloq: mascotas que guían", "url": "https://www.creativebloq.com/design/branding/mascots-are-back-but-not-as-you-know-them"},
+      {"name": "Mixue y Snow King (OMPI)", "url": "https://www.wipo.int/en/web/ip-advantage/w/stories/mixue-ice-cream-and-tea-from-china-s-streets-to-global-fast-food-giant"},
+      {"name": "BLOOP: mascota con estados, Behance", "url": "https://www.behance.net/gallery/252871673/BLOOP-Brand-Identity-for-Bubble-Tea-Coffee"},
+      {"name": "HEYTEA: stickers y fricción (Built for Mars)", "url": "https://builtformars.com/company/heytea"}
+    ],
+    "pros": ["Aprovecha el activo más fuerte de la marca: su mascota", "Genera contenido gratis en Instagram con la tarjeta compartible", "Resuelve la indecisión del cliente nuevo"],
+    "cons": ["El quiz es un paso extra para el cliente frecuente (por eso es opcional)", "La animación del koi en producción pide un archivo Rive o Lottie"],
+    "ideal": "Clientes nuevos, grupos de amigos y redes sociales.",
+    "complexity": "Media"
+  },
+  "v5": {
+    "name": "Tablero",
+    "kicker": "Versión 5 · El tablero en tu mano",
+    "accent": "#5E7F72",
+    "concept": "El menú del celular y las 3 pantallas del local como un solo sistema. Se recorre como las pantallas: tres tableros que se deslizan, con nombres en español e inglés a la vez, puntos guía hasta el precio y la Koi Tea destacada. Un botón muestra cómo se verían las 3 pantallas del local con el mismo contenido, en alto contraste y resaltando la bebida que estás viendo.",
+    "why": "Las pantallas actuales tienen texto crema sobre salvia con contraste de 1.75:1 (se leen mal); con tinta sube a 7.96:1. Unificar teléfono y pantallas con un solo contenido es uno de los ganchos del estudio previo. Reemplaza a la hipótesis \"Linterna\" (modo oscuro), que la evidencia contradijo para un destino de playa.",
+    "refs": [
+      {"name": "Cha.ology: señalética bilingüe", "url": "https://Behance.net/gallery/41111003/Chaology"},
+      {"name": "CHAGEE: menú curado en series", "url": "https://dailybruin.com/2025/05/18/restaurant-review-chagee-modern-tea-houses-1st-us-location-delivers-both-aesthetic-and-flavor"},
+      {"name": "NN/g: modo oscuro vs. claro", "url": "https://www.nngroup.com/articles/dark-mode/"},
+      {"name": "Xing Fu Tang: pantalla de retiro", "url": "https://www.snackpass.co/testimonials/how-xing-fu-tang-successfully-delivered-a-luxury-boba-experience"}
+    ],
+    "pros": ["Un solo contenido para el celular y las 3 pantallas: cambias un precio una vez", "La más legible de lejos y de cerca, sin depender del botón de idioma", "Abre la venta del paquete completo (menú + pantallas)"],
+    "cons": ["Menos espectacular en el teléfono que Armador o Koi guía", "Deslizar entre tableros requiere un indicador claro"],
+    "ideal": "El dueño que quiere resolver menú y pantallas en un solo proyecto.",
+    "complexity": "Media"
+  }
+}

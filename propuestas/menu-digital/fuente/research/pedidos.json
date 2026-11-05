@@ -1,0 +1,243 @@
+{
+ "track": "Patrones de apps de pedido y plataformas de menú",
+ "sources": [
+  {
+   "name": "McDonald's EE. UU. · Mobile Ordering FAQs (centro de ayuda oficial)",
+   "url": "https://www.mcdonalds.com/us/en-us/contact-us/help-center/mobile-ordering.html",
+   "accessed": false,
+   "kind": "app de pedido",
+   "observed": "Solo visto en el resumen del buscador (página no abierta). Flujo oficial: al hacer el pedido en la app queda 'completado' y se cobra a la tarjeta registrada. Para recoger en Drive-Thru 'recibes un código' que das al llegar al restaurante elegido. En Curbside, al llegar escribes en la app tu número de cajón o de mesa. Las opciones de entrega 'pueden variar por restaurante y hora del día'.",
+   "borrow": "Separar 'armar el pedido' de 'entregarlo'. El cierre da un código corto que el cliente dice o enseña en la barra, más un dato de entrega (Para llevar / Aquí / Mesa N). La entrega depende del horario: en Koi Tea, 'Pedir por WhatsApp' debe avisar cuando esté fuera de 11:00–21:30.",
+   "avoid": "Cobro en línea y cuenta obligatoria. Koi Tea cobra en caja, así que el código no debe parecer comprobante de pago: decir 'Paga en caja'."
+  },
+  {
+   "name": "McDonald's Canadá · The McDonald's app",
+   "url": "https://www.mcdonalds.com/ca/en-ca/getmoremcds/mcdonaldsapp.html",
+   "accessed": false,
+   "kind": "app de pedido",
+   "observed": "Resumen del buscador: después de pedir en la app vas al restaurante y tocas 'check-in' cuando llegas.",
+   "borrow": "En pedidos anticipados por WhatsApp, pedir 'Hora para recoger' para que la bebida no espere. Con hielo y perlas pierde calidad si se prepara antes de tiempo.",
+   "avoid": "Check-in con cuenta o con geolocalización: es demasiado para un local recién abierto."
+  },
+  {
+   "name": "BuzzFeed News · America, Meet McDonald's Self-Service Kiosks",
+   "url": "https://www.buzzfeednews.com/article/venessawong/heres-how-mcdonalds-kiosk-works",
+   "accessed": false,
+   "kind": "app de pedido",
+   "observed": "Resumen del buscador de una prueba del kiosco: tocar para empezar → elegir productos → confirmar el pedido → pagar deslizando la tarjeta (no aceptaba efectivo) → esperar a que llamen tu número desde el mostrador.",
+   "borrow": "Un cierre de pocas decisiones, con un número de turno que une la pantalla con la barra.",
+   "avoid": "Un flujo que solo acepta un medio de pago. En Koi Tea el cierre debe decir con claridad que se paga en caja."
+  },
+  {
+   "name": "Hospitality Technology · McDonald's debut table service, self-serve kiosks",
+   "url": "https://hospitalitytech.com/mcdonalds-debut-table-service-self-serve-kiosks",
+   "accessed": false,
+   "kind": "app de pedido",
+   "observed": "Resumen del buscador: el cliente ordena en el kiosco o en el mostrador y elige llevarse la comida o que se la sirvan en la mesa.",
+   "borrow": "Con un QR por mesa, poner 'Mesa N' en el ticket y en el mensaje desde el inicio. Sin QR de mesa, ofrecer 'Para llevar / Para tomar aquí' en el cierre, no antes de mostrar el menú.",
+   "avoid": "Prometer servicio a la mesa si el local no lo da. Hay que confirmarlo con Koi Tea."
+  },
+  {
+   "name": "Food Republic · The Starbucks mobile order hack that gets you cheaper lattes",
+   "url": "https://www.foodrepublic.com/stories/the-starbucks-mobile-order-hack-that-gets-you-cheaper-lattes/",
+   "accessed": false,
+   "kind": "app de pedido",
+   "observed": "Resumen del buscador: ruta en la app de Starbucks para una bebida de espresso. Eliges el tamaño del vaso, tocas 'Customize', bajas a la sección 'Add-Ins' y eliges 'Add Creamer'. De la ruta se desprende que la personalización está en secciones con nombre, detrás de un botón y después del tamaño.",
+   "borrow": "El tamaño como primera decisión, a la vista. Lo demás en secciones con nombre fijo: Topping incluido · Extras · Dulzor · Hielo.",
+   "avoid": "Esconder todo detrás de 'Customize' con un scroll largo. Koi Tea tiene pocas opciones y caben en una sola hoja."
+  },
+  {
+   "name": "MFour · Starbucks app: to blame for over-the-top drinks?",
+   "url": "https://mfour.com/?p=5548",
+   "accessed": false,
+   "kind": "estudio/artículo UX",
+   "observed": "Resumen del buscador con datos de mercado: 53% personaliza su café con leche, 50% con jarabe y 49% con crema batida. 81% admite que su último pedido por app fue personalizado.",
+   "borrow": "Argumento para el cliente: en el pedido digital, personalizar es la norma. Dulzor, hielo y topping van en la ficha sin pasos extra.",
+   "avoid": "Presentar estas cifras de Starbucks EE. UU. como si fueran de Koi Tea. Son referencia; los datos propios salen del QR."
+  },
+  {
+   "name": "Prototypr · A usability study on Starbucks's mobile app (2017)",
+   "url": "https://blog.prototypr.io/a-usability-study-on-starbuckss-mobile-app-375a840311da",
+   "accessed": false,
+   "kind": "estudio/artículo UX",
+   "observed": "Resumen del buscador: un equipo de estudiantes hizo pruebas de pensamiento en voz alta. Problema al personalizar: la información nutricional no se actualizaba después de cambiar la bebida.",
+   "borrow": "Todo lo que depende de la elección (precio MXN/USD, resumen de la bebida, dibujo del vaso) se recalcula al instante con cada toque.",
+   "avoid": "Mostrar datos que no siguen a la elección. Si Koi Tea no tiene calorías confirmadas, mejor no mostrarlas."
+  },
+  {
+   "name": "Chain Store Age · Chipotle customers can swipe right for custom ingredients",
+   "url": "https://chainstoreage.com/chipotle-customers-can-swipe-right-custom-ingredients",
+   "accessed": false,
+   "kind": "app de pedido",
+   "observed": "Resumen del buscador (anuncio antiguo): en la app de Chipotle cualquier ingrediente se puede poner en 'light', 'standard' o 'extra' deslizando el dedo de izquierda a derecha sobre él mientras armas el platillo.",
+   "borrow": "Una cantidad gradual por ingrediente (poco / normal / extra) en el mismo renglón. En Koi Tea sirve para dulzor, hielo y quizá topping doble.",
+   "avoid": "El gesto oculto de deslizar: casi nadie lo descubre y no funciona bien con lector de pantalla. Mejor botones segmentados visibles de 44 px o más."
+  },
+  {
+   "name": "Deloitte Digital · Caso Chipotle (rediseño de las apps de pedido)",
+   "url": "https://www.deloittedigital.com/uk/en/work/chipotle.html",
+   "accessed": false,
+   "kind": "estudio/artículo UX",
+   "observed": "Resumen del buscador: según el caso de Deloitte Digital, la nueva app de pedido de Chipotle llegó a un promedio de 4.4 estrellas en App Store, más de dos estrellas arriba de la versión anterior.",
+   "borrow": "Argumento de venta para Luis Mario: un armador claro se nota en la calificación. Conviene presentar las propuestas con métricas de antes y después.",
+   "avoid": "Copiar la complejidad de una cadena (cuentas, pedidos en grupo, pago en línea) en un local de una sola sucursal."
+  },
+  {
+   "name": "Baltimore Fishbowl · New Sweetgreen app makes grabbing that salad even easier",
+   "url": "https://baltimorefishbowl.com/stories/new-sweetgreen-app-makes-grabbing-that-salad-even-easier/",
+   "accessed": false,
+   "kind": "app de pedido",
+   "observed": "Resumen del buscador (nota del lanzamiento): la app muestra cómo se verá el platillo y calcula la información nutricional y calórica mientras el usuario lo arma.",
+   "borrow": "Una vista previa que cambia con cada elección: el vaso de Koi Tea toma el color del sabor, la capa de leche, las perlas o jelly del fondo y el nivel de hielo.",
+   "avoid": "Datos nutricionales sin fuente."
+  },
+  {
+   "name": "App Store · sweetgreen",
+   "url": "https://apps.apple.com/gb/app/sweetgreen/id594329490",
+   "accessed": false,
+   "kind": "app de pedido",
+   "observed": "Resumen del buscador de la ficha: se pueden volver a pedir los favoritos desde la pantalla de inicio y marcar preferencias alimentarias.",
+   "borrow": "'Pedir de nuevo' y 'Mis favoritas' arriba del menú cuando existan. Etiquetas como 'sin lácteos' solo con datos que confirme Koi Tea.",
+   "avoid": "Pedir una cuenta para guardar favoritos. En Koi Tea basta con guardarlos en el teléfono (localStorage dentro de try/catch)."
+  },
+  {
+   "name": "Domino's · Innovations (sitio corporativo)",
+   "url": "https://biz.dominos.com/about-us/innovations/",
+   "accessed": false,
+   "kind": "app de pedido",
+   "observed": "Resumen del buscador: Domino's cuenta que en 2008 lanzó Domino's Tracker y Pizza Builder. Con ellos el cliente elegía masa e ingredientes y veía 'su pizza cobrar vida' en la pantalla.",
+   "borrow": "El producto dibujado es la interfaz del armador: el vaso se llena con lo que eliges. A futuro, con Supabase, puede sumarse un estado simple: Recibido → Preparando → Listo."
+  },
+  {
+   "name": "Domino's · comunicado de 2008 (concurso 'BFD Builder')",
+   "url": "https://dominos.gcs-web.com/node/9206",
+   "accessed": false,
+   "kind": "app de pedido",
+   "observed": "Resumen del buscador: en el armador digital el cliente elige masa, salsa, queso e ingredientes, y puede ponerle nombre a su pizza y guardarla.",
+   "borrow": "'Guarda tu boba' con nombre propio (por ejemplo, 'Mi taro de la playa'). Funciona como favorito, motivo para volver y contenido para compartir."
+  },
+  {
+   "name": "TechCrunch · Domino's lanza su app de iPad con armador 3D (2014)",
+   "url": "https://techcrunch.com/2014/04/24/dominos-launches-its-ipad-pizza-ordering-app-with-3d-custom-pizza-builder",
+   "accessed": false,
+   "kind": "app de pedido",
+   "observed": "Resumen del buscador: armador 3D en OpenGL para una vista previa más realista. TechCrunch advierte que aun así se verá bastante distinta de lo que llega en la caja. La prensa de entonces describe que eliges tamaño, masa, salsa, queso e ingredientes, que el ingrediente elegido 'llueve' sobre la pizza en una animación y que puedes verla desde varios ángulos.",
+   "borrow": "Una animación breve de 'caída' para confirmar la acción (perlas o jelly que caen al vaso), hecha en CSS/SVG y apagada con prefers-reduced-motion.",
+   "avoid": "3D 'realista' que no coincide con la bebida real: decepciona y pesa con datos lentos. Además, el brief prohíbe Three.js."
+  },
+  {
+   "name": "Evans Kiff · Case Study: Domino's Product Builder Redesign",
+   "url": "https://www.evanskiff.com/work/product-builder-redesign-case-study",
+   "accessed": false,
+   "kind": "estudio/artículo UX",
+   "observed": "Resumen del buscador: trabajo con los equipos de iOS y Android de Domino's para rehacer los 'Product Builders'. Metas: simplificar la personalización y que el sistema escale. Incluye actualizar los componentes a estándares modernos de accesibilidad y usa pruebas A/B entre sus métodos. La página no muestra fecha.",
+   "borrow": "Un solo componente de armador para Milk Tea, Fruit Tea y Smoothies, con las opciones de cada categoría desde el panel. Accesible desde el principio y con eventos para comparar versiones."
+  },
+  {
+   "name": "Baymard Institute · investigación Food Delivery & Takeout (lanzamiento, 2022)",
+   "url": "https://baymard.com/blog/food-delivery-takeout-launch",
+   "accessed": false,
+   "kind": "estudio/artículo UX",
+   "observed": "Resumen del buscador sobre la investigación de Baymard (este artículo y páginas relacionadas): más de 90 sesiones de usabilidad 'think aloud', más de 600 problemas de gravedad media a alta y más de 320 guías. Los participantes buscaban en la página de inicio cómo repetir un pedido anterior, y muchos clientes recurrentes saben exactamente qué quieren. Recomienda que las preferencias del platillo se puedan cambiar fácilmente en el carrito; si no, parte de los usuarios abandona.",
+   "borrow": "'Pedir de nuevo' en el inicio y edición completa desde el carrito, reabriendo la ficha con lo ya elegido."
+  },
+  {
+   "name": "Baymard Institute · Food Delivery & Takeout UX Benchmark 2026",
+   "url": "https://baymard.com/blog/food-delivery-and-takeout-ux-benchmark-2026",
+   "accessed": false,
+   "kind": "estudio/artículo UX",
+   "observed": "Resumen del buscador; intenté abrirlo con WebFetch y falló porque el dominio no está permitido. Benchmark de 8 sitios con desempeño general entre 'pobre' y 'mediocre'. Las necesidades dietéticas y de personalización no tenían un camino resuelto en ningún punto de decisión. Las fichas de producto a menudo no describían las opciones de personalización, lo que complica resolver alergias y restricciones.",
+   "borrow": "Una línea bilingüe por opción: qué es la tapioca, la perla explosiva y el jelly, y qué lleva un milk tea. Alérgenos solo cuando Koi Tea los confirme."
+  },
+  {
+   "name": "WhatsApp Help Center · How to use click to chat",
+   "url": "https://whatsapp.com/faq/en/general/26000030",
+   "accessed": false,
+   "kind": "app de pedido",
+   "observed": "Resumen del buscador; WebFetch falló porque el dominio no está permitido. Formato: https://wa.me/<número>, con el número completo en formato internacional y sin ceros, paréntesis ni guiones. Un mensaje prellenado aparece solo en el campo de texto del chat. Funciona en la app del teléfono y en WhatsApp Web. El enlace sin número abre una lista de contactos para elegir a quién enviar.",
+   "borrow": "'Pedir por WhatsApp' = https://wa.me/52XXXXXXXXXX?text=<mensaje codificado>. En el prototipo se muestra la vista previa del mensaje con botón Copiar, sin navegar.",
+   "avoid": "El enlace sin número sirve para 'Compartir mi boba', no para pedir."
+  },
+  {
+   "name": "Bird · What is a WhatsApp click to chat link",
+   "url": "https://bird.com/explained/whatsapp/what-is-a-whatsapp-click-to-chat-link",
+   "accessed": false,
+   "kind": "app de pedido",
+   "observed": "Resumen del buscador: los enlaces cortos que genera Meta (wa.me/message/<código>) guardan el mensaje prellenado en los servidores de Meta y lo limitan a 140 caracteres. Los resultados sobre el tema (Bird, Dotdigital, Unipile) coinciden en tres cosas: el número va sin '+', el texto va codificado (encodeURIComponent) y el mensaje llega editable, así que la persona tiene que tocar Enviar. No se confirmó un límite para los enlaces wa.me con ?text= armados a mano.",
+   "borrow": "Armar el enlace a mano con ?text=, porque un pedido no cabe en 140 caracteres. El mensaje debe seguir claro aunque el cliente lo edite.",
+   "avoid": "Usar los enlaces cortos de Meta para pedidos (texto fijo y corto). Tampoco dar por hecho que el mensaje llega intacto: el código se valida en caja."
+  }
+ ],
+ "patterns": [
+  {
+   "pattern": "Valores de la casa por defecto y personalización agrupada en la misma ficha",
+   "evidence": "Starbucks (Food Republic): tamaño → 'Customize' → secciones con nombre como 'Add-Ins' → opción. MFour: 81% dice que su último pedido por app fue personalizado; 53% cambia la leche y 50% agrega jarabe. Baymard: muchos clientes recurrentes saben exactamente qué quieren.",
+   "implication": "La ficha de Koi Tea deja 'Agregar' en un toque con los valores de la casa ya marcados (tamaño, topping incluido, dulzor y hielo normales). En la misma hoja van grupos fijos en este orden: Tamaño · Topping incluido · Extras · Dulzor · Hielo. El botón fijo muestra el precio en vivo, por ejemplo 'Agregar · $85 MXN · ≈ $4.75 USD' (ilustrativo)."
+  },
+  {
+   "pattern": "Cantidad gradual por ingrediente con un solo control",
+   "evidence": "Chipotle (Chain Store Age): cada ingrediente se pone en light / standard / extra deslizando sobre él mientras armas.",
+   "implication": "Dulzor e hielo como botones segmentados visibles de 44 px o más, con palabra y porcentaje: 5 niveles de dulzor y 3 de hielo. Nada de gestos ocultos ni listas desplegables. El mismo control sirve para 'topping doble'."
+  },
+  {
+   "pattern": "El producto dibujado se actualiza en vivo mientras armas",
+   "evidence": "Domino's Pizza Builder 2008 ('ver tu pizza cobrar vida'). App de iPad de 2014 con ingredientes que 'llueven' sobre la pizza (TechCrunch advierte que la vista previa difiere de lo real). Sweetgreen muestra cómo se verá el platillo y recalcula la nutrición al armar. En Starbucks (Prototypr, 2017), la nutrición que no se actualizaba fue un problema de usabilidad.",
+   "implication": "El vaso de línea en SVG, por capas, reacciona a cada elección: color del sabor, capa de leche, perlas o jelly, hielo. El precio MXN/USD y el resumen se recalculan en el mismo instante. Estilo ilustrado, sin 3D realista, y una animación de caída que respeta prefers-reduced-motion."
+  },
+  {
+   "pattern": "Repetir y guardar, siempre al frente",
+   "evidence": "Baymard: los participantes buscaban en el inicio cómo repetir un pedido anterior. Sweetgreen (App Store): los favoritos se vuelven a pedir desde el inicio. Domino's 2008: le pones nombre a tu pizza y la guardas.",
+   "implication": "Tarjeta 'Tu último pedido · Pedir de nuevo' y sección 'Mis bobas' (guardadas con nombre) arriba del menú cuando existan, en localStorage con try/catch. Sin datos guardados, no aparecen y la portada queda limpia."
+  },
+  {
+   "pattern": "Editar en el carrito sin empezar de nuevo",
+   "evidence": "Baymard: recomienda que las preferencias del platillo se puedan cambiar fácilmente en el carrito; sin eso, parte de los usuarios abandona.",
+   "implication": "Cada línea del carrito muestra sus modificadores en texto corto ('M · Tapioca · 50% · Poco hielo'). 'Editar' reabre la ficha con lo elegido; hay stepper de cantidad, y 'Quitar' ofrece 'Deshacer' dentro de la página, sin confirm()."
+  },
+  {
+   "pattern": "Explicar cada opción y resolver las restricciones alimentarias",
+   "evidence": "Baymard 2026: 8 sitios entre 'pobre' y 'mediocre', con opciones de personalización sin describir y sin camino para necesidades dietéticas. Sweetgreen deja marcar preferencias alimentarias.",
+   "implication": "Una microdescripción bilingüe para cada topping (tapioca, perlas explosivas, jelly) y para cada base (té verde frutal o milk tea con leche). Etiquetas como 'sin lácteos' solo cuando Koi Tea confirme los datos; hay que pedírselos al cliente."
+  },
+  {
+   "pattern": "El cierre entrega un código corto y un modo de entrega",
+   "evidence": "McDonald's EE. UU.: código para dar al llegar al Drive-Thru y número de cajón o de mesa en Curbside. McDonald's Canadá: 'check-in' al llegar. Kiosco (BuzzFeed): esperas a que llamen tu número. Hospitality Tech: para llevar o servido en la mesa.",
+   "implication": "'Mostrar en caja' muestra un código enorme de 4 caracteres sin confusiones (sin 0/O ni 1/I), un resumen legible para la barista, 'Paga en caja' y el modo de entrega (Para llevar / Aquí / Mesa N, que el QR de mesa llena solo). El mismo código encabeza el mensaje de WhatsApp."
+  },
+  {
+   "pattern": "WhatsApp: mensaje prellenado y editable que el cliente envía",
+   "evidence": "WhatsApp Help Center: wa.me/<número internacional sin ceros, paréntesis ni guiones>, y el mensaje prellenado aparece en el campo de texto. Bird: los enlaces cortos de Meta se limitan a 140 caracteres; en todos los casos el texto llega editable y la persona toca Enviar.",
+   "implication": "Texto plano, legible por una persona y con estructura fija: saludo → código → una línea por bebida con modificadores y precio → total MXN (≈ USD) → nombre → hora de recogida → 'Pago en caja'. Antes de abrir WhatsApp, vista previa con botón Copiar. Probar en iOS y Android con el número real."
+  },
+  {
+   "pattern": "El armador se rediseña como un componente medible y accesible",
+   "evidence": "Evans Kiff (Domino's): simplificar la personalización, que escale, accesibilidad moderna y pruebas A/B. Deloitte Digital (Chipotle): la nueva app subió a 4.4 estrellas, más de dos arriba de la anterior.",
+   "implication": "Una sola ficha o armador, configurable por categoría desde el panel (Supabase), con eventos por QR de mesa: ver ficha, agregar, cerrar en caja o por WhatsApp. Así las direcciones se comparan con datos reales."
+  }
+ ],
+ "insights": [
+  "Base común para las 5 direcciones: la misma ficha, el mismo carrito y el mismo cierre. Entre direcciones cambia cómo se llega a la ficha (galería, armador, lista, guía o tablero), no cómo se pide. Así se mantiene un solo código y el turista no aprende cinco formas de pagar.",
+  "Ficha: 'Agregar' disponible desde el primer momento con los valores de la casa. El topping incluido se marca 'Incluido' y los extras '+$'. Botón fijo con el precio en vivo en MXN y en USD redondeado a 0.25 (por ejemplo $85 MXN ≈ $4.75 USD, ilustrativo).",
+  "Dulzor e hielo con controles segmentados visibles de 44 px o más, con palabra y porcentaje. Nunca un gesto oculto como el deslizar de Chipotle, ni un desplegable.",
+  "El vaso SVG funciona como vista previa en vivo. Todo dato visible (precio, resumen, ilustración) cambia en el mismo instante que la elección: Starbucks falló en esto con la nutrición (Prototypr). No mostrar calorías ni alérgenos que Koi Tea no haya confirmado.",
+  "Atajos para quien regresa: 'Pedir de nuevo' y 'Mis bobas' guardadas con nombre propio (Domino's 2008), sin cuenta y en localStorage con try/catch. Es el camino más corto para el turista que vuelve dos o tres veces en la misma semana (Baymard: el inicio es donde buscan repetir).",
+  "Carrito editable: cada línea con sus modificadores en texto, 'Editar' que reabre la ficha prellenada, stepper de cantidad y 'Quitar' con 'Deshacer' dentro de la página. El total siempre visible. El estado vacío lleva a los favoritos de la casa.",
+  "Cierre 'Mostrar en caja': código de 4 caracteres de un alfabeto sin confusiones (A C D E F H J K M N P R T U V W X Y y 3 4 6 7 9), con fecha y hora, modo de entrega (Para llevar / Aquí / Mesa N) y 'Paga en caja'. Tinta sobre crema en alto contraste, para leerse a un brazo de distancia.",
+  "Plantilla del mensaje de WhatsApp en texto plano: 'Hola, Koi Tea. Quiero pedir para recoger. Pedido K7FM / 1 × Taro Milk Tea · M · Tapioca · 50% · Poco hielo — $85 / 1 × Koi Tea · G · Jelly de lichi · 100% · Hielo normal — $95 / Total: $180 MXN (≈ $10.00 USD) · precios ilustrativos / Nombre: ___ / Recojo a las: ___ / Pago en caja.' El código va primero para que la barra lo cruce con el ticket. Si se usan asteriscos para negritas, revisar cómo se ve: no lo verifiqué en esta sesión.",
+  "Número de WhatsApp en formato internacional sin '+' (52 + 10 dígitos). Antes de publicar, probar el enlace con el número real de Koi Tea en iOS y Android: no pude verificar el caso de México (52/521) en esta sesión.",
+  "Horario y agotados desde el panel. McDonald's advierte que las opciones de entrega varían por restaurante y hora. En Koi Tea, fuera de 11:00–21:30 el botón de WhatsApp dice que está cerrado y ofrece 'Ver menú'. Una bebida o un topping agotado se ve, pero no se puede agregar.",
+  "Upsell tipo 'Complementa tu pedido': en esta sesión no encontré evidencia fiable (el 'Make it a meal?' de McDonald's venía de un blog poco confiable). Si se usa, que sea una sola sugerencia relevante y descartable dentro del carrito, por ejemplo 'Agrega perlas explosivas +$15' o 'Hazla grande', nunca un modal que bloquee.",
+  "Sin verificar en esta sesión (conocimiento previo; validar con capturas antes de presentarlo como evidencia): en Rappi, Uber Eats y DiDi Food es habitual un encabezado de tienda, pestañas de categoría fijas que siguen el scroll, un buscador dentro de la tienda, un '+' en cada tarjeta que abre la ficha si hay opciones obligatorias y una barra flotante 'Ver carrito · N · $'. En Koi Tea, el '+' rápido debe abrir la ficha, porque el topping incluido es una elección obligatoria, o bien agregar con los valores de la casa y ofrecer 'Cambiar'.",
+  "Medición: un QR por mesa más eventos (ver ficha, agregar, cerrar en caja o por WhatsApp). A Koi Tea conviene ofrecerle un antes y después medido en lugar de promesas; Chipotle subió más de dos estrellas tras rediseñar su app (Deloitte Digital)."
+ ],
+ "direction_notes": "1 · Galería 'Sabor y arte': la evidencia no la contradice, pero obliga a ajustarla. Personalizar es la norma (MFour: 81% del último pedido por app fue personalizado) y quien regresa sabe lo que quiere (Baymard). Por eso la galería debe ser una capa para explorar encima de la ficha estándar (valores de la casa, grupos y 'Agregar · precio'), con un atajo 'Pedir de nuevo'. La cédula de museo es el lugar natural para explicar ingredientes y opciones, justo lo que Baymard 2026 no encontró en las fichas. 2 · Armador 'Arma tu boba': es la más respaldada (Domino's 'ver tu pizza cobrar vida', Sweetgreen con vista previa en vivo, Chipotle con cantidades graduales). Ajustes: arrancar desde un favorito de la casa con los valores ya puestos; permitir 'Agregar' en cualquier paso en lugar de obligar a recorrer los cinco (Starbucks pone el tamaño primero y lo demás en secciones); controles visibles en vez de gestos; vaso y precio que se recalculan con cada toque (Prototypr); 'Guarda tu boba' con nombre (Domino's 2008); nada de 3D realista (TechCrunch: la vista previa no coincide con lo real). 3 · Express bilingüe: la más alineada con Baymard (repetir desde el inicio, editar en el carrito) y con el cierre por código de McDonald's. Conviene que su ficha, carrito y cierre sean la base de las otras cuatro. Lo propio de las apps de delivery (pestañas fijas, buscador, '+', barra de carrito, 'Complementa tu pedido') no se pudo verificar en esta sesión y queda como hipótesis. 4 · Koi guía: no hay evidencia directa en esta línea. Que Baymard 2026 no encontrara camino para necesidades dietéticas o de personalización sugiere que 3 preguntas (cremoso o frutal, con o sin leche, qué tan dulce) llenan un hueco real, siempre que terminen en la ficha estándar ya prellenada (dulzor y topping puestos) y haya siempre 'Ver todo el menú'. 5 · Linterna (noche): no hay evidencia sobre el feed vertical. Los hallazgos piden que el feed no sea el único camino (índice o categorías para saltar, 'Guardar', 'Pedir de nuevo') y que carrito y cierre sean los mismos que en las demás. Si la v5 ya es 'Tablero' (DIRECTIONS.md), aplica igual: el '+' de cada fila abre la ficha cuando hay una elección obligatoria (topping incluido), o agrega con los valores de la casa y ofrece 'Cambiar'.",
+ "blocked": [
+  "Red de la sesión: la política de red del entorno bloqueó el acceso a páginas. WebFetch falló (ENOTFOUND) en baymard.com y whatsapp.com, y el proxy respondió 403 a baymard.com, www.whatsapp.com, faq.whatsapp.com, www.starbucks.com, www.ubereats.com, www.rappi.com.mx y www.google.com. Por eso ninguna fuente tiene accessed=true: todo lo descrito viene de resúmenes del buscador. Para abrir páginas hay que cambiar 'Network access' en la configuración del entorno (menú del entorno de nube en la barra de título de la sesión → Edit): elegir un nivel más amplio o agregar esos dominios en 'Allowed domains', dejando marcada 'Allow package managers'. Pasos: https://code.claude.com/docs/en/cloud-environments#network-access",
+  "Presupuesto de búsqueda agotado: después de 11 búsquedas mías se alcanzó el límite de 200 WebSearch por turno, compartido por todos los agentes del flujo, y la búsqueda 12 (flujo actual de Chipotle) no se ejecutó. Se puede continuar con un mensaje de seguimiento después de esta respuesta o subiendo CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION.",
+  "Sin investigar por ese límite: Rappi, Uber Eats y DiDi Food México (estructura de tienda, pestañas fijas, buscador, '+' rápido, carrito, 'Complementa tu pedido').",
+  "Sin investigar: demos públicas de OlaClick, Meniu, MENU TIGER, me&u/Mr Yum, Sunday, Toast, Square Online, Owner.com y GloriaFood.",
+  "Sin investigar: catálogo y carrito de WhatsApp Business, y cómo estructuran el mensaje de pedido los negocios mexicanos (incluido el uso de negritas con asteriscos y el prefijo 52/521 en enlaces wa.me).",
+  "Sin investigar: lealtad simple (sellos digitales), y la app y los kioscos de McDonald's México (por ejemplo, si ofrecen 'pagar en caja').",
+  "Huecos en lo encontrado: no apareció fuente del flujo actual (2024-2026) de Chipotle ni del armador actual de Domino's (mitad y mitad, 'Easy Order', 'Pizza Profile'); lo citado es de 2008-2017 o sin fecha. Tampoco aparecieron páginas de ayuda oficiales de Starbucks: su flujo viene de prensa."
+ ]
+}
