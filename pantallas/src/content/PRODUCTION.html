@@ -1,0 +1,54 @@
+<div class="opts">
+  <article class="opt">
+    <span class="tg2">Para empezar</span>
+    <h3>Video en la USB de la TV</h3>
+    <p class="muted">La animación se exporta como MP4 y se reproduce desde una memoria en la propia TV. Sirve para las versiones de pantalla central.</p>
+    <ul>
+      <li>Sin equipo extra ni mensualidad.</li>
+      <li>El video se exporta ya girado 90°, porque las TV de casa no giran la imagen.</li>
+      <li>Cada cambio de precio implica exportar de nuevo.</li>
+      <li>No sirve para tres pantallas sincronizadas: tres videos sueltos se desfasan segundos en una jornada.</li>
+    </ul>
+  </article>
+  <article class="opt rec2">
+    <span class="tg2">Recomendado</span>
+    <h3>Una Raspberry Pi 5 por pantalla</h3>
+    <p class="muted">Cada pantalla abre la animación en vivo a pantalla completa. Para la central basta una; para las tres, tres iguales.</p>
+    <ul>
+      <li>Precios y promociones se cambian desde un panel y aparecen solos.</li>
+      <li>Las tres se sincronizan por reloj en la red del local, con un margen menor a un cuadro de video: el ojo no lo nota.</li>
+      <li>El mismo equipo crece de una a tres pantallas sin cambiar nada.</li>
+      <li>Soporte remoto gratuito con Raspberry Pi Connect.</li>
+    </ul>
+  </article>
+  <article class="opt">
+    <span class="tg2">Alternativa</span>
+    <h3>Una mini PC con tres salidas</h3>
+    <p class="muted">Un solo equipo maneja las tres pantallas con un solo reloj.</p>
+    <ul>
+      <li>Sincronía perfecta sin depender de la red.</li>
+      <li>Un solo equipo que mantener, pero si falla se apagan las tres.</li>
+      <li>Hay que confirmar que el modelo maneje tres salidas a la vez.</li>
+    </ul>
+  </article>
+</div>
+<div class="two" style="margin-top:28px">
+  <div class="prose">
+    <h3>Video maestro</h3>
+    <p>MP4 H.264 de 1080 × 1920 a 30 cuadros por segundo (perfil High 4.0, calidad CRF 18, tope de 12 Mbps), uno por pantalla, exportado cuadro por cuadro desde el mismo código. Cada vuelta del loop termina exactamente donde empieza, y los cambios entre vueltas ocurren en momentos quietos para que no se note el corte. La versión de tres pantallas se exporta como un solo lienzo de 3720 × 1920 y se recorta en tres videos con los mismos cuadros.</p>
+    <h3>Calibración en el local (15 minutos)</h3>
+    <p>Con una página de prueba se ajustan tres valores por pantalla, a ojo desde la fila: el ancho real del hueco (para que una diagonal se vea recta de una pantalla a otra), la diferencia de altura entre soportes y el retraso de cada TV. Se guardan en la dirección de cada pantalla, por ejemplo <code>?screen=C&amp;gap=240&amp;dy=0&amp;lat=0</code>.</p>
+  </div>
+  <div class="prose">
+    <h3>Antes de comprar, medir</h3>
+    <ul>
+      <li>Marca, modelo y tamaño de las tres TV, y si el fabricante permite montarlas en vertical.</li>
+      <li>Ancho de la imagen encendida y distancia entre imágenes de pantallas vecinas.</li>
+      <li>Si hay toma de red cerca de la barra (mejor por cable que por Wi-Fi).</li>
+      <li>Contactos, ventilación y calor detrás de la barra en verano.</li>
+      <li>El reflejo de los globos visto desde la fila.</li>
+    </ul>
+    <h3>Costos de referencia</h3>
+    <p>Una Raspberry Pi 5 de 4 GB con fuente, disipador, cables y memoria ronda entre $2,000 y $3,600 MXN; tres kits, entre $6,000 y $7,700 MXN. Una mini PC con tres salidas, entre $3,500 y $6,500 MXN. Son estimaciones a partir de precios de lista en dólares, con IVA y un tipo de cambio de 18 a 20: hay que confirmarlas en tienda. El software (ffmpeg, Chromium, chrony) es gratuito; un panel de precios en Supabase puede empezar en el plan gratuito.</p>
+  </div>
+</div>

@@ -1,0 +1,7 @@
+shots/
+export/
+qa/
+node_modules/
+# fotos y logo del cliente usados solo para calcar y probar (no se publican en el repo)
+dev/logo.jpg
+dev/screens.jpg

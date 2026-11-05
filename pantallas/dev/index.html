@@ -1,0 +1,476 @@
+<title>Pantallas Koi Tea</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Cinco animaciones para las tres pantallas verticales de la barra de Koi Tea Boba Shop, Puerto Peñasco.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Jost:wght@300..700&family=M+PLUS+Rounded+1c:wght@500;800&family=Shippori+Mincho:wght@600;800&family=Yuji+Syuku&display=swap">
+<style>
+/* Layout: una sala de muestra en una sola columna (máx. 1200 px): tesis → selector de 5 versiones → la pared de la barra con sus tres pantallas (escenario) y su línea de tiempo → ficha → comparativa → investigación → producción. */
+:root{
+  --paper:#F6F0E7; --surface:#EEE5D7; --raised:#FBF8F3; --ink:#221D1B; --muted:#6B5E56; --line:#DED0BE;
+  --koi:#C93D27; --koi-ink:#FFFFFF; --koi-soft:#F5DDD4; --sage:#7E9488;
+  --wall-a:#F3E6D4; --wall-b:#E6D3BA; --soffit:#D2AA74; --led:#FFE0AA; --bezel:#141011; --stage:#E8DCCB; --slat:#4A3E40;
+  --f-display:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif;
+  --f-body:"Jost","Futura","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --f-jp:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",serif;
+  --ease:cubic-bezier(.22,.8,.2,1); --silk:cubic-bezier(.76,0,.24,1);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#141011; --surface:#1E191A; --raised:#251F20; --ink:#F2E9DF; --muted:#B6A89C; --line:#3A3132;
+  --koi:#FF7A5E; --koi-ink:#1C0D08; --koi-soft:#3A221C; --sage:#A9BDB1;
+  --wall-a:#D8C5AC; --wall-b:#C5AE90; --soffit:#B98F5C; --led:#F6CF92; --bezel:#0B0909; --stage:#211B1C; --slat:#2E2628; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#141011; --surface:#1E191A; --raised:#251F20; --ink:#F2E9DF; --muted:#B6A89C; --line:#3A3132;
+  --koi:#FF7A5E; --koi-ink:#1C0D08; --koi-soft:#3A221C; --sage:#A9BDB1;
+  --wall-a:#D8C5AC; --wall-b:#C5AE90; --soffit:#B98F5C; --led:#F6CF92; --bezel:#0B0909; --stage:#211B1C; --slat:#2E2628; color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 72px)}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+h1,h2,h3{margin:0;text-wrap:balance;font-weight:600}
+h1,h2{font-family:var(--f-display);font-style:italic;letter-spacing:-.005em;line-height:1.08}
+h1{font-size:clamp(2.4rem,6.2vw,4.6rem);font-weight:600}
+h2{font-size:clamp(1.8rem,3.6vw,2.6rem)}
+h3{font-family:var(--f-body);font-size:1.02rem;font-weight:600;letter-spacing:.01em}
+p{margin:0}
+a{color:var(--koi)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--koi);outline-offset:3px;border-radius:8px}
+.wrap{max-width:1200px;margin:0 auto}
+.eyebrow{font-size:.74rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.lede{font-size:1.1rem;color:var(--muted);max-width:62ch}
+.muted{color:var(--muted)}
+.prose{display:grid;gap:.75em;max-width:68ch}
+
+/* Cabecera */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)));background:color-mix(in srgb,var(--paper) 90%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px max(16px,env(safe-area-inset-left,0px))}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.seal{width:32px;height:32px;border-radius:7px;background:var(--koi);color:var(--koi-ink);display:grid;place-items:center;font-family:var(--f-jp);font-weight:800;font-size:1.05rem;line-height:1}
+.brand b{font-family:var(--f-body);font-weight:600;letter-spacing:.22em;font-size:.9rem}
+.brand small{font-size:.78rem;color:var(--muted);letter-spacing:.06em}
+.nav{display:flex;gap:4px;flex-wrap:wrap}
+.nav a{color:var(--muted);text-decoration:none;font-size:.86rem;padding:6px 10px;border-radius:999px}
+.nav a:hover{color:var(--ink);background:var(--surface)}
+
+/* Tesis */
+.hero{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:40px;align-items:end;padding-block:48px 26px}
+.hero h1 em{font-style:italic;color:var(--koi)}
+.hero .lede{margin-top:16px}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--raised)}
+.facts div{padding:12px 16px;border-bottom:1px solid var(--line);border-right:1px solid var(--line);min-width:0}
+.facts div:nth-child(2n){border-right:0}
+.facts div:nth-last-child(-n+2){border-bottom:0}
+.facts dt{font-size:.68rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.facts dd{margin:2px 0 0;font-weight:500;font-variant-numeric:tabular-nums}
+
+/* Selector */
+.vpick-wrap{overflow-x:auto;scrollbar-width:thin;margin-inline:-4px;padding:4px}
+.vpick{display:grid;grid-template-columns:repeat(5,minmax(178px,1fr));gap:10px;min-width:min-content}
+.vcard{appearance:none;text-align:left;border:1.5px solid var(--line);background:var(--raised);border-radius:18px;padding:14px 16px 16px;display:grid;gap:6px;align-content:start;transition:border-color .3s var(--ease),background .3s var(--ease),transform .2s}
+.vcard:hover{border-color:color-mix(in srgb,var(--koi) 45%,var(--line))}
+.vcard:active{transform:scale(.985)}
+.vcard[aria-pressed="true"]{border-color:var(--koi);background:color-mix(in srgb,var(--koi) 7%,var(--raised))}
+.vnum{font-size:.7rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.vname{font-family:var(--f-display);font-style:italic;font-weight:600;font-size:1.55rem;line-height:1.05}
+.vtag{justify-self:start;font-size:.7rem;font-weight:600;letter-spacing:.06em;border-radius:999px;padding:3px 9px;border:1px solid var(--line);color:var(--muted)}
+.vtag.tri{background:var(--koi);border-color:var(--koi);color:var(--koi-ink)}
+.vline{font-size:.86rem;color:var(--muted);line-height:1.4}
+
+/* Escenario: la pared de la barra */
+.stage{margin-top:14px;background:var(--stage);border-radius:28px;padding:clamp(10px,2vw,18px);display:grid;gap:12px}
+.stage:fullscreen{background:#0d0b0b;border-radius:0;padding:2vh 2vw;align-content:center}
+.wall{position:relative;border-radius:20px;overflow:hidden;background:linear-gradient(180deg,var(--wall-a) 0%,var(--wall-b) 100%);padding:clamp(54px,7vw,92px) 8px clamp(46px,6vw,80px);isolation:isolate}
+.wall::before{content:"";position:absolute;left:-6%;right:-6%;top:-1px;height:clamp(30px,4.5vw,58px);background:var(--soffit);border-radius:0 0 48% 48%/0 0 100% 100%;box-shadow:0 10px 26px 2px color-mix(in srgb,var(--led) 85%,transparent),0 2px 0 color-mix(in srgb,var(--led) 90%,transparent);z-index:0}
+.wall::after{content:"";position:absolute;inset:0;background:radial-gradient(90% 55% at 50% 0%,color-mix(in srgb,var(--led) 55%,transparent),transparent 70%);pointer-events:none;z-index:0}
+.counter{position:absolute;left:0;right:0;bottom:0;height:clamp(18px,3vw,34px);z-index:2;background:repeating-linear-gradient(90deg,var(--slat) 0 7px,color-mix(in srgb,var(--slat) 78%,#000) 7px 9px);box-shadow:0 -5px 0 0 #F8F5F0}
+.tvrow{position:relative;z-index:1;display:flex;justify-content:center;align-items:flex-start;gap:var(--gap,40px)}
+.tv{margin:0;position:relative;width:var(--tvw,240px);aspect-ratio:9/16;max-width:100%;background:var(--bezel);padding:calc(var(--tvw,240px)*.018);border-radius:calc(var(--tvw,240px)*.012);box-shadow:0 28px 34px -22px rgba(55,32,14,.55),0 2px 6px rgba(55,32,14,.25)}
+.tv canvas{display:block;width:100%;height:100%;background:#FBF3E8}
+.tvrow[data-view="center"] .tv:not([data-slot="C"]){display:none}
+.tv .glare{position:absolute;inset:calc(var(--tvw,240px)*.018);pointer-events:none;opacity:0;transition:opacity .5s var(--ease);background:radial-gradient(15% 8.5% at 17% 38%,rgba(255,252,240,.82),rgba(255,252,240,.25) 55%,transparent 72%)}
+.tv[data-slot="L"] .glare{background:radial-gradient(20% 11% at 46% 33%,rgba(255,252,240,.82),rgba(255,252,240,.25) 55%,transparent 72%)}
+.tv[data-slot="R"] .glare{display:none}
+.lampset{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:0;transition:opacity .5s var(--ease)}
+.wall.lamps .lampset,.wall.lamps .tv .glare{opacity:1}
+.lamp{position:absolute;top:0;width:clamp(26px,4.2vw,58px);transform:translateX(-50%)}
+.lamp i{display:block;width:2px;margin:0 auto;height:var(--h,60px);background:#1d1817}
+.lamp b{display:block;width:100%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 38% 35%,#fffdf6,#f6ecd9 55%,#e7d7bd);box-shadow:0 0 28px 10px rgba(255,236,190,.55)}
+.stage-cap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:.84rem;color:var(--muted);padding-inline:4px}
+
+/* Controles */
+.controls{display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"play tl time" "opts opts opts";gap:12px 18px;align-items:center;padding:4px}
+.controls .pbtn{grid-area:play}.controls .tl{grid-area:tl}.controls .time{grid-area:time}.controls .tright{grid-area:opts;justify-content:flex-start}
+.pbtn{justify-self:start;appearance:none;border:0;background:var(--ink);color:var(--paper);border-radius:999px;padding:10px 18px 10px 14px;display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:.92rem}
+.pbtn svg{width:16px;height:16px}
+.pbtn .i-play{display:none}
+.pbtn[aria-pressed="false"] .i-play{display:block}
+.pbtn[aria-pressed="false"] .i-pause{display:none}
+.tl{display:grid;gap:6px;min-width:0}
+.tl-track{position:relative;display:flex;gap:3px;height:12px;cursor:pointer;touch-action:none;border-radius:999px}
+.tl-track .seg{position:relative;height:100%;border-radius:999px;background:color-mix(in srgb,var(--ink) 14%,transparent);overflow:hidden}
+.tl-track .seg i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--koi)}
+.tl-track .head{position:absolute;top:-4px;width:4px;height:20px;margin-left:-2px;border-radius:2px;background:var(--ink);pointer-events:none}
+.tl-labels{display:flex;gap:3px;min-width:0}
+.chap{appearance:none;border:0;background:none;padding:0;text-align:left;font-size:.74rem;line-height:1.25;color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chap span{display:block;font-variant-numeric:tabular-nums;font-size:.66rem;opacity:.8}
+.chap.on{color:var(--ink);font-weight:600}
+.tright{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.time{font-size:.86rem;font-variant-numeric:tabular-nums;color:var(--muted);white-space:nowrap}
+.time b{color:var(--ink);font-weight:600}
+.cyc{margin-left:6px;padding:2px 8px;border-radius:999px;background:var(--koi-soft);color:var(--ink);font-size:.76rem}
+.seg2{display:flex;background:color-mix(in srgb,var(--ink) 8%,transparent);border-radius:999px;padding:3px}
+.seg2 button{appearance:none;border:0;background:transparent;color:var(--muted);font-size:.84rem;font-weight:500;padding:7px 12px;border-radius:999px;white-space:nowrap}
+.seg2 button[aria-pressed="true"]{background:var(--raised);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.ghost{appearance:none;border:1px solid color-mix(in srgb,var(--ink) 18%,transparent);background:transparent;color:var(--ink);font-size:.84rem;font-weight:500;padding:7px 12px;border-radius:999px;white-space:nowrap}
+.ghost[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.rm{font-size:.82rem;color:var(--muted)}
+.ghost.take{border-color:var(--koi);color:var(--koi)}
+
+/* Ficha */
+.vinfo{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:44px;padding-block:44px 8px}
+.vi-main{display:grid;gap:14px;align-content:start}
+.vi-main h3{margin-top:10px}
+.vi-main p{max-width:64ch}
+.sig{border-left:3px solid var(--koi);padding:4px 0 4px 16px;display:grid;gap:4px;margin-top:6px}
+.sig .k{font-size:.7rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--koi)}
+.vi-side{display:grid;gap:18px;align-content:start;min-width:0}
+.beats{list-style:none;margin:0;padding:0;display:grid;gap:2px;border-top:1px solid var(--line)}
+.beats li{border-bottom:1px solid var(--line)}
+.beats button{appearance:none;border:0;background:none;text-align:left;width:100%;padding:10px 4px;display:grid;grid-template-columns:5.6rem minmax(0,1fr);gap:2px 12px}
+.beats button:hover b{color:var(--koi)}
+.beats .tt{font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums;grid-row:span 2;padding-top:2px}
+.beats b{font-weight:600}
+.beats .nn{font-size:.88rem;color:var(--muted);line-height:1.45}
+.specs{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.specs div{padding:10px 14px;border-bottom:1px solid var(--line);border-right:1px solid var(--line);min-width:0}
+.specs div:nth-child(2n){border-right:0}
+.specs div:nth-last-child(-n+2){border-bottom:0}
+.specs dt{font-size:.66rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.specs dd{margin:2px 0 0;font-size:.93rem;font-weight:500}
+
+/* Secciones */
+section.block{padding-block:64px 0}
+.sh{display:grid;gap:10px;margin-bottom:24px}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:18px;background:var(--raised)}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:.93rem}
+th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);background:var(--surface)}
+tbody th{font-size:.82rem;letter-spacing:.04em;text-transform:none;color:var(--ink);background:transparent;white-space:nowrap}
+tr:last-child td,tr:last-child th{border-bottom:0}
+.rec{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px;align-items:start;border:1.5px solid var(--koi);border-radius:20px;padding:20px 22px;margin-top:18px;background:color-mix(in srgb,var(--koi) 5%,var(--raised))}
+.rec .tg{font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;background:var(--koi);color:var(--koi-ink);padding:5px 10px;border-radius:8px;white-space:nowrap}
+.findings{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.find{border:1px solid var(--line);border-radius:18px;padding:18px;display:grid;gap:8px;align-content:start;background:var(--raised);min-width:0}
+.find h3{font-size:1.02rem}
+.find p{font-size:.94rem;color:var(--muted)}
+.find ul{margin:0;padding-left:1.1em;font-size:.8rem;display:grid;gap:3px}
+.find a{word-break:break-word}
+.refs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 24px;margin-top:22px;padding:0;list-style:none}
+.refs li{display:grid;gap:2px;padding:10px 0;border-bottom:1px solid var(--line);min-width:0}
+.refs li span{font-size:.88rem;color:var(--muted)}
+.opts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.opt{border:1px solid var(--line);border-radius:18px;padding:18px;display:grid;gap:8px;align-content:start;background:var(--raised);min-width:0}
+.opt.rec2{border:1.5px solid var(--koi)}
+.opt .tg2{justify-self:start;font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:6px;background:var(--surface);color:var(--muted)}
+.opt.rec2 .tg2{background:var(--koi);color:var(--koi-ink)}
+.opt ul{margin:0;padding-left:1.1em;display:grid;gap:4px;font-size:.92rem}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
+.two>*{min-width:0}
+footer{margin-top:72px;padding-block:28px 56px;border-top:1px solid var(--line);color:var(--muted);font-size:.86rem;display:grid;gap:6px}
+
+@media (max-width:980px){
+  .hero{grid-template-columns:minmax(0,1fr);gap:24px}
+  .vinfo{grid-template-columns:minmax(0,1fr);gap:28px}
+  .findings,.opts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .controls{grid-template-columns:auto minmax(0,1fr) auto}
+}
+@media (max-width:640px){
+  body{font-size:16px}
+  .nav{display:none}
+  .findings,.opts,.two,.refs{grid-template-columns:minmax(0,1fr)}
+  .facts{grid-template-columns:minmax(0,1fr)}
+  .facts div{border-right:0!important;border-bottom:1px solid var(--line)!important}
+  .facts div:last-child{border-bottom:0!important}
+  .controls{grid-template-columns:auto minmax(0,1fr);grid-template-areas:"play time" "tl tl" "opts opts"}
+  .controls .time{justify-self:end}
+  .tl-labels .chap{font-size:.66rem}
+  .tl-labels .chap span{display:none}
+  .tl-labels .chap:not(.on){color:transparent}
+  .specs{grid-template-columns:minmax(0,1fr)}
+  .specs div{border-right:0!important;border-bottom:1px solid var(--line)!important}
+  .specs div:last-child{border-bottom:0!important}
+  .rec{grid-template-columns:minmax(0,1fr)}
+  .wall{padding-inline:4px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#inicio"><span class="seal" aria-hidden="true">鯉</span><b>KOI TEA</b><small>Pantallas de la barra</small></a>
+    <nav class="nav" aria-label="Secciones"><a href="#versiones">Versiones</a><a href="#comparativa">Comparativa</a><a href="#investigacion">Investigación</a><a href="#produccion">Producción</a></nav>
+  </div>
+</header>
+
+<main class="wrap" id="inicio">
+  <section class="hero">
+    <div>
+      <p class="eyebrow">Koi Tea Boba Shop · Puerto Peñasco · propuesta de animación</p>
+      <h1><em>Cinco</em> animaciones para las pantallas de la barra</h1>
+      <p class="lede">Dos versiones cambian solo la pantalla central; tres convierten las tres pantallas en una sola escena sin dejar de ser el menú. Todo está dibujado en código con la mascota, los colores y las tipografías de Koi Tea, a 1080 × 1920 por pantalla, y se puede producir como video en loop o correr en vivo, sincronizado por reloj.</p>
+    </div>
+    <dl class="facts">
+      <div><dt>Pantallas</dt><dd>3 verticales, lado a lado</dd></div>
+      <div><dt>Lienzo</dt><dd>1080 × 1920 por pantalla</dd></div>
+      <div><dt>Lectura</dt><dd>Desde la fila, a 3–4 m</dd></div>
+      <div><dt>Formato</dt><dd>Loops de 36 y 60 s, 3 vueltas</dd></div>
+    </dl>
+  </section>
+
+  <div id="versiones" class="vpick-wrap"><nav class="vpick" id="vpick" aria-label="Versiones"></nav></div>
+
+  <section class="stage" id="stage" aria-label="Vista previa en la pared de la barra">
+    <div class="wall" id="wall" data-format="central">
+      <div class="tvrow" id="tvrow" data-view="wall">
+        <figure class="tv" data-slot="L"><canvas id="cv-L" width="360" height="640" role="img" aria-label="Pantalla izquierda"></canvas><span class="glare"></span></figure>
+        <figure class="tv" data-slot="C"><canvas id="cv-C" width="360" height="640" role="img" aria-label="Pantalla central"></canvas><span class="glare"></span></figure>
+        <figure class="tv" data-slot="R"><canvas id="cv-R" width="360" height="640" role="img" aria-label="Pantalla derecha"></canvas><span class="glare"></span></figure>
+      </div>
+      <div class="lampset" aria-hidden="true">
+        <span class="lamp" style="left:27%;--h:46px"><i></i><b></b></span>
+        <span class="lamp" style="left:41%;--h:62px"><i></i><b></b></span>
+        <span class="lamp" style="left:58%;--h:52px"><i></i><b></b></span>
+        <span class="lamp" style="left:74%;--h:70px"><i></i><b></b></span>
+      </div>
+      <div class="counter" aria-hidden="true"></div>
+    </div>
+    <div class="controls">
+      <button class="pbtn" id="btn-play" aria-pressed="true"><svg class="i-pause" viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="2" width="3.4" height="12" rx="1" fill="currentColor"/><rect x="9.6" y="2" width="3.4" height="12" rx="1" fill="currentColor"/></svg><svg class="i-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.2v11.6c0 .6.7 1 1.2.6l8.6-5.8a.7.7 0 0 0 0-1.2L5.2 1.6C4.7 1.3 4 1.6 4 2.2z" fill="currentColor"/></svg><span>Pausar</span></button>
+      <div class="tl">
+        <div class="tl-track" id="tl-track" tabindex="0" role="slider" aria-label="Línea de tiempo del loop"></div>
+        <div class="tl-labels" id="tl-labels"></div>
+      </div>
+      <span class="time"><b id="tl-cur">0.0 s</b> / <span id="tl-total"></span> <span class="cyc" id="tl-cyc" hidden></span></span>
+      <div class="tright">
+        <div class="seg2" role="group" aria-label="Vista"><button data-view-btn="wall" aria-pressed="true">Pared</button><button data-view-btn="center" aria-pressed="false">Pantalla central</button></div>
+        <button class="ghost" id="btn-lamps" aria-pressed="false">Lámparas</button>
+        <button class="ghost" id="btn-full" aria-pressed="false">Pantalla completa</button>
+        <button class="ghost" id="btn-restart">Desde el inicio</button>
+        <button class="ghost take" id="btn-take" hidden>Ver la toma de las tres pantallas</button>
+      </div>
+    </div>
+    <div class="stage-cap"><span id="stage-label"></span><span class="rm" id="rm-note" hidden>Tu equipo pide reducir el movimiento: la animación empieza en pausa.</span></div>
+  </section>
+
+  <section class="vinfo" id="vinfo" aria-live="polite"></section>
+
+  <section class="block" id="comparativa">
+    <div class="sh"><p class="eyebrow">Comparativa</p><h2>Cómo se diferencian las cinco</h2></div>
+    <div class="tbl">
+  <table>
+    <thead>
+      <tr><th></th><th>1 · Koi vivo</th><th>2 · Tinta</th><th>3 · Estanque</th><th>4 · Luz</th><th>5 · Atardecer</th></tr>
+    </thead>
+    <tbody>
+      <tr><th scope="row">Pantallas</th><td>Central</td><td>Central</td><td>Las tres</td><td>Las tres</td><td>Las tres</td></tr>
+      <tr><th scope="row">Idea</th><td>La mascota del logo cobra vida y presenta la bebida.</td><td>Sumi-e: la bebida pintada como obra de galería.</td><td>Un estanque detrás de las tres pantallas; el menú flota quieto.</td><td>La línea de luz del plafón cruza las pantallas y enciende el menú.</td><td>Un friso del Mar de Cortés; la Koi Tea como atardecer.</td></tr>
+      <tr><th scope="row">Momento firma</th><td>El koi sorbe: una perla sube por el popote.</td><td>El sello rojo 鯉 firma la ficha de la obra.</td><td>El koi entra al muro y sale en la pantalla de al lado.</td><td>El acorde de té: cortinas con los colores de todas las bebidas.</td><td>El sol se mete en el mar a lo largo de las tres pantallas.</td></tr>
+      <tr><th scope="row">Qué vende</th><td>Una bebida por vuelta, con precio grande, e Instagram.</td><td>Una “obra” por vuelta, con precio, e Instagram.</td><td>Bebida recomendada resaltada en el menú, topping incluido e Instagram.</td><td>Bebida del momento, Koi Tea, smoothies e Instagram.</td><td>Koi Tea, la combinación recomendada en Google e Instagram.</td></tr>
+      <tr><th scope="row">Menú de los lados</th><td>Como está hoy</td><td>Como está hoy</td><td>Rediseñado, en placas de papel</td><td>Rediseñado, en marcos de nogal</td><td>Rediseñado, bajo el friso</td></tr>
+      <tr><th scope="row">Tono</th><td>Cálido y cercano</td><td>Calmado, de galería</td><td>Natural, sereno</td><td>Arquitectónico, sobrio</td><td>Local, emotivo</td></tr>
+      <tr><th scope="row">Para instalar</th><td>1 reproductor</td><td>1 reproductor</td><td>3 reproductores sincronizados</td><td>3 reproductores sincronizados</td><td>3 reproductores sincronizados</td></tr>
+      <tr><th scope="row">Ideal para</th><td>Empezar ya, sin tocar los menús.</td><td>Reforzar “sabor y arte” y la galería.</td><td>Hacer del koi la experiencia del local.</td><td>Integrar las pantallas al diseño interior.</td><td>Conquistar al turista y la temporada alta.</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="rec" id="recomendacion">
+  <span class="tg">Recomendación</span>
+  <div class="prose">
+    <p><b>Empezar por la pantalla central con Koi vivo.</b> Se instala con un solo reproductor, no toca los menús actuales y convierte la pantalla que hoy solo repite el logo en una que vende: cada vuelta presenta una bebida con su precio y termina en Instagram.</p>
+<p><b>Para dar el paso a las tres pantallas, Atardecer o Estanque.</b> Atardecer es la más propia de Koi Tea en Rocky Point y le habla directo al turista; Estanque es la más ligada al koi. Las dos traen los menús laterales rediseñados para leerse desde la fila. Tinta y Luz son alternativas más sobrias si se prefiere que las pantallas se integren al interiorismo sin tanto protagonismo.</p>
+  </div>
+</div>
+  </section>
+
+  <section class="block" id="investigacion">
+    <div class="sh"><p class="eyebrow">Investigación</p><h2>Lo que define una pantalla de menú que funciona</h2><p class="lede">Antes de animar revisamos guías de legibilidad y de señalización digital, estudios sobre menús y ventas, normas de fotosensibilidad, referencias de marcas de té y la técnica para sincronizar varias pantallas. Estas son las reglas que siguen las cinco versiones.</p></div>
+    <div class="findings">
+  <article class="find">
+    <h3>Letra que se lee desde la fila</h3>
+    <p>La regla de señalización es 1 pulgada de letra por cada 10 pies de distancia. En una TV de 55" vista a 4 m, eso da unos 53 px de altura de mayúscula. Por eso los nombres y precios del menú van a 62 px, el inglés y las notas a 46 px o más, y los titulares a 120 px o más. Si las pantallas fueran de 43", todo sube un 25%.</p>
+    <ul>
+      <li><a href="https://wmich.edu/digital-accessibility/digital-signage" target="_blank" rel="noopener">Western Michigan University, digital signage</a></li>
+      <li><a href="https://digitalsignage.com/digital_signage/docs/guides/typography-viewing-distance" target="_blank" rel="noopener">DigitalSignage.com, tipografía y distancia</a></li>
+    </ul>
+  </article>
+  <article class="find">
+    <h3>Contraste: el problema de hoy</h3>
+    <p>El texto actual es gris delgado sobre gris verdoso: blanco sobre ese salvia da apenas 1.9 a 1. Las versiones usan tinta sobre crema (13.8 a 1), el inglés en nogal (9.4 a 1) y un rojo más profundo para textos (5.4 a 1). El rojo brillante del logo queda para la mascota y los adornos.</p>
+    <ul>
+      <li><a href="https://raw.githubusercontent.com/w3c/wcag/main/guidelines/sc/20/contrast-minimum.html" target="_blank" rel="noopener">WCAG 1.4.3, contraste mínimo</a></li>
+      <li><a href="https://raw.githubusercontent.com/w3c/wcag/main/guidelines/sc/20/contrast-enhanced.html" target="_blank" rel="noopener">WCAG 1.4.6, contraste mejorado</a></li>
+    </ul>
+  </article>
+  <article class="find">
+    <h3>El menú no se mueve</h3>
+    <p>Las guías coinciden: nombres, precios y categorías nunca rotan ni se animan; el movimiento vive en zonas que no se leen. Por eso en las versiones de tres pantallas el menú lateral está quieto y visible el 96% del tiempo, y la toma completa dura 7 s cada 3 minutos.</p>
+    <ul>
+      <li><a href="https://seenlabs.com/blog/the-carousel-of-frustration-why-rotating-digital-menus-kill-your-conversion-rate" target="_blank" rel="noopener">SeenLabs, menús que rotan</a></li>
+      <li><a href="https://digitalsignage.com/digital_signage/docs/industries/drive-thru-optimization" target="_blank" rel="noopener">DigitalSignage.com, optimización de menús</a></li>
+      <li><a href="https://kontechdisplay.com/news/how-to-design-an-effective-digital-menu-board-layout/" target="_blank" rel="noopener">Kontech, layout de menú digital</a></li>
+    </ul>
+  </article>
+  <article class="find">
+    <h3>Una idea a la vez, de 8 a 12 segundos</h3>
+    <p>Cada escena dura lo suficiente para leerse con calma: alrededor de 1 segundo por palabra visible y nunca menos de 8 s, con pocas palabras por idioma. Los loops largos con varias vueltas hacen que quien espera en la fila vea cada mensaje dos o tres veces.</p>
+    <ul>
+      <li><a href="https://www.crowntv-us.com/blog/digital-signage-design/" target="_blank" rel="noopener">CrownTV, reglas de diseño</a></li>
+      <li><a href="https://screencloud.com/blog/digital-signage-best-content-practices" target="_blank" rel="noopener">ScreenCloud, buenas prácticas</a></li>
+      <li><a href="https://www.digitalsignagetoday.com/blogs/the-rule-of-3-in-digital-signage-content/" target="_blank" rel="noopener">Digital Signage Today, regla de 3</a></li>
+    </ul>
+  </article>
+  <article class="find">
+    <h3>Animar vende si hay producto y precio</h3>
+    <p>En experimentos de campo, encender pantallas subió las ventas solo cuando el mensaje mostraba producto y precio; en tiendas pequeñas, el contenido genérico no ayudó. En pruebas de menús, pasar de texto a imágenes con movimiento sutil sí subió las ventas. Cada versión presenta una bebida concreta con su precio.</p>
+    <ul>
+      <li><a href="https://www.sciencedaily.com/releases/2016/02/160222134207.htm" target="_blank" rel="noopener">Roggeveen, Nordfält y Grewal (2016)</a></li>
+      <li><a href="https://sixteen-nine.net/2019/09/16/research-menu-board-testing-shows-differences-images-and-motion-make-on-sales" target="_blank" rel="noopener">Living Retail Lab, imágenes y movimiento</a></li>
+    </ul>
+  </article>
+  <article class="find">
+    <h3>Lo que mueve la mirada es el arranque</h3>
+    <p>La atención la captura el inicio de un movimiento, no el movimiento continuo. Por eso cada escena tiene un solo protagonista que entra (la bebida, el precio, el QR) y el resto se mueve lento: los koi nadan a menos de 150 px por segundo y nada parpadea.</p>
+    <ul>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/12930472/" target="_blank" rel="noopener">Abrams y Christ (2003)</a></li>
+      <li><a href="https://www.nngroup.com/articles/animation-usability/" target="_blank" rel="noopener">Nielsen Norman Group, animación</a></li>
+    </ul>
+  </article>
+  <article class="find">
+    <h3>Sin destellos</h3>
+    <p>Nada destella más de tres veces por segundo, y los cambios grandes de luz son fundidos de medio segundo o más. Ninguna versión alterna rápido entre rojo y crema: el rojo saturado es el más riesgoso para personas fotosensibles.</p>
+    <ul>
+      <li><a href="https://raw.githubusercontent.com/w3c/wcag/main/guidelines/sc/20/three-flashes-or-below-threshold.html" target="_blank" rel="noopener">WCAG 2.3.1, tres destellos</a></li>
+      <li><a href="https://www.itu.int/dms_pubrec/itu-r/rec/bt/R-REC-BT.1702-3-202311-I!!PDF-E.pdf" target="_blank" rel="noopener">ITU-R BT.1702-3</a></li>
+    </ul>
+  </article>
+  <article class="find">
+    <h3>El hueco entre pantallas es parte del dibujo</h3>
+    <p>Las tres pantallas se dibujan como un solo lienzo de 3720 × 1920 que incluye los dos huecos de pared. Lo que cruza pasa por detrás y reaparece a la velocidad correcta, sin detenerse, para que el ojo lo lea como el mismo koi (el “efecto túnel”). Ningún texto cruza un hueco.</p>
+    <ul>
+      <li><a href="https://www.fugo.ai/wiki/bezel-compensation-digital-signage" target="_blank" rel="noopener">Fugo, compensación de marcos</a></li>
+      <li><a href="https://en.wikipedia.org/wiki/Tunnel_effect" target="_blank" rel="noopener">Efecto túnel</a></li>
+      <li><a href="https://caplab.yale.edu/sites/default/files/files/2004-Flombaumetal.pdf" target="_blank" rel="noopener">Flombaum et al. (2004)</a></li>
+    </ul>
+  </article>
+  <article class="find">
+    <h3>Pesos primero, inglés después</h3>
+    <p>La ley pide información en español y precios en moneda nacional, visibles y con el total. Las versiones muestran el precio en pesos sin el signo “$” (en Peñasco un turista puede leerlo como dólares), una etiqueta “Precios en pesos mexicanos (MXN)” por pantalla y el inglés en segundo nivel. El equivalente en dólares aparece solo en las escenas de bebida, como referencia.</p>
+    <ul>
+      <li><a href="https://mley.mx/LFPC/articulo/7-bis/" target="_blank" rel="noopener">LFPC, artículo 7 Bis</a></li>
+      <li><a href="https://mley.mx/LFPC/articulo/34/" target="_blank" rel="noopener">LFPC, artículo 34</a></li>
+      <li><a href="https://news.cornell.edu/node/273666" target="_blank" rel="noopener">Cornell, el signo de pesos en el menú</a></li>
+    </ul>
+  </article>
+</div>
+<div class="two" style="margin-top:34px">
+  <div class="prose">
+    <h3>Reflejos de las lámparas</h3>
+    <p>En la foto de la barra, el reflejo de los globos cae en la pantalla izquierda a un tercio de su altura y en la central cerca de su borde izquierdo, a la misma altura; la derecha está limpia. Ninguna versión pone precios en esa franja de la central, y el botón <b>Lámparas</b> de la vista previa la simula. Para la pantalla izquierda conviene probar un panel mate o inclinar el soporte unos grados viéndolo desde la fila.</p>
+  </div>
+  <div class="prose">
+    <h3>Un hueco que nadie ocupa</h3>
+    <p>No encontramos evidencia pública de menús animados ni de pantallas sincronizadas en las grandes cadenas de té (CHAGEE, Nayuki, Yi Fang, CoCo): invierten en arquitectura y empaque. Un tríptico bien hecho diferenciaría a Koi Tea en Peñasco. Las referencias que sí inspiran el trabajo son el personaje de línea de HEYTEA, los koi de teamLab y el “código de barras” animado de nueve pantallas que Imaginary Forces hizo para el MoMA.</p>
+  </div>
+</div>
+<ul class="refs">
+  <li><a href="https://designcompass.org/en/2026/01/14/heytea-subtly-younger-rebrand" target="_blank" rel="noopener">HEYTEA, identidad 2026</a><span>Un personaje de línea que bebe, igual que el koi: lo premium es el sistema, no la cantidad de animación.</span></li>
+  <li><a href="https://www.teamlab.art/w/koi_and_people" target="_blank" rel="noopener">teamLab, koi y personas</a><span>El koi no actúa, se comporta: su estela es el dibujo.</span></li>
+  <li><a href="https://imaginaryforces.com/project/moma" target="_blank" rel="noopener">Imaginary Forces, MoMA</a><span>Una fila de pantallas detrás del mostrador leída como una sola pieza rítmica.</span></li>
+  <li><a href="https://www.archdaily.com/933048/heytea-lab-shenzhen-oct-harbor-store-tomo-design" target="_blank" rel="noopener">HEYTEA LAB Shenzhen</a><span>La pantalla como material de arquitectura, no como anuncio.</span></li>
+  <li><a href="https://wolffolins.com/work/blank-street" target="_blank" rel="noopener">Blank Street, Wolff Olins</a><span>Colores nombrados por la hora del día: la idea detrás de las luces de Atardecer.</span></li>
+  <li><a href="https://www.indesignlive.com/projects/chagee-tea-bar-still-young" target="_blank" rel="noopener">CHAGEE, Still Young</a><span>Una tira delgada de luz cálida que conecta todo el espacio, como el plafón de Koi Tea.</span></li>
+  <li><a href="https://animationobsessive.substack.com/p/animating-chinese-ink-wash-paintings" target="_blank" rel="noopener">Tinta animada de Shanghái</a><span>Pocas pinceladas, mucho aire y movimiento respirado.</span></li>
+  <li><a href="https://www.sosolimited.com/work/mfa-digital-signage-system/" target="_blank" rel="noopener">Sosolimited, MFA Boston</a><span>Transiciones derivadas del propio logo y contenido que sale de un archivo editable.</span></li>
+</ul>
+  </section>
+
+  <section class="block" id="produccion">
+    <div class="sh"><p class="eyebrow">Producción</p><h2>Cómo llevarlo a las pantallas</h2><p class="lede">Las animaciones dependen solo del reloj: cada pantalla calcula qué cuadro mostrar a partir de la hora, sin hablar con las demás. Eso permite dos caminos con el mismo código: un video en loop para empezar y una página en vivo, sincronizada, para actualizar precios y promociones sin volver a producir nada.</p></div>
+    <div class="opts">
+  <article class="opt">
+    <span class="tg2">Para empezar</span>
+    <h3>Video en la USB de la TV</h3>
+    <p class="muted">La animación se exporta como MP4 y se reproduce desde una memoria en la propia TV. Sirve para las versiones de pantalla central.</p>
+    <ul>
+      <li>Sin equipo extra ni mensualidad.</li>
+      <li>El video se exporta ya girado 90°, porque las TV de casa no giran la imagen.</li>
+      <li>Cada cambio de precio implica exportar de nuevo.</li>
+      <li>No sirve para tres pantallas sincronizadas: tres videos sueltos se desfasan segundos en una jornada.</li>
+    </ul>
+  </article>
+  <article class="opt rec2">
+    <span class="tg2">Recomendado</span>
+    <h3>Una Raspberry Pi 5 por pantalla</h3>
+    <p class="muted">Cada pantalla abre la animación en vivo a pantalla completa. Para la central basta una; para las tres, tres iguales.</p>
+    <ul>
+      <li>Precios y promociones se cambian desde un panel y aparecen solos.</li>
+      <li>Las tres se sincronizan por reloj en la red del local, con un margen menor a un cuadro de video: el ojo no lo nota.</li>
+      <li>El mismo equipo crece de una a tres pantallas sin cambiar nada.</li>
+      <li>Soporte remoto gratuito con Raspberry Pi Connect.</li>
+    </ul>
+  </article>
+  <article class="opt">
+    <span class="tg2">Alternativa</span>
+    <h3>Una mini PC con tres salidas</h3>
+    <p class="muted">Un solo equipo maneja las tres pantallas con un solo reloj.</p>
+    <ul>
+      <li>Sincronía perfecta sin depender de la red.</li>
+      <li>Un solo equipo que mantener, pero si falla se apagan las tres.</li>
+      <li>Hay que confirmar que el modelo maneje tres salidas a la vez.</li>
+    </ul>
+  </article>
+</div>
+<div class="two" style="margin-top:28px">
+  <div class="prose">
+    <h3>Video maestro</h3>
+    <p>MP4 H.264 de 1080 × 1920 a 30 cuadros por segundo (perfil High 4.0, calidad CRF 18, tope de 12 Mbps), uno por pantalla, exportado cuadro por cuadro desde el mismo código. Cada vuelta del loop termina exactamente donde empieza, y los cambios entre vueltas ocurren en momentos quietos para que no se note el corte. La versión de tres pantallas se exporta como un solo lienzo de 3720 × 1920 y se recorta en tres videos con los mismos cuadros.</p>
+    <h3>Calibración en el local (15 minutos)</h3>
+    <p>Con una página de prueba se ajustan tres valores por pantalla, a ojo desde la fila: el ancho real del hueco (para que una diagonal se vea recta de una pantalla a otra), la diferencia de altura entre soportes y el retraso de cada TV. Se guardan en la dirección de cada pantalla, por ejemplo <code>?screen=C&amp;gap=240&amp;dy=0&amp;lat=0</code>.</p>
+  </div>
+  <div class="prose">
+    <h3>Antes de comprar, medir</h3>
+    <ul>
+      <li>Marca, modelo y tamaño de las tres TV, y si el fabricante permite montarlas en vertical.</li>
+      <li>Ancho de la imagen encendida y distancia entre imágenes de pantallas vecinas.</li>
+      <li>Si hay toma de red cerca de la barra (mejor por cable que por Wi-Fi).</li>
+      <li>Contactos, ventilación y calor detrás de la barra en verano.</li>
+      <li>El reflejo de los globos visto desde la fila.</li>
+    </ul>
+    <h3>Costos de referencia</h3>
+    <p>Una Raspberry Pi 5 de 4 GB con fuente, disipador, cables y memoria ronda entre $2,000 y $3,600 MXN; tres kits, entre $6,000 y $7,700 MXN. Una mini PC con tres salidas, entre $3,500 y $6,500 MXN. Son estimaciones a partir de precios de lista en dólares, con IVA y un tipo de cambio de 18 a 20: hay que confirmarlas en tienda. El software (ffmpeg, Chromium, chrony) es gratuito; un panel de precios en Supabase puede empezar en el plan gratuito.</p>
+  </div>
+</div>
+  </section>
+
+  <footer>
+    <p>Propuesta de Luis Mario para Koi Tea Boba Shop, C. Benito Juárez 276, Puerto Peñasco. Animaciones dibujadas en código; el logo y la mascota pertenecen a Koi Tea.</p>
+    <p>Precios ilustrativos, por confirmar con el negocio. Tipo de cambio de ejemplo: $18 MXN por dólar. El QR de las pantallas abre instagram.com/koitea.mx.</p>
+  </footer>
+</main>
+
+<script src="../src/kit.js"></script>
+<script src="../src/mascot.js"></script>
+<script src="../src/koi.js"></script>
+<script src="../src/cup.js"></script>
+<script src="../src/data.js"></script>
+<script src="../src/boards.js"></script>
+<script src="../src/versions/v1.js"></script>
+<script src="../src/versions/v2.js"></script>
+<script src="../src/versions/v3.js"></script>
+<script src="../src/versions/v4.js"></script>
+<script src="../src/versions/v5.js"></script>
+<script src="../src/engine.js"></script>
+<script>KT.boot();</script>

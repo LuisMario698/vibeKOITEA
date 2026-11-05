@@ -1,0 +1,18 @@
+<!doctype html><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Jost:wght@300..700&family=M+PLUS+Rounded+1c:wght@500;800&family=Shippori+Mincho:wght@600;800&family=Yuji+Syuku&display=swap">
+<body style="margin:0;background:#fff">
+<canvas id="c" width="1800" height="900"></canvas>
+<script src="../src/kit.js"></script>
+<script src="../src/mascot.js"></script>
+<script>
+const c=document.getElementById('c'),g=c.getContext('2d');
+const img=new Image();img.onload=()=>{
+  g.drawImage(img,0,0,900,900);
+  g.globalAlpha=0.55;
+  KT.mascot(g,450,450,900,{line:'#0066ff',lw:6,fill:0});
+  g.globalAlpha=1;
+  g.fillStyle='#FEF4EB';g.fillRect(900,0,900,900);
+  KT.mascot(g,1350,450,900,{});
+  window.done=true;
+};img.src='logo.jpg';
+</script>
