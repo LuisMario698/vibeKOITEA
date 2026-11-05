@@ -601,6 +601,12 @@ ul,ol{padding:0;list-style:none}
 .mood span{font-size:.75rem;line-height:1.25;color:var(--ink-2)}
 .info .fine{margin-top:var(--s5)}
 #sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* Ajustes de revisión: tarjeta para historias, ticket y primera pantalla */
+.st-art{width:58cqw;top:31cqw}
+.st-name{top:auto;bottom:calc(17% + 3.5cqw);font-size:9.2cqw;text-wrap:balance}
+.tk-mode button{display:grid;place-items:center;padding:0 12px;text-align:center}
+.hello-koi{width:min(40vw,160px);margin-top:-20px}
 </style>
 </head>
 <body>
@@ -758,8 +764,8 @@ ul,ol{padding:0;list-style:none}
       qty: 'Cantidad', qtyDec: 'Quitar uno', qtyInc: 'Agregar uno', each: 'c/u', soldShort: 'Agotado',
       smoothNote: 'Los smoothies van frappé: aquí eliges tamaño y toppings; no llevan ajuste de dulzor ni hielo.',
       soldTitle: 'Se nos acabó por hoy', soldTry: 'Te pueden gustar estas:', addBtn: 'Agregar · {p}', addBtnN: 'Agregar {q} · {p}', saveBtn: 'Guardar · {p}', soldBtn: 'Agotado por hoy',
-      shDef: '¡Buena elección! Viene con {t} incluido.', shCasa: 'Es la de la casa: en capas de rojo a naranja, como yo.', shResena: 'Una reseña la recomienda con {t}.', shSmooth: 'Frappé cremoso y frío. ¡Elige tus toppings!', shSold: '¡Ay! Se nos acabó por hoy. ¿Te late otra?', shEdit: 'Cámbiale lo que quieras y guarda.',
-      sayGrande: 'Grande: {p} más.', sayRegular: 'Mediano, perfecto.', sayTopIncl: '{t} va incluido.', sayTopExtra: '{t}: {p} por ser extra.', sayTopOff: 'Quité {t}.',
+      shDef: '¡Buena elección! Tu topping incluido: {t}.', shCasa: 'Es la de la casa: en capas de rojo a naranja, como yo.', shResena: 'Una reseña la recomienda con {t}.', shSmooth: 'Frappé cremoso y frío. ¡Elige tus toppings!', shSold: '¡Ay! Se nos acabó por hoy. ¿Te late otra?', shEdit: 'Cámbiale lo que quieras y guarda.',
+      sayGrande: 'Grande: {p} más.', sayRegular: 'Mediano, perfecto.', sayTopIncl: 'Sin costo: {t}.', sayTopExtra: '{t}: {p} por ser extra.', sayTopOff: 'Quité: {t}.',
       sayTopMax: '¡Uy! Máximo 3 toppings; si no, no cabe el té.', sayTopNone: 'Sin topping, puro sabor.', saySweet: 'Anotado: {s}.', saySweet0: 'Sin azúcar: puro sabor a té.', sayIce: 'Anotado: {i}.', sayQty: '{q} vasos, ¡qué buen plan!',
       cartTitle: 'Tu pedido', cartHi: '¡Gracias! Revisa tu pedido antes de cerrar.', cartInc: 'Uno más de {name}.', cartDec: 'Uno menos de {name}.', cartRm: 'Quité {name}.', cartUndo: 'Listo, regresé {name}.', cartEdited: 'Listo, actualicé tu {name}.', undo: 'Deshacer',
       lineInc: 'Uno más de {name}', lineDec: 'Uno menos de {name}', lineRmA: 'Quitar {name} del pedido', remove: 'Quitar', edit: 'Editar', editA: 'Editar {name}',
@@ -1260,7 +1266,7 @@ ul,ol{padding:0;list-style:none}
     el.hidden = false;
     $('#shell').inert = true; if (prev) prev.inert = true;
     root.classList.add('is-locked');
-    void el.offsetWidth; el.classList.add('is-open');
+    void el.offsetWidth; Array.prototype.forEach.call(el.querySelectorAll('.panel-body'), function (b) { b.scrollTop = 0; }); el.classList.add('is-open');
     var f = el.querySelector('[id$="-t"]') || focusables(el)[0];
     if (f) f.focus({ preventScroll: true });
   }
@@ -1618,6 +1624,10 @@ ul,ol{padding:0;list-style:none}
   renderChrome();
   go('hello', { focus: false });
 })();
+</script>
+<script>
+/* Evita toques fantasma: si una capa se abrió o cerró hace menos de 350 ms, el segundo toque se ignora. */
+(function(){var last=0,sig='';function cur(){return Array.prototype.map.call(document.querySelectorAll('.dlg:not([hidden])'),function(d){return d.id;}).join('|');}document.addEventListener('click',function(e){var t=performance.now(),now=cur();if(t-last<350&&now!==sig){e.preventDefault();e.stopImmediatePropagation();return;}last=t;sig=now;},true);})();
 </script>
 </body>
 </html>
