@@ -71,7 +71,7 @@ button{background:none;border:0;padding:0;margin:0;cursor:pointer;touch-action:m
 button:disabled{cursor:not-allowed}
 h1,h2,h3,p,ul,ol,dl,dd,figure{margin:0;padding:0}
 ul,ol{list-style:none}
-:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px;box-shadow:0 0 0 5px #fff}
 [tabindex="-1"]:focus{outline:none}
 [tabindex="-1"]:focus-visible{outline:2px dashed var(--oak);outline-offset:4px}
 .sr{position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
@@ -226,7 +226,8 @@ ul,ol{list-style:none}
 .plus.done,.piece.is-lit .plus.done{background:var(--seal);border-color:var(--seal);color:#fff}
 .plus:disabled,.piece.is-lit .plus:disabled{border-style:dashed;border-color:var(--rule);color:var(--rule);background:transparent}
 .plus:focus-visible{outline-offset:3px}
-@media (max-width:350px){.cd-view{display:none}}
+@media (max-width:400px){.cd-view{display:none}}
+.cd-buy{flex-wrap:wrap}.cd-buy .plus{margin-left:auto}
 
 /* obra destacada: nicho en arco + cédula montada */
 .piece-f{display:block;padding:34px var(--gut) 44px}
@@ -966,7 +967,7 @@ ul,ol{list-style:none}
   function go(id) {
     var el = id === 'hall' ? $('#entrada') : $('#sala-' + id); if (!el) return;
     var behavior = reduced() ? 'auto' : 'smooth';
-    if (id === 'hall') window.scrollTo({ top: 0, behavior: behavior }); else el.scrollIntoView({ behavior: behavior, block: 'start' });
+    if (id === 'hall') window.scrollTo({ top: 0, behavior: behavior }); else { var sp = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0; window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - sp, behavior: behavior }); }
     var h = id === 'hall' ? $('#hall-title') : $('#rt-' + id);
     if (h) { try { h.focus({ preventScroll: true }); } catch (e) {} }
   }
@@ -1345,6 +1346,10 @@ ul,ol{list-style:none}
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', function () { updatePlan(true); });
 })();
+</script>
+<script>
+/* Evita toques fantasma: si una capa se abrió o cerró hace menos de 350 ms, el segundo toque (que cae sobre la capa nueva) se ignora. */
+(function(){var last=0,sig='';function cur(){return Array.prototype.map.call(document.querySelectorAll('dialog[open]'),function(d){return d.id;}).join('|');}document.addEventListener('click',function(e){var t=performance.now(),now=cur();if(t-last<350&&now!==sig){e.preventDefault();e.stopImmediatePropagation();return;}last=t;sig=now;},true);})();
 </script>
 </body>
 </html>
