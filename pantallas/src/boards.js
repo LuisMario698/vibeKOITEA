@@ -72,7 +72,7 @@
       rows.push({ kind: 'head', sec: 'toppings', y: hy });
       rows.push({ kind: 'tapioca', y: hy + 120 });
       rows.push({ kind: 'cols', y: hy + 220 });
-      rows.push({ kind: 'foot', y: hy + 220 + 132 + 6 * 72 + 30, es: '1 topping incluido en cada bebida', en: '1 topping included with every drink' });
+      rows.push({ kind: 'foot', y: hy + 220 + 132 + 6 * 72 + 30, es: '1 topping incluido · precios en MXN', en: '1 topping included · prices in Mexican pesos' });
     }
     return rows;
   };

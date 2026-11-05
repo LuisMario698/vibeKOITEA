@@ -24,7 +24,8 @@ src/
   kanji.js      trazos de 鯉 y 茶 de KanjiVG (Ulrich Apel, CC BY-SA 3.0) para la caligrafía y los sellos
   mascot.js     la mascota calcada del logo, con estados (parpadeo, aletas, sorbo, dibujo de línea)
   koi.js        koi visto desde arriba (línea, tinta y sombra) y rutas periódicas (Hermite en el tiempo)
-  cup.js        vaso con tapa sellada, capas, toppings, hielo
+  cup.js        vaso plano con tapa sellada, capas, toppings, hielo (respaldo sin WebGL)
+  drink3d.js    la bebida en 3D con Three.js (vendor/three.min.js, MIT): vaso, capas, perlas, hielo, tapa, popote, condensación
   data.js       menú y precios (ilustrativos)
   boards.js     menús laterales: los actuales, los rediseñados y los actuales recoloreados en crema (texto en caché, nunca se mueven)
   versions/     v1.js … v5.js

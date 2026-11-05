@@ -114,12 +114,12 @@
   ];
 
   KT.register({
-    id: 'v3', n: 3, name: 'Estanque', format: 'triple', duration: L, cycles: 3, cycleLabel: 'Vuelta',
+    id: 'v3', n: 3, name: 'Estanque', pick: true, format: 'triple', duration: L, cycles: 3, cycleLabel: 'Vuelta',
     takeover: { cycle: 2, t: 51.5, label: 'Ver la toma de las tres pantallas' },
     tagline: 'Un estanque color té detrás de las tres pantallas; el menú flota quieto y dos koi cruzan bajo el muro.',
     chapters: [
       { t: 0, label: 'Estanque', note: 'Un koi termina su círculo y sube por la orilla; la central presenta la marca.' },
-      { t: 12, label: 'Recomendado', note: 'El koi cruza a la pantalla izquierda y la bebida recomendada se ilumina en el menú.' },
+      { t: 12, label: 'Recomendado', note: 'El koi cruza a la pantalla izquierda y la bebida recomendada se ilumina en el menú; la central la arma en 3D con su precio.' },
       { t: 28, label: 'Toppings', note: 'Otro koi recorre la pantalla derecha, sobre los toppings; la central explica el topping incluido.' },
       { t: 40, label: 'Síguenos', note: 'QR a @koitea.mx con una razón para seguir.' },
       { t: 52, label: 'Encuentro', note: 'Los dos koi giran cabeza con cola mientras se escribe 鯉. En la tercera vuelta las placas se apartan y el estanque ocupa las tres pantallas durante 7 s.' }
@@ -155,12 +155,14 @@
         const ka = 1 - seg(t, 59.0, 59.7);
         if (t > TA && ka > 0) { ctx.save(); ctx.globalAlpha *= ka; KT.calli(ctx, '鯉', O.x, O.y, 168, t - TA - 0.2, { color: C.ink, speed: 1.25, weight: 0.1, seed: 21 }); ctx.restore(); }
       }
-      // koi
+      // koi, con su sombra sobre el fondo del estanque (desplazada y suave: da profundidad)
       [[routeA, 40, 'mascot'], [routeB, 36, 4]].forEach(([path, R, seed], i) => {
         const P = KT.koi.spine(path, t, { len: R * 8.4 });
         let minx = 1e9, maxx = -1e9; P.forEach(p => { minx = Math.min(minx, p.x); maxx = Math.max(maxx, p.x); });
         if (maxx < x0 - 200 || minx > x0 + 1280) return;
-        KT.koi.draw(ctx, P, { R, style: 'line', phase: (TAU * 26 * t) / L + i * 2, seed, lw: R * 0.11 });
+        const ph = (TAU * 26 * t) / L + i * 2;
+        ctx.save(); ctx.translate(26, 38); KT.koi.draw(ctx, P, { R: R * 1.05, style: 'shadow', phase: ph, seed, color: KT.rgba(SHADE, 0.22) }); ctx.restore();
+        KT.koi.draw(ctx, P, { R, style: 'line', phase: ph, seed, lw: R * 0.11 });
       });
       // nenúfares
       PADS.forEach((p, i) => { if (p.x > x0 - 120 && p.x < x0 + 1200) lily(ctx, p.x + Math.sin((TAU * t) / L + i) * 6, p.y + Math.cos((TAU * t) / L + i * 1.7) * 5, p.r, Math.sin((TAU * t) / L + i) * 0.15 + i, p.f); });
@@ -210,9 +212,18 @@
         ny += 70 - NT.o.size * 1.02;
         KT.textIn(ctx, f.es, 540, ny, { size: 56, weight: 500, family: F.sans, color: C.ink, align: 'center', mode: 'fade' }, t - 13.8, out);
         KT.textIn(ctx, f.en, 540, ny + 62, { size: 48, weight: 400, family: F.sans, color: C.en, align: 'center', mode: 'fade' }, t - 14.1, out);
-        ctx.save(); ctx.globalAlpha *= a2;
-        KT.cup(ctx, 400, 1560, 560, { drink: d, fill: seg(t, 14.2, 17), drop: seg(t, 16, 19), ice: !!f.ice, wave: (TAU * 30 * t) / L, seed: 7 });
-        ctx.restore();
+        // la bebida en 3D: gira al entrar, caen los toppings, se sirve, hielo, tapa sellada, popote y condensación
+        const s3 = {
+          t, alpha: a2, pearls: seg(t, 14.0, 15.2), fill: seg(t, 14.8, 17.4), ice: f.ice ? seg(t, 17.0, 18.0) : 0,
+          seal: seg(t, 18.0, 18.6), straw: seg(t, 18.8, 19.6), cond: seg(t, 18.6, 21.0),
+          spin: -1.6 * (1 - E.outCubic(seg(t, 12.6, 15.0))) + 0.26 * Math.sin((TAU * (t - 12.6)) / 11),
+          strawColor: d.k === 'fruit' ? '#E2483D' : '#8C6FB4', fadeTop: ny + 62 + 30
+        };
+        if (!KT.drink3d.draw(ctx, 400, 1560, 560, d, s3)) {
+          ctx.save(); ctx.globalAlpha *= a2;
+          KT.cup(ctx, 400, 1560, 560, { drink: d, fill: seg(t, 14.2, 17), drop: seg(t, 16, 19), ice: !!f.ice, wave: (TAU * 30 * t) / L, seed: 7 });
+          ctx.restore();
+        }
         const pa = KT.clamp((t - 17.5) / 0.8) * fadeOut(out);
         if (pa > 0) {
           KT.priceBlock(ctx, 650, 1300, d.p, { alpha: pa, rule: E.outCubic(KT.clamp((t - 17.5) / 0.8)) });

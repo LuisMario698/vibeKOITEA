@@ -57,18 +57,18 @@
   }
 
   KT.register({
-    id: 'v1', n: 1, name: 'Koi vivo', format: 'central', duration: L, cycles: 3, cycleLabel: 'Bebida',
+    id: 'v1', n: 1, name: 'Koi vivo', pick: true, format: 'central', duration: L, cycles: 3, cycleLabel: 'Bebida',
     tagline: 'La mascota se dibuja, toma su boba y presenta la bebida del momento.',
     chapters: [
       { t: 0, label: 'Se dibuja', note: 'El koi del logo aparece trazo a trazo y toma color.' },
       { t: 6.2, label: 'Toma su boba', note: 'Parpadea, mueve las aletas y sorbe: una perla sube por el popote.' },
-      { t: 12.6, label: 'Bebida del momento', note: 'Sube a la esquina y presenta la bebida; cada vuelta, una distinta.' },
+      { t: 12.6, label: 'Bebida del momento', note: 'Sube a la esquina y presenta la bebida en 3D: el vaso entra girando, caen las perlas, se sirve en capas, se sella, entra el popote y suda. Cada vuelta, una bebida distinta.' },
       { t: 26.6, label: 'Síguenos', note: 'QR real a @koitea.mx con una razón para seguir: promos y bebidas nuevas.' }
     ],
     info: {
       concept: 'La mascota del logo cobra vida en la pantalla central. Se dibuja con tinta, toma su boba y presenta la bebida del momento con su precio. Cada vuelta del loop destaca una bebida distinta: Taro, Koi Tea y Brown Sugar. Cierra con un QR real que abre el Instagram del local y una razón para seguirlo.',
       why: 'Es la evolución directa de lo que hoy muestra la pantalla central: la misma mascota y el mismo llamado a Instagram, pero ahora vende. El trazo negro y el rojo koi son los del logo, y el fondo crema continúa la pared del local en lugar de cortarla.',
-      signature: 'El koi sorbe su boba: una perla sube por el popote y el nivel del vaso baja. Luego se acomoda arriba y mira la bebida que presenta.',
+      signature: 'Dos momentos: el koi sorbe su boba (una perla sube por el popote y baja el nivel) y la bebida del momento se arma en 3D frente al cliente, con vaso transparente, capas, perlas brillantes, tapa sellada y condensación.',
       specs: [['Formato', 'Pantalla central · 1080 × 1920'], ['Loop', '36 s × 3 bebidas = 108 s'], ['Escenas', '3 por vuelta, de 9 a 14 s'], ['Texto', 'Nombres 132 px · inglés ≥ 48 px'], ['Laterales', 'Como hoy o en crema'], ['Exportación', 'MP4 de 108 s o web']]
     },
     setup() { return { paper: KT.paper(1080, 1920, '#FBF3E8', 11, 0.9) }; },
@@ -125,12 +125,19 @@
         const rise = 1 - E.outCubic(seg(t, 12.8, 14.4)), sink = E.inOutCubic(seg(t, 25.6, 26.8));
         const cupA = KT.clamp(seg(t, 12.8, 13.6)) * (1 - seg(t, 26.2, 26.8));
         if (cupA > 0) {
-          ctx.save(); ctx.globalAlpha = cupA;
-          KT.cup(ctx, 400, 1770 + rise * 260 + sink * 320, lines.length > 1 ? 600 : 640, {
-            drink: d, fill: seg(t, 14.8, 17.6), drop: seg(t, 16.6, 19.6), ice: !!f.ice, sweat: 0.7,
-            wave: (TAU * 18 * t) / L, straw: false, seed: 3
-          });
-          ctx.restore();
+          // la bebida en 3D: entra girando, caen las perlas, se sirve, hielo, se sella, entra el popote y suda
+          const by = 1770 + rise * 260 + sink * 320, H3 = lines.length > 1 ? 620 : 660;
+          const s3 = {
+            t, alpha: cupA, fill: seg(t, 15.0, 17.8), pearls: seg(t, 14.0, 15.4), ice: f.ice ? seg(t, 17.3, 18.3) : 0,
+            seal: seg(t, 18.4, 19.0), straw: seg(t, 19.2, 20.0), cond: seg(t, 19.0, 21.5),
+            spin: -1.7 * (1 - E.outCubic(seg(t, 12.8, 15.4))) + 0.28 * Math.sin((TAU * (t - 12.8)) / 11),
+            strawColor: d.k === 'fruit' ? '#E2483D' : d.k === 'brown' ? '#3A2A22' : '#8C6FB4', fadeTop: y + 185
+          };
+          if (!KT.drink3d.draw(ctx, 400, by, H3, d, s3)) {
+            ctx.save(); ctx.globalAlpha = cupA;
+            KT.cup(ctx, 400, by, lines.length > 1 ? 600 : 640, { drink: d, fill: seg(t, 14.8, 17.6), drop: seg(t, 16.6, 19.6), ice: !!f.ice, wave: (TAU * 18 * t) / L, straw: false, seed: 3 });
+            ctx.restore();
+          }
           const pa = seg(t, 18.0, 18.8) * (1 - seg(t, 25.4, 25.9));
           KT.priceBlock(ctx, 690, 1420, d.p, { alpha: pa, rule: E.outCubic(seg(t, 18.0, 19.0)) });
         }
@@ -138,19 +145,19 @@
 
       // ---- escena 3: síguenos ----
       if (t > 26.6) {
-        const out = t > 34.4 ? t - 34.4 : null;
+        const out = t > 34.9 ? t - 34.9 : null;
         KT.textIn(ctx, 'Síguenos', 540, 1010, { size: 150, weight: 700, style: 'italic', family: F.serif, color: C.ink, align: 'center', mode: 'mask', stagger: 0.04, dur: 1.1 }, t - 27.0, out);
-        KT.textIn(ctx, 'Follow us on Instagram', 540, 1090, { size: 50, weight: 400, family: F.sans, color: C.en, align: 'center', mode: 'fade', stagger: 0.015 }, t - 28.2, out);
-        const qa = seg(t, 28.2, 28.8) * (1 - seg(t, 34.6, 35.3));
+        KT.textIn(ctx, 'Follow us on Instagram', 540, 1090, { size: 50, weight: 400, family: F.sans, color: C.en, align: 'center', mode: 'fade', stagger: 0.015 }, t - 27.6, out);
+        const qa = seg(t, 27.4, 28.0) * (1 - seg(t, 35.0, 35.6));
         if (qa > 0) {
           ctx.save(); ctx.globalAlpha = qa;
           ctx.fillStyle = KT.rgba(C.ink, 0.08); ctx.beginPath(); KT.rr(ctx, 540 - 180, 1150, 360, 360, 34); ctx.fill();
-          KT.qr(ctx, 540 - 170, 1140, 340, { round: 0.32, radius: 28, reveal: E.outCubic(seg(t, 28.2, 29.8)) });
+          KT.qr(ctx, 540 - 170, 1140, 340, { round: 0.32, radius: 28, reveal: E.outCubic(seg(t, 27.4, 28.6)) });
           ctx.restore();
         }
-        KT.textIn(ctx, '@koitea.mx', 540, 1626, { size: 96, weight: 600, family: F.sans, color: C.red, align: 'center', mode: 'fade', stagger: 0.015 }, t - 29.2, out);
-        KT.textIn(ctx, 'Promos y bebidas nuevas', 540, 1716, { size: 56, weight: 500, family: F.sans, color: C.ink, align: 'center', mode: 'fade', stagger: 0.01 }, t - 30.0, out);
-        KT.textIn(ctx, 'Promos & new drinks', 540, 1782, { size: 48, weight: 400, family: F.sans, color: C.en, align: 'center', mode: 'fade', stagger: 0.01 }, t - 30.3, out);
+        KT.textIn(ctx, '@koitea.mx', 540, 1626, { size: 96, weight: 600, family: F.sans, color: C.red, align: 'center', mode: 'fade', stagger: 0.015 }, t - 28.4, out);
+        KT.textIn(ctx, 'Promos y bebidas nuevas', 540, 1716, { size: 56, weight: 500, family: F.sans, color: C.ink, align: 'center', mode: 'fade', stagger: 0.01 }, t - 29.0, out);
+        KT.textIn(ctx, 'Promos & new drinks', 540, 1782, { size: 48, weight: 400, family: F.sans, color: C.en, align: 'center', mode: 'fade', stagger: 0.01 }, t - 29.3, out);
       }
     }
   });

@@ -19,7 +19,7 @@
       <button class="vcard" id="pick-${v.id}" data-id="${v.id}" aria-pressed="false">
         <span class="vnum">Versión ${v.n}</span>
         <b class="vname">${esc(v.name)}</b>
-        <span class="vtag ${v.format === 'triple' ? 'tri' : 'one'}">${v.format === 'triple' ? 'Tres pantallas' : 'Pantalla central'}</span>
+        <span class="vtags"><span class="vtag ${v.format === 'triple' ? 'tri' : 'one'}">${v.format === 'triple' ? 'Tres pantallas' : 'Pantalla central'}</span>${v.pick ? '<span class="vtag pick">Elegida</span>' : ''}</span>
         <span class="vline">${esc(v.tagline || '')}</span>
       </button>`).join('');
     box.querySelectorAll('.vcard').forEach(b => b.addEventListener('click', () => select(b.dataset.id, true)));
