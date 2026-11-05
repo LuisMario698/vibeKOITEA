@@ -139,6 +139,11 @@
       [[17.9, 900, 100], [29.5, RX + 510, 94], [TA + 0.4, O.x, O.y]].forEach(([tt, x, y]) => {
         const p = KT.wrap(t - tt, L) / 3.2; if (p > 0 && p < 1 && x > x0 - 300 && x < x0 + 1380) KT.ripple(ctx, x, y, p, { r: 220, color: '#FFF8EC', alpha: 0.6, lw: 3 });
       });
+      // transición propia: en cada cambio de escena una onda nace del koi más cercano a la central
+      [[12, routeA], [28, routeB], [40, routeB], [52, routeB]].forEach(([T, r]) => {
+        const p = seg(t, T - 0.8, T + 1.4); if (p <= 0 || p >= 1) return;
+        const h = r(T - 0.8); KT.ripple(ctx, h.x, h.y, p, { r: 1500, squash: 0.62, rings: 2, color: '#FFF8EC', alpha: 0.55, lw: 4 });
+      });
       if (tw > 0) {
         const rp = seg(t, TA, 59.4);
         for (let k = 0; k < 3; k++) { const p = KT.clamp(rp * 1.3 - k * 0.15); if (p > 0 && p < 1) KT.ripple(ctx, O.x, O.y, p, { r: 2400, squash: 0.62, rings: 2, color: '#FFF8EC', alpha: 0.7 * tw, lw: 6 }); }

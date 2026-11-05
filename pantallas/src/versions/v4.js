@@ -197,6 +197,13 @@
           KT.textIn(ctx, 'Promos y bebidas nuevas', 540, 1270, { size: 56, weight: 500, family: F.sans, color: C.ink, align: 'center', mode: 'fade' }, t - 51.8, out);
           KT.textIn(ctx, 'Promos & new drinks', 540, 1336, { size: 48, weight: 400, family: F.sans, color: C.en, align: 'center', mode: 'fade' }, t - 52.1, out);
         }
+        // transición propia: el pulso baja de la línea de luz como un barrido suave en cada cambio de capítulo
+        [11, 24, 37, 49].forEach(T => {
+          const p = seg(t, T - 0.7, T + 0.5); if (p <= 0 || p >= 1) return;
+          const y = LINE_Y + (1920 - LINE_Y) * E.inOutSine(p), a = 0.32 * Math.sin(Math.PI * p) * (1 - take);
+          const gs = ctx.createLinearGradient(0, y - 220, 0, y + 220); gs.addColorStop(0, KT.rgba(LED, 0)); gs.addColorStop(0.5, KT.rgba(LED, a)); gs.addColorStop(1, KT.rgba(LED, 0));
+          ctx.fillStyle = gs; ctx.fillRect(0, y - 220, 1080, 440);
+        });
         if (take < 1) { ctx.save(); ctx.globalAlpha = 1 - take; cubes(ctx, t); ctx.restore(); }
         ctx.restore();
       }

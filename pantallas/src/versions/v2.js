@@ -104,6 +104,14 @@
     draw(ctx, t, view, st) {
       const ci = view.cycle || 0, art = ART[ci], d = KT.drink(art.name);
       ctx.drawImage(st.paper, 0, 0, 1080, 1920);
+      // transición propia: una aguada de tinta muy diluida se abre desde el centro y se lava en cada cambio de escena
+      [12, 24.4, 32].forEach(T => {
+        const p = E.outCubic(seg(t, T - 1.0, T + 0.2)), a = 0.075 * Math.min(1, seg(t, T - 1.0, T - 0.6) * 2) * (1 - seg(t, T + 0.1, T + 1.3));
+        if (p <= 0 || a <= 0) return;
+        const r = 260 + 1100 * p, g = ctx.createRadialGradient(540, 980, r * 0.15, 540, 980, r);
+        g.addColorStop(0, KT.rgba(INK, a)); g.addColorStop(0.7, KT.rgba(INK, a * 0.75)); g.addColorStop(1, KT.rgba(INK, 0));
+        ctx.fillStyle = g; ctx.fillRect(0, 0, 1080, 1920);
+      });
 
       // koi de tinta: nada dentro del enso (escena 1) y bajo la frase (escena 3)
       const koiA = Math.max(KT.env(t, 1.6, 11.2, 1.2, 0.8), KT.env(t, 25, 31.8, 1.4, 1.0) * 0.9);

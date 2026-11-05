@@ -115,11 +115,11 @@
       // ---- escena 2: bebida del momento ----
       if (t > 12.6 && t < 27) {
         const out = t > 25.6 ? t - 25.6 : null;
-        KT.textIn(ctx, 'BEBIDA DEL MOMENTO', 540, 640, { size: 50, weight: 600, family: F.sans, color: C.red, align: 'center', ls: 6, mode: 'fade', stagger: 0.01 }, t - 12.8, out);
+        KT.textIn(ctx, 'BEBIDA DEL MOMENTO', 540, 640, { size: 50, weight: 600, family: F.sans, color: C.red, align: 'center', ls: 6, mode: 'fade', stagger: 0.01 }, t - 13.5, out);
         const NO = { size: 132, weight: 700, style: 'italic', family: F.serif };
         const lines = nameLines(ctx, f.name, NO, 960);
         let y = lines.length > 1 ? 780 : 790;
-        lines.forEach((ln, i) => { KT.textIn(ctx, ln, 540, y, Object.assign({ color: C.ink, align: 'center', mode: 'mask', stagger: 0.03, dur: 1.1 }, NO), t - 13.2 - i * 0.25, out); if (i < lines.length - 1) y += 128; });
+        lines.forEach((ln, i) => { KT.textIn(ctx, ln, 540, y, Object.assign({ color: C.ink, align: 'center', mode: 'mask', stagger: 0.03, dur: 1.1 }, NO), t - 13.7 - i * 0.25, out); if (i < lines.length - 1) y += 128; });
         KT.textIn(ctx, f.es, 540, y + 96, { size: 58, weight: 500, family: F.sans, color: C.ink, align: 'center', mode: 'fade', stagger: 0.012 }, t - 14.6, out);
         KT.textIn(ctx, f.en, 540, y + 160, { size: 50, weight: 400, family: F.sans, color: C.en, align: 'center', mode: 'fade', stagger: 0.012 }, t - 15.0, out);
         const rise = 1 - E.outCubic(seg(t, 12.8, 14.4)), sink = E.inOutCubic(seg(t, 25.6, 26.8));

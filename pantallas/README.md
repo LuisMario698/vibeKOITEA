@@ -20,12 +20,13 @@ Los precios son ilustrativos y están en `src/data.js`.
 
 ```
 src/
-  kit.js        primitivas: tiempo, easing, texto, papel, tinta, sello, QR real a instagram.com/koitea.mx
+  kit.js        primitivas: tiempo, easing, color (OKLCH), texto, papel, tinta, caligrafía por trazos, sello, QR real a instagram.com/koitea.mx
+  kanji.js      trazos de 鯉 y 茶 de KanjiVG (Ulrich Apel, CC BY-SA 3.0) para la caligrafía y los sellos
   mascot.js     la mascota calcada del logo, con estados (parpadeo, aletas, sorbo, dibujo de línea)
-  koi.js        koi visto desde arriba (línea, tinta y sombra) y rutas periódicas
+  koi.js        koi visto desde arriba (línea, tinta y sombra) y rutas periódicas (Hermite en el tiempo)
   cup.js        vaso con tapa sellada, capas, toppings, hielo
   data.js       menú y precios (ilustrativos)
-  boards.js     menús laterales: los actuales y los rediseñados (texto en caché, nunca se mueven)
+  boards.js     menús laterales: los actuales, los rediseñados y los actuales recoloreados en crema (texto en caché, nunca se mueven)
   versions/     v1.js … v5.js
   engine.js     página: selector, pared con las 3 pantallas y su hueco, reloj, línea de tiempo, modo kiosco
   page.html     plantilla de la página
