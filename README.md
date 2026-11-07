@@ -22,20 +22,29 @@ Copia `.env.example` a `.env.local`. Todo es opcional y se activa por capas:
 |---|---|---|
 | Básica | `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_WHATSAPP` | URL pública y el WhatsApp de la barra al que llegan los pedidos. |
 | Supabase | `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `ADMIN_EMAILS` | Menú editable, pedidos guardados con seguimiento en vivo (`/pedido/K-123`) y panel `/admin`. |
-| Stripe | `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` | Pago exprés (Apple Pay / Google Pay) y tarjeta con Stripe Checkout. Webhook: `/api/stripe/webhook` (evento `checkout.session.completed`). |
-| Mercado Pago | `MP_ACCESS_TOKEN` | Checkout Pro. Webhook: `/api/mp/webhook`. |
-| WhatsApp Business API | `WHATSAPP_TOKEN`, `WHATSAPP_PHONE_ID`, `WHATSAPP_TEAM_NUMBER`, `WHATSAPP_VERIFY_TOKEN`, `WHATSAPP_READY_TEMPLATE` | El pedido llega solo al WhatsApp del equipo con botones *Preparando · Listo · Entregado* (webhook `/api/whatsapp/webhook`) y, con una plantilla aprobada, aviso al cliente cuando está listo. |
+| Stripe (requiere Supabase) | `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` | Pago exprés (Apple Pay / Google Pay) y tarjeta con Stripe Checkout. Webhook: `/api/stripe/webhook` con los eventos `checkout.session.completed`, `checkout.session.async_payment_succeeded`, `checkout.session.async_payment_failed` y `checkout.session.expired`. |
+| Mercado Pago (requiere Supabase) | `MP_ACCESS_TOKEN` | Checkout Pro. Webhook: `/api/mp/webhook` (tema *Pagos*). |
+| WhatsApp Business API | `WHATSAPP_TOKEN`, `WHATSAPP_PHONE_ID`, `WHATSAPP_TEAM_NUMBER`, `WHATSAPP_VERIFY_TOKEN`, `WHATSAPP_APP_SECRET`, `WHATSAPP_READY_TEMPLATE` | El pedido llega solo al WhatsApp del equipo con botones *Preparando · Listo · Entregado* (webhook `/api/whatsapp/webhook`, firmado con el App Secret) y, con una plantilla aprobada, aviso al cliente cuando está listo. |
+
+El pago en línea solo se ofrece con Supabase configurado: el aviso del banco llega a otro proceso del servidor y necesita encontrar el pedido en la base de datos. Sin Supabase el sitio acepta pago en barra y el pedido se manda por WhatsApp.
+
+Cómo funciona un pago en línea: el pedido se guarda como *pendiente*, el cliente paga en Stripe o Mercado Pago y, cuando llega el aviso del pago, el pedido aparece en el tablero (con campana) y en el WhatsApp del equipo. Si el cliente regresa sin pagar, su carrito sigue intacto y el pedido pendiente se cancela; si abandona la página de pago, caduca a los 30 minutos.
 
 ## Supabase (menú editable + pedidos + panel)
 
 1. Crea un proyecto en [supabase.com](https://supabase.com) y abre el **SQL Editor**.
 2. Ejecuta `supabase/migrations/20261106000000_init.sql` (tablas, RLS, tiempo real y la función `next_order_code`).
 3. Ejecuta `supabase/seed.sql` (el menú actual; los precios son ilustrativos y se editan desde el panel).
-4. En **Authentication → Users** crea el usuario del dueño (correo + contraseña) y agrégalo a la tabla `staff`:
+4. En **Authentication → Users** crea el usuario del dueño (correo + contraseña) y agrégalo a la tabla `staff` (o pon su correo en `ADMIN_EMAILS` y se agrega solo la primera vez que entre):
    ```sql
    insert into public.staff (email, name) values ('correo@koitea.mx', 'Koi Tea');
    ```
-5. Copia la URL, la clave anónima y la clave de servicio a las variables de entorno. Si cambias el menú y quieres regenerar la semilla: `node --experimental-strip-types scripts/seed-sql.mjs > supabase/seed.sql`.
+5. Para que el enlace mágico por correo funcione aunque se abra en otro teléfono o navegador, en **Authentication → Emails → Magic Link** cambia el enlace de la plantilla por:
+   ```html
+   <a href="{{ .RedirectTo }}&token_hash={{ .TokenHash }}&type=magiclink">Entrar al panel</a>
+   ```
+   y en **Authentication → URL Configuration** agrega `https://TU-DOMINIO/auth/callback` a las *Redirect URLs*.
+6. Copia la URL, la clave anónima y la clave de servicio a las variables de entorno. Si cambias el menú y quieres regenerar la semilla: `npm run seed`.
 
 ## Despliegue en Vercel
 
@@ -77,4 +86,6 @@ Para regenerarlo después de cambiar `pantallas/src`: `node pantallas/tools/buil
 - Precios y tipo de cambio son **ilustrativos** hasta confirmarlos con el negocio; se cambian desde el panel sin tocar código.
 - El 3D se carga solo cuando hace falta y respeta "reducir movimiento"; sin WebGL se muestra el vaso ilustrado y un estanque en Canvas 2D.
 - Las tipografías se sirven desde el mismo dominio (Fontsource): ninguna petición sale a Google.
-- Es una PWA instalable (`manifest.webmanifest` + `public/sw.js`): guarda el menú para abrir rápido con mala señal.
+- Es una PWA instalable (`manifest.webmanifest` + `public/sw.js`): guarda el menú para abrir rápido con mala señal. Cada despliegue estrena su caché.
+- El seguimiento de un pedido va en un enlace con secreto (`/pedido/K-123?t=…`): los códigos K-100…K-999 son cortos y se reciclan, así que sin el secreto nadie puede ver pedidos ajenos.
+- Los íconos de la PWA se regeneran con `npm run icons` (usa `sharp`).

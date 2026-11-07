@@ -129,6 +129,8 @@ export interface OrderItem {
 export interface Order {
   id: string;
   code: string;
+  /** Secreto del enlace de seguimiento (/pedido/K-123?t=…): sin él no se ve el pedido. */
+  token: string;
   status: OrderStatus;
   type: OrderType;
   table: number | null;

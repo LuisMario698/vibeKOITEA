@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { PI, RM, ctex, makeRenderer, mk } from "./common";
+import { PI, RM, canvasFilter, ctex, makeRenderer, mk } from "./common";
 
 /* Estanque 3D con koi al estilo del logo: sombreado en tres tonos y contorno de tinta.
    Cada koi es una columna que sigue su propio recorrido; el cuerpo se curva y ondula hacia la cola.
@@ -75,15 +75,17 @@ export class PondEngine {
       for (let i = 0; i < 70; i++) { const x = Math.random() * 512, y = Math.random() * 512, r = 8 + Math.random() * 18, rot = Math.random() * 3, ry = r * (0.6 + Math.random() * 0.3);
         for (const ox of [-512, 0, 512]) for (const oy of [-512, 0, 512]) { if (x + ox < -30 || x + ox > 542 || y + oy < -30 || y + oy > 542) continue; g.save(); g.translate(x + ox, y + oy); g.rotate(rot); g.fillStyle = pal[i % pal.length]; g.beginPath(); g.ellipse(0, 0, r, ry, 0, 0, 7); g.fill(); g.lineWidth = 2.4; g.strokeStyle = "rgba(39,33,30,.22)"; g.stroke(); g.restore(); } }
     });
-    const pTex = ctex(pc); pTex.wrapS = pTex.wrapT = THREE.RepeatWrapping;
-    const floor = new THREE.Mesh(new THREE.PlaneGeometry(10, 8), new THREE.ShaderMaterial({ uniforms: { map: { value: pTex }, uT: this.uT },
+    // Sin espacio de color: el shader escribe los bytes tal cual (como el prototipo), así el fondo se ve del #7FAA9A de la marca.
+    const pTex = ctex(pc, false); pTex.wrapS = pTex.wrapT = THREE.RepeatWrapping;
+    // Más grande que el encuadre más vertical (fov 44) para que nunca asome el color de fondo por arriba.
+    const floor = new THREE.Mesh(new THREE.PlaneGeometry(16, 14), new THREE.ShaderMaterial({ uniforms: { map: { value: pTex }, uT: this.uT },
       vertexShader: `varying vec2 vW;varying vec2 vUv;void main(){vUv=uv;vec4 w=modelMatrix*vec4(position,1.);vW=w.xz;gl_Position=projectionMatrix*viewMatrix*w;}`,
       fragmentShader: `uniform sampler2D map;uniform float uT;varying vec2 vW;varying vec2 vUv;${CAUST}
-      void main(){vec3 b=texture2D(map,vUv*2.2).rgb;float c=caust(vW*1.1,uT*.5);float line=smoothstep(.42,.5,c)-smoothstep(.56,.66,c);vec3 col=mix(b,vec3(.9,.97,.92),clamp(line,0.,1.)*.6);
+      void main(){vec3 b=texture2D(map,vW*vec2(.22,-.275)).rgb;float c=caust(vW*1.1,uT*.5);float line=smoothstep(.42,.5,c)-smoothstep(.56,.66,c);vec3 col=mix(b,vec3(.9,.97,.92),clamp(line,0.,1.)*.6);
       float v=smoothstep(4.6,2.2,length(vW*vec2(.75,1.)));col=mix(col*.8,col,v);gl_FragColor=vec4(col,1.);}` }));
     floor.rotation.x = -PI / 2; floor.position.y = -0.85; this.scene.add(floor);
     // superficie
-    const water = new THREE.Mesh(new THREE.PlaneGeometry(10, 8), new THREE.ShaderMaterial({ transparent: true, depthWrite: false, uniforms: { uT: this.uT, uRip: { value: this.rip } },
+    const water = new THREE.Mesh(new THREE.PlaneGeometry(16, 14), new THREE.ShaderMaterial({ transparent: true, depthWrite: false, uniforms: { uT: this.uT, uRip: { value: this.rip } },
       vertexShader: `varying vec2 vW;void main(){vec4 w=modelMatrix*vec4(position,1.);vW=w.xz;gl_Position=projectionMatrix*viewMatrix*w;}`,
       fragmentShader: `uniform float uT;uniform vec3 uRip[4];varying vec2 vW;
       void main(){vec2 p=vW*1.3;float s=sin(p.x*2.6+uT*.7+sin(p.y*1.8+uT*.4))*sin(p.y*3.1-uT*.5+sin(p.x*1.5));float a=smoothstep(.955,.97,s)*.55;
@@ -92,7 +94,12 @@ export class PondEngine {
       gl_FragColor=vec4(1.,1.,.98,min(a,.9));}` }));
     water.rotation.x = -PI / 2; water.position.y = 0.3; water.renderOrder = 20; this.top.add(water);
     // sombras planas
-    const shc = mk(256, 128, (g) => { g.filter = "blur(6px)"; g.fillStyle = "rgba(30,70,58,1)"; g.beginPath(); g.ellipse(128, 64, 112, 46, 0, 0, 7); g.fill(); });
+    const shc = mk(256, 128, (g) => {
+      if (canvasFilter()) { g.filter = "blur(6px)"; g.fillStyle = "rgba(30,70,58,1)"; g.beginPath(); g.ellipse(128, 64, 112, 46, 0, 0, 7); g.fill(); return; }
+      // sin `filter` (Safari < 18): borde suave con un degradado radial
+      g.translate(128, 64); g.scale(1, 46 / 112); const rg = g.createRadialGradient(0, 0, 0, 0, 0, 120);
+      rg.addColorStop(0, "rgba(30,70,58,1)"); rg.addColorStop(0.86, "rgba(30,70,58,1)"); rg.addColorStop(1, "rgba(30,70,58,0)"); g.fillStyle = rg; g.beginPath(); g.arc(0, 0, 120, 0, 7); g.fill();
+    });
     this.shTex = ctex(shc); this.shGeo = new THREE.PlaneGeometry(1, 1); this.shGeo.rotateX(-PI / 2);
     // hojas de loto y flor
     const lc = mk(256, 256, (g) => {
@@ -114,7 +121,7 @@ export class PondEngine {
     this.pelletMat = this.toon({ color: 0xd08a3e });
     this.bubTex = ctex(mk(64, 64, (g) => { g.beginPath(); g.arc(32, 32, 26, 0, 7); g.fillStyle = "rgba(255,255,255,.5)"; g.fill(); g.lineWidth = 5; g.strokeStyle = "#27211E"; g.stroke(); g.beginPath(); g.arc(24, 23, 6, 0, 7); g.fillStyle = "#fff"; g.fill(); }));
     this.ALL = SPECS.map((o, i) => this.makeKoi(o, i + 1));
-    cv.addEventListener("pointerdown", this.onPointer);
+    cv.addEventListener("pointerdown", this.onDown); cv.addEventListener("pointerup", this.onUp); cv.addEventListener("pointercancel", this.onCancel);
     this.ro = new ResizeObserver(() => this.size()); this.ro.observe(host);
     this.io = new IntersectionObserver((es) => { this.vis = es[0].isIntersecting; if (this.vis && this.on) { cancelAnimationFrame(this.raf); this.t0 = performance.now(); this.raf = requestAnimationFrame(this.frame); } });
     this.io.observe(host);
@@ -349,6 +356,15 @@ export class PondEngine {
       if (k >= 1) { this.ripple(b.x, b.z); this.top.remove(b.sp); b.sp.material.dispose(); this.BUBS.splice(i, 1); continue; }
       b.sp.position.set(b.x + Math.sin(k * 9 + i) * 0.02, b.y0 + (0.3 - b.y0) * k, b.z); b.sp.scale.setScalar(0.05 + 0.05 * k); b.sp.material.opacity = k > 0.85 ? (1 - k) / 0.15 : 1; }
   }
+  /* Alimentar solo con un toque: si el dedo se desliza (scroll) o el navegador cancela el gesto, no pasa nada. */
+  private press: { id: number; x: number; y: number; t: number } | null = null;
+  private onDown = (e: PointerEvent) => { this.press = { id: e.pointerId, x: e.clientX, y: e.clientY, t: performance.now() }; };
+  private onCancel = () => { this.press = null; };
+  private onUp = (e: PointerEvent) => {
+    const p = this.press; this.press = null;
+    if (!p || p.id !== e.pointerId || Math.hypot(e.clientX - p.x, e.clientY - p.y) > 10 || performance.now() - p.t > 700) return;
+    this.onPointer(e);
+  };
   private onPointer = (e: PointerEvent) => {
     const r = this.cv.getBoundingClientRect();
     this.ray.setFromCamera(new THREE.Vector2(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1), this.cam);
@@ -372,5 +388,5 @@ export class PondEngine {
   };
   start() { if (this.on || this.disposed) return; this.on = true; this.size(); this.t0 = performance.now(); this.raf = requestAnimationFrame(this.frame); }
   stop() { this.on = false; cancelAnimationFrame(this.raf); }
-  dispose() { this.stop(); this.disposed = true; this.io.disconnect(); this.ro.disconnect(); this.cv.removeEventListener("pointerdown", this.onPointer); this.R.dispose(); }
+  dispose() { this.stop(); this.disposed = true; this.io.disconnect(); this.ro.disconnect(); this.cv.removeEventListener("pointerdown", this.onDown); this.cv.removeEventListener("pointerup", this.onUp); this.cv.removeEventListener("pointercancel", this.onCancel); this.R.dispose(); }
 }

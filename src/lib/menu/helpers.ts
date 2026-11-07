@@ -38,6 +38,16 @@ export function lineKey(l: Omit<CartLine, "key">): string {
     : `m-${l.ref}-${l.size ?? ""}`;
 }
 
+/** Precio unitario vigente de una línea: bebida + extra del topping, o el precio de la mercancía (misma regla que el servidor). */
+export function linePrice(menu: Menu, l: Pick<CartLine, "kind" | "ref" | "opts" | "price">): number {
+  if (l.kind === "drink") {
+    const d = drinkById(menu, l.ref); if (!d) return l.price;
+    const top = toppingById(menu, l.opts?.top ?? d.topping) ?? toppingById(menu, d.topping);
+    return d.price + (top?.price ?? 0);
+  }
+  return merchById(menu, l.ref)?.price ?? l.price;
+}
+
 export function cartTotals(lines: CartLine[], tipPct: number) {
   const sub = lines.reduce((s, l) => s + l.price * l.qty, 0);
   const drinks = lines.filter((l) => l.kind === "drink").reduce((s, l) => s + l.price * l.qty, 0);
@@ -45,11 +55,11 @@ export function cartTotals(lines: CartLine[], tipPct: number) {
   return { sub, tip, total: sub + tip, count: lines.reduce((s, l) => s + l.qty, 0) };
 }
 
-/** ¿Está abierto ahora? (hora local de Sonora, UTC-7 todo el año) */
+/** ¿Está abierto ahora? (hora local de Sonora, UTC-7 todo el año, sin horario de verano). */
 export function isOpenNow(schedule: Menu["settings"]["schedule"], now = new Date()): boolean {
-  const local = new Date(now.getTime() + (now.getTimezoneOffset() - 7 * 60) * 60000);
-  const day = local.getDay();
-  const mins = local.getHours() * 60 + local.getMinutes();
+  const local = new Date(now.getTime() - 7 * 3600e3);
+  const day = local.getUTCDay();
+  const mins = local.getUTCHours() * 60 + local.getUTCMinutes();
   const s = schedule[day];
   if (!s) return false;
   return mins >= s[0] && mins < s[1];

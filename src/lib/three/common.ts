@@ -25,6 +25,13 @@ export function mk(w: number, h: number, fn: (g: CanvasRenderingContext2D, w: nu
   return c;
 }
 
+/** ¿El canvas 2D soporta `filter` (desenfoque)? Safari lo tiene desde la versión 18. */
+let filterOk: boolean | null = null;
+export function canvasFilter(): boolean {
+  if (filterOk == null) { try { const g = document.createElement("canvas").getContext("2d"); filterOk = !!g && "filter" in g; } catch { filterOk = false; } }
+  return filterOk;
+}
+
 export function ctex(c: HTMLCanvasElement, srgb = true, aniso = 1): THREE.CanvasTexture {
   const t = new THREE.CanvasTexture(c);
   if (srgb) t.colorSpace = THREE.SRGBColorSpace;

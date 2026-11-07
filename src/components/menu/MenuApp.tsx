@@ -13,6 +13,7 @@ import OrderFlow from "@/components/cart/OrderFlow";
 import CartBar from "@/components/cart/CartBar";
 import Toast from "@/components/ui/Toast";
 import { useUI } from "@/lib/store/ui";
+import { useCart } from "@/lib/store/cart";
 import { useT } from "@/lib/i18n/useT";
 import { L } from "@/lib/menu/helpers";
 import { hasWebGL } from "@/lib/three/common";
@@ -36,20 +37,33 @@ function Shell({ menu }: { menu: Menu }) {
     const idle = (window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number }).requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 1200));
     idle(() => { import("@/lib/three/cup").then((m) => m.getCup()).catch(() => undefined); }, { timeout: 4000 });
   }, [ready]);
-  // regreso de un pago cancelado
+  // regreso de un pago cancelado: el pedido pendiente se cancela y el carrito sigue intacto para reintentar
   useEffect(() => {
     const q = new URLSearchParams(window.location.search);
-    if (q.get("cancel")) { showToast(t("payCancelled")); history.replaceState(null, "", "/"); }
+    if (!q.get("cancel")) return;
+    const code = q.get("code");
+    const a = useCart.getState().active;
+    if (a && a.pending && a.code === code) {
+      void fetch(`/api/orders/${a.code}/cancel`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ t: a.token }), keepalive: true }).catch(() => undefined);
+      useCart.getState().setActive(null);
+    }
+    showToast(t("payCancelled")); history.replaceState(null, "", "/");
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  // precios del carrito al día con el menú vigente (por si cambiaron desde la última visita)
+  useEffect(() => {
+    const go = () => useCart.getState().reprice(menu);
+    if (useCart.persist.hasHydrated()) go();
+    return useCart.persist.onFinishHydration(go);
+  }, [menu]);
 
   return (
     <>
       <Splash onDone={() => setReady(true)} />
-      <div className="app">
+      <div className="app" inert={overlay}>
         <aside><PondHero paused={overlay} /></aside>
         <main>
-          <Chips items={chips} />
+          <Chips items={chips} label={t("cats")} />
           <Promo menu={menu} />
           <FeaturedRail />
           <CategorySections />

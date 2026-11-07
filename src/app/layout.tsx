@@ -28,7 +28,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="es" className={fontClasses}>
+    <html lang="es-MX" className={fontClasses}>
       <body>
         {children}
         <SWRegister />

@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { PI, RM, ctex, fontFamily, makeRenderer, mk, studioEnv } from "./common";
+import { PI, RM, canvasFilter, ctex, fontFamily, makeRenderer, mk, studioEnv } from "./common";
 import type { MerchArt } from "../menu/types";
 
 /* Merch en 3D construido en código: playeras, tote y gorras. Las prendas son siluetas con volumen (extrusión con bisel),
@@ -33,7 +33,7 @@ export class MerchEngine {
     this.scene.add(new THREE.HemisphereLight(0xfff6ea, 0x7a5e48, 0.55 * PI));
     const key = new THREE.DirectionalLight(0xfff1df, 1.3 * PI); key.position.set(-4, 6, 7); this.scene.add(key);
     const rim = new THREE.DirectionalLight(0xffe0c0, 0.85 * PI); rim.position.set(5, 3, -6); this.scene.add(rim);
-    const weave = ctex(mk(256, 256, (g, w, h) => { g.fillStyle = "#808080"; g.fillRect(0, 0, w, h); for (let i = 0; i < 9000; i++) { const v = (95 + Math.random() * 70) | 0; g.fillStyle = `rgb(${v},${v},${v})`; g.fillRect((Math.random() * w) | 0, (Math.random() * h) | 0, 2, 2); } g.filter = "blur(.7px)"; g.drawImage(g.canvas, 0, 0); g.filter = "none"; }), false, 8);
+    const weave = ctex(mk(256, 256, (g, w, h) => { g.fillStyle = "#808080"; g.fillRect(0, 0, w, h); for (let i = 0; i < 9000; i++) { const v = (95 + Math.random() * 70) | 0; g.fillStyle = `rgb(${v},${v},${v})`; g.fillRect((Math.random() * w) | 0, (Math.random() * h) | 0, 2, 2); } if (canvasFilter()) { g.filter = "blur(.7px)"; g.drawImage(g.canvas, 0, 0); g.filter = "none"; } }), false, 8);
     weave.wrapS = weave.wrapT = THREE.RepeatWrapping; weave.repeat.set(2.4, 2.4); this.weave = weave;
     this.metal = new THREE.MeshStandardMaterial({ color: 0xc9c3bb, metalness: 0.95, roughness: 0.28 });
     const shc = mk(256, 256, (g) => { const rg = g.createRadialGradient(128, 128, 8, 128, 128, 128); rg.addColorStop(0, "rgba(40,24,12,.42)"); rg.addColorStop(0.6, "rgba(40,24,12,.12)"); rg.addColorStop(1, "rgba(40,24,12,0)"); g.fillStyle = rg; g.fillRect(0, 0, 256, 256); });

@@ -13,6 +13,7 @@ import { flyToCart, popCartBar } from "@/lib/fly";
 import { hasWebGL } from "@/lib/three/common";
 import type { MerchEngine } from "@/lib/three/merch";
 import { reducedMotion } from "@/lib/utils";
+import { lockScroll, unlockScroll, useDialogFocus } from "@/lib/dialog";
 
 /** Ficha de merch: el producto en 3D (o inclinable si no hay WebGL), talla y cantidad. */
 export default function MerchSheet() {
@@ -25,13 +26,14 @@ export default function MerchSheet() {
   const [is3d, setIs3d] = useState(false);
   const stage = useRef<HTMLDivElement>(null); const prod = useRef<HTMLDivElement>(null); const art = useRef<HTMLDivElement>(null);
   const engine = useRef<MerchEngine | null>(null);
+  const sheet = useRef<HTMLDivElement>(null); const closeBtn = useRef<HTMLButtonElement>(null);
   const price = (mxn: number) => formatPrice(mxn, cur, menu.settings.rate);
 
   useEffect(() => {
     if (!id) return;
     const m = merchById(menu, id); if (!m) return;
-    const raf = requestAnimationFrame(() => { setShown(m); setSize(m.sizes ? "M" : null); setQty(1); requestAnimationFrame(() => setOn(true)); });
-    document.body.classList.add("lock");
+    const raf = requestAnimationFrame(() => { setShown(m); setSize(m.sizes?.length ? (m.sizes.includes("M") ? "M" : m.sizes[0]) : null); setQty(1); requestAnimationFrame(() => setOn(true)); });
+    lockScroll("merch");
     let cancelled = false;
     (async () => {
       if (!hasWebGL() || !stage.current) { setIs3d(false); return; }
@@ -44,10 +46,11 @@ export default function MerchSheet() {
   }, [id]);
   useEffect(() => {
     if (id) return;
-    const r = requestAnimationFrame(() => setOn(false)); document.body.classList.remove("lock");
+    const r = requestAnimationFrame(() => setOn(false)); unlockScroll("merch");
     const tm = setTimeout(() => { engine.current?.stop(); if (!useUI.getState().merch) setShown(null); }, 700);
     return () => { cancelAnimationFrame(r); clearTimeout(tm); };
   }, [id]);
+  useDialogFocus(!!id, sheet, closeBtn, 300);
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape" && useUI.getState().merch) closeMerch(); };
     window.addEventListener("keydown", onKey); return () => window.removeEventListener("keydown", onKey);
@@ -66,7 +69,7 @@ export default function MerchSheet() {
   };
   const m = shown;
   return (
-    <div className={`det${on ? " on" : ""}`} role="dialog" aria-modal="true" aria-labelledby="mr-n" aria-hidden={!on} style={{ ["--cx" as string]: "50%", ["--cy" as string]: "100%", ["--dbg" as string]: m ? `radial-gradient(70% 60% at 50% 45%, #FFFDF9, ${m.bg})` : undefined }}>
+    <div className={`det${on ? " on" : ""}`} ref={sheet} role="dialog" aria-modal="true" aria-labelledby="mr-n" aria-hidden={!on} inert={!on} style={{ ["--cx" as string]: "50%", ["--cy" as string]: "100%", ["--dbg" as string]: m ? `radial-gradient(70% 60% at 50% 45%, #FFFDF9, ${m.bg})` : undefined }}>
       <div className="g3" ref={stage} onPointerMove={tilt} onPointerLeave={() => { if (prod.current) prod.current.style.transform = ""; }} style={{ perspective: 700 }}>
         {m && !is3d && (
           <div className="fb3d"><div ref={prod} style={{ width: "62%", transition: "transform .25s ease-out", filter: "drop-shadow(0 18px 16px rgba(40,25,15,.2))" }}><div ref={art}><MerchArt art={m.art} /></div></div></div>
@@ -74,7 +77,7 @@ export default function MerchSheet() {
         {m && is3d && <div ref={art} hidden aria-hidden="true"><MerchArt art={m.art} /></div>}
         <span className="hint3">{is3d ? t("drag") : t("tilt")}</span>
       </div>
-      <button className="x" onClick={closeMerch} aria-label={t("close")}>←</button>
+      <button className="x" ref={closeBtn} onClick={closeMerch} aria-label={t("close")}>←</button>
       <div className="body">
         {m && (
           <>
@@ -83,7 +86,7 @@ export default function MerchSheet() {
             {m.sizes && (
               <div>
                 <span className="lb">{t("size")}</span>
-                <div className="pills" role="radiogroup" aria-label={t("size")}>{m.sizes.map((z) => <button key={z} role="radio" aria-checked={size === z} aria-pressed={size === z} onClick={() => { setSize(z); engine.current?.size(z); }}>{z}</button>)}</div>
+                <div className="pills" role="group" aria-label={t("size")}>{m.sizes.map((z) => <button key={z} aria-pressed={size === z} onClick={() => { setSize(z); engine.current?.size(z); }}>{z}</button>)}</div>
               </div>
             )}
             <div>

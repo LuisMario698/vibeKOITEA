@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { PI, RM, cl, ctex, easeBack, easeInOut, easeOut, fontFamily, makeRenderer, mk, studioEnv } from "./common";
+import { PI, RM, canvasFilter, cl, ctex, easeBack, easeInOut, easeOut, fontFamily, makeRenderer, mk, studioEnv } from "./common";
 import type { Drink, ToppingType } from "../menu/types";
 
 export interface CupTopping { type: ToppingType; color: string }
@@ -229,7 +229,7 @@ export class CupEngine {
         if (d.kind === "brown") {
           const pool = g.createLinearGradient(0, 512, 0, 330); pool.addColorStop(0, c2); pool.addColorStop(1, "rgba(90,46,20,0)"); g.fillStyle = pool; g.fillRect(0, 330, 512, 182);
           for (let i = 0; i < 16; i++) { let x = Math.random() * 512, y = 0; g.fillStyle = "rgba(90,46,20," + (0.55 + Math.random() * 0.35) + ")"; g.beginPath(); const w = 6 + Math.random() * 14; g.moveTo(x - w, 0); const pts: number[][] = []; const end = 170 + Math.random() * 300; while (y < end) { y += 20 + Math.random() * 30; x += Math.random() * 24 - 12; pts.push([x, y, w * (1 - (y / end) * 0.6)]); } pts.forEach((q) => g.lineTo(q[0] - q[2], q[1])); pts.slice().reverse().forEach((q) => g.lineTo(q[0] + q[2], q[1])); g.lineTo(x + w, 0); g.closePath(); g.fill(); }
-          g.filter = "blur(4px)"; g.drawImage(g.canvas, 0, 0); g.filter = "none";
+          if (canvasFilter()) { g.filter = "blur(4px)"; g.drawImage(g.canvas, 0, 0); g.filter = "none"; }
         }
       }
     });

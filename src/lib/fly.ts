@@ -4,9 +4,12 @@ import { reducedMotion } from "./utils";
 export function flyToCart(from: Element | null, svgMarkup: string | null, onLand?: () => void) {
   if (reducedMotion() || !from || !svgMarkup) { onLand?.(); return; }
   const r = from.getBoundingClientRect();
-  const bar = document.querySelector(".cartbar");
+  const bar = document.querySelector<HTMLElement>(".cartbar");
   const br = bar?.getBoundingClientRect();
-  const x1 = br && br.width ? br.left + 28 : window.innerWidth * 0.26, y1 = br && br.width ? br.top + br.height / 2 : window.innerHeight - 40;
+  // Con el carrito vacío la barra aún está escondida bajo la pantalla (está por subir): apuntamos a su lugar final.
+  const hidden = !bar || !br || !br.width || bar.dataset.n === "0" || br.top >= window.innerHeight - 4;
+  const x1 = br && br.width ? br.left + 28 : window.innerWidth * 0.26;
+  const y1 = hidden ? window.innerHeight - (bar ? parseFloat(getComputedStyle(bar).bottom) || 14 : 14) - (br?.height || 56) / 2 : br.top + br.height / 2;
   const f = document.createElement("div");
   f.className = "fly"; f.innerHTML = svgMarkup; document.body.appendChild(f);
   const x0 = r.left + r.width / 2, y0 = r.top + r.height * 0.45;

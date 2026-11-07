@@ -4,7 +4,7 @@ import type { CreateOrderError, CreateOrderInput, CreateOrderResult } from "./ty
 import { getMenu } from "../menu/repo";
 import { ICE_LONG, drinkById, merchById, toppingById } from "../menu/helpers";
 import { SWEET } from "../menu/types";
-import { createOrder, ordersLive } from "./repo";
+import { createOrder, ordersLive, patchOrder } from "./repo";
 import { orderText, waLink, notifyTeam } from "./whatsapp";
 import { mpCheckout, mpEnabled, stripeCheckout, stripeEnabled } from "./payments";
 import { siteUrl } from "../supabase/env";
@@ -16,7 +16,9 @@ export async function placeOrder(raw: unknown): Promise<CreateOrderResult | Crea
   const body = (raw ?? {}) as Partial<CreateOrderInput>;
   const menu = await getMenu();
   if (!menu.settings.acceptOrders) return { ok: false, error: "closed" };
-  const lines = Array.isArray(body.items) ? (body.items as CartLine[]).slice(0, 30) : [];
+  const lines = (Array.isArray(body.items) ? (body.items as unknown[]) : [])
+    .filter((l): l is CartLine => !!l && typeof l === "object" && ((l as CartLine).kind === "drink" || (l as CartLine).kind === "merch"))
+    .slice(0, 30);
   if (!lines.length) return { ok: false, error: "invalid" };
   const lang = body.lang === "en" ? "en" : "es";
   const items: OrderItem[] = [];
@@ -48,26 +50,27 @@ export async function placeOrder(raw: unknown): Promise<CreateOrderResult | Crea
   const phone = str(body.phone, 15).replace(/\D/g, "");
   if (phone && phone.length !== 10) return { ok: false, error: "invalid", message: "phone" };
   const cc = body.cc === "1" ? "1" : "52";
+  const live = ordersLive();
   const pmRaw = String(body.pm ?? "bar");
-  const online = (pmRaw === "express" || pmRaw === "card") && stripeEnabled() ? pmRaw : pmRaw === "mp" && mpEnabled() ? "mp" : "bar";
-  const pm = online as Order["pm"];
+  const wantsOnline = pmRaw === "express" || pmRaw === "card" || pmRaw === "mp";
+  // El pago en línea necesita una base de datos: el aviso del banco llega a otro proceso del servidor y tiene que encontrar el pedido.
+  const online = !live ? null : (pmRaw === "express" || pmRaw === "card") && stripeEnabled() ? pmRaw : pmRaw === "mp" && mpEnabled() ? "mp" : null;
+  if (wantsOnline && !online) return { ok: false, error: "payment" };
+  const pm = (online ?? "bar") as Order["pm"];
 
   const order = await createOrder({ type, table, name: str(body.name, 24), phone, cc, lang, items, subtotal, tip, total, pm, paid: false });
-  const live = ordersLive();
-  const trackUrl = live ? `${siteUrl()}/pedido/${order.code}` : undefined;
-  const text = orderText({ ...order }, trackUrl);
-  const waUrl = waLink(text, menu.settings.whatsapp);
+  const trackUrl = live ? `${siteUrl()}/pedido/${order.code}?t=${order.token}` : undefined;
 
-  let checkoutUrl: string | undefined;
-  if (pm === "express" || pm === "card") {
-    try { checkoutUrl = (await stripeCheckout(order)) ?? undefined; } catch (e) { console.error("stripe", e); return { ok: false, error: "payment" }; }
-    if (!checkoutUrl) return { ok: false, error: "payment" };
-  } else if (pm === "mp") {
-    try { checkoutUrl = (await mpCheckout(order)) ?? undefined; } catch (e) { console.error("mp", e); return { ok: false, error: "payment" }; }
-    if (!checkoutUrl) return { ok: false, error: "payment" };
-  } else {
-    // pago en barra: el equipo recibe el pedido de inmediato (si la API de WhatsApp está configurada)
-    notifyTeam({ ...order }, trackUrl).catch(() => undefined);
+  if (pm !== "bar") {
+    let checkoutUrl: string | null = null;
+    try { checkoutUrl = pm === "mp" ? await mpCheckout(order) : await stripeCheckout(order); } catch (e) { console.error(pm, e); }
+    if (!checkoutUrl) { await patchOrder(order.id, { status: 9 }).catch(() => undefined); return { ok: false, error: "payment" }; }
+    // El equipo recibe el pedido cuando el pago se confirma (webhook), no antes.
+    return { ok: true, code: order.code, token: order.token, subtotal, tip, total, live, paid: false, waUrl: null, waText: "", checkoutUrl, items };
   }
-  return { ok: true, code: order.code, subtotal, tip, total, live, paid: false, waUrl, waText: text, checkoutUrl, items };
+
+  // Pago en barra: el equipo recibe el pedido de inmediato (por la API de WhatsApp si está configurada, si no lo manda el cliente).
+  const text = orderText({ ...order }, trackUrl);
+  notifyTeam({ ...order }, trackUrl).catch(() => undefined);
+  return { ok: true, code: order.code, token: order.token, subtotal, tip, total, live, paid: false, waUrl: waLink(text, menu.settings.whatsapp), waText: text, items };
 }

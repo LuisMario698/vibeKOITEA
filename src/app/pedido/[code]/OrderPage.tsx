@@ -6,15 +6,26 @@ import { MenuProvider } from "@/components/menu/MenuContext";
 import StoreHydrator from "@/components/StoreHydrator";
 import OrderView from "@/components/cart/OrderView";
 import Toast from "@/components/ui/Toast";
+import { useEffect } from "react";
 import { useCart } from "@/lib/store/cart";
 import { useT } from "@/lib/i18n/useT";
 import KoiMark from "@/components/brand/KoiMark";
 
-function Inner({ code, live, initial, paid }: { code: string; live: boolean; initial: PublicOrder | null; paid: boolean }) {
+type Props = { code: string; token: string; live: boolean; initial: PublicOrder | null; paidReturn: boolean };
+
+function Inner({ code, token, live, initial, paidReturn }: Props) {
   const { t } = useT();
   const active = useCart((s) => s.active);
-  const local = active?.code === code ? active.local : null;
+  const mine = active?.code === code && (!token || active.token === token) ? active : null;
+  const local = mine?.local ?? null;
+  const tk = token || mine?.token || "";
   const known = !!initial || !!local;
+  // De vuelta del pago: el pedido deja de estar pendiente y el carrito se vacía (ya se pagó lo que contenía).
+  useEffect(() => {
+    if (!paidReturn || !mine?.pending) return;
+    const c = useCart.getState();
+    c.setActive({ ...mine, pending: false }); c.clear();
+  }, [paidReturn, mine]);
   return (
     <div className="mx-auto max-w-[520px] px-4 pb-16 pt-[max(20px,env(safe-area-inset-top))]">
       <header className="mb-4 flex items-center gap-3">
@@ -24,7 +35,7 @@ function Inner({ code, live, initial, paid }: { code: string; live: boolean; ini
       </header>
       {known ? (
         <div className="rounded-[22px] border border-line bg-paper p-4">
-          <OrderView code={code} live={live} initial={initial} local={local} paidBanner={paid && !(initial?.paid)} />
+          <OrderView code={code} token={tk} live={live} initial={initial} local={local} paidReturn={paidReturn} />
         </div>
       ) : (
         <div className="emptyc"><KoiMark mode="done" /><b>{t("notFound")}</b><span>{t("notFoundH")}</span><Link className="more" style={{ maxWidth: 240 }} href="/">{t("backMenu")}</Link></div>
@@ -34,7 +45,7 @@ function Inner({ code, live, initial, paid }: { code: string; live: boolean; ini
   );
 }
 
-export default function OrderPage({ menu, ...rest }: { menu: Menu; code: string; live: boolean; initial: PublicOrder | null; paid: boolean }) {
+export default function OrderPage({ menu, ...rest }: { menu: Menu } & Props) {
   return (
     <MenuProvider value={menu}>
       <StoreHydrator />

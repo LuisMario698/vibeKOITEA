@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { useMenu } from "./MenuContext";
 import { useT } from "@/lib/i18n/useT";
@@ -115,14 +116,20 @@ export function ToppingsSection() {
 
 export function InfoFooter() {
   const menu = useMenu(); const { t, lang } = useT(); const s = menu.settings;
-  const open = isOpenNow(s.schedule);
+  // la hora se lee solo en el navegador (el HTML del servidor puede ser de hace un rato) y se actualiza cada minuto
+  const [open, setOpen] = useState<boolean | null>(null);
+  useEffect(() => {
+    const upd = () => setOpen(isOpenNow(s.schedule));
+    const r = requestAnimationFrame(upd); const iv = setInterval(upd, 60000);
+    return () => { cancelAnimationFrame(r); clearInterval(iv); };
+  }, [s.schedule]);
   return (
     <footer className="sec" style={{ paddingBottom: 140 }}>
       <div className="grid gap-4 rounded-[22px] border border-line bg-card p-5 sm:grid-cols-2">
         <div>
           <span className="lb">{t("hours")}</span>
           <p className="font-medium">{s.hours}</p>
-          <p className={`mt-1 text-xs font-mono ${open ? "text-good" : "text-muted"}`}>● {open ? t("openNow") : t("closedNow")}</p>
+          <p className={`mt-1 min-h-[1.2em] text-xs font-mono ${open ? "text-good" : "text-muted"}`}>{open == null ? "\u00a0" : `● ${open ? t("openNow") : t("closedNow")}`}</p>
         </div>
         <div>
           <span className="lb">{t("address")}</span>

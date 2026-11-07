@@ -15,6 +15,8 @@ import CupMini from "@/components/menu/CupMini";
 import MerchArt from "@/components/menu/MerchArt";
 import OrderView from "./OrderView";
 import { reducedMotion, wait } from "@/lib/utils";
+import { lockScroll, unlockScroll, useDialogFocus } from "@/lib/dialog";
+import type { ActiveOrder } from "@/lib/store/cart";
 
 type Step = "cart" | "pay" | "done";
 const PAYI: Record<PayMethod, React.ReactNode> = {
@@ -42,6 +44,7 @@ export default function OrderFlow() {
   const [waErr, setWaErr] = useState(false);
   const [removing, setRemoving] = useState<string | null>(null);
   const waInput = useRef<HTMLInputElement>(null);
+  const panel = useRef<HTMLDivElement>(null);
   const price = (n: number) => formatPrice(n, cur, menu.settings.rate);
   const totals = cartTotals(cart.lines, cart.tipPct);
   const s = menu.settings;
@@ -51,12 +54,19 @@ export default function OrderFlow() {
   const pmSub: Record<PayMethod, string> = { express: t("expressS"), card: t("cardS"), mp: t("mpS"), bar: t("barS") };
 
   useEffect(() => {
-    if (!open) { document.body.classList.remove("lock"); return; }
-    document.body.classList.add("lock");
-    const r = requestAnimationFrame(() => { setErr(null); setProc(null); setStep(!cart.lines.length && cart.active && cart.active.status < 3 ? "done" : "cart"); });
+    if (!open) { unlockScroll("order"); return; }
+    lockScroll("order");
+    const a = cart.active;
+    const r = requestAnimationFrame(() => { setErr(null); setProc(null); setStep(!cart.lines.length && a && !a.pending && a.status < 3 ? "done" : "cart"); });
     return () => cancelAnimationFrame(r);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
+  useDialogFocus(open, panel);
+  // Volver con "Atrás" desde la página de pago restaura esta página desde la caché del navegador: quitamos el "Conectando…".
+  useEffect(() => {
+    const onShow = (e: PageTransitionEvent) => { if (e.persisted) { setProc(null); setStep((st) => (st === "done" ? st : "pay")); } };
+    window.addEventListener("pageshow", onShow); return () => window.removeEventListener("pageshow", onShow);
+  }, []);
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape" && useUI.getState().orderOpen) setOpen(false); };
     window.addEventListener("keydown", onKey); return () => window.removeEventListener("keydown", onKey);
@@ -81,9 +91,10 @@ export default function OrderFlow() {
     try {
       const r = await fetch("/api/orders", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ items: snapshot, type: cart.type, table: cart.table, name: cart.name, phone: cart.phone, cc: cart.cc, lang, tipPct: cart.tipPct, pm, cur }) });
       const j = (await r.json()) as CreateOrderResult | CreateOrderError;
-      if (!j.ok) { setProc(null); setErr(j.error === "closed" ? t("ordersClosed") : t("errOrder")); return; }
-      const active = { code: j.code, createdAt: new Date().toISOString(), status: 0, local: { items: j.items, type: cart.type, table: cart.type === "table" ? cart.table : null, name: cart.name, tip: j.tip, total: j.total, pm, paid: false, phone: cart.phone, cc: cart.cc, waUrl: j.waUrl, waText: j.waText, live: j.live } };
-      if (j.checkoutUrl) { cart.setActive(active); cart.clear(); window.location.assign(j.checkoutUrl); return; }
+      if (!j.ok) { setProc(null); setErr(j.error === "closed" ? t("ordersClosed") : j.error === "payment" ? t("errPay") : j.error === "unavailable" ? t("errUnavailable") : t("errOrder")); return; }
+      const active: ActiveOrder = { code: j.code, token: j.token, createdAt: new Date().toISOString(), status: 0, local: { items: j.items, type: cart.type, table: cart.type === "table" ? cart.table : null, name: cart.name, tip: j.tip, total: j.total, pm, paid: false, phone: cart.phone, cc: cart.cc, waUrl: j.waUrl, waText: j.waText, live: j.live } };
+      // Pago en línea: el carrito se queda hasta que el pago se confirme (si el cliente vuelve sin pagar, lo encuentra intacto).
+      if (j.checkoutUrl) { cart.setActive({ ...active, pending: true }); window.location.assign(j.checkoutUrl); return; }
       setProc("ok"); await wait(reducedMotion() ? 100 : 750);
       cart.setActive(active); cart.clear(); setStep("done"); setProc(null);
       if (!j.live && pm === "bar") showToast(t("sent"));
@@ -95,7 +106,7 @@ export default function OrderFlow() {
   return (
     <>
       <div className={`scrim${open ? " on" : ""}`} onClick={() => setOpen(false)} aria-hidden="true" />
-      <div className={`ord${open ? " on" : ""}`} role="dialog" aria-modal="true" aria-label={title} aria-hidden={!open}>
+      <div className={`ord${open ? " on" : ""}`} ref={panel} role="dialog" aria-modal="true" aria-label={title} aria-hidden={!open} inert={!open}>
         <div className="oh">
           <button className="bk" onClick={back} aria-label={t("back")}>←</button>
           <h2>{title}</h2>
@@ -128,13 +139,13 @@ export default function OrderFlow() {
                 <button className="more" onClick={() => setOpen(false)}>+ {t("more")}</button>
                 <div className="blk">
                   <span className="lb">{t("type")}</span>
-                  <div className="pills" role="radiogroup" aria-label={t("type")}>
-                    <button role="radio" aria-checked={cart.type === "togo"} aria-pressed={cart.type === "togo"} onClick={() => cart.patch({ type: "togo" })}>{t("togo")}</button>
-                    <button role="radio" aria-checked={cart.type === "table"} aria-pressed={cart.type === "table"} onClick={() => cart.patch({ type: "table" })}>{t("table")}</button>
+                  <div className="pills" role="group" aria-label={t("type")}>
+                    <button aria-pressed={cart.type === "togo"} onClick={() => cart.patch({ type: "togo" })}>{t("togo")}</button>
+                    <button aria-pressed={cart.type === "table"} onClick={() => cart.patch({ type: "table" })}>{t("table")}</button>
                   </div>
                   {cart.type === "table" && (
-                    <div className="pills" style={{ marginTop: 8 }} role="radiogroup" aria-label={t("tableN")}>
-                      {Array.from({ length: s.tableCount }, (_, i) => i + 1).map((k) => <button key={k} role="radio" aria-checked={cart.table === k} aria-pressed={cart.table === k} onClick={() => cart.patch({ table: k })}>{t("tableN")} {k}</button>)}
+                    <div className="pills" style={{ marginTop: 8 }} role="group" aria-label={t("tableN")}>
+                      {Array.from({ length: s.tableCount }, (_, i) => i + 1).map((k) => <button key={k} aria-pressed={cart.table === k} onClick={() => cart.patch({ table: k })}>{t("tableN")} {k}</button>)}
                     </div>
                   )}
                 </div>
@@ -153,7 +164,7 @@ export default function OrderFlow() {
                 {s.tips.length > 1 && (
                   <div className="blk">
                     <span className="lb">{t("tip")}</span>
-                    <div className="pills" role="radiogroup" aria-label={t("tip")}>{s.tips.map((v) => <button key={v} role="radio" aria-checked={cart.tipPct === v} aria-pressed={cart.tipPct === v} onClick={() => cart.patch({ tipPct: v })}>{v ? `${v}%` : t("noTip")}</button>)}</div>
+                    <div className="pills" role="group" aria-label={t("tip")}>{s.tips.map((v) => <button key={v} aria-pressed={cart.tipPct === v} onClick={() => cart.patch({ tipPct: v })}>{v ? `${v}%` : t("noTip")}</button>)}</div>
                   </div>
                 )}
                 <div className="sum">
@@ -169,9 +180,9 @@ export default function OrderFlow() {
           <div className="st" data-pos={pos("pay")}>
             <div className="paysum"><span>{t("toPayL")}</span><b>{price(totals.total)}</b><small>{tn("items", n)} · {cart.type === "table" ? `${t("tableN")} ${cart.table}` : t("togo")}</small></div>
             <span className="lb">{t("pm")}</span>
-            <div className="paym" role="radiogroup" aria-label={t("pm")}>
+            <div className="paym" role="group" aria-label={t("pm")}>
               {methods.map((k) => (
-                <button key={k} className="pm" role="radio" aria-checked={pm === k} aria-pressed={pm === k} onClick={() => cart.patch({ pm: k })}>
+                <button key={k} className="pm" aria-pressed={pm === k} onClick={() => cart.patch({ pm: k })}>
                   <span className="ico">{PAYI[k]}</span>
                   <span><b>{pmName[k]}{k === "express" && <em>{t("tourist")}</em>}</b><small>{pmSub[k]}</small></span>
                   <span className="rd" />
@@ -183,7 +194,7 @@ export default function OrderFlow() {
           </div>
           {/* ---------- confirmación ---------- */}
           <div className="st" data-pos={pos("done")}>
-            {step === "done" && cart.active && <OrderView code={cart.active.code} live={!!cart.active.local?.live} local={cart.active.local} />}
+            {step === "done" && cart.active && <OrderView code={cart.active.code} token={cart.active.token} live={!!cart.active.local?.live} local={cart.active.local} />}
           </div>
         </div>
         <div className="foot">

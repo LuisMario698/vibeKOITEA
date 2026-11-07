@@ -2,22 +2,29 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabaseBrowser } from "@/lib/supabase/client";
+import { safeNext } from "@/lib/safe-next";
+
+const ERR: Record<string, string> = {
+  link: "El enlace ya no es válido o ya se usó. Pide uno nuevo.",
+  browser: "Abre el enlace en el mismo navegador donde lo pediste (o entra con tu contraseña).",
+};
 
 export default function LoginForm({ next, error }: { next: string; error: string | null }) {
   const router = useRouter();
   const [email, setEmail] = useState(""); const [pass, setPass] = useState("");
-  const [busy, setBusy] = useState(false); const [msg, setMsg] = useState<string | null>(error === "link" ? "El enlace ya no es válido. Pide uno nuevo." : null);
+  const [busy, setBusy] = useState(false); const [msg, setMsg] = useState<string | null>(error ? ERR[error] ?? ERR.link : null);
+  const dest = safeNext(next);
   const signIn = async (e: React.FormEvent) => {
     e.preventDefault(); setBusy(true); setMsg(null);
     const { error } = await supabaseBrowser().auth.signInWithPassword({ email, password: pass });
     setBusy(false);
     if (error) { setMsg("Correo o contraseña incorrectos."); return; }
-    router.replace(next.startsWith("/") ? next : "/admin"); router.refresh();
+    router.replace(dest); router.refresh();
   };
   const magic = async () => {
     if (!email) { setMsg("Escribe tu correo para mandarte el enlace."); return; }
     setBusy(true); setMsg(null);
-    const { error } = await supabaseBrowser().auth.signInWithOtp({ email, options: { emailRedirectTo: `${location.origin}/auth/callback?next=${encodeURIComponent(next)}` } });
+    const { error } = await supabaseBrowser().auth.signInWithOtp({ email, options: { emailRedirectTo: `${location.origin}/auth/callback?next=${encodeURIComponent(dest)}` } });
     setBusy(false);
     setMsg(error ? "No se pudo mandar el enlace. Intenta de nuevo." : "Listo: revisa tu correo y abre el enlace para entrar.");
   };

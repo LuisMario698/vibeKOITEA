@@ -8,20 +8,24 @@ const s = (v: unknown, d = "") => (typeof v === "string" ? v : d);
 const n = (v: unknown, d = 0) => (typeof v === "number" ? v : Number(v ?? d) || d);
 const b = (v: unknown, d = true) => (typeof v === "boolean" ? v : d);
 
+const handle = (v: string) => v.trim().replace(/^@+/, "").replace(/^https?:\/\/(www\.)?instagram\.com\//i, "").replace(/\/+$/, "");
+
 function mapSettings(r: Row | null): Settings {
+  // Pedidos en vivo = hay base de datos. El pago en línea solo se ofrece con ella (el aviso del banco tiene que encontrar el pedido).
+  const live = !!process.env.SUPABASE_SERVICE_ROLE_KEY && !!process.env.NEXT_PUBLIC_SUPABASE_URL;
   const base: Settings = {
     ...DEFAULT_SETTINGS,
-    whatsapp: process.env.NEXT_PUBLIC_WHATSAPP ?? DEFAULT_SETTINGS.whatsapp,
-    instagram: process.env.NEXT_PUBLIC_INSTAGRAM ?? DEFAULT_SETTINGS.instagram,
-    payments: { stripe: !!process.env.STRIPE_SECRET_KEY, mp: !!process.env.MP_ACCESS_TOKEN },
-    live: !!process.env.SUPABASE_SERVICE_ROLE_KEY && !!process.env.NEXT_PUBLIC_SUPABASE_URL,
+    whatsapp: process.env.NEXT_PUBLIC_WHATSAPP || DEFAULT_SETTINGS.whatsapp,
+    instagram: handle(process.env.NEXT_PUBLIC_INSTAGRAM || DEFAULT_SETTINGS.instagram),
+    payments: { stripe: live && !!process.env.STRIPE_SECRET_KEY, mp: live && !!process.env.MP_ACCESS_TOKEN },
+    live,
   };
   if (!r) return base;
   return {
     ...base,
     rate: n(r.rate, base.rate) || base.rate,
     whatsapp: s(r.whatsapp, base.whatsapp) || base.whatsapp,
-    instagram: s(r.instagram, base.instagram) || base.instagram,
+    instagram: handle(s(r.instagram, base.instagram)) || base.instagram,
     hours: s(r.hours, base.hours) || base.hours,
     schedule: Array.isArray(r.schedule) ? (r.schedule as Settings["schedule"]) : base.schedule,
     address: s(r.address, base.address) || base.address,

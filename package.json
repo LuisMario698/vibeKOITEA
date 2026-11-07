@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "icons": "node scripts/icons.mjs",
+    "seed": "node --experimental-strip-types scripts/seed-sql.mjs > supabase/seed.sql"
   },
   "dependencies": {
     "@fontsource/dela-gothic-one": "^5.3.0",
@@ -32,6 +34,7 @@
     "@types/three": "^0.187.0",
     "eslint": "^9",
     "eslint-config-next": "16.4.5",
+    "sharp": "^0.35.5",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

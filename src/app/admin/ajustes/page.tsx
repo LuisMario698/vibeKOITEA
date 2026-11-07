@@ -1,6 +1,7 @@
 import { supabaseServer } from "@/lib/supabase/server";
 import SettingsForm from "@/components/admin/SettingsForm";
 import type { SettingsInput } from "../actions";
+import { DEFAULT_SETTINGS } from "@/lib/menu/data";
 
 export default async function SettingsPage() {
   const sb = await supabaseServer();
@@ -12,6 +13,7 @@ export default async function SettingsPage() {
     tagline_es: String(r.tagline_es ?? ""), tagline_en: String(r.tagline_en ?? ""), origin_es: String(r.origin_es ?? ""), origin_en: String(r.origin_en ?? ""),
     accept_orders: r.accept_orders !== false, table_count: Number(r.table_count ?? 8), tips: Array.isArray(r.tips) ? (r.tips as number[]) : [0, 10, 15],
     promo_es: String(r.promo_es ?? ""), promo_en: String(r.promo_en ?? ""),
+    schedule: Array.isArray(r.schedule) ? (r.schedule as SettingsInput["schedule"]) : DEFAULT_SETTINGS.schedule,
   };
-  return <SettingsForm initial={initial} payments={{ stripe: !!process.env.STRIPE_SECRET_KEY, mp: !!process.env.MP_ACCESS_TOKEN, wa: !!process.env.WHATSAPP_TOKEN }} />;
+  return <SettingsForm initial={initial} payments={{ stripe: !!process.env.STRIPE_SECRET_KEY, mp: !!process.env.MP_ACCESS_TOKEN, wa: !!process.env.WHATSAPP_TOKEN, live: !!process.env.SUPABASE_SERVICE_ROLE_KEY }} />;
 }

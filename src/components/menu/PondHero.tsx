@@ -20,6 +20,7 @@ export default function PondHero({ paused }: { paused: boolean }) {
   const [fed, setFed] = useState(false);
   const [is3d, setIs3d] = useState(true);
   const [hint, setHint] = useState(false);
+  const pausedRef = useRef(paused);
 
   useEffect(() => {
     let alive = true;
@@ -29,15 +30,16 @@ export default function PondHero({ paused }: { paused: boolean }) {
         const { PondEngine } = await import("@/lib/three/pond");
         if (!alive || !cv.current || !host.current) return;
         const e = PondEngine.create(cv.current, host.current);
-        if (e) { e.onFeed = () => setFed(true); e.setCount(usePrefs.getState().koi); eng.current = e; e.start(); setHint(true); return; }
+        if (e) { e.onFeed = () => setFed(true); e.setCount(usePrefs.getState().koi); eng.current = e; if (!pausedRef.current) e.start(); setHint(true); return; }
       }
       const { Pond2D } = await import("@/lib/three/pond2d");
       if (!alive || !cv.current) return;
-      setIs3d(false); const e = new Pond2D(cv.current); eng.current = e; e.start();
+      setIs3d(false); const e = new Pond2D(cv.current); eng.current = e; if (!pausedRef.current) e.start();
     })();
     return () => { alive = false; eng.current?.dispose(); eng.current = null; };
   }, []);
-  useEffect(() => { const e = eng.current; if (!e) return; if (paused) e.stop(); else e.start(); }, [paused]);
+  // si el motor carga con una ficha ya abierta, arranca en pausa
+  useEffect(() => { pausedRef.current = paused; const e = eng.current; if (!e) return; if (paused) e.stop(); else e.start(); }, [paused]);
   useEffect(() => { const e = eng.current as PondEngine | null; if (e && "setCount" in e) e.setCount(koi); }, [koi]);
   useEffect(() => { const id = setTimeout(() => setFed(true), 12000); return () => clearTimeout(id); }, []);
 

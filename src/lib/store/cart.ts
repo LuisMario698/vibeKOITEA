@@ -1,12 +1,16 @@
 "use client";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import type { CartLine, OrderItem, OrderType, PayMethod } from "../menu/types";
-import { lineKey } from "../menu/helpers";
+import type { CartLine, Menu, OrderItem, OrderType, PayMethod } from "../menu/types";
+import { drinkById, lineKey, linePrice, merchById } from "../menu/helpers";
 
 export interface ActiveOrder {
   code: string;
+  /** Secreto del enlace de seguimiento. */
+  token: string;
   createdAt: string;
+  /** Pago en línea iniciado y aún no confirmado: el carrito se conserva por si el cliente vuelve sin pagar. */
+  pending?: boolean;
   /** Copia local del pedido para mostrarlo aunque no haya base de datos. */
   local: {
     items: OrderItem[];
@@ -43,7 +47,10 @@ interface Cart {
   clear: () => void;
   patch: (p: Partial<Pick<Cart, "type" | "table" | "name" | "phone" | "cc" | "tipPct" | "pm">>) => void;
   setActive: (a: ActiveOrder | null) => void;
-  setActiveStatus: (s: number) => void;
+  /** Actualiza el estado solo si el pedido mostrado es el propio. */
+  setActiveStatus: (code: string, s: number) => void;
+  /** Recalcula los precios del carrito con el menú vigente y quita lo que ya no existe. */
+  reprice: (menu: Menu) => void;
 }
 
 export const useCart = create<Cart>()(
@@ -71,7 +78,14 @@ export const useCart = create<Cart>()(
       clear: () => set({ lines: [], tipPct: 0 }),
       patch: (p) => set(p),
       setActive: (active) => set({ active }),
-      setActiveStatus: (status) => set((s) => (s.active ? { active: { ...s.active, status } } : {})),
+      setActiveStatus: (code, status) => set((s) => (s.active && s.active.code === code && s.active.status !== status ? { active: { ...s.active, status } } : {})),
+      reprice: (menu) => {
+        const cur = get().lines;
+        const lines = cur
+          .filter((l) => (l.kind === "drink" ? !!drinkById(menu, l.ref) : !!merchById(menu, l.ref)))
+          .map((l) => { const price = linePrice(menu, l); return price === l.price ? l : { ...l, price }; });
+        if (lines.length !== cur.length || lines.some((l, i) => l !== cur[i])) set({ lines });
+      },
     }),
     {
       name: "koi-cart",

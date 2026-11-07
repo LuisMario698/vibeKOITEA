@@ -16,27 +16,28 @@ import Tracker from "./Tracker";
 
 export const WA_ICON = <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3.2c-4.9 0-8.8 3.5-8.8 7.9 0 2.3 1.1 4.4 2.9 5.8l-.7 3.7 3.9-2.1c.9.3 1.8.4 2.7.4 4.9 0 8.8-3.5 8.8-7.9S16.9 3.2 12 3.2z" /></svg>;
 
-/** Sondea el estado del pedido mientras está en curso (cada 5 s; cada 20 s al estar listo). */
-export function useOrderPoll(code: string | null, live: boolean, initial: PublicOrder | null) {
+/** Sondea el estado del pedido mientras está en curso (cada 5 s; cada 20 s al estar listo y pagado). */
+export function useOrderPoll(code: string | null, token: string, live: boolean, initial: PublicOrder | null) {
   const [order, setOrder] = useState<PublicOrder | null>(initial);
   const [missing, setMissing] = useState(false);
   useEffect(() => {
-    if (!code || !live) return;
-    let alive = true, timer = 0;
+    if (!code || !token || !live) return;
+    let alive = true, timer = 0, last: PublicOrder | null = initial;
     const tick = async () => {
       try {
-        const r = await fetch(`/api/orders/${code}`, { cache: "no-store" });
+        const r = await fetch(`/api/orders/${code}?t=${encodeURIComponent(token)}`, { cache: "no-store" });
         if (!alive) return;
-        if (r.status === 404) { setMissing(true); return; }
+        if (r.status === 404 || r.status === 400) { setMissing(true); return; }
         const j = (await r.json()) as { ok: boolean; order?: PublicOrder };
-        if (j.ok && j.order) { setOrder(j.order); setMissing(false); if (j.order.status >= 3 || j.order.status === 9) return; }
+        if (j.ok && j.order) { last = j.order; setOrder(j.order); setMissing(false); if (j.order.status >= 3) return; }
       } catch { /* reintenta */ }
-      timer = window.setTimeout(tick, order && order.status >= 2 ? 20000 : 5000);
+      if (!alive) return;
+      timer = window.setTimeout(tick, last && last.status >= 2 && last.paid ? 20000 : 5000);
     };
-    tick();
+    void tick();
     return () => { alive = false; clearTimeout(timer); };
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [code, live]);
+  }, [code, token, live]);
   return { order, missing };
 }
 
@@ -55,28 +56,32 @@ function ItemIcon({ it }: { it: OrderItem }) {
 
 export interface OrderViewProps {
   code: string;
+  token: string;
   live: boolean;
   initial?: PublicOrder | null;
   /** Copia local (del teléfono que hizo el pedido). */
   local?: { items: OrderItem[]; type: "togo" | "table"; table: number | null; name: string; tip: number; total: number; pm: PayMethod; paid: boolean; phone: string; cc: string; waUrl: string | null; waText: string } | null;
-  paidBanner?: boolean;
+  /** El cliente vuelve de la página de pago (?paid=1): mientras el banco confirma mostramos "Confirmando tu pago…". */
+  paidReturn?: boolean;
 }
 
 /** Confirmación y seguimiento de un pedido (se usa dentro del flujo y en /pedido/[code]). */
-export default function OrderView({ code, live, initial = null, local = null, paidBanner }: OrderViewProps) {
+export default function OrderView({ code, token, live, initial = null, local = null, paidReturn }: OrderViewProps) {
   const { t, lang } = useT(); const menu = useMenu(); const cur = usePrefs((s) => s.cur);
   const showToast = useUI((s) => s.showToast); const setActiveStatus = useCart((s) => s.setActiveStatus);
-  const { order, missing } = useOrderPoll(code, live, initial);
+  const { order, missing } = useOrderPoll(code, token, live, initial);
   const price = (n: number) => formatPrice(n, cur, menu.settings.rate);
   const pmName: Record<PayMethod, string> = { express: t("express"), card: t("card"), mp: t("mp"), bar: t("bar") };
-  useEffect(() => { if (order) setActiveStatus(order.status); }, [order, setActiveStatus]);
+  useEffect(() => { if (order) setActiveStatus(code, order.status); }, [code, order, setActiveStatus]);
   const status = order?.status ?? 0;
   const items = order?.items ?? local?.items ?? [];
   const type = order?.type ?? local?.type ?? "togo", table = order?.table ?? local?.table ?? null, name = order?.name ?? local?.name ?? "";
   const paid = order?.paid ?? local?.paid ?? false, pm = order?.pm ?? local?.pm ?? "bar", total = order?.total ?? local?.total ?? 0;
   const phoneTail = order?.phoneTail ?? (local?.phone ? local.phone.slice(-4) : null), cc = order?.cc ?? local?.cc ?? "52";
+  const cancelled = status === 9;
+  const confirming = !!paidReturn && !paid && pm !== "bar" && !cancelled;
   if (missing && !local) return <div className="emptyc"><b>{t("notFound")}</b><span>{t("notFoundH")}</span></div>;
-  const copyLink = async () => { try { await navigator.clipboard.writeText(`${location.origin}/pedido/${code}`); showToast(t("linkCopied")); } catch { /* noop */ } };
+  const copyLink = async () => { try { await navigator.clipboard.writeText(`${location.origin}/pedido/${code}?t=${token}`); showToast(t("linkCopied")); } catch { /* noop */ } };
   const copyText = async () => { if (!local?.waText) return; try { await navigator.clipboard.writeText(local.waText); showToast(t("copied")); } catch { /* noop */ } };
   return (
     <>
@@ -87,11 +92,11 @@ export default function OrderView({ code, live, initial = null, local = null, pa
         <span className="code">{code}</span>
         <span className="who">{type === "table" ? `${t("tableN")} ${table}` : t("togo")}{name ? ` · ${name}` : ""}</span>
       </div>
-      {paidBanner && <p className="notice info" style={{ textAlign: "center" }}>{t("paidOk")} ✓</p>}
-      <Tracker status={status} live={live} />
-      {phoneTail && <p className="wanote">{WA_ICON}<span>{t("waWill")} +{cc} ••• ••• {phoneTail}</span></p>}
-      <div className={`paid${paid ? " ok" : ""}`}>{paid ? `${t("paidW")} ${pmName[pm]}` : `${t("payAtBar")} · ${price(total)}`}</div>
-      {local?.waUrl && (
+      {paidReturn && paid && <p className="notice info" style={{ textAlign: "center" }}>{t("paidOk")} ✓</p>}
+      {cancelled ? <p className="notice" style={{ textAlign: "center" }}>{t("cancelledN")}</p> : <Tracker status={status} live={live} />}
+      {phoneTail && !cancelled && <p className="wanote">{WA_ICON}<span>{t("waWill")} +{cc} ••• ••• {phoneTail}</span></p>}
+      <div className={`paid${paid ? " ok" : ""}`}>{paid ? `${t("paidW")} ${pmName[pm]}` : confirming ? t("confirmingPay") : pm === "bar" ? `${t("payAtBar")} · ${price(total)}` : `${t("payPending")} · ${price(total)}`}</div>
+      {local?.waUrl && !paid && pm === "bar" && !cancelled && (
         <div style={{ margin: "12px 0 4px", display: "grid", gap: 8 }}>
           <a className="wabtn" href={local.waUrl} target="_blank" rel="noopener">{WA_ICON}<span>{t("waSend")}</span></a>
           <p className="hint" style={{ textAlign: "center" }}>{live ? t("waSendLive") : t("waSendH")}</p>
@@ -101,7 +106,7 @@ export default function OrderView({ code, live, initial = null, local = null, pa
           </div>
         </div>
       )}
-      {!local?.waUrl && live && <div style={{ display: "flex", justifyContent: "center", margin: "8px 0" }}><button className="ghost" onClick={copyLink}>{t("shareTrack")}</button></div>}
+      {!(local?.waUrl && pm === "bar") && live && !cancelled && <div style={{ display: "flex", justifyContent: "center", margin: "8px 0" }}><button className="ghost" onClick={copyLink}>{t("shareTrack")}</button></div>}
       <div className="lines ml" style={{ marginTop: 8 }}>
         {items.map((it, i) => (
           <div className="line" key={i}>

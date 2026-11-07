@@ -37,12 +37,15 @@ export interface PublicOrder {
 export interface CreateOrderResult {
   ok: true;
   code: string;
+  /** Secreto del enlace de seguimiento. */
+  token: string;
   subtotal: number;
   tip: number;
   total: number;
   live: boolean;
   paid: boolean;
-  waUrl: string;
+  /** Solo para pago en barra: el pedido se manda por WhatsApp. */
+  waUrl: string | null;
   waText: string;
   checkoutUrl?: string;
   items: OrderItem[];

@@ -10,6 +10,12 @@ create table if not exists public.staff (
   created_at timestamptz not null default now()
 );
 
+-- los correos se guardan siempre en minúsculas (la app y las reglas comparan sin distinguir mayúsculas)
+create or replace function public.staff_lower_email() returns trigger language plpgsql as $$
+begin new.email = lower(trim(new.email)); return new; end $$;
+drop trigger if exists staff_lower on public.staff;
+create trigger staff_lower before insert or update on public.staff for each row execute function public.staff_lower_email();
+
 create or replace function public.is_staff() returns boolean
 language sql stable security definer set search_path = public as $$
   select exists (select 1 from public.staff s where lower(s.email) = lower(coalesce(auth.jwt() ->> 'email', '')));
@@ -100,10 +106,16 @@ create or replace function public.next_order_code() returns text
 language sql volatile security definer set search_path = public as $$
   select 'K-' || (100 + (nextval('public.order_code_seq') % 900))::text;
 $$;
+-- solo el servidor (clave de servicio) genera códigos: nadie con la clave pública puede adelantar la secuencia
+revoke execute on function public.next_order_code() from public, anon, authenticated;
+grant execute on function public.next_order_code() to service_role;
+revoke usage on sequence public.order_code_seq from public, anon, authenticated;
 
 create table if not exists public.orders (
   id uuid primary key default gen_random_uuid(),
   code text not null,
+  -- secreto del enlace de seguimiento (/pedido/K-123?t=…); los códigos son cortos y se reciclan
+  token text not null default encode(gen_random_bytes(8), 'hex'),
   status smallint not null default 0 check (status in (0,1,2,3,9)),
   type text not null default 'togo' check (type in ('togo','table')),
   table_no int,
@@ -122,6 +134,8 @@ create table if not exists public.orders (
   updated_at timestamptz not null default now()
 );
 create index if not exists orders_code_idx on public.orders (code, created_at desc);
+-- por si la tabla ya existía de una versión anterior
+alter table public.orders add column if not exists token text not null default encode(gen_random_bytes(8), 'hex');
 create index if not exists orders_created_idx on public.orders (created_at desc);
 
 -- ---------- seguridad (RLS) ----------

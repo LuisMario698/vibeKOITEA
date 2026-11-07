@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import KoiMark from "@/components/brand/KoiMark";
 import { useT } from "@/lib/i18n/useT";
 import { reducedMotion } from "@/lib/utils";
+import { lockScroll, unlockScroll } from "@/lib/dialog";
 
 const KEY = "koi-splash";
 type State = "idle" | "show" | "gone" | "off";
@@ -19,13 +20,13 @@ export default function Splash({ onDone }: { onDone: () => void }) {
     const finish = (animated: boolean) => {
       if (done) return; done = true;
       try { sessionStorage.setItem(KEY, "1"); } catch { /* noop */ }
-      document.body.classList.remove("lock");
+      unlockScroll("splash");
       setState(animated ? "gone" : "off"); onDone();
     };
     finishRef.current = () => finish(true);
     if (seen) { const r = requestAnimationFrame(() => finish(false)); return () => cancelAnimationFrame(r); }
     const raf = requestAnimationFrame(() => setState("show"));
-    document.body.classList.add("lock");
+    lockScroll("splash");
     const min = reducedMotion() ? 150 : 1900;
     const fonts = (document.fonts?.ready ?? Promise.resolve()).then(() => undefined);
     const timer = new Promise<void>((r) => setTimeout(r, min));
