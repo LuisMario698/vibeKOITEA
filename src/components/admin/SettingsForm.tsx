@@ -3,7 +3,7 @@ import { useState, useTransition } from "react";
 import { saveSettings, type SettingsInput } from "@/app/admin/actions";
 
 function Field({ label, children, hint }: { label: string; children: React.ReactNode; hint?: string }) {
-  return <label className="grid gap-1 text-sm"><span className="lb" style={{ marginBottom: 0 }}>{label}</span>{children}{hint && <span className="hint">{hint}</span>}</label>;
+  return <label className="grid content-start gap-1 text-sm"><span className="lb" style={{ marginBottom: 0 }}>{label}</span>{children}{hint && <span className="hint">{hint}</span>}</label>;
 }
 
 const DAYS = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
@@ -66,9 +66,9 @@ export default function SettingsForm({ initial, payments }: { initial: SettingsI
               <label className="flex w-32 items-center gap-2"><input type="checkbox" checked={d.open} onChange={(e) => setDay(i, { open: e.target.checked })} /> {DAYS[i]}</label>
               {d.open ? (
                 <>
-                  <input className="inp w-28" type="time" aria-label={`${DAYS[i]}: abre`} value={d.from} onChange={(e) => setDay(i, { from: e.target.value })} />
+                  <input className="inp" style={{ width: 124 }} type="time" aria-label={`${DAYS[i]}: abre`} value={d.from} onChange={(e) => setDay(i, { from: e.target.value })} />
                   <span className="text-muted">a</span>
-                  <input className="inp w-28" type="time" aria-label={`${DAYS[i]}: cierra`} value={d.to} onChange={(e) => setDay(i, { to: e.target.value })} />
+                  <input className="inp" style={{ width: 124 }} type="time" aria-label={`${DAYS[i]}: cierra`} value={d.to} onChange={(e) => setDay(i, { to: e.target.value })} />
                 </>
               ) : <span className="text-muted">Cerrado</span>}
             </div>

@@ -14,6 +14,35 @@ npm run build && npm start
 
 Sin configurar nada más, el sitio ya funciona: usa el menú estático de `src/lib/menu/data.ts` y los pedidos se mandan por WhatsApp (enlace `wa.me` con el pedido ya escrito).
 
+## Base de datos local (Postgres en Docker)
+
+Para trabajar con todo encendido (menú editable, pedidos guardados, seguimiento en vivo y panel) sin crear nada en la nube. Necesitas [Docker Desktop](https://www.docker.com/products/docker-desktop/) abierto.
+
+```bash
+npm run db:start   # levanta Postgres y los servicios de Supabase en Docker, aplica la migración y la semilla
+npm run dev        # el sitio ya usa la base local
+```
+
+`db:start` usa la CLI de Supabase (incluida en las dependencias): corre Postgres 17 con la misma API, inicio de sesión y tiempo real que Supabase en la nube, así que el código es idéntico en local y en producción. Al terminar escribe `.env.local` con las claves locales y crea el usuario del panel:
+
+| Qué | Dónde |
+|---|---|
+| Panel | http://localhost:3000/admin · `dueno@koitea.local` / `koitea-local` |
+| Studio (ver y editar tablas) | http://127.0.0.1:54323 |
+| Correos de prueba (enlace mágico) | http://127.0.0.1:54324 |
+| Postgres directo | `postgresql://postgres:postgres@127.0.0.1:54322/postgres` |
+
+Otros comandos:
+
+```bash
+npm run db:stop     # apaga los contenedores (los datos se conservan)
+npm run db:reset    # borra todo y vuelve a aplicar migración + semilla (y recrea el usuario del panel)
+npm run db:status   # URLs y claves de la base local
+node scripts/local-db.mjs otro@correo.com su-contraseña   # otro usuario del panel
+```
+
+La configuración local vive en `supabase/config.toml` (sin almacenamiento de archivos ni funciones, registro público cerrado: solo el personal tiene cuenta) y la plantilla del enlace mágico en `supabase/templates/magic_link.html`. Las claves locales son las de demostración de Supabase: sirven solo en tu máquina.
+
 ## Variables de entorno
 
 Copia `.env.example` a `.env.local`. Todo es opcional y se activa por capas:

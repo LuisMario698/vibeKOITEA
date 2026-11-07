@@ -7,6 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "db:start": "supabase start && node scripts/local-db.mjs",
+    "db:stop": "supabase stop",
+    "db:reset": "supabase db reset && node scripts/local-db.mjs",
+    "db:status": "supabase status",
     "icons": "node scripts/icons.mjs",
     "seed": "node --experimental-strip-types scripts/seed-sql.mjs > supabase/seed.sql"
   },
@@ -35,6 +39,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.4.5",
     "sharp": "^0.35.5",
+    "supabase": "^3.0.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

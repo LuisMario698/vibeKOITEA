@@ -70,27 +70,30 @@
 }
 
 /* ---------- base ---------- */
-* { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
-body {
-  margin: 0;
-  background: var(--paper);
-  color: var(--ink);
-  font-family: var(--font-body), "Hiragino Sans", "Segoe UI", system-ui, sans-serif;
-  font-size: 16px;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  overflow-x: clip;
+/* Dentro de la capa base para que las utilidades de Tailwind (bg-*, px-*, w-*) puedan sobrescribirlo. */
+@layer base {
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body), "Hiragino Sans", "Segoe UI", system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+  body.lock { overflow: hidden; }
+  button { font: inherit; color: inherit; cursor: pointer; background: none; border: 0; padding: 0; }
+  input, select, textarea { font: inherit; color: inherit; }
+  img, svg, canvas { display: block; max-width: 100%; }
+  p { margin: 0; }
+  h1, h2, h3, h4, h5 { margin: 0; font-weight: 800; line-height: 1.15; text-wrap: balance; }
+  :focus-visible { outline: 2px solid var(--koi); outline-offset: 3px; border-radius: 8px; }
+  ::selection { background: var(--koi-soft); }
 }
-body.lock { overflow: hidden; }
-button { font: inherit; color: inherit; cursor: pointer; background: none; border: 0; padding: 0; }
-input, select, textarea { font: inherit; color: inherit; }
-img, svg, canvas { display: block; max-width: 100%; }
-p { margin: 0; }
-h1, h2, h3, h4, h5 { margin: 0; font-weight: 800; line-height: 1.15; text-wrap: balance; }
-:focus-visible { outline: 2px solid var(--koi); outline-offset: 3px; border-radius: 8px; }
-::selection { background: var(--koi-soft); }
 .font-display { font-family: var(--font-display), Georgia, serif; }
 .font-mono { font-family: var(--font-mono), ui-monospace, monospace; }
 .font-poster { font-family: var(--font-poster), "Arial Black", sans-serif; }
