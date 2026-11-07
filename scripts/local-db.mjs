@@ -22,7 +22,7 @@ try {
 
 // ---------- .env.local ----------
 const local = {
-  NEXT_PUBLIC_SITE_URL: "http://localhost:3000",
+  NEXT_PUBLIC_SITE_URL: "http://localhost:3456",
   NEXT_PUBLIC_SUPABASE_URL: status.API_URL,
   NEXT_PUBLIC_SUPABASE_ANON_KEY: status.ANON_KEY,
   SUPABASE_SERVICE_ROLE_KEY: status.SERVICE_ROLE_KEY,
@@ -43,7 +43,7 @@ const { error } = await admin.auth.admin.createUser({ email, password, email_con
 if (error && !/already|registered|exists/i.test(error.message)) { console.error("No se pudo crear el usuario:", error.message); process.exit(1); }
 const staff = await admin.from("staff").upsert({ email, name: "Koi Tea" }, { onConflict: "email" });
 if (staff.error) { console.error("No se pudo dar de alta en staff:", staff.error.message); process.exit(1); }
-console.log(`✓ Panel: http://localhost:3000/admin  ·  ${email} / ${error ? "(contraseña que ya tenía)" : password}`);
+console.log(`✓ Panel: http://localhost:3456/admin  ·  ${email} / ${error ? "(contraseña que ya tenía)" : password}`);
 console.log(`✓ Studio (ver y editar tablas): ${status.STUDIO_URL}`);
 console.log(`✓ Correos de prueba (enlace mágico): ${status.MAILPIT_URL ?? status.INBUCKET_URL}`);
 console.log(`✓ Postgres directo: ${status.DB_URL}`);
