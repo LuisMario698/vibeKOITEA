@@ -11,14 +11,42 @@ import { createClient } from "@supabase/supabase-js";
 const email = (process.argv[2] ?? "dueno@koitea.local").toLowerCase();
 const password = process.argv[3] ?? "koitea-local";
 
-let status;
-try {
-  const out = execFileSync("npx", ["supabase", "status", "-o", "json"], { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] });
-  status = JSON.parse(out.slice(out.indexOf("{")));
-} catch {
-  console.error("La base local no está corriendo. Arráncala con: npm run db:start");
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+/** `supabase status` sale con error si algún servicio aún no pasa su chequeo de salud, pero igual imprime las claves. */
+function readStatus() {
+  let out = "";
+  try { out = execFileSync("npx", ["supabase", "status", "-o", "json"], { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }); }
+  catch (e) { out = String(e.stdout ?? ""); }
+  const i = out.indexOf("{");
+  if (i < 0) return null;
+  try { const j = JSON.parse(out.slice(i, out.lastIndexOf("}") + 1)); return j.API_URL && j.ANON_KEY ? j : null; } catch { return null; }
+}
+
+let status = null;
+for (let i = 0; i < 20 && !status; i++) { status = readStatus(); if (!status) await sleep(3000); }
+if (!status) {
+  console.error("La base local no está corriendo. Abre Docker Desktop y arráncala con: npm run db:start");
   process.exit(1);
 }
+
+/** En la primera arrancada (sobre todo en Mac) los servicios tardan en responder: esperamos hasta 2 minutos. */
+async function waitFor(name, url, headers) {
+  for (let i = 0; i < 60; i++) {
+    try { const r = await fetch(url, { headers }); if (r.status < 500) return true; } catch { /* aún arrancando */ }
+    if (i === 0) process.stdout.write(`… esperando a ${name}`); else if (i % 5 === 0) process.stdout.write(".");
+    await sleep(2000);
+  }
+  return false;
+}
+const key = { apikey: status.ANON_KEY };
+const authOk = await waitFor("el inicio de sesión", `${status.API_URL}/auth/v1/health`, key);
+const restOk = await waitFor("la API", `${status.API_URL}/rest/v1/settings?select=id`, key);
+if (!authOk || !restOk) {
+  console.error("\nLos servicios de la base no respondieron. Revisa en Docker Desktop que haya memoria suficiente (4 GB o más) y vuelve a correr: npm run db:start");
+  process.exit(1);
+}
+process.stdout.write("\r");
 
 // ---------- .env.local ----------
 const local = {
@@ -47,3 +75,6 @@ console.log(`✓ Panel: http://localhost:3456/admin  ·  ${email} / ${error ? "(
 console.log(`✓ Studio (ver y editar tablas): ${status.STUDIO_URL}`);
 console.log(`✓ Correos de prueba (enlace mágico): ${status.MAILPIT_URL ?? status.INBUCKET_URL}`);
 console.log(`✓ Postgres directo: ${status.DB_URL}`);
+const rt = await waitFor("el tiempo real", `${status.API_URL}/realtime/v1/api/ping`, key);
+if (!rt) console.log("\n⚠ El tiempo real aún no responde: el tablero del panel se actualiza igual cada 30 s y se conecta solo cuando esté listo.");
+console.log("\nListo. Arranca el sitio con: npm run dev  →  http://localhost:3456");

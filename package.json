@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start -p 3456",
     "lint": "eslint",
-    "db:start": "supabase start && node scripts/local-db.mjs",
+    "db:start": "supabase start --ignore-health-check && node scripts/local-db.mjs",
     "db:stop": "supabase stop",
     "db:reset": "supabase db reset && node scripts/local-db.mjs",
     "db:status": "supabase status",
