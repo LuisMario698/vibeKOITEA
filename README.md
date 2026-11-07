@@ -41,6 +41,8 @@ npm run db:status   # URLs y claves de la base local
 node scripts/local-db.mjs otro@correo.com su-contraseña   # otro usuario del panel
 ```
 
+**Desde tu teléfono en la misma red Wi-Fi:** arranca con `npm run dev -- -H 0.0.0.0` y abre `http://IP-DE-TU-COMPUTADORA:3000`. El navegador del teléfono no puede llegar a `127.0.0.1`, así que cuando la base es local el sitio la expone en `/sb` (mismo dominio) y el panel, el inicio de sesión y el tiempo real pasan por ahí. En producción, con Supabase en la nube, ese puente no existe.
+
 La configuración local vive en `supabase/config.toml` (sin almacenamiento de archivos ni funciones, registro público cerrado: solo el personal tiene cuenta) y la plantilla del enlace mágico en `supabase/templates/magic_link.html`. Las claves locales son las de demostración de Supabase: sirven solo en tu máquina.
 
 ## Variables de entorno

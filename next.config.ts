@@ -29,10 +29,17 @@ const nextConfig: NextConfig = {
   },
   async rewrites() {
     // Las animaciones de las pantallas de la barra viven en public/pantallas/index.html
-    return [
-      { source: "/pantallas", destination: "/pantallas/index.html" },
-      { source: "/pantallas/", destination: "/pantallas/index.html" },
-    ];
+    // Base local en Docker: puente /sb → Supabase local, para abrir el sitio desde otro dispositivo o una vista previa.
+    const sb = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
+    const localDb = /^https?:\/\/(127\.0\.0\.1|localhost)(:\d+)?\/?$/.test(sb) ? [{ source: "/sb/:path*", destination: `${sb.replace(/\/$/, "")}/:path*` }] : [];
+    return {
+      beforeFiles: localDb,
+      afterFiles: [
+        { source: "/pantallas", destination: "/pantallas/index.html" },
+        { source: "/pantallas/", destination: "/pantallas/index.html" },
+      ],
+      fallback: [],
+    };
   },
   async headers() {
     return [
