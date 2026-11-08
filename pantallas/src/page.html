@@ -1,6 +1,6 @@
 <title>Pantallas Koi Tea</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Cinco animaciones para las tres pantallas verticales de la barra de Koi Tea Boba Shop, Puerto Peñasco.">
+<meta name="description" content="Seis animaciones para las tres pantallas verticales de la barra de Koi Tea Boba Shop, Puerto Peñasco.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Jost:wght@300..700&family=Shippori+Mincho:wght@600;800&family=Yuji+Syuku&display=swap">
@@ -68,7 +68,9 @@ button{font:inherit;color:inherit;cursor:pointer}
 
 /* Selector */
 .vpick-wrap{overflow-x:auto;scrollbar-width:thin;margin-inline:-4px;padding:4px}
-.vpick{display:grid;grid-template-columns:repeat(5,minmax(178px,1fr));gap:10px;min-width:min-content}
+.vpick{display:grid;grid-template-columns:repeat(3,minmax(178px,1fr));gap:10px;min-width:min-content}
+@media (max-width:760px){.vpick{grid-template-columns:repeat(6,minmax(178px,1fr))}}
+.vcard.feat{order:-1}
 .vcard{appearance:none;text-align:left;border:1.5px solid var(--line);background:var(--raised);border-radius:18px;padding:14px 16px 16px;display:grid;gap:6px;align-content:start;transition:border-color .3s var(--ease),background .3s var(--ease),transform .2s}
 .vcard:hover{border-color:color-mix(in srgb,var(--koi) 45%,var(--line))}
 .vcard:active{transform:scale(.985)}
@@ -222,7 +224,7 @@ footer{margin-top:72px;padding-block:28px 56px;border-top:1px solid var(--line);
   <section class="hero">
     <div>
       <p class="eyebrow">Koi Tea Boba Shop · Puerto Peñasco · propuesta de animación</p>
-      <h1><em>Cinco</em> animaciones para las pantallas de la barra</h1>
+      <h1><em>Seis</em> animaciones para las pantallas de la barra</h1>
       <p class="lede">{{HERO_LEDE}}</p>
     </div>
     <dl class="facts">
@@ -272,7 +274,7 @@ footer{margin-top:72px;padding-block:28px 56px;border-top:1px solid var(--line);
   <section class="vinfo" id="vinfo" aria-live="polite"></section>
 
   <section class="block" id="comparativa">
-    <div class="sh"><p class="eyebrow">Comparativa</p><h2>Cómo se diferencian las cinco</h2></div>
+    <div class="sh"><p class="eyebrow">Comparativa</p><h2>Cómo se diferencian las seis</h2></div>
     {{COMPARE}}
   </section>
 

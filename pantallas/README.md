@@ -1,6 +1,6 @@
 # Pantallas Koi Tea
 
-Cinco animaciones para las tres pantallas verticales de la barra de Koi Tea Boba Shop (Puerto Peñasco). Todo se dibuja en Canvas 2D y depende solo del tiempo, así que el mismo código sirve para:
+Seis animaciones para las tres pantallas verticales de la barra de Koi Tea Boba Shop (Puerto Peñasco). Todo se dibuja en Canvas 2D y depende solo del tiempo, así que el mismo código sirve para:
 
 - la página de presentación (`dist/index.html`, publicada como artifact),
 - el modo kiosco sincronizado por reloj (una URL por pantalla),
@@ -13,6 +13,7 @@ Cinco animaciones para las tres pantallas verticales de la barra de Koi Tea Boba
 | 3 · Estanque | Las tres | 60 s × 3 vueltas (toma de 7 s en la tercera) |
 | 4 · Luz | Las tres | 60 s × 3 vueltas (acorde de té en la tercera) |
 | 5 · Atardecer | Las tres | 60 s × 3 luces (puesta de sol en la tercera) |
+| 6 · Letrero | Central | 44 s × 3 bebidas (marca, bebida en 3D, sabor y arte, QR e información) |
 
 Los precios son ilustrativos y están en `src/data.js`.
 
@@ -25,6 +26,7 @@ src/
   mascot.js     la mascota calcada del logo, con estados (parpadeo, aletas, sorbo, dibujo de línea)
   koi.js        koi visto desde arriba (línea, tinta y sombra) y rutas periódicas (Hermite en el tiempo)
   cup.js        vaso plano con tapa sellada, capas, toppings, hielo (respaldo sin WebGL)
+  sign3d.js     el letrero «KOI TEA» en 3D: letras redibujadas de la foto de la fachada, contorno trazado y extruido
   drink3d.js    la bebida en 3D con Three.js (vendor/three.min.js, MIT): vaso, capas, perlas, hielo, tapa, popote, condensación
   data.js       menú y precios (ilustrativos)
   boards.js     menús laterales: los actuales, los rediseñados y los actuales recoloreados en crema (texto en caché, nunca se mueven)

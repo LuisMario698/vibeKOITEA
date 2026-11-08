@@ -16,10 +16,10 @@
   function buildPicker() {
     const box = $('vpick'); if (!box) return;
     box.innerHTML = versions().map(v => `
-      <button class="vcard" id="pick-${v.id}" data-id="${v.id}" aria-pressed="false">
+      <button class="vcard${v.featured ? ' feat' : ''}" id="pick-${v.id}" data-id="${v.id}" aria-pressed="false">
         <span class="vnum">Versión ${v.n}</span>
         <b class="vname">${esc(v.name)}</b>
-        <span class="vtags"><span class="vtag ${v.format === 'triple' ? 'tri' : 'one'}">${v.format === 'triple' ? 'Tres pantallas' : 'Pantalla central'}</span>${v.pick ? '<span class="vtag pick">Elegida</span>' : ''}</span>
+        <span class="vtags"><span class="vtag ${v.format === 'triple' ? 'tri' : 'one'}">${v.format === 'triple' ? 'Tres pantallas' : 'Pantalla central'}</span>${v.pick ? '<span class="vtag pick">Elegida</span>' : ''}${v.badge ? '<span class="vtag pick">' + esc(v.badge) + '</span>' : ''}</span>
         <span class="vline">${esc(v.tagline || '')}</span>
       </button>`).join('');
     box.querySelectorAll('.vcard').forEach(b => b.addEventListener('click', () => select(b.dataset.id, true)));
@@ -163,6 +163,7 @@
     const card = $('pick-' + v.id), wrap = card && card.closest('.vpick-wrap');
     if (wrap && wrap.scrollWidth > wrap.clientWidth) { const r = card.offsetLeft - (wrap.clientWidth - card.offsetWidth) / 2; wrap.scrollTo({ left: Math.max(0, r), behavior: fromUser && !RM ? 'smooth' : 'auto' }); }
     $('wall').dataset.format = v.format;
+    if (changed) { S.sides = v.sides || 'hoy'; S.dirtySides = true; }
     if (changed) { S.cycle = 0; S.playhead = RM ? (v.still != null ? v.still : (v.chapters && v.chapters[1] ? v.chapters[1].t + 2 : 2)) : 0; }
     buildTimeline(); buildInfo(); layout();
     if (fromUser) { try { history.replaceState(null, '', '#' + v.id); } catch (e) { location.hash = v.id; } }
@@ -172,7 +173,7 @@
   // etiqueta, accesibilidad y selector de laterales según el formato
   function sidesUI() {
     const v = S.v, cream = S.sides === 'crema', central = v.format !== 'triple';
-    const lbl = $('stage-label'); if (lbl) lbl.textContent = (!central ? 'Las tres pantallas cuentan una sola escena; las laterales siguen siendo el menú.' : cream ? 'Solo cambia la pantalla central; las laterales se muestran recoloreadas en crema, sin animación.' : 'Solo cambia la pantalla central; las laterales se muestran como están hoy.') + ' Precios ilustrativos.';
+    const lbl = $('stage-label'); if (lbl) lbl.textContent = (!central ? 'Las tres pantallas cuentan una sola escena; las laterales siguen siendo el menú.' : cream ? 'Solo cambia la pantalla central; las laterales se muestran recoloreadas en crema, sin animación.' : 'Solo cambia la pantalla central; las laterales se muestran como están hoy.') + ' Precios ilustrativos.' + (v.labelNote ? ' ' + v.labelNote : '');
     const names = { L: 'izquierda', C: 'central', R: 'derecha' };
     slots.forEach(sl => { if (cv[sl]) cv[sl].setAttribute('aria-label', !central || sl === 'C' ? `${v.name}, pantalla ${names[sl]}: ${v.tagline || ''}` : `Pantalla ${names[sl]}: menú ${cream ? 'recoloreado en crema' : 'como está hoy'}`); });
     const sg = $('sides-seg'); if (sg) sg.hidden = !central;
@@ -223,7 +224,7 @@
     let q; try { q = new URLSearchParams(location.search); } catch (e) { return false; }
     const slot = (q.get('screen') || '').toUpperCase(); if (!['L', 'C', 'R'].includes(slot)) return false;
     const v = byId(q.get('v') || 'v1') || versions()[0];
-    const dy = parseFloat(q.get('dy')) || 0, lat = parseFloat(q.get('lat')) || 0, sides = q.get('sides') === 'crema' ? 'crema' : 'hoy';
+    const dy = parseFloat(q.get('dy')) || 0, lat = parseFloat(q.get('lat')) || 0, sides = q.get('sides') ? (q.get('sides') === 'crema' ? 'crema' : 'hoy') : (v.sides || 'hoy');
     const EPOCH = Date.UTC(2026, 10, 1, 17 + 7, 30);   // 1 nov 2026, 17:30 en Sonora (UTC−7)
     document.body.innerHTML = '';
     document.body.style.cssText = 'margin:0;padding:0;background:#000;overflow:hidden;cursor:none';
@@ -252,7 +253,8 @@
     if (!document.getElementById('wall')) return;
     buildPicker(); buildWall(); bindControls(); bindScrub();
     const first = location.hash.slice(1);
-    select(byId(first) ? first : versions()[0].id, false);
+    const feat = versions().find(x => x.featured);
+    select(byId(first) ? first : (feat || versions()[0]).id, false);
     setPlaying(!RM);
     if (RM) { const n = $('rm-note'); if (n) n.hidden = false; }
     requestAnimationFrame(frame);

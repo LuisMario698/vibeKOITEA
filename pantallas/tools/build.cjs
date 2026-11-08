@@ -2,7 +2,7 @@
 const fs = require('fs'), path = require('path');
 const ROOT = path.resolve(__dirname, '..'), SRC = path.join(ROOT, 'src');
 const read = p => fs.readFileSync(path.join(SRC, p), 'utf8');
-const CORE = ['../vendor/three.min.js', 'kit.js', 'kanji.js', 'mascot.js', 'koi.js', 'cup.js', 'drink3d.js', 'data.js', 'boards.js'];
+const CORE = ['../vendor/three.min.js', 'kit.js', 'kanji.js', 'mascot.js', 'koi.js', 'cup.js', 'drink3d.js', 'sign3d.js', 'data.js', 'boards.js'];
 const versions = fs.readdirSync(path.join(SRC, 'versions')).filter(f => /^v\d+\.js$/.test(f)).sort((a, b) => parseInt(a.slice(1)) - parseInt(b.slice(1))).map(f => 'versions/' + f);
 const ORDER = [...CORE, ...versions, 'engine.js'];
 let page = read('page.html');

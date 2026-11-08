@@ -1,6 +1,6 @@
 <title>Pantallas Koi Tea</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Cinco animaciones para las tres pantallas verticales de la barra de Koi Tea Boba Shop, Puerto Peñasco.">
+<meta name="description" content="Seis animaciones para las tres pantallas verticales de la barra de Koi Tea Boba Shop, Puerto Peñasco.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Jost:wght@300..700&family=Shippori+Mincho:wght@600;800&family=Yuji+Syuku&display=swap">
@@ -68,7 +68,9 @@ button{font:inherit;color:inherit;cursor:pointer}
 
 /* Selector */
 .vpick-wrap{overflow-x:auto;scrollbar-width:thin;margin-inline:-4px;padding:4px}
-.vpick{display:grid;grid-template-columns:repeat(5,minmax(178px,1fr));gap:10px;min-width:min-content}
+.vpick{display:grid;grid-template-columns:repeat(3,minmax(178px,1fr));gap:10px;min-width:min-content}
+@media (max-width:760px){.vpick{grid-template-columns:repeat(6,minmax(178px,1fr))}}
+.vcard.feat{order:-1}
 .vcard{appearance:none;text-align:left;border:1.5px solid var(--line);background:var(--raised);border-radius:18px;padding:14px 16px 16px;display:grid;gap:6px;align-content:start;transition:border-color .3s var(--ease),background .3s var(--ease),transform .2s}
 .vcard:hover{border-color:color-mix(in srgb,var(--koi) 45%,var(--line))}
 .vcard:active{transform:scale(.985)}
@@ -222,8 +224,8 @@ footer{margin-top:72px;padding-block:28px 56px;border-top:1px solid var(--line);
   <section class="hero">
     <div>
       <p class="eyebrow">Koi Tea Boba Shop · Puerto Peñasco · propuesta de animación</p>
-      <h1><em>Cinco</em> animaciones para las pantallas de la barra</h1>
-      <p class="lede">Dos versiones cambian solo la pantalla central; tres convierten las tres pantallas en una sola escena sin dejar de ser el menú. Todo está dibujado en código con la mascota, los colores y las tipografías de Koi Tea, a 1080 × 1920 por pantalla, y se puede producir como video en loop o correr en vivo, sincronizado por reloj.</p>
+      <h1><em>Seis</em> animaciones para las pantallas de la barra</h1>
+      <p class="lede">Tres versiones cambian solo la pantalla central; tres convierten las tres pantallas en una sola escena sin dejar de ser el menú. La más nueva, Letrero, nace de la fachada: las letras rojas de «KOI TEA» en 3D y la caja de luz de «BOBA SHOP». Todo está dibujado en código con la mascota, los colores y las tipografías de Koi Tea, a 1080 × 1920 por pantalla, y se puede producir como video en loop o correr en vivo, sincronizado por reloj.</p>
     </div>
     <dl class="facts">
       <div><dt>Pantallas</dt><dd>3 verticales, lado a lado</dd></div>
@@ -272,35 +274,36 @@ footer{margin-top:72px;padding-block:28px 56px;border-top:1px solid var(--line);
   <section class="vinfo" id="vinfo" aria-live="polite"></section>
 
   <section class="block" id="comparativa">
-    <div class="sh"><p class="eyebrow">Comparativa</p><h2>Cómo se diferencian las cinco</h2></div>
+    <div class="sh"><p class="eyebrow">Comparativa</p><h2>Cómo se diferencian las seis</h2></div>
     <div class="tbl">
   <table>
     <thead>
-      <tr><th></th><th>1 · Koi vivo</th><th>2 · Tinta</th><th>3 · Estanque</th><th>4 · Luz</th><th>5 · Atardecer</th></tr>
+      <tr><th></th><th>1 · Koi vivo</th><th>2 · Tinta</th><th>3 · Estanque</th><th>4 · Luz</th><th>5 · Atardecer</th><th>6 · Letrero</th></tr>
     </thead>
     <tbody>
-      <tr><th scope="row">Pantallas</th><td>Central</td><td>Central</td><td>Las tres</td><td>Las tres</td><td>Las tres</td></tr>
-      <tr><th scope="row">Idea</th><td>La mascota del logo cobra vida y presenta la bebida.</td><td>Sumi-e: la bebida pintada como obra de galería.</td><td>Un estanque color té detrás de las tres pantallas; el menú flota quieto.</td><td>La línea de luz del plafón cruza las pantallas y enciende el menú.</td><td>Un friso del Mar de Cortés; la Koi Tea como atardecer.</td></tr>
-      <tr><th scope="row">Momento firma</th><td>El koi sorbe: una perla sube por el popote.</td><td>鯉 se escribe trazo por trazo y el sello 茶 lo firma: juntos dicen «Koi Tea».</td><td>Dos koi giran cabeza con cola alrededor de 鯉; cada tres minutos, las placas se apartan.</td><td>El acorde de té: las bebidas se vierten desde la luz y drenan hacia un vaso de Koi Tea.</td><td>El sol se mete en un vaso de Koi Tea que sube del mar.</td></tr>
-      <tr><th scope="row">Qué vende</th><td>Una bebida por vuelta, con precio grande, e Instagram.</td><td>Una “obra” por vuelta, con precio, e Instagram.</td><td>Bebida recomendada resaltada en el menú, topping incluido e Instagram.</td><td>Bebida del momento, Koi Tea, tés verdes con fruta e Instagram.</td><td>Koi Tea, la combinación que recomienda una reseña e Instagram.</td></tr>
-      <tr><th scope="row">Menú de los lados</th><td>Como está hoy, o recoloreado en crema</td><td>Como está hoy, o recoloreado en crema</td><td>Rediseñado, en placas de papel</td><td>Rediseñado, en marcos de nogal</td><td>Rediseñado, bajo el friso</td></tr>
-      <tr><th scope="row">Tono</th><td>Cálido y cercano</td><td>Calmado, de galería</td><td>Natural, sereno</td><td>Arquitectónico, sobrio</td><td>Local, emotivo</td></tr>
-      <tr><th scope="row">Para instalar</th><td>1 reproductor</td><td>1 reproductor</td><td>3 reproductores sincronizados</td><td>3 reproductores sincronizados</td><td>3 reproductores sincronizados</td></tr>
-      <tr><th scope="row">Ideal para</th><td>Empezar ya, sin tocar los menús.</td><td>Reforzar “sabor y arte” y la galería.</td><td>Hacer del koi la experiencia del local.</td><td>Integrar las pantallas al diseño interior.</td><td>Conquistar al turista y la temporada alta.</td></tr>
+      <tr><th scope="row">Pantallas</th><td>Central</td><td>Central</td><td>Las tres</td><td>Las tres</td><td>Las tres</td><td>Central</td></tr>
+      <tr><th scope="row">Idea</th><td>La mascota del logo cobra vida y presenta la bebida.</td><td>Sumi-e: la bebida pintada como obra de galería.</td><td>Un estanque color té detrás de las tres pantallas; el menú flota quieto.</td><td>La línea de luz del plafón cruza las pantallas y enciende el menú.</td><td>Un friso del Mar de Cortés; la Koi Tea como atardecer.</td><td>El letrero de la fachada en 3D y la caja de luz «BOBA SHOP».</td></tr>
+      <tr><th scope="row">Momento firma</th><td>El koi sorbe: una perla sube por el popote.</td><td>鯉 se escribe trazo por trazo y el sello 茶 lo firma: juntos dicen «Koi Tea».</td><td>Dos koi giran cabeza con cola alrededor de 鯉; cada tres minutos, las placas se apartan.</td><td>El acorde de té: las bebidas se vierten desde la luz y drenan hacia un vaso de Koi Tea.</td><td>El sol se mete en un vaso de Koi Tea que sube del mar.</td><td>Las letras rojas se levantan una por una con su sombra; «sabor» se llena con la bebida.</td></tr>
+      <tr><th scope="row">Qué vende</th><td>Una bebida por vuelta, con precio grande, e Instagram.</td><td>Una “obra” por vuelta, con precio, e Instagram.</td><td>Bebida recomendada resaltada en el menú, topping incluido e Instagram.</td><td>Bebida del momento, Koi Tea, tés verdes con fruta e Instagram.</td><td>Koi Tea, la combinación que recomienda una reseña e Instagram.</td><td>Bebida del momento en 3D con precio, la frase de la marca, Instagram, horario y dirección.</td></tr>
+      <tr><th scope="row">Menú de los lados</th><td>Como está hoy, o recoloreado en crema</td><td>Como está hoy, o recoloreado en crema</td><td>Rediseñado, en placas de papel</td><td>Rediseñado, en marcos de nogal</td><td>Rediseñado, bajo el friso</td><td>Recoloreado en crema, o como está hoy</td></tr>
+      <tr><th scope="row">Tono</th><td>Cálido y cercano</td><td>Calmado, de galería</td><td>Natural, sereno</td><td>Arquitectónico, sobrio</td><td>Local, emotivo</td><td>Icónico, de marca</td></tr>
+      <tr><th scope="row">Para instalar</th><td>1 reproductor</td><td>1 reproductor</td><td>3 reproductores sincronizados</td><td>3 reproductores sincronizados</td><td>3 reproductores sincronizados</td><td>1 reproductor</td></tr>
+      <tr><th scope="row">Ideal para</th><td>Empezar ya, sin tocar los menús.</td><td>Reforzar “sabor y arte” y la galería.</td><td>Hacer del koi la experiencia del local.</td><td>Integrar las pantallas al diseño interior.</td><td>Conquistar al turista y la temporada alta.</td><td>Unir la fachada con la barra y estrenar la marca adentro.</td></tr>
     </tbody>
   </table>
 </div>
 <div class="rec" id="recomendacion">
   <span class="tg">Recomendación</span>
   <div class="prose">
-    <p><b>Elegidas para desarrollar: Koi vivo para la pantalla central y Estanque para las tres.</b> Koi vivo se instala con un solo reproductor y convierte la pantalla que hoy solo repite el logo en una que vende: la mascota sorbe su boba y la bebida del momento se arma en 3D, con su precio, antes de cerrar en Instagram. Si además se recolorean las laterales en crema (el mismo menú, sin animarlo), la pared se ve como una sola pieza desde el primer día.</p>
+    <p><b>Nueva: Letrero, para la pantalla central.</b> Repite adentro lo primero que el cliente ve afuera: las letras rojas de «KOI TEA» en 3D, con la forma del letrero de la fachada, y la caja de luz de «BOBA SHOP». En cuatro secciones dice quién eres, qué pedir y cuánto cuesta (la bebida se arma en 3D), por qué es especial (sabor y arte) y cómo seguirte o volver (QR, horario y dirección). Se instala con un solo reproductor, igual que Koi vivo.</p>
+<p><b>Elegidas para desarrollar: Koi vivo para la pantalla central y Estanque para las tres.</b> Koi vivo se instala con un solo reproductor y convierte la pantalla que hoy solo repite el logo en una que vende: la mascota sorbe su boba y la bebida del momento se arma en 3D, con su precio, antes de cerrar en Instagram. Si además se recolorean las laterales en crema (el mismo menú, sin animarlo), la pared se ve como una sola pieza desde el primer día.</p>
 <p><b>Estanque es el paso a las tres pantallas.</b> Es la más ligada al koi: el menú flota quieto sobre el agua, dos koi cruzan bajo el muro y la bebida recomendada se ilumina en el menú mientras la central la presenta en 3D. Las otras tres versiones quedan como referencia.</p>
   </div>
 </div>
   </section>
 
   <section class="block" id="investigacion">
-    <div class="sh"><p class="eyebrow">Investigación</p><h2>Lo que define una pantalla de menú que funciona</h2><p class="lede">Antes de animar revisamos guías de legibilidad y de señalización digital, estudios sobre menús y ventas, normas de fotosensibilidad, referencias de marcas de té y la técnica para sincronizar varias pantallas. Estas son las reglas que siguen las cinco versiones.</p></div>
+    <div class="sh"><p class="eyebrow">Investigación</p><h2>Lo que define una pantalla de menú que funciona</h2><p class="lede">Antes de animar revisamos guías de legibilidad y de señalización digital, estudios sobre menús y ventas, normas de fotosensibilidad, referencias de marcas de té y la técnica para sincronizar varias pantallas. Estas son las reglas que siguen las seis versiones.</p></div>
     <div class="findings">
   <article class="find">
     <h3>Letra que se lee desde la fila</h3>
@@ -441,6 +444,8 @@ footer{margin-top:72px;padding-block:28px 56px;border-top:1px solid var(--line);
   <div class="prose">
     <h3>Video maestro</h3>
     <p>MP4 H.264 de 1080 × 1920 a 30 cuadros por segundo (perfil High 4.0, calidad CRF 18, tope de 12 Mbps), uno por pantalla, exportado cuadro por cuadro desde el mismo código. Cada vuelta del loop termina exactamente donde empieza, y los cambios entre vueltas ocurren en momentos quietos para que no se note el corte. La versión de tres pantallas se exporta como un solo lienzo de 3720 × 1920 y se recorta en tres videos con los mismos cuadros.</p>
+    <h3>El letrero en 3D</h3>
+    <p>Las letras de «KOI TEA» de Letrero se redibujaron a partir de la foto de la fachada (no corresponden a una fuente comercial) y se construyen en 3D: el contorno de cada letra se traza y se extruye, con cara roja, canto blanco y sombra sobre la pared. Si la marca tiene el archivo vectorial original del letrero, se puede usar en su lugar sin cambiar la animación.</p>
     <h3>La bebida en 3D</h3>
     <p>En Koi vivo y en Estanque el vaso se dibuja en 3D con <a href="https://threejs.org" target="_blank" rel="noopener">Three.js</a> (licencia MIT): plástico transparente con reflejos de estudio, líquido en capas, perlas, hielo, tapa sellada con la impresión de Koi Tea y condensación. También depende solo del reloj, así que el loop empata y el video se exporta igual. En vivo necesita WebGL, que la Raspberry Pi 5 tiene; si la pantalla no lo soporta, se dibuja el vaso plano.</p>
     <h3>Prueba en el equipo</h3>
@@ -478,6 +483,7 @@ footer{margin-top:72px;padding-block:28px 56px;border-top:1px solid var(--line);
 <script src="../src/koi.js"></script>
 <script src="../src/cup.js"></script>
 <script src="../src/drink3d.js"></script>
+<script src="../src/sign3d.js"></script>
 <script src="../src/data.js"></script>
 <script src="../src/boards.js"></script>
 <script src="../src/versions/v1.js"></script>
@@ -485,5 +491,6 @@ footer{margin-top:72px;padding-block:28px 56px;border-top:1px solid var(--line);
 <script src="../src/versions/v3.js"></script>
 <script src="../src/versions/v4.js"></script>
 <script src="../src/versions/v5.js"></script>
+<script src="../src/versions/v6.js"></script>
 <script src="../src/engine.js"></script>
 <script>KT.boot();</script>
